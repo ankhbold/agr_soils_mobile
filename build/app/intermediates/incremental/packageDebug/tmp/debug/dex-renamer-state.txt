@@ -1,0 +1,4 @@
+#Tue Oct 25 12:53:57 ULAT 2022
+base.0=D\:\\work\\mobile\\example\\Mvvm-Architecture-With-Provider-with-Rest-Api-main\\Mvvm-Architecture-With-Provider-with-Rest-Api-main\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

@@ -1,248 +1,390 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/res/color.dart';
 
-// import '../data/listdata.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/src/geo/crs/crs.dart';
-import 'package:flutter_map/src/map/flutter_map_state.dart';
-import 'package:flutter_map/src/map/map.dart';
-import 'package:latlong2/latlong.dart';
+class NoteScreen extends StatefulWidget {
+  // PageController _pageController = PageController();
+  NoteScreen({
+    super.key,
+  });
 
-class ScreenTwo extends StatefulWidget {
-  const ScreenTwo({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() {
-    return _ScreenTwo();
-  }
+  State<NoteScreen> createState() => _ScreenState();
 }
 
-class _ScreenTwo extends State<ScreenTwo> {
+class _ScreenState extends State<NoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: MediaQuery.of(context).size.height * 0.85,
-                floating: true,
-                pinned: false,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(
-                    "Parcel list",
-                  ),
-                  background: _buildMap(),
+      backgroundColor: Color(0xfff0f0f0),
+      body: ListView(
+        children: [
+          // DefaultTabController(
+          //   length: 3,
+          //   child: TabBarView(
+          //     children: [
+          //       NavigationBar(),
+          //     ],
+          //   ),
+          // ),
+          Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).size.width * 0.817,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.05,
                 ),
-              ),
-            ];
-          },
-          body: Center(
-              child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Search field",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      //     TextField(
-                      //   decoration: InputDecoration(
-                      //     filled: true,
-                      //     fillColor: Color(0Xff302360),
-                      //     border:OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(8.0),
-                      //       borderSide: BorderSide.none,
-                      //       ),
-                      //       hintText: "Search field",
-                      //       prefixIcon: Icon(Icons.search),
-                      //   ),
-                      // ),
-                    ],
-                  ),
+                NavigationBar(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.27,
                 ),
+                NotesNearby(),
+
+                NotesProvince(),
+                NotesLocation(),
+                // NavigationBar(),
+                // BuildPageView(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.05,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.05,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white,
+            child: Column(children: [
+              SizedBox(
+                height: 20,
               ),
-            ],
-          )),
-        ),
-        appBar: _buildAppBar(context),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    'Талбайн ургамлын индекс',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Index(),
+              SizedBox(
+                height: 20,
+              ),
+              roow(),
+              SizedBox(
+                height: 20,
+              ),
+              roow(),
+              SizedBox(
+                height: 20,
+              ),
+              roow(),
+              SizedBox(
+                height: 20,
+              ),
+              roow(),
+              SizedBox(
+                height: 20,
+              ),
+            ]),
+          ),
+        ],
       ),
-    ));
+    );
   }
 }
 
-AppBar _buildAppBar(context) {
-  return AppBar(
-    actions: [
-      // ElevatedButton(
-      //     style: ElevatedButton.styleFrom(
-      //       padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
-      //      shape: RoundedRectangleBorder(
-      //      borderRadius: BorderRadius.circular(4.0)
+class roow extends StatelessWidget {
+  const roow({
+    Key? key,
+  }) : super(key: key);
 
-      //           ),
-      //       // style: ElevatedButton.styleFrom(
-      //       //   shape: const StadiumBorder(),
-      //       ),
-
-      //       child: const Text('Pill '),
-      //       onPressed: () {},
-      //     ),
-
-      Container(
-        margin: EdgeInsets.only(
-          top: 16,
-          right: 16,
-        ),
-        child: Stack(
-          children: <Widget>[
-            new IconButton(
-              icon: const Icon(
-                Icons.arrow_downward_outlined,
-              ),
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Container(
-                      height: 200,
-                      color: Colors.amber,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            const Text('Modal BottomSheet'),
-                            ElevatedButton(
-                              child: const Text('Close BottomSheet'),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.width * 0.18,
+            child: Image.asset(
+              'assets/images/ones.png',
+              fit: BoxFit.contain,
             ),
-            Positioned(
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.all(1),
-                child: Text(
-                  '5',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 8,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Талбай 3, 15 га',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
               ),
-            )
-          ],
+              Text(
+                'Өргөст хэмх',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.25,
+          ),
+          Column(
+            children: [
+              Text(
+                'Sep 11',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              ),
+              Text(
+                '0,29',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Index extends StatelessWidget {
+  const Index({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          NavigationBarr(),
+        ],
+      ),
+    );
+  }
+}
+
+class NavigationBarr extends StatelessWidget {
+  const NavigationBarr({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffb1b1b1),
+          ),
+          height: MediaQuery.of(context).size.height * 0.035,
+          width: MediaQuery.of(context).size.width * 0.29,
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Бүх талбай')),
+          ),
         ),
-      )
-    ],
-    automaticallyImplyLeading: false,
-    centerTitle: true,
-    elevation: 0,
-    backgroundColor: Colors.transparent,
-  );
+        Container(
+          height: MediaQuery.of(context).size.height * 0.035,
+          width: MediaQuery.of(context).size.width * 0.29,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffdadada),
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Өргөст хэмх')),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.035,
+          width: MediaQuery.of(context).size.width * 0.29,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffdadada),
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Буудай')),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-FlutterMap _buildMap() {
-  // ignore: unnecessary_new
-  return new FlutterMap(
-    options: MapOptions(
-      center: LatLng(50.093057, 105.715020),
-      zoom: 9.2,
-    ),
-    nonRotatedChildren: [
-      AttributionWidget.defaultWidget(
-        source: 'OpenStreetMap contributors',
-        onSourceTapped: null,
+class NotesNearby extends StatelessWidget {
+  const NotesNearby({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            'Байршилд хандахыг зөвшөөрөх',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.03,
+          ),
+          Text(
+            'Тохиргоог нээх',
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: AppColors.Green),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.15,
+          ),
+          Container(
+            color: Color(
+              0xffb1b1b1,
+            ),
+            height: 1,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.03,
+          ),
+          Container(
+            child: Text(
+              'Өргөтгөсөн урьдчилсан мэдээ',
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.Green),
+            ),
+          ),
+        ],
       ),
-    ],
-    children: [
-      TileLayer(
-        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        userAgentPackageName: 'com.example.app',
-      ),
-    ],
-  );
+    );
+  }
 }
 
-// class ScreenTwo extends StatefulWidget {
-//   const ScreenTwo({super.key});
+class NotesProvince extends StatelessWidget {
+  const NotesProvince({super.key});
 
-//   @override
-//   State<ScreenTwo> createState() => _ScreenTwoState();
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromARGB(255, 54, 244, 101),
+    );
+  }
+}
 
-// class _ScreenTwoState extends State<ScreenTwo> {
+class NotesLocation extends StatelessWidget {
+  const NotesLocation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromARGB(255, 98, 54, 244),
+    );
+  }
+}
+
+class NavigationBar extends StatelessWidget {
+  const NavigationBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffb1b1b1),
+          ),
+          height: MediaQuery.of(context).size.height * 0.05,
+          width: MediaQuery.of(context).size.width * 0.3,
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Миний хажууд\nТалбай байхгүй')),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.05,
+          width: MediaQuery.of(context).size.width * 0.3,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffdadada),
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Төв аймаг\n2 Талбай')),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.05,
+          width: MediaQuery.of(context).size.width * 0.3,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Color(0xffdadada),
+          ),
+          child: GestureDetector(
+            onTap: () {},
+            child: Center(child: const Text('Байршил\nнэмэх')),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// class BuildPageView extends StatelessWidget {
+//   const BuildPageView({super.key});
+
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Container(
-//           width: MediaQuery.of(context).size.width * 0.87,
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Text(
-//                 'Танд одоохондоо тэмдэглэл алга',
-//                 style: TextStyle(
-//                     color: Colors.black,
-//                     fontSize: 19,
-//                     fontWeight: FontWeight.w600),
-//               ),
-//               SizedBox(
-//                 height: 20,
-//               ),
-//               Row(
-//                 children: [
-//                   SizedBox(
-//                     width: 25,
-//                   ),
-//                   Text(
-//                       'Газрын зураг дээр чухал газрыг тэмдэглэхийг\nхүссэн үедээ тэмдэглэл нэмнэ үү'),
-//                 ],
-//               ),
-//               SizedBox(
-//                 height: 35,
-//               ),
-//               Text(
-//                 'Анхны тэмдэглэлээ нэмнэ үү',
-//                 style: TextStyle(
-//                     color: AppColors.Green,
-//                     fontSize: 14,
-//                     fontWeight: FontWeight.w600),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       appBar: AppBar(
-//         backgroundColor: Color(0xfff0f0f0),
-//         title: Text(
-//           'Тэмдэглэл',
-//           style: TextStyle(color: Colors.black),
-//         ),
+//     return SizedBox(
+//       height: 200,
+//       child: PageView(
+//         controller: _pageController,
+//         children: const [
+//           NotesLocation(),
+//           NotesNearby(),
+//           NotesProvince(),
+//         ],
 //       ),
 //     );
 //   }
 // }
+
+class BuildPageView extends StatelessWidget {
+  const BuildPageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: PageView(
+        children: const [
+          NotesNearby(),
+          NotesProvince(),
+          NotesLocation(),
+        ],
+      ),
+    );
+  }
+}

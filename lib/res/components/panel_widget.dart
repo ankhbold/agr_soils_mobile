@@ -136,7 +136,7 @@ Widget buildPlanted() => Container(
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      'Create crop rotation',
+                      'Газар тариалан үүсгэх',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,

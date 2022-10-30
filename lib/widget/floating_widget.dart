@@ -5,17 +5,17 @@ Widget buildFAB(BuildContext context) => AnimatedCrossFade(
       duration: Duration(milliseconds: 10),
       secondChild: SizedBox(),
       firstChild: Container(
-        height: MediaQuery.of(context).size.width * 0.3,
-        width: MediaQuery.of(context).size.width * 0.95,
+        height: MediaQuery.of(context).size.width * 0.28,
+        width: MediaQuery.of(context).size.width * 0.93,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.85),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Row(
               children: [
@@ -68,7 +68,7 @@ Widget buildFAB(BuildContext context) => AnimatedCrossFade(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Үүл',
+                            'Үүлтэй',
                             style:
                                 TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                           ),
@@ -113,7 +113,7 @@ class Listview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.055,
-      width: MediaQuery.of(context).size.width * 0.915,
+      width: MediaQuery.of(context).size.width * 0.91,
       child: ListView.builder(
         itemCount: 8,
         padding: EdgeInsets.all(3),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/color.dart';
+
 class FieldsSheet extends StatelessWidget {
   const FieldsSheet({
     Key? key,
@@ -9,10 +11,10 @@ class FieldsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.25,
-      height: MediaQuery.of(context).size.height * 0.045,
+      height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
           heroTag: "btn2",
-          backgroundColor: Colors.white.withOpacity(0.85),
+          backgroundColor: Color(0xff0f766e).withOpacity(0.8),
           onPressed: () => showModalBottomSheet(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17)),
@@ -26,14 +28,14 @@ class FieldsSheet extends StatelessWidget {
               Icon(
                 Icons.add,
                 size: 25,
-                color: Colors.black,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.001,
               ),
               Text(
                 'Талбай',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
               ),
             ],
           )),
@@ -86,6 +88,7 @@ class FieldSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.27,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -113,7 +116,7 @@ class FieldSheet extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Actions',
+                      'Үйлдлүүд',
                       style: TextStyle(
                         color: Colors.green,
                       ),
@@ -121,36 +124,47 @@ class FieldSheet extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 Container(
                   height: 40,
                   width: 500,
-                  child: GestureDetector(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.touch_app),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text('Select on map'),
-                      ],
+                  child: InkWell(
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.touch_app,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text('Газрын зураг дээр сонголт хийх'),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 7,
+                ),
                 Container(
                   height: 40,
                   width: 500,
-                  child: GestureDetector(
+                  child: InkWell(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.draw_rounded),
+                        Icon(
+                          Icons.draw_rounded,
+                          color: Colors.black,
+                        ),
                         SizedBox(
                           width: 10,
                         ),
-                        Text('Draw borders'),
+                        Text('Хүрээ Зурах'),
                       ],
                     ),
                   ),
@@ -160,7 +174,6 @@ class FieldSheet extends StatelessWidget {
           ),
         ],
       ),
-      height: MediaQuery.of(context).size.height * 0.27,
     );
   }
 }

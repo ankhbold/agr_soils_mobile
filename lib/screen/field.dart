@@ -173,7 +173,7 @@ final List<Tab> myTabs = <Tab>[
     child: FloatingItem(),
   ),
   Tab(
-    child: FloatingItem(),
+    child: FloatingFourthItem(),
   ),
   Tab(
     child: FloatingSecondItem(),
@@ -182,62 +182,72 @@ final List<Tab> myTabs = <Tab>[
     child: FloatingThirdItem(),
   ),
   Tab(
-    child: FloatingFourthItem(),
+    child: FloatingItem(),
   ),
   Tab(
     child: FloatingFourthItem(),
   ),
+  Tab(
+    child: FloatingSecondItem(),
+  ),
+  Tab(
+    child: FloatingThirdItem(),
+  ),
 ];
 
 class FloatingFourthItem extends StatelessWidget {
-  const FloatingFourthItem({
+  FloatingFourthItem({
     Key? key,
   }) : super(key: key);
 
   @override
+  List<String> item = [
+    "Буудай",
+    "Рапс",
+    "Овъёос",
+    "Арвай",
+    "Тэжээлийн ургамал",
+  ];
+  List<Color> color = [
+    Colors.red,
+    Colors.blue,
+    Colors.yellow,
+    Colors.green,
+    Colors.pink,
+  ];
+
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(60),
-              color: Colors.red,
-            ),
-            height: 15,
-            width: 15,
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          child: Row(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                    color: color[index],
+                    borderRadius: BorderRadius.circular(60),
+                    border: Border.all(
+                      width: 0.5,
+                    )),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.01,
+              ),
+              Text(
+                item[index],
+                style: TextStyle(fontSize: 14),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.05,
+              ),
+            ],
           ),
-          Text(
-            'Wheat soft, spring',
-            style: TextStyle(fontSize: 12),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(60),
-              color: Colors.blue,
-            ),
-            height: 15,
-            width: 15,
-          ),
-          Text(
-            'Wheat soft, spring',
-            style: TextStyle(fontSize: 12),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(60),
-              color: Colors.yellow,
-            ),
-            height: 15,
-            width: 15,
-          ),
-          Text(
-            'Wheat soft, spring',
-            style: TextStyle(fontSize: 12),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -257,7 +267,7 @@ class FloatingSecondItem extends StatelessWidget {
             children: [
               Container(
                 height: 40,
-                width: 378,
+                width: MediaQuery.of(context).size.width * 0.85,
                 child: Column(
                   children: [
                     Row(
@@ -278,7 +288,7 @@ class FloatingSecondItem extends StatelessWidget {
                     ),
                     Container(
                       height: 5,
-                      width: 378,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
@@ -317,7 +327,7 @@ class FloatingThirdItem extends StatelessWidget {
             children: [
               Container(
                 height: 40,
-                width: 378,
+                width: MediaQuery.of(context).size.width * 0.85,
                 child: Column(
                   children: [
                     Row(
@@ -338,7 +348,7 @@ class FloatingThirdItem extends StatelessWidget {
                     ),
                     Container(
                       height: 5,
-                      width: 378,
+                      width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
@@ -377,7 +387,7 @@ class FloatingItem extends StatelessWidget {
             children: [
               Container(
                 height: 40,
-                width: 300,
+                width: MediaQuery.of(context).size.width * 0.65,
                 child: Column(
                   children: [
                     Row(
@@ -398,7 +408,7 @@ class FloatingItem extends StatelessWidget {
                     ),
                     Container(
                       height: 5,
-                      width: 300,
+                      width: MediaQuery.of(context).size.width * 0.65,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
@@ -417,27 +427,23 @@ class FloatingItem extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 12,
+                width: MediaQuery.of(context).size.width * 0.01,
               ),
               Container(
                 height: 40,
-                width: 60,
+                width: MediaQuery.of(context).size.width * 0.2,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Үүлтэй',
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                      ],
+                    Text(
+                      'Үүлтэй',
+                      style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                      width: 60,
+                      width: MediaQuery.of(context).size.width * 0.2,
                       height: 5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -465,20 +471,23 @@ class _FloatingFabState extends State<FloatingFab> {
         color: Colors.white.withOpacity(0.85),
         borderRadius: BorderRadius.circular(12),
       ),
-      height: MediaQuery.of(context).size.height * 0.115,
+      height: MediaQuery.of(context).size.height * 0.12,
       width: MediaQuery.of(context).size.width * 0.93,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-              margin: EdgeInsets.only(right: 10, left: 10),
+              margin: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.03,
+                left: MediaQuery.of(context).size.width * 0.03,
+              ),
               child: myTabs[current]),
           Container(
             height: MediaQuery.of(context).size.height * 0.055,
             width: MediaQuery.of(context).size.width * 0.925,
             child: ListView.builder(
               itemCount: 8,
-              padding: EdgeInsets.all(3),
+              padding: EdgeInsets.only(right: 3, left: 3),
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) => Padding(
                 padding: EdgeInsets.all(3),
@@ -516,7 +525,7 @@ class _FloatingFabState extends State<FloatingFab> {
             ),
           ),
           SizedBox(
-            height: 2,
+            height: 5,
           ),
         ],
       ),

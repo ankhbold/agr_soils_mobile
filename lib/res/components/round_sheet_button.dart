@@ -56,7 +56,7 @@ class RoundSheetButton extends StatelessWidget {
                             fontSize: 25, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: 220,
+                        width: MediaQuery.of(context).size.width * 0.45,
                       ),
                       IconButton(
                           onPressed: () {},

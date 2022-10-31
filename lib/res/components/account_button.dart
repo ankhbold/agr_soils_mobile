@@ -44,9 +44,14 @@ class AccountButton extends StatelessWidget {
               ),
               text,
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.46,
+                width: MediaQuery.of(context).size.width * 0.45,
               ),
-              icon2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  icon2,
+                ],
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.02,
               ),

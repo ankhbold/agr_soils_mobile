@@ -40,7 +40,77 @@ class _PanelWidgetState extends State<PanelWidget> {
             SizedBox(
               height: 10,
             ),
-            buildPlanted(),
+            Container(
+              height: 90,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Тариалан',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              '0 ha out of 0 ha',
+                              style: TextStyle(
+                                  color: Color.fromARGB(95, 255, 255, 255),
+                                  fontSize: 13),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                      ),
+                      Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Газар тариалан үүсгэх',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffB7B7B7),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 1,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: 20,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 219, 227, 231),
+                          borderRadius: BorderRadius.circular(7)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
               height: 10,
             ),

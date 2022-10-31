@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/utils/routes/routes.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 
@@ -25,12 +26,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserViewModel())
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        initialRoute: RoutesName.splash,
-        onGenerateRoute: Routes.generateRoute,
+        home: HomeScreen(),
+        // initialRoute: RoutesName.splash,
+        // onGenerateRoute: Routes.generateRoute,
       ),
     );
   }

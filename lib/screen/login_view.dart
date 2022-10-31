@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/res/components/round_button.dart';
+import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
 
@@ -147,6 +148,8 @@ class _LoginViewState extends State<LoginView> {
               title: 'Нэвтрэх',
               loading: authViewMode.loading,
               onPress: () {
+                // Navigator.push(
+                //     context, MaterialPageRoute(builder: (_) => HomeScreen()));
                 if (_emailController.text.isEmpty) {
                   Utils.flushBarErrorMessage('Please enter email', context);
                 } else if (_passwordController.text.isEmpty) {

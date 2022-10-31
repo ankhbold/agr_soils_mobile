@@ -262,15 +262,17 @@ class NotesNearby extends StatelessWidget {
             height: 1,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.03,
+            height: MediaQuery.of(context).size.width * 0.015,
           ),
           Container(
-            child: Text(
-              'Өргөтгөсөн урьдчилсан мэдээ',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.Green),
+            child: Center(
+              child: Text(
+                'Өргөтгөсөн урьдчилсан мэдээ',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.Green),
+              ),
             ),
           ),
         ],

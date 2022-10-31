@@ -183,7 +183,7 @@ class ListProfile extends StatelessWidget {
             size: 15,
           ),
           text: const Text(
-            'Тусламж                 ',
+            'Тусламж                   ',
             style: TextStyle(),
           ),
           onTap: () {},

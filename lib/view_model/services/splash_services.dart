@@ -13,10 +13,15 @@ class SplashServices {
 
       if (value.user_id.toString() == 'null' ||
           value.user_id.toString() == '') {
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(Duration(
+            // seconds: 3,
+            seconds: 1));
         Navigator.pushNamed(context, RoutesName.intro);
       } else {
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(Duration(
+          // seconds: 3,
+          seconds: 1,
+        ));
         Navigator.pushNamed(context, RoutesName.home);
       }
     }).onError((error, stackTrace) {

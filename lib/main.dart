@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: HomeScreen(),
-        // initialRoute: RoutesName.splash,
-        // onGenerateRoute: Routes.generateRoute,
+        // home: HomeScreen(),
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: Routes.generateRoute,
       ),
     );
   }

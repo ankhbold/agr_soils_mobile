@@ -368,6 +368,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "polygon",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/polygon-0.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "polylabel",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/polylabel-1.0.1",
       "packageUri": "lib/",
@@ -608,7 +614,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-10-28T06:24:54.739064Z",
+  "generated": "2022-10-31T05:29:38.131780Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

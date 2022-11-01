@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/components/account_button.dart';
+import 'package:mvvm/screen/settings_screen.dart';
 import 'package:mvvm/widget/account_profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -60,11 +61,6 @@ class ListProfile extends StatelessWidget {
             Icons.account_circle,
             color: Colors.black54,
           ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
-          ),
           text: const Text(
             'batitgel@gmail.com',
             style: TextStyle(),
@@ -84,16 +80,18 @@ class ListProfile extends StatelessWidget {
             Icons.settings,
             color: Colors.black54,
           ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
-          ),
           text: const Text(
             'Тохиргоо                 ',
             style: TextStyle(),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SettingsScreen(),
+              ),
+            );
+          },
         ),
         const Line2(),
         SizedBox(
@@ -104,11 +102,6 @@ class ListProfile extends StatelessWidget {
           icon: const Icon(
             Icons.computer_outlined,
             color: Colors.black54,
-          ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
           ),
           text: const Text(
             'Вэб хувилбар         ',
@@ -121,11 +114,6 @@ class ListProfile extends StatelessWidget {
           icon: const Icon(
             Icons.update,
             color: Colors.black54,
-          ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
           ),
           text: const Text(
             'Шинчлэгдсэн түүх ',
@@ -143,11 +131,6 @@ class ListProfile extends StatelessWidget {
             Icons.comment,
             color: Colors.black54,
           ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
-          ),
           text: const Text(
             'Санал хүсэлт          ',
             style: TextStyle(),
@@ -160,11 +143,6 @@ class ListProfile extends StatelessWidget {
             Icons.bookmark_outline,
             color: Colors.black54,
           ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
-          ),
           text: const Text(
             'Гарын авлага          ',
             style: TextStyle(),
@@ -176,11 +154,6 @@ class ListProfile extends StatelessWidget {
           icon: const Icon(
             Icons.help_outline_sharp,
             color: Colors.black54,
-          ),
-          icon2: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black54,
-            size: 15,
           ),
           text: const Text(
             'Тусламж                   ',
@@ -237,7 +210,7 @@ class Line extends StatelessWidget {
       children: [
         Container(
           color: Colors.black,
-          height: 0.15,
+          height: 0.07,
           width: MediaQuery.of(context).size.width * 0.85,
         ),
       ],
@@ -258,6 +231,26 @@ class Line2 extends StatelessWidget {
         Container(
           color: Colors.black,
           height: 0.1,
+          width: MediaQuery.of(context).size.width,
+        ),
+      ],
+    );
+  }
+}
+
+class Line3 extends StatelessWidget {
+  const Line3({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          color: Colors.black,
+          height: 0.2,
           width: MediaQuery.of(context).size.width,
         ),
       ],

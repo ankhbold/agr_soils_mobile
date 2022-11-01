@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HomeViewViewModel homeViewViewModel = HomeViewViewModel();
   int index_color = 0;
-  List Screen = [FieldScreen(), NoteScreen(), ScreenTwo(), ProfilePage()];
+  List Screen = [FieldScreen(), TestScreen(), ScreenTwo(), ProfilePage()];
   @override
   Widget build(BuildContext context) {
     // final userPrefernece = Provider.of<UserViewModel>(context);

@@ -5,13 +5,12 @@ import 'package:flutter/src/widgets/framework.dart';
 class AccountButton extends StatelessWidget {
   final Icon icon;
   final Text text;
-  final Icon icon2;
+
   final VoidCallback onTap;
   const AccountButton({
     super.key,
     required this.icon,
     required this.text,
-    required this.icon2,
     required this.onTap,
   });
 
@@ -33,23 +32,28 @@ class AccountButton extends StatelessWidget {
             color: Colors.white,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.05,
               ),
               icon,
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.05,
+                width: MediaQuery.of(context).size.width * 0.03,
               ),
-              text,
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.5, child: text),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.45,
+                width: MediaQuery.of(context).size.width * 0.2,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  icon2,
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                    color: Colors.black54,
+                  )
                 ],
               ),
               SizedBox(

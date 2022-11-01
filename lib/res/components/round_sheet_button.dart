@@ -53,7 +53,9 @@ class RoundSheetButton extends StatelessWidget {
                       Text(
                         'Тохиргоо',
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w500),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.45,
@@ -63,7 +65,12 @@ class RoundSheetButton extends StatelessWidget {
                           icon: Icon(
                             Icons.cancel,
                             size: 40,
-                            color: Color.fromARGB(255, 188, 188, 188),
+                            color: Color.fromARGB(
+                              255,
+                              188,
+                              188,
+                              188,
+                            ),
                           ))
                     ],
                   ),

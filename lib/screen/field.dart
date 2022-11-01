@@ -78,7 +78,7 @@ class _FieldScreenState extends State<FieldScreen> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          _buildMap(),
+          // _buildMap(),
           Container(
             // height: MediaQuery.of(context).size.height,
             // width: MediaQuery.of(context).size.width,
@@ -103,42 +103,17 @@ class _FieldScreenState extends State<FieldScreen> {
               body: Container(
                 height: double.infinity,
                 width: double.infinity,
-                child: _buildMap(),
+                // child: _buildMap(),
+                child: Container(
+                  width: double.infinity,
+                  //     decoration: BoxDecoration(
+                  //       image: DecorationImage(
+                  //         image: AssetImage("assets/images/map2.jpg"),
+                  //         fit: BoxFit.cover,
+                  //       ),
+                  //     ),
+                ),
               ),
-              // Container(
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //       // image:
-              //       // DecorationImage(
-              //       //   image: AssetImage("assets/images/map2.jpg"),
-              //       //   fit: BoxFit.cover,
-              //       // ),
-              //       ),
-              //   child: Column(
-              //     children: [
-              //       SizedBox(
-              //         height: MediaQuery.of(context).size.width * 0.1,
-              //       ),
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.start,
-              //         children: [
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.035,
-              // ),
-              // Season(),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.25,
-              // ),
-              // FieldsSheet(),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.02,
-              // ),
-              // RoundSheetButton(),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ),
           ),
           Positioned(
@@ -211,7 +186,7 @@ class FloatingFourthItem extends StatelessWidget {
   List<Color> color = [
     Colors.red,
     Colors.blue,
-    Colors.yellow,
+    Color.fromARGB(255, 226, 203, 0),
     Colors.green,
     Colors.pink,
   ];
@@ -225,14 +200,15 @@ class FloatingFourthItem extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 15,
-                height: 15,
+                width: 12,
+                height: 12,
                 decoration: BoxDecoration(
-                    color: color[index],
-                    borderRadius: BorderRadius.circular(60),
-                    border: Border.all(
-                      width: 0.5,
-                    )),
+                  color: color[index],
+                  borderRadius: BorderRadius.circular(60),
+                  // border: Border.all(
+                  //   width: 0,
+                  // ),
+                ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.01,
@@ -468,13 +444,13 @@ class _FloatingFabState extends State<FloatingFab> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.85),
+        color: Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
         borderRadius: BorderRadius.circular(12),
       ),
-      height: MediaQuery.of(context).size.height * 0.12,
+      height: MediaQuery.of(context).size.height * 0.125,
       width: MediaQuery.of(context).size.width * 0.93,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
               margin: EdgeInsets.only(
@@ -483,7 +459,7 @@ class _FloatingFabState extends State<FloatingFab> {
               ),
               child: myTabs[current]),
           Container(
-            height: MediaQuery.of(context).size.height * 0.055,
+            height: MediaQuery.of(context).size.height * 0.052,
             width: MediaQuery.of(context).size.width * 0.925,
             child: ListView.builder(
               itemCount: 8,
@@ -496,9 +472,10 @@ class _FloatingFabState extends State<FloatingFab> {
                   // width: MediaQuery.of(context).size.width * 0.3,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 0.15),
                     color: current == index
                         ? Color(0xff0f766e)
-                        : Color(0xffB1B1B1),
+                        : Color.fromARGB(255, 255, 255, 255),
                   ),
                   child: Center(
                     child: GestureDetector(
@@ -524,30 +501,14 @@ class _FloatingFabState extends State<FloatingFab> {
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+          // SizedBox(
+          //   height: 5,
+          // ),
         ],
       ),
     );
   }
 }
-
-// appBar: AppBar(
-//   automaticallyImplyLeading: false,
-//   actions: [
-// InkWell(
-//     onTap: () {
-//       userPrefernece.remove().then((value) {
-//         Navigator.pushNamed(context, RoutesName.login);
-//       });
-//     },
-//     child: Center(child: Text('Гарах'))),
-// SizedBox(
-//   width: 20,
-// )
-//   ],
-// ),
 
 FlutterMap _buildMap() {
   // ignore: unnecessary_new

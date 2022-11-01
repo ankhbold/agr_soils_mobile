@@ -74,7 +74,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.22,
                       ),
                       Column(
                         children: [
@@ -101,7 +101,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ),
                   Container(
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.95,
+                      width: MediaQuery.of(context).size.width * 0.94,
                       height: 20,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 219, 227, 231),

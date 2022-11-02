@@ -8,6 +8,8 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - geolocator_apple (1.2.0):
+    - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
     - GoogleMaps
@@ -17,6 +19,8 @@ PODS:
   - GoogleMaps/Maps (5.2.0):
     - GoogleMaps/Base
   - hexcolor (0.0.1):
+    - Flutter
+  - location (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
@@ -33,8 +37,10 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - hexcolor (from `.symlinks/plugins/hexcolor/ios`)
+  - location (from `.symlinks/plugins/location/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -53,10 +59,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   hexcolor:
     :path: ".symlinks/plugins/hexcolor/ios"
+  location:
+    :path: ".symlinks/plugins/location/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   shared_preferences_ios:
@@ -71,9 +81,11 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   fluttertoast: 74526702fea2c060ea55dde75895b7e1bde1c86b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   hexcolor: fdfb9c4258ad96e949c2dbcdf790a62194b8aa89
+  location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904

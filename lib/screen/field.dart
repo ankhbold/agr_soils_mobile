@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/res/components/field_sheet_button.dart';
@@ -18,10 +19,20 @@ class FieldScreen extends StatefulWidget {
 class _FieldScreenState extends State<FieldScreen> {
   final MapType _currentMapType = MapType.satellite;
   late GoogleMapController _mapController;
+  final Map<String, Marker> _markers = {};
   LatLng currentLocation = const LatLng(
     47.92424770803818,
     106.90079705604086,
   );
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) {
+      print("error$error");
+    });
+    return await Geolocator.getCurrentPosition();
+  }
+
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
 
@@ -107,6 +118,7 @@ class _FieldScreenState extends State<FieldScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (controller) {
                     _mapController = controller;
+                    addMarker('id', currentLocation);
                   },
                 ),
               ),
@@ -115,7 +127,21 @@ class _FieldScreenState extends State<FieldScreen> {
                 left: 370,
                 child: FloatingActionButton.small(
                   backgroundColor: Colors.white.withOpacity(0.9),
-                  onPressed: () {},
+                  onPressed: () {
+                    getUserCurrentLocation().then((value) async {
+                      print("my current location");
+                      print("${value.latitude} ${value.longitude}");
+                      addMarker('2', LatLng(value.latitude, value.longitude));
+                      CameraPosition cameraPosition = CameraPosition(
+                          zoom: 17,
+                          target: LatLng(value.latitude, value.longitude));
+                      final GoogleMapController controller = _mapController;
+
+                      controller.animateCamera(
+                          CameraUpdate.newCameraPosition(cameraPosition));
+                      setState(() {});
+                    });
+                  },
                   child: const Icon(
                     Icons.location_on,
                     color: AppColors.Green,
@@ -132,6 +158,16 @@ class _FieldScreenState extends State<FieldScreen> {
         ],
       ),
     );
+  }
+
+  addMarker(String id, LatLng location) {
+    var marker = Marker(
+        markerId: MarkerId(id),
+        position: location,
+        infoWindow:
+            const InfoWindow(title: 'title of place', snippet: 'hahhahahhaha'));
+    _markers[id] = marker;
+    setState(() {});
   }
 }
 

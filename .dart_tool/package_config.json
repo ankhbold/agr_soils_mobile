@@ -254,6 +254,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "location",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "location_platform_interface",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/location_platform_interface-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "location_web",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/location_web-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "logging",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/logging-0.11.4",
       "packageUri": "lib/",
@@ -614,7 +632,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-11-01T10:09:24.497955Z",
+  "generated": "2022-11-02T11:01:49.457721Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

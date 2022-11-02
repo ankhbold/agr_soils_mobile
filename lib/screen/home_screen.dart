@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/notes_screen.dart';
-import 'package:mvvm/screen/Insight_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
 import 'package:mvvm/screen/test_screen.dart';
 
@@ -18,7 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HomeViewViewModel homeViewViewModel = HomeViewViewModel();
   int index_color = 0;
-  List Screen = [FieldScreen(), TestScreen(), ScreenTwo(), ProfilePage()];
+  List Screen = [
+    const FieldScreen(),
+    const TestScreen(),
+    const ScreenTwo(),
+    const ProfilePage()
+  ];
   @override
   Widget build(BuildContext context) {
     // final userPrefernece = Provider.of<UserViewModel>(context);
@@ -37,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 2,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
-        color: Color.fromARGB(255, 251, 250, 250),
+        color: const Color.fromARGB(255, 251, 250, 250),
       ),
       height: MediaQuery.of(context).size.height * 0.09,
       child: Column(
@@ -58,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.nfc,
-                      color: index_color == 0 ? Color(0xff368983) : Colors.grey,
+                      color: index_color == 0
+                          ? const Color(0xff368983)
+                          : Colors.grey,
                       size: MediaQuery.of(context).size.width * 0.06,
                     ),
                     SizedBox(
@@ -87,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.speaker_notes,
-                      color: index_color == 1 ? Color(0xff368983) : Colors.grey,
+                      color: index_color == 1
+                          ? const Color(0xff368983)
+                          : Colors.grey,
                       size: MediaQuery.of(context).size.width * 0.06,
                     ),
                     SizedBox(
@@ -123,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                           color: AppColors.Green,
                           borderRadius: BorderRadius.circular(60)),
-                      child: Icon(
+                      child: const Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
@@ -137,7 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.event_note,
-                      color: index_color == 2 ? Color(0xff368983) : Colors.grey,
+                      color: index_color == 2
+                          ? const Color(0xff368983)
+                          : Colors.grey,
                       size: MediaQuery.of(context).size.width * 0.06,
                     ),
                     SizedBox(
@@ -166,7 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.account_circle_rounded,
-                      color: index_color == 3 ? Color(0xff368983) : Colors.grey,
+                      color: index_color == 3
+                          ? const Color(0xff368983)
+                          : Colors.grey,
                       size: MediaQuery.of(context).size.width * 0.06,
                     ),
                     SizedBox(

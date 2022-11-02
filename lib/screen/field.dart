@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/res/components/field_sheet_button.dart';
 import 'package:mvvm/res/components/round_sheet_button.dart';
 import 'package:mvvm/res/components/season_sheet_button.dart';
-import 'package:mvvm/screen/notes_screen.dart';
-import 'package:mvvm/screen/test_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../res/components/panel_widget.dart';
-import '../widget/floating_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/src/geo/crs/crs.dart';
-import 'package:flutter_map/src/map/flutter_map_state.dart';
-import 'package:flutter_map/src/map/map.dart';
-import 'package:latlong2/latlong.dart';
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -25,6 +16,12 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
+  final MapType _currentMapType = MapType.satellite;
+  late GoogleMapController _mapController;
+  LatLng currentLocation = const LatLng(
+    47.92424770803818,
+    106.90079705604086,
+  );
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
 
@@ -54,23 +51,23 @@ class _FieldScreenState extends State<FieldScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.035,
                   ),
-                  Season(),
+                  const Season(),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.25,
                   ),
-                  FieldsSheet(),
+                  const FieldsSheet(),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.02,
                   ),
-                  RoundSheetButton(),
+                  const RoundSheetButton(),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.02,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 0,
-              )
+              ),
             ],
           ),
         ],
@@ -79,46 +76,58 @@ class _FieldScreenState extends State<FieldScreen> {
         alignment: Alignment.topCenter,
         children: <Widget>[
           // _buildMap(),
-          Container(
-            // height: MediaQuery.of(context).size.height,
-            // width: MediaQuery.of(context).size.width,
-            child: SlidingUpPanel(
-              backdropEnabled: true,
-              maxHeight: panelHeightOpened,
-              minHeight: panelHeightClosed,
-              parallaxEnabled: true,
-              parallaxOffset: .5,
-              panelBuilder: (controller) => PanelWidget(
-                controller: controller,
-              ),
-              onPanelSlide: (position) => setState(() {
-                final panelMaxScrollExtent =
-                    panelHeightOpened - panelHeightClosed;
-                fabHeight =
-                    position * panelMaxScrollExtent + panelHeightClosed + 10;
-              }),
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(30),
-              ),
-              body: Container(
+
+          SlidingUpPanel(
+            backdropEnabled: true,
+            maxHeight: panelHeightOpened,
+            minHeight: panelHeightClosed,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            panelBuilder: (controller) => PanelWidget(
+              controller: controller,
+            ),
+            onPanelSlide: (position) => setState(() {
+              final panelMaxScrollExtent =
+                  panelHeightOpened - panelHeightClosed;
+              fabHeight =
+                  position * panelMaxScrollExtent + panelHeightClosed + 10;
+            }),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+            body: Stack(children: [
+              SizedBox(
                 height: double.infinity,
                 width: double.infinity,
-                // child: _buildMap(),
-                child: Container(
-                  width: double.infinity,
-                  //     decoration: BoxDecoration(
-                  //       image: DecorationImage(
-                  //         image: AssetImage("assets/images/map2.jpg"),
-                  //         fit: BoxFit.cover,
-                  //       ),
-                  //     ),
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: currentLocation,
+                    zoom: 16.5,
+                  ),
+                  mapType: _currentMapType,
+                  onMapCreated: (controller) {
+                    _mapController = controller;
+                  },
                 ),
               ),
-            ),
+              Positioned(
+                bottom: 350,
+                left: 370,
+                child: FloatingActionButton.small(
+                  backgroundColor: Colors.white.withOpacity(0.9),
+                  onPressed: () {},
+                  child: const Icon(
+                    Icons.location_on,
+                    color: AppColors.Green,
+                  ),
+                ),
+              ),
+            ]),
           ),
+
           Positioned(
             bottom: fabHeight,
-            child: FloatingFab(),
+            child: const FloatingFab(),
           ),
         ],
       ),
@@ -144,28 +153,28 @@ List<String> items = [
   "NDVI дундаж",
 ];
 final List<Tab> myTabs = <Tab>[
-  Tab(
+  const Tab(
     child: FloatingItem(),
   ),
   Tab(
     child: FloatingFourthItem(),
   ),
-  Tab(
+  const Tab(
     child: FloatingSecondItem(),
   ),
-  Tab(
+  const Tab(
     child: FloatingThirdItem(),
   ),
-  Tab(
+  const Tab(
     child: FloatingItem(),
   ),
   Tab(
     child: FloatingFourthItem(),
   ),
-  Tab(
+  const Tab(
     child: FloatingSecondItem(),
   ),
-  Tab(
+  const Tab(
     child: FloatingThirdItem(),
   ),
 ];
@@ -186,11 +195,12 @@ class FloatingFourthItem extends StatelessWidget {
   List<Color> color = [
     Colors.red,
     Colors.blue,
-    Color.fromARGB(255, 226, 203, 0),
+    const Color.fromARGB(255, 226, 203, 0),
     Colors.green,
     Colors.pink,
   ];
 
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -215,7 +225,7 @@ class FloatingFourthItem extends StatelessWidget {
               ),
               Text(
                 item[index],
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.05,
@@ -236,19 +246,19 @@ class FloatingSecondItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: const EdgeInsets.only(top: 5),
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.85,
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text(
                           'Бага (Ургамал)',
                           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
@@ -259,7 +269,7 @@ class FloatingSecondItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -267,7 +277,7 @@ class FloatingSecondItem extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             begin: Alignment.topRight,
                             end: Alignment.bottomLeft,
                             colors: [
@@ -296,19 +306,19 @@ class FloatingThirdItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: const EdgeInsets.only(top: 5),
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.85,
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text(
                           'Бага (Ургамал)',
                           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
@@ -319,7 +329,7 @@ class FloatingThirdItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -327,7 +337,7 @@ class FloatingThirdItem extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.85,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             begin: Alignment.topRight,
                             end: Alignment.bottomLeft,
                             colors: [
@@ -356,19 +366,19 @@ class FloatingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: const EdgeInsets.only(top: 5),
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text(
                           'Бага (Ургамал)',
                           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
@@ -379,7 +389,7 @@ class FloatingItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -387,7 +397,7 @@ class FloatingItem extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.65,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             begin: Alignment.topRight,
                             end: Alignment.bottomLeft,
                             colors: [
@@ -405,17 +415,17 @@ class FloatingItem extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.01,
               ),
-              Container(
+              SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
+                    const Text(
                       'Үүлтэй',
                       style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -423,7 +433,7 @@ class FloatingItem extends StatelessWidget {
                       height: 5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color.fromARGB(129, 158, 158, 158),
+                        color: const Color.fromARGB(129, 158, 158, 158),
                       ),
                     ),
                   ],
@@ -444,7 +454,7 @@ class _FloatingFabState extends State<FloatingFab> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+        color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
         borderRadius: BorderRadius.circular(12),
       ),
       height: MediaQuery.of(context).size.height * 0.125,
@@ -458,15 +468,15 @@ class _FloatingFabState extends State<FloatingFab> {
                 left: MediaQuery.of(context).size.width * 0.03,
               ),
               child: myTabs[current]),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.052,
             width: MediaQuery.of(context).size.width * 0.925,
             child: ListView.builder(
               itemCount: 8,
-              padding: EdgeInsets.only(right: 3, left: 3),
+              padding: const EdgeInsets.only(right: 3, left: 3),
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) => Padding(
-                padding: EdgeInsets.all(3),
+                padding: const EdgeInsets.all(3),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.055,
                   // width: MediaQuery.of(context).size.width * 0.3,
@@ -474,14 +484,14 @@ class _FloatingFabState extends State<FloatingFab> {
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(width: 0.15),
                     color: current == index
-                        ? Color(0xff0f766e)
-                        : Color.fromARGB(255, 255, 255, 255),
+                        ? const Color(0xff0f766e)
+                        : const Color.fromARGB(255, 255, 255, 255),
                   ),
                   child: Center(
                     child: GestureDetector(
                       child: AnimatedContainer(
-                        margin: EdgeInsets.only(left: 10, right: 10),
-                        duration: Duration(milliseconds: 250),
+                        margin: const EdgeInsets.only(left: 10, right: 10),
+                        duration: const Duration(milliseconds: 250),
                         child: Text(
                           items[index],
                           style: TextStyle(
@@ -508,26 +518,4 @@ class _FloatingFabState extends State<FloatingFab> {
       ),
     );
   }
-}
-
-FlutterMap _buildMap() {
-  // ignore: unnecessary_new
-  return FlutterMap(
-    options: MapOptions(
-      center: LatLng(50.093057, 105.715020),
-      zoom: 9.2,
-    ),
-    nonRotatedChildren: [
-      AttributionWidget.defaultWidget(
-        source: 'OpenStreetMap contributors',
-        onSourceTapped: null,
-      ),
-    ],
-    children: [
-      TileLayer(
-        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        userAgentPackageName: 'com.example.app',
-      ),
-    ],
-  );
 }

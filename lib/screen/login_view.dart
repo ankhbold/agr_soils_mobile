@@ -18,10 +18,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -60,10 +60,10 @@ class _LoginViewState extends State<LoginView> {
               height: height * .090,
             ),
             Padding(
-              padding: EdgeInsets.only(right: 30),
-              child: Container(
+              padding: const EdgeInsets.only(right: 30),
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
-                child: Text(
+                child: const Text(
                   // textAlign: TextAlign.center,
                   'Ухаалаг Газар тариалан',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
@@ -82,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 focusNode: emailFocusNode,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Нэвтрэх нэр оруулна уу',
                   labelText: 'Хэрэглэгчийн нэр',
@@ -130,7 +130,7 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     'Нууц үг мартсан?',
                     style: TextStyle(
                         color: Colors.black45, fontWeight: FontWeight.w400),
@@ -175,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
               onTap: () {
                 Navigator.pushNamed(context, RoutesName.signUp);
               },
-              child: Text(
+              child: const Text(
                 "Бүртгэл үүсгэх",
                 style: TextStyle(
                   color: AppColors.Green,

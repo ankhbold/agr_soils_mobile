@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/res/components/account_button.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
-import 'package:mvvm/widget/floating_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../res/components/season_sheet_button.dart';
 import '../screen/profile_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -17,13 +11,13 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: ProfileAppBar(context),
       body: ListView(
         children: [
-          Line3(),
-          UnitSystem(),
-          Line2(),
+          const Line3(),
+          const UnitSystem(),
+          const Line2(),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
@@ -33,8 +27,8 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.03,
               ),
-              Text(
-                'Notifications',
+              const Text(
+                'Мэдэгдэл',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               SizedBox(
@@ -52,16 +46,16 @@ class SettingsScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
           ),
-          Line2(),
+          const Line2(),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           OfflineMaps(context),
-          Line2(),
-          SettingsButton(),
-          Line(),
-          SettingsButton(),
-          Line()
+          const Line2(),
+          const SettingsButton(),
+          const Line(),
+          const SettingsButton(),
+          const Line()
         ],
       ),
     );
@@ -78,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
         child: Ink(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               SizedBox(
                 width: 5,
               ),
@@ -95,8 +89,8 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       automaticallyImplyLeading: false,
-      backgroundColor: Color.fromARGB(255, 246, 246, 246),
-      title: Text(
+      backgroundColor: const Color.fromARGB(255, 246, 246, 246),
+      title: const Text(
         'Тохиргоо',
         style: TextStyle(color: Colors.black, fontSize: 18),
       ),
@@ -118,8 +112,8 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.04,
               ),
-              Text(
-                'Offline maps',
+              const Text(
+                'Оффлайн газрын зураг',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -133,26 +127,26 @@ class SettingsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                'Maps around my fields',
+              const Text(
+                'Манай талбайн ойролцоох газрын зураг',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.25,
-              ),
+              const SizedBox(
+                  // width: MediaQuery.of(context).size.width * 0.01,
+                  ),
               InkWell(
                 child: Ink(
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(
                         Icons.file_download,
                         color: AppColors.Green,
                       ),
                       Text(
-                        'download',
+                        'татах',
                         style: TextStyle(
                             color: AppColors.Green,
                             fontWeight: FontWeight.w600,
@@ -185,7 +179,7 @@ class SettingsButton extends StatelessWidget {
       child: Ink(
         height: MediaQuery.of(context).size.height * 0.06,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: Row(
@@ -194,10 +188,10 @@ class SettingsButton extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.01,
             ),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
-              child: Text(
-                'Privacy Policy',
+              child: const Text(
+                'Нууцлал',
                 style: TextStyle(fontSize: 15),
               ),
             ),
@@ -206,7 +200,7 @@ class SettingsButton extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+              children: const [
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 15,
@@ -235,10 +229,10 @@ class UnitSystem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -246,19 +240,19 @@ class UnitSystem extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.04,
               ),
-              Text(
-                'Unit system',
+              const Text(
+                'Системийн нэгж',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
-              SizedBox(),
+              const SizedBox(),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
+            children: const [
               Icon(
                 Icons.check,
                 color: AppColors.Green,
@@ -273,12 +267,12 @@ class UnitSystem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: const [
               SizedBox(
                 width: 80,
               ),
@@ -288,12 +282,12 @@ class UnitSystem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: const [
               SizedBox(
                 width: 80,
               ),
@@ -303,7 +297,7 @@ class UnitSystem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
         ],

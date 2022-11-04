@@ -6,7 +6,7 @@ import 'package:mvvm/res/color.dart';
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
 
-  PanelWidget({
+  const PanelWidget({
     Key? key,
     required this.controller,
   }) : super(key: key);
@@ -18,7 +18,7 @@ class PanelWidget extends StatefulWidget {
 class _PanelWidgetState extends State<PanelWidget> {
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.Green,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
@@ -37,23 +37,23 @@ class _PanelWidgetState extends State<PanelWidget> {
               height: MediaQuery.of(context).size.height * 0.012,
             ),
             buildTextField(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 90,
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 7,
                       ),
                       Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'Тариалан',
                               style: TextStyle(
@@ -80,7 +80,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Газар тариалан үүсгэх',
                               style: TextStyle(
                                 fontSize: 15,
@@ -89,12 +89,12 @@ class _PanelWidgetState extends State<PanelWidget> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 1,
                       ),
                     ],
@@ -104,14 +104,14 @@ class _PanelWidgetState extends State<PanelWidget> {
                       width: MediaQuery.of(context).size.width * 0.94,
                       height: 20,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 219, 227, 231),
+                          color: const Color.fromARGB(255, 219, 227, 231),
                           borderRadius: BorderRadius.circular(7)),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             buildMyFields(),
@@ -121,7 +121,7 @@ class _PanelWidgetState extends State<PanelWidget> {
 }
 
 Widget buildNavigator() => Container(
-      padding: EdgeInsets.only(right: 50, left: 50),
+      padding: const EdgeInsets.only(right: 50, left: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -130,7 +130,7 @@ Widget buildNavigator() => Container(
             width: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ],
@@ -138,7 +138,7 @@ Widget buildNavigator() => Container(
     );
 
 Widget buildTextField() => Container(
-      padding: EdgeInsets.only(right: 10, left: 10),
+      padding: const EdgeInsets.only(right: 10, left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -146,9 +146,9 @@ Widget buildTextField() => Container(
             height: 40,
             width: 400,
             decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: const Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.circular(12)),
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.only(),
               child: TextField(
                 decoration: InputDecoration(
@@ -165,20 +165,20 @@ Widget buildTextField() => Container(
         ],
       ),
     );
-Widget buildPlanted() => Container(
+Widget buildPlanted() => SizedBox(
       height: 90,
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 7,
               ),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'Тариалан',
                       style: TextStyle(
@@ -198,14 +198,14 @@ Widget buildPlanted() => Container(
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 113,
               ),
               Column(
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Газар тариалан үүсгэх',
                       style: TextStyle(
                         fontSize: 15,
@@ -214,12 +214,12 @@ Widget buildPlanted() => Container(
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
               ),
             ],
@@ -229,7 +229,7 @@ Widget buildPlanted() => Container(
               width: 400,
               height: 20,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 219, 227, 231),
+                  color: const Color.fromARGB(255, 219, 227, 231),
                   borderRadius: BorderRadius.circular(7)),
             ),
           ),
@@ -243,13 +243,13 @@ Widget buildMyFields() => Container(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'Миний талбай',
                       style: TextStyle(
@@ -264,14 +264,14 @@ Widget buildMyFields() => Container(
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 60,
               ),
               Column(
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Ургамлын индексээр',
                       style: TextStyle(
                         fontSize: 15,
@@ -280,32 +280,32 @@ Widget buildMyFields() => Container(
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 1,
               ),
             ],
           ),
-          Container(
+          SizedBox(
             height: 217,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Icon(
+                const Icon(
                   Icons.flag_circle_rounded,
                   size: 80,
                   color: Colors.white,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   'Талбайгаа нэмнэ үү',
                   style: TextStyle(
                     fontSize: 20,
@@ -313,12 +313,12 @@ Widget buildMyFields() => Container(
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
+                SizedBox(
                   width: 300,
-                  child: Text(
+                  child: const Text(
                     'Та NDVI индексийг хянах, тэмдэглэл бичих, газар тариалангийн эргэлтийг бүртгэх болон бусад олон..',
                     style: TextStyle(
                       fontSize: 13,
@@ -329,15 +329,15 @@ Widget buildMyFields() => Container(
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Container(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: const Color.fromARGB(255, 255, 255, 255),
             height: 2,
             width: 500,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Container(
@@ -348,7 +348,7 @@ Widget buildMyFields() => Container(
               borderRadius: BorderRadius.circular(20),
             ),
             child: GestureDetector(
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Талбай нэмэх',
                   style: TextStyle(

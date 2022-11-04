@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/res/components/account_button.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
-import 'package:mvvm/widget/floating_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../screen/profile_screen.dart';
 
 class AccountProfile extends StatelessWidget {
-  AccountProfile({super.key});
+  const AccountProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class AccountProfile extends StatelessWidget {
           child: Ink(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 SizedBox(
                   width: 5,
                 ),
@@ -43,8 +41,8 @@ class AccountProfile extends StatelessWidget {
             ),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 246, 246, 246),
-        title: Text(
+        backgroundColor: const Color.fromARGB(255, 246, 246, 246),
+        title: const Text(
           'Миний бүртгэл',
           style: TextStyle(color: Colors.black, fontSize: 18),
         ),
@@ -58,7 +56,7 @@ class AccountProfile extends StatelessWidget {
               color: Colors.black54,
             ),
             text: const Text(
-              'change mail',
+              'Мэйл хаяг солих',
               style: TextStyle(),
             ),
             onTap: () {
@@ -75,7 +73,7 @@ class AccountProfile extends StatelessWidget {
               color: Colors.black54,
             ),
             text: const Text(
-              'change password                 ',
+              'Нууц үг солих                 ',
               style: TextStyle(),
             ),
             onTap: () {},
@@ -87,7 +85,7 @@ class AccountProfile extends StatelessWidget {
               color: Colors.black54,
             ),
             text: const Text(
-              'delete account         ',
+              'Хэрэглэгчийг устгах',
               style: TextStyle(),
             ),
             onTap: () {},
@@ -105,12 +103,12 @@ class AccountProfile extends StatelessWidget {
             child: Ink(
               height: MediaQuery.of(context).size.height * 0.06,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
-                  'sign out',
+                  'Гарах',
                   style: TextStyle(color: Colors.red),
                 ),
               ),

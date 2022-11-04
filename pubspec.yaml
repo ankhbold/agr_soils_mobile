@@ -43,6 +43,7 @@ dependencies:
   get: ^4.6.5
   smooth_page_indicator: ^1.0.0+2
   polygon: ^0.1.0
+  coord_convert: ^1.0.0
 
 
 
@@ -74,7 +75,7 @@ dependencies:
   # google_maps_flutter: ^2.2.1
 #  flutter_osm_plugin: ^0.40.3
   # flutter_map: any
-#  geocoding: ^2.0.5
+  geocoding: ^2.0.5
 ##  geocoder: ^0.2.1
 #  geocode: ^1.0.2
 #  tuple: ^1.0.2

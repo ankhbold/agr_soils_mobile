@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		mE704D9vZQzcNfPJf87cnPCM3Cs=
+		OAYCigHw2avjli6Tg1PGn5t8O38=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		5mjzUWf420hlbjqhej6Z2EpVyYI=
+		VvZVQWZtHlJ9/cX/APPyFwBM5Wo=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		UuIrx9F8ytSXYhWBsgis/RYA7FY=
+		RewmK9sA2DXKzgp13eadDKE/9gM=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/image.png</key>
 		<data>
@@ -98,7 +98,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		I4vVxqfndcuCRW7OJYPpH6D2hBY=
+		HppkPqeaQmvy1yI/lKT7HwIpXXs=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -134,7 +134,7 @@
 		</data>
 		<key>Frameworks/FMDB.framework/FMDB</key>
 		<data>
-		ckxpHbo2bfmCcAM5XTYBk7Nm2Ls=
+		UNoV34SVeOxQ5eO0fMYTIzEqrA0=
 		</data>
 		<key>Frameworks/FMDB.framework/Info.plist</key>
 		<data>
@@ -234,7 +234,7 @@
 		</data>
 		<key>Frameworks/Toast.framework/Toast</key>
 		<data>
-		pLCttfr+o6I5DwKoeiIv/64YMLI=
+		9aP2PR76uQvLop8Voxi0XuBRPFA=
 		</data>
 		<key>Frameworks/Toast.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -262,7 +262,19 @@
 		</data>
 		<key>Frameworks/fluttertoast.framework/fluttertoast</key>
 		<data>
-		DVfE0hk94Uiq/Lc3J1wAzlZg++0=
+		YAjUCh3njQSTaE2Th8jhBfvqSj8=
+		</data>
+		<key>Frameworks/geocoding.framework/Info.plist</key>
+		<data>
+		TlTkMILePEdgkErmhCbMWH9XLQY=
+		</data>
+		<key>Frameworks/geocoding.framework/_CodeSignature/CodeResources</key>
+		<data>
+		qOU3pSyVkIYlOI3TxjfMhtOjZFo=
+		</data>
+		<key>Frameworks/geocoding.framework/geocoding</key>
+		<data>
+		5l5P8bV4HtCPNnmupO3iT/UYD1E=
 		</data>
 		<key>Frameworks/geolocator_apple.framework/Info.plist</key>
 		<data>
@@ -334,7 +346,7 @@
 		</data>
 		<key>Frameworks/sqflite.framework/sqflite</key>
 		<data>
-		bsX7Uk9XnNQijg7Rr9bQejv3Mc4=
+		vIO30cfqJ3ID1aMCoaSXoSbbGSw=
 		</data>
 		<key>Frameworks/webview_flutter.framework/Info.plist</key>
 		<data>
@@ -1143,7 +1155,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		HmVzHQrDkWqJ+uVdYeAHOXLaDfw=
+		GK61nWOzP5QpGguKUxoueouW6mE=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -1226,7 +1238,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HKpdB32rrjcDlb5oG5AFb5Ew66vV4v23Kdr5v1vxM/Y=
+			KEuHlCy+dBrc1eY1Yuwn9dMF45NFCET6UduMrhOUu2k=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -1240,7 +1252,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9N+A3Fp5b16TqHtKlKoW1+hwkUWdauVm3svDFxk5ejY=
+			K224i53GfqhRD0qLW8VS8ArBHrRGVN4uVns4uZ5/Uv4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -1261,7 +1273,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sogor1ojeEc5uAKE3vsr1lZicRJB8AhVEiX5jxGazGM=
+			xCwws6O0ViL1dFpYnkJ8r2pv0cqOrqJcCKIw7CbF5lU=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/images/image.png</key>
@@ -1317,7 +1329,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gE0PCAY/SYxtOyY781X6+CbMiMf/J6XE/7CD0gjmZew=
+			QfMukrMSohfwENuqahP3IB1JjaYNeB/sk4zGkSqI0SY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -1380,7 +1392,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			eDlsvodZ2U7P7O0ewjcmF59/NbHJhll/J+Xe3T7zyXs=
+			lVQuMkhoBTXtEWdcuW7Hv4hvnv+H28LRWRN0sipMPZU=
 			</data>
 		</dict>
 		<key>Frameworks/FMDB.framework/Info.plist</key>
@@ -1555,7 +1567,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hIykqvI5fGD239WQiVQea/fHS44WUAfBrXzbAzN3DtY=
+			obpptQ4Lb4Ws97qhhMq7IOZ/zsqDVcgPBU9/biSVKZE=
 			</data>
 		</dict>
 		<key>Frameworks/Toast.framework/_CodeSignature/CodeResources</key>
@@ -1604,7 +1616,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1p+PN3WVrMPaaFzJ0g6Gk1WbYRh1DoGFmtX49Gx848k=
+			2B24CTlcoqFCtQWZ263tq6/S4BT1mmUFS8/e5RiyjFQ=
+			</data>
+		</dict>
+		<key>Frameworks/geocoding.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Za2MqYIOqKhLIBrgM6YoeiA51TVVG7AgTbClIlpI1A4=
+			</data>
+		</dict>
+		<key>Frameworks/geocoding.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			biX14jGMNutsy+ZQR4+vozdHWxwqG207vmrJjnyoLtg=
+			</data>
+		</dict>
+		<key>Frameworks/geocoding.framework/geocoding</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			LGQXkhF07E2JCW9D01FqGB6wVtwuo0B7/LpMF+GLG+o=
 			</data>
 		</dict>
 		<key>Frameworks/geolocator_apple.framework/Info.plist</key>
@@ -1730,7 +1763,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/LeJm8Bif35++3GMRryc/Ut4LpUfLLGFIONoovDXRrg=
+			aAlVHY5JrqbFHEOU1qukRj/01SNa0R36pirRk7MRw8w=
 			</data>
 		</dict>
 		<key>Frameworks/webview_flutter.framework/Info.plist</key>

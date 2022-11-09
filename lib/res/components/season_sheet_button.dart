@@ -8,7 +8,7 @@ class Season extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.33,
       height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
@@ -24,7 +24,7 @@ class Season extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Center(
@@ -37,70 +37,70 @@ class Season extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 30,
                       ),
-                      Text(
+                      const Text(
                         'Улирал сонгох',
                         style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w500),
+                            fontSize: 18, fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(
-                        width: 170,
+                      const SizedBox(
+                        width: 200,
                       ),
                       IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.cancel,
-                            size: 40,
+                            size: 35,
                             color: Color.fromARGB(255, 188, 188, 188),
                           ))
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     height: 0.5,
-                    color: Color.fromARGB(115, 104, 104, 104),
+                    color: const Color.fromARGB(115, 104, 104, 104),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  Seasons(),
-                  SizedBox(
+                  const Seasons(),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Seasonss(),
-                  SizedBox(
+                  const Seasonss(),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Seasonss(),
-                  SizedBox(
-                    height: 25,
+                  const Seasonss(),
+                  const SizedBox(
+                    height: 35,
                   ),
                   Row(
-                    children: [
+                    children: const [
                       SizedBox(
                         width: 30,
                       ),
                       Icon(
                         Icons.add,
                         size: 30,
-                        color: Colors.black,
+                        color: Colors.black54,
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        'Add season',
+                        'Улирал нэмэх',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w400),
+                            fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                     ],
                   )
@@ -111,14 +111,14 @@ class Season extends StatelessWidget {
         ),
         label: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Text(
               'Улирал 2022',
               style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
             ),
             Icon(
               Icons.arrow_drop_down,
-              size: 18,
+              size: 20,
               color: Color.fromARGB(255, 255, 255, 255),
             )
           ],
@@ -199,15 +199,18 @@ class Seasons extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              Icons.check,
-              color: AppColors.Green,
-              size: 35,
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Icon(
+                Icons.check,
+                color: AppColors.Green,
+                size: 30,
+              ),
             ),
             Text(
               'Арвин-Хур 2022 он',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               width: 100,
@@ -215,18 +218,18 @@ class Seasons extends StatelessWidget {
             Text(
               'Edit',
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: AppColors.Green,
                   fontWeight: FontWeight.w400),
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 140),
+        const Padding(
+          padding: EdgeInsets.only(right: 140),
           child: Text(
             'April 1 - Dec 31, 2022',
             style: TextStyle(
-                color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w400),
           ),
         ),
       ],
@@ -245,13 +248,13 @@ class Seasonss extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: const [
             SizedBox(
               width: 35,
             ),
             Text(
               'Арвин-Хур 2022 он',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               width: 100,
@@ -259,18 +262,18 @@ class Seasonss extends StatelessWidget {
             Text(
               'Edit',
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: AppColors.Green,
                   fontWeight: FontWeight.w400),
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 140),
+        const Padding(
+          padding: EdgeInsets.only(right: 140),
           child: Text(
             'April 1 - Dec 31, 2022',
             style: TextStyle(
-                color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w400),
+                color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w400),
           ),
         ),
       ],

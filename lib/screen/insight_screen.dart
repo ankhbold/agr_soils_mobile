@@ -3,7 +3,7 @@ import 'package:mvvm/res/color.dart';
 
 class NoteScreen extends StatefulWidget {
   // PageController _pageController = PageController();
-  NoteScreen({
+  const NoteScreen({
     super.key,
   });
 
@@ -15,7 +15,7 @@ class _ScreenState extends State<NoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff0f0f0),
+      backgroundColor: const Color(0xfff0f0f0),
       body: ListView(
         children: [
           // DefaultTabController(
@@ -34,14 +34,14 @@ class _ScreenState extends State<NoteScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.width * 0.05,
                 ),
-                NavigationBar(),
+                const NavigationBar(),
                 SizedBox(
                   height: MediaQuery.of(context).size.width * 0.27,
                 ),
-                NotesNearby(),
+                const NotesNearby(),
 
-                NotesProvince(),
-                NotesLocation(),
+                const NotesProvince(),
+                const NotesLocation(),
                 // NavigationBar(),
                 // BuildPageView(),
                 SizedBox(
@@ -57,11 +57,11 @@ class _ScreenState extends State<NoteScreen> {
             height: MediaQuery.of(context).size.height,
             color: Colors.white,
             child: Column(children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
-                children: [
+                children: const [
                   SizedBox(
                     width: 15,
                   ),
@@ -71,27 +71,27 @@ class _ScreenState extends State<NoteScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Index(),
-              SizedBox(
+              const Index(),
+              const SizedBox(
                 height: 20,
               ),
-              roow(),
-              SizedBox(
+              const roow(),
+              const SizedBox(
                 height: 20,
               ),
-              roow(),
-              SizedBox(
+              const roow(),
+              const SizedBox(
                 height: 20,
               ),
-              roow(),
-              SizedBox(
+              const roow(),
+              const SizedBox(
                 height: 20,
               ),
-              roow(),
-              SizedBox(
+              const roow(),
+              const SizedBox(
                 height: 20,
               ),
             ]),
@@ -116,7 +116,7 @@ class roow extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.05,
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.width * 0.18,
             child: Image.asset(
               'assets/images/ones.png',
@@ -128,13 +128,13 @@ class roow extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               Text(
                 'Талбай 3, 15 га',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
               ),
               Text(
-                'Өргөст хэмх',
+                'Буудай',
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
               ),
             ],
@@ -143,7 +143,7 @@ class roow extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.25,
           ),
           Column(
-            children: [
+            children: const [
               Text(
                 'Sep 11',
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
@@ -170,7 +170,7 @@ class Index extends StatelessWidget {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+        children: const [
           NavigationBarr(),
         ],
       ),
@@ -191,13 +191,13 @@ class NavigationBarr extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffb1b1b1),
+            color: const Color(0xffb1b1b1),
           ),
           height: MediaQuery.of(context).size.height * 0.035,
           width: MediaQuery.of(context).size.width * 0.29,
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Бүх талбай')),
+            child: const Center(child: Text('Бүх талбай')),
           ),
         ),
         Container(
@@ -205,11 +205,11 @@ class NavigationBarr extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.29,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffdadada),
+            color: const Color(0xffdadada),
           ),
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Өргөст хэмх')),
+            child: const Center(child: Text('Буудай')),
           ),
         ),
         Container(
@@ -217,11 +217,11 @@ class NavigationBarr extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.29,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffdadada),
+            color: const Color(0xffdadada),
           ),
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Буудай')),
+            child: const Center(child: Text('Буудай')),
           ),
         ),
       ],
@@ -238,14 +238,14 @@ class NotesNearby extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Байршилд хандахыг зөвшөөрөх',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.03,
           ),
-          Text(
+          const Text(
             'Тохиргоог нээх',
             style: TextStyle(
                 fontSize: 15,
@@ -256,7 +256,7 @@ class NotesNearby extends StatelessWidget {
             height: MediaQuery.of(context).size.width * 0.15,
           ),
           Container(
-            color: Color(
+            color: const Color(
               0xffb1b1b1,
             ),
             height: 1,
@@ -265,7 +265,7 @@ class NotesNearby extends StatelessWidget {
             height: MediaQuery.of(context).size.width * 0.015,
           ),
           Container(
-            child: Center(
+            child: const Center(
               child: Text(
                 'Өргөтгөсөн урьдчилсан мэдээ',
                 style: TextStyle(
@@ -316,13 +316,13 @@ class NavigationBar extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffb1b1b1),
+            color: const Color(0xffb1b1b1),
           ),
           height: MediaQuery.of(context).size.height * 0.05,
           width: MediaQuery.of(context).size.width * 0.3,
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Миний хажууд\nТалбай байхгүй')),
+            child: const Center(child: Text('Миний хажууд\nТалбай байхгүй')),
           ),
         ),
         Container(
@@ -330,11 +330,11 @@ class NavigationBar extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.3,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffdadada),
+            color: const Color(0xffdadada),
           ),
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Төв аймаг\n2 Талбай')),
+            child: const Center(child: Text('Төв аймаг\n2 Талбай')),
           ),
         ),
         Container(
@@ -342,11 +342,11 @@ class NavigationBar extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.3,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xffdadada),
+            color: const Color(0xffdadada),
           ),
           child: GestureDetector(
             onTap: () {},
-            child: Center(child: const Text('Байршил\nнэмэх')),
+            child: const Center(child: Text('Байршил\nнэмэх')),
           ),
         ),
       ],

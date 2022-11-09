@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int index_color = 0;
   List Screen = [
     const FieldScreen(),
-    NoteScreen(),
+    const NoteScreen(),
     const ScreenTwo(),
     const ProfilePage()
   ];
@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.event_note,
+                      Icons.leaderboard,
                       color: index_color == 2
                           ? const Color(0xff368983)
                           : Colors.grey,

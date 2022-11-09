@@ -23,25 +23,25 @@ final List<Tab> Tabs = <Tab>[
     child: Rectangular(),
   ),
   const Tab(
-    child: Text('data'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data2'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data3'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data4'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data5'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data6'),
+    child: Rectangular(),
   ),
   const Tab(
-    child: Text('data7'),
+    child: Rectangular(),
   ),
 ];
 final List<Tab> myTabs = <Tab>[
@@ -376,7 +376,10 @@ class Rectangular extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image.asset('assets/images/ones.png'),
+      child: Image.asset(
+        'assets/images/ones.png',
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

@@ -21,8 +21,8 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       body: Navigator(
         onGenerateRoute: (settings) {
-          Widget page = ListProfile();
-          if (settings.name == 'page2') page = AccountProfile();
+          Widget page = const ListProfile();
+          if (settings.name == 'page2') page = const AccountProfile();
           return MaterialPageRoute(builder: (_) => page);
         },
       ),
@@ -186,7 +186,7 @@ class ListProfile extends StatelessWidget {
         ),
         const Center(
           child: Text(
-            'OneSoil, 6.7.0 (428)\nM-S901B, Android 12',
+            'Тариалангийн систем, 1.0.0\nios 15.5',
             style: TextStyle(
               color: Colors.grey,
               fontSize: 12,

@@ -54,25 +54,30 @@ class _FieldPanelState extends State<FieldPanel> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Тэлэх талбай 3га',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            'add crop',
-                            style:
-                                TextStyle(fontSize: 15, color: AppColors.Green),
-                          )
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'Тэлэх талбай 3га',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black),
+                            ),
+                            Text(
+                              'add crop',
+                              style: TextStyle(
+                                  fontSize: 15, color: AppColors.Green),
+                            )
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        width: 180,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
                       ),
                       GestureDetector(
                         child: const RemoveButton(),

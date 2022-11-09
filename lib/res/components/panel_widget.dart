@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
+import 'package:mvvm/screen/field.dart';
 
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
@@ -155,6 +154,7 @@ Widget buildTextField() => Container(
                   prefixIcon: Icon(
                     Icons.search,
                     size: 30,
+                    color: AppColors.Green,
                   ),
                   border: InputBorder.none,
                   hintText: 'Хайлтын утгаа оруулна уу',
@@ -291,72 +291,118 @@ Widget buildMyFields() => Container(
             ],
           ),
           SizedBox(
-            height: 217,
             child: Column(
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Icon(
-                  Icons.flag_circle_rounded,
-                  size: 80,
-                  color: Colors.white,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Text(
-                  'Талбайгаа нэмнэ үү',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+              children: const [
                 SizedBox(
-                  width: 300,
-                  child: const Text(
-                    'Та NDVI индексийг хянах, тэмдэглэл бичих, газар тариалангийн эргэлтийг бүртгэх болон бусад олон..',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            color: const Color.fromARGB(255, 255, 255, 255),
-            height: 2,
-            width: 500,
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 50,
-            width: 150,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: GestureDetector(
-              child: const Center(
-                child: Text(
-                  'Талбай нэмэх',
-                  style: TextStyle(
-                      color: AppColors.Green, fontWeight: FontWeight.w600),
+                  height: 20,
                 ),
-              ),
+                Roow(),
+                SizedBox(
+                  height: 20,
+                ),
+                Roow(),
+                SizedBox(
+                  height: 20,
+                ),
+                Roow(),
+                SizedBox(
+                  height: 20,
+                ),
+                Roow(),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+
+class Roow extends StatelessWidget {
+  const Roow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        click = !click;
+        clicks = !clicks;
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.18,
+            child: Image.asset(
+              'assets/images/ones.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.05,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                'Тэлэх талбай 15 га',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'Буудай',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.25,
+          ),
+          Column(
+            children: [
+              const Text(
+                '0.14',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+              Container(
+                height: 20,
+                width: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.red,
+                ),
+                child: const Center(
+                  child: Text(
+                    '-0.01',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

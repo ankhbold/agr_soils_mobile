@@ -200,7 +200,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: firstLocation,
-                    zoom: 15,
+                    zoom: 14.5,
                   ),
                   mapType: _currentMapType,
                   onMapCreated: (controller) {
@@ -248,23 +248,6 @@ class _FieldScreenState extends State<FieldScreen> {
                   },
                   child: const Icon(
                     Icons.location_on,
-                    color: AppColors.Green,
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 450,
-                left: 370,
-                child: FloatingActionButton.small(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  onPressed: () {
-                    setState(() {
-                      click = !click;
-                      clicks = !clicks;
-                    });
-                  },
-                  child: const Icon(
-                    Icons.swap_calls,
                     color: AppColors.Green,
                   ),
                 ),
@@ -376,22 +359,6 @@ class _FieldScreenState extends State<FieldScreen> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 450,
-                left: 370,
-                child: FloatingActionButton.small(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  onPressed: () {
-                    setState(() {
-                      click = !click;
-                    });
-                  },
-                  child: const Icon(
-                    Icons.swap_calls,
-                    color: AppColors.Green,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -408,23 +375,25 @@ class _FieldScreenState extends State<FieldScreen> {
     return Column(
       children: [
         SizedBox(
-          height: 140,
+          height: MediaQuery.of(context).size.width * 0.22,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 8,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: const EdgeInsets.only(left: 5, bottom: 10),
+                padding: const EdgeInsets.only(left: 8, bottom: 8),
                 child: Container(
-                  width: 130,
+                  height: MediaQuery.of(context).size.width * 0.2,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   decoration: BoxDecoration(
-                      border: Border.all(
-                          width: clicked == index ? 3 : 0,
-                          color: AppColors.Green),
-                      color: const Color.fromARGB(255, 239, 239, 239)
-                          .withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(12)),
+                    border: Border.all(
+                        width: clicked == index ? 3 : 0,
+                        color: AppColors.Green),
+                    color: const Color.fromARGB(255, 239, 239, 239)
+                        .withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: InkWell(
                     onTap: () {
                       setState(() {

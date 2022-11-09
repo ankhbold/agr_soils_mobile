@@ -336,7 +336,7 @@ class _FloatingFabState extends State<FloatingFab> {
               ),
               child: myTabs[current]),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.052,
+            height: MediaQuery.of(context).size.height * 0.05,
             width: MediaQuery.of(context).size.width * 0.925,
             child: ListView.builder(
               itemCount: 8,

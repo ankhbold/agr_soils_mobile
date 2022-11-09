@@ -58,6 +58,10 @@ cupertino_icons
 2.12
 file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/
 file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/lib/
+custom_info_window
+2.12
+file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/custom_info_window-1.0.1/
+file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/custom_info_window-1.0.1/lib/
 dio
 2.12
 file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.6/
@@ -308,8 +312,8 @@ file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/pr
 file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.4/lib/
 rxdart
 2.12
-file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.5/
-file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.5/lib/
+file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/
+file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/lib/
 shared_preferences
 2.14
 file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.15/

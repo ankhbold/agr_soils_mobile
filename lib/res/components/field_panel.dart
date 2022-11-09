@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/color.dart';
+import '../../screen/field.dart';
 import '../../screen/profile_screen.dart';
 
 class FieldPanel extends StatefulWidget {
@@ -28,13 +29,67 @@ class _FieldPanelState extends State<FieldPanel> {
         child: ListView(
           controller: widget.controller,
           padding: EdgeInsets.zero,
-          children: const <Widget>[
-            FirstFieldPanelItem(),
-            Line3(),
-            SizedBox(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.width * 0.21,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.015,
+                  ),
+                  Container(child: buildNavigator()),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.012,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Тэлэх талбай 3га',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ),
+                          Text(
+                            'add crop',
+                            style:
+                                TextStyle(fontSize: 15, color: AppColors.Green),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 180,
+                      ),
+                      GestureDetector(
+                        child: const RemoveButton(),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const Line3(),
+            const SizedBox(
               height: 10,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],
@@ -42,68 +97,30 @@ class _FieldPanelState extends State<FieldPanel> {
       );
 }
 
-class FirstFieldPanelItem extends StatelessWidget {
-  const FirstFieldPanelItem({
+class RemoveButton extends StatefulWidget {
+  const RemoveButton({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<RemoveButton> createState() => _RemoveButtonState();
+}
+
+class _RemoveButtonState extends State<RemoveButton> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.width * 0.21,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(30),
-          topLeft: Radius.circular(30),
-        ),
+    return IconButton(
+      icon: Icon(
+        Icons.remove_circle,
+        color: Colors.black.withOpacity(0.5),
+        size: 30,
       ),
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.015,
-          ),
-          Container(child: buildNavigator()),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.012,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Тэлэх талбай 3га',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
-                  ),
-                  Text(
-                    'add crop',
-                    style: TextStyle(fontSize: 15, color: AppColors.Green),
-                  )
-                ],
-              ),
-              const SizedBox(
-                width: 180,
-              ),
-              Icon(
-                Icons.remove_circle,
-                color: Colors.black.withOpacity(0.5),
-                size: 30,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
-          ),
-        ],
-      ),
+      onPressed: () {
+        setState(() {
+          click = !click;
+          clicks = !clicks;
+        });
+      },
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,24 +11,29 @@ import 'package:mvvm/res/components/panel_widget.dart';
 import 'package:mvvm/res/components/round_sheet_button.dart';
 import 'package:mvvm/res/components/season_sheet_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:coord_convert/coord_convert.dart';
 import '../res/components/field_panel.dart';
 import '../res/components/ndvi_button.dart';
 
-/// Determine the current position of the device.
-///
-/// When the location services are not enabled or permissions
-/// are denied the `Future` will return an error.
+final Set<Marker> _markers = {};
+
+LocationSettings locationSettings = const LocationSettings(
+  accuracy: LocationAccuracy.high,
+  distanceFilter: 100,
+);
+StreamSubscription<Position> positionStream =
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) {
+  print(position == null
+      ? 'Unknown'
+      : '${position.latitude.toString()}, ${position.longitude.toString()}');
+});
+
 Future<Position> _determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;
 
-  // Test if location services are enabled.
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
-    // Location services are not enabled don't continue
-    // accessing the position and request users of the
-    // App to enable the location services.
     return Future.error('Location services are disabled.');
   }
 
@@ -34,23 +41,15 @@ Future<Position> _determinePosition() async {
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      // Permissions are denied, next time you could try
-      // requesting permissions again (this is also where
-      // Android's shouldShowRequestPermissionRationale
-      // returned true. According to Android guidelines
-      // your App should show an explanatory UI now.
       return Future.error('Location permissions are denied');
     }
   }
 
   if (permission == LocationPermission.deniedForever) {
-    // Permissions are denied forever, handle appropriately.
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
 
-  // When we reach here, permissions are granted and we can
-  // continue accessing the position of the device.
   return await Geolocator.getCurrentPosition();
 }
 
@@ -65,17 +64,7 @@ List<String> items = [
   "NDVI дундаж",
 ];
 bool click = true;
-
-const coords = Coords(
-  47.92424770803818,
-  106.90079705604086,
-); // Coords(lat, lng)
-
-// WGS-84 from GCJ-02
-final Coords fromGCJ02 = CoordConvert.gcj02towgs84(coords);
-
-// WGS-84 from BD-09
-final Coords fromBD09 = CoordConvert.bd09towgs84(coords);
+bool clicks = true;
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -86,20 +75,10 @@ class FieldScreen extends StatefulWidget {
 
 class _FieldScreenState extends State<FieldScreen> {
   final MapType _currentMapType = MapType.satellite;
+
   late GoogleMapController _mapController;
-  final Map<String, Marker> _markers = {};
-  LatLng firstLocation = const LatLng(
-    47.92424770803818,
-    106.90079705604086,
-  );
-  // Future<Position> getUserCurrentLocation() async {
-  //   await Geolocator.requestPermission()
-  //       .then((value) {})
-  //       .onError((error, stackTrace) {
-  //     print("error$error");
-  //   });
-  //   return await Geolocator.getCurrentPosition();
-  // }
+
+  LatLng firstLocation = const LatLng(50.054818, 105.820441);
 
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
@@ -114,16 +93,19 @@ class _FieldScreenState extends State<FieldScreen> {
   int clicked = 0;
   Set<Polygon> myPolygon() {
     List<LatLng> polygonCoords = [];
-    polygonCoords.add(const LatLng(47.926575, 106.898016));
-    polygonCoords.add(const LatLng(47.921978, 106.893066));
-    polygonCoords.add(const LatLng(47.920036, 106.897168));
-    polygonCoords.add(const LatLng(47.925019, 106.905391));
+
+    polygonCoords.add(const LatLng(50.056588, 105.810508));
+    polygonCoords.add(const LatLng(50.060662, 105.821967));
+    polygonCoords.add(const LatLng(50.057155, 105.827509));
+    polygonCoords.add(const LatLng(50.050830, 105.819745));
+    polygonCoords.add(const LatLng(50.053236, 105.808501));
+
     Set<Polygon> polygonSet = {};
     polygonSet.add(Polygon(
         polygonId: const PolygonId('test'),
         points: polygonCoords,
         strokeWidth: 2,
-        fillColor: click
+        fillColor: clicks
             ? const Color.fromARGB(255, 255, 173, 73).withOpacity(0.9)
             : const Color.fromARGB(255, 195, 107, 0).withOpacity(0.9),
         strokeColor: const Color.fromARGB(255, 0, 0, 0))); //color of the border
@@ -223,17 +205,18 @@ class _FieldScreenState extends State<FieldScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (controller) {
                     _mapController = controller;
-                    addMarker('id', firstLocation);
                   },
                   circles: {
                     Circle(
-                      circleId: const CircleId('currentCircle'),
-                      center: const LatLng(
-                        47.92424770803818,
-                        106.90079705604086,
+                      circleId: const CircleId(
+                        'currentCircle',
                       ),
-                      radius: 100,
-                      fillColor: const Color.fromARGB(255, 180, 255, 165)
+                      center: const LatLng(
+                        50.054818,
+                        105.820441,
+                      ),
+                      radius: 180,
+                      fillColor: const Color.fromARGB(255, 224, 146, 0)
                           .withOpacity(0.9),
                       strokeColor: const Color.fromARGB(255, 0, 0, 0),
                       strokeWidth: 2,
@@ -248,14 +231,10 @@ class _FieldScreenState extends State<FieldScreen> {
                 child: FloatingActionButton.small(
                   backgroundColor: Colors.white.withOpacity(0.9),
                   onPressed: () {
-                    // setState(() {
-                    //   click = !click;
-                    // });
                     _determinePosition().then(
                       (value) async {
                         print("my current location"); //wsg84
                         print("${value.latitude} ${value.longitude}");
-                        addMarker('2', LatLng(value.latitude, value.longitude));
                         CameraPosition cameraPosition = CameraPosition(
                             zoom: 17,
                             target: LatLng(value.latitude, value.longitude));
@@ -281,6 +260,7 @@ class _FieldScreenState extends State<FieldScreen> {
                   onPressed: () {
                     setState(() {
                       click = !click;
+                      clicks = !clicks;
                     });
                   },
                   child: const Icon(
@@ -346,7 +326,6 @@ class _FieldScreenState extends State<FieldScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (controller) {
                     _mapController = controller;
-                    addMarker('id', firstLocation);
                   },
                   circles: {
                     Circle(
@@ -356,8 +335,10 @@ class _FieldScreenState extends State<FieldScreen> {
                         106.90079705604086,
                       ),
                       radius: 100,
-                      fillColor: const Color.fromARGB(255, 25, 96, 10)
-                          .withOpacity(0.9),
+                      fillColor: clicks
+                          ? const Color.fromARGB(255, 25, 96, 10)
+                              .withOpacity(0.9)
+                          : Colors.blue,
                       strokeColor: const Color.fromARGB(255, 0, 0, 0),
                       strokeWidth: 2,
                     ),
@@ -378,7 +359,6 @@ class _FieldScreenState extends State<FieldScreen> {
                       (value) async {
                         print("my current location"); //wsg84
                         print("${value.latitude} ${value.longitude}");
-                        addMarker('2', LatLng(value.latitude, value.longitude));
                         CameraPosition cameraPosition = CameraPosition(
                             zoom: 17,
                             target: LatLng(value.latitude, value.longitude));
@@ -423,11 +403,6 @@ class _FieldScreenState extends State<FieldScreen> {
       ],
     );
   }
-//
-//
-//
-//
-//
 
   Column SecondFab(BuildContext context) {
     return Column(
@@ -453,6 +428,7 @@ class _FieldScreenState extends State<FieldScreen> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
+                        clicks = !clicks;
                         clicked = index;
                       });
                     },
@@ -470,22 +446,5 @@ class _FieldScreenState extends State<FieldScreen> {
         NdviButton(),
       ],
     );
-  }
-
-////
-//////
-  ///
-  ///
-  addMarker(String id, LatLng location) {
-    var marker = Marker(
-      markerId: MarkerId(id),
-      position: location,
-      infoWindow: const InfoWindow(
-        title: 'title of place',
-        snippet: 'hahhahahhaha',
-      ),
-    );
-    _markers[id] = marker;
-    setState(() {});
   }
 }

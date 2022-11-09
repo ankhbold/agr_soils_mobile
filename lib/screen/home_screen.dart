@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
+import 'package:mvvm/screen/Insight_screen.dart';
 import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/notes_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
-import 'package:mvvm/screen/test_screen.dart';
 
 import 'package:mvvm/view_model/home_view_model.dart';
 
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int index_color = 0;
   List Screen = [
     const FieldScreen(),
-    const TestScreen(),
+    NoteScreen(),
     const ScreenTwo(),
     const ProfilePage()
   ];
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 2,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3),
           ),
         ],
         color: const Color.fromARGB(255, 251, 250, 250),

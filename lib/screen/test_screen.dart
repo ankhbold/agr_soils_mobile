@@ -40,7 +40,7 @@ class _TestScreenState extends State<TestScreen> {
           itemCount: posts?.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              child: Text(posts![index].nameEn),
+              child: Text(posts![index].name),
             );
           },
         ),

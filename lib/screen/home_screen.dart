@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
-import 'package:mvvm/screen/Insight_screen.dart';
 import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/notes_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
@@ -121,24 +120,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               Column(
-                children: [
+                children: const [
                   // SizedBox(
                   //   height: MediaQuery.of(context).size.width * 0.015,
                   // ),
-                  GestureDetector(
-                    child: Container(
-                      height: MediaQuery.of(context).size.width * 0.1,
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
-                          color: AppColors.Green,
-                          borderRadius: BorderRadius.circular(60)),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
+                  CustomAddButton(),
                 ],
               ),
               GestureDetector(
@@ -206,6 +192,49 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomAddButton extends StatelessWidget {
+  const CustomAddButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        height: MediaQuery.of(context).size.width * 0.1,
+        width: MediaQuery.of(context).size.width * 0.1,
+        decoration: BoxDecoration(
+            color: AppColors.Green, borderRadius: BorderRadius.circular(60)),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
+      onTap: () => showModalBottomSheet(
+        context: context,
+        builder: (context) => SizedBox(
+          height: MediaQuery.of(context).size.width * 0.6,
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                  width: 300,
+                  child: TextField(),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('add'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

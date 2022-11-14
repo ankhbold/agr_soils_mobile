@@ -23,7 +23,7 @@ class Post {
     // required this.parentId,
     // required this.codelistType,
     // required this.codelistComment,
-    // required this.createdAt,
+    required this.createdAt,
     // required this.updatedAt,
     // this.createdBy,
     // this.updatedBy,
@@ -40,7 +40,7 @@ class Post {
   // int parentId;
   // int codelistType;
   // String codelistComment;
-  // DateTime createdAt;
+  DateTime createdAt;
   // DateTime updatedAt;
   // dynamic createdBy;
   // dynamic updatedBy;
@@ -57,7 +57,7 @@ class Post {
         // parentId: json["parent_id"],
         // codelistType: json["codelist_type"],
         // codelistComment: json["codelist_comment"],
-        // createdAt: DateTime.parse(json["created_at"]),
+        createdAt: DateTime.parse(json["created_at"]),
         // updatedAt: DateTime.parse(json["updated_at"]),
         // createdBy: json["created_by"],
         // updatedBy: json["updated_by"],
@@ -75,7 +75,7 @@ class Post {
         // "parent_id": parentId,
         // "codelist_type": codelistType,
         // "codelist_comment": codelistComment,
-        // "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
         // "updated_at": updatedAt.toIso8601String(),
         // "created_by": createdBy,
         // "updated_by": updatedBy,

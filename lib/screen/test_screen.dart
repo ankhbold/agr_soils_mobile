@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm/screen/profile_screen.dart';
 import 'package:mvvm/service/remote_services.dart';
@@ -29,10 +30,27 @@ class _TestScreenState extends State<TestScreen> {
     }
   }
 
+  void getHTTP() async {
+    try {
+      var response = await Dio().get(
+        'http://103.143.40.250:8100/api/note/type/getnotetype',
+      );
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FinalNotesWidget(isloaded: isloaded, posts: posts),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          getHTTP();
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
@@ -78,7 +96,6 @@ class FinalNotesWidget extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.92,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                         
                               children: [
                                 Text(
                                   "${posts![index].createdAt}",
@@ -88,7 +105,7 @@ class FinalNotesWidget extends StatelessWidget {
                                   ),
                                 ),
                                 const Text(
-                                  'typesText',
+                                  'усалгаатай - 10',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -133,3 +150,4 @@ class FinalNotesWidget extends StatelessWidget {
     );
   }
 }
+

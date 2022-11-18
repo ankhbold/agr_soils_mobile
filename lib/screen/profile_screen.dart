@@ -258,6 +258,26 @@ class Line3 extends StatelessWidget {
   }
 }
 
+class Line4 extends StatelessWidget {
+  const Line4({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          color: Colors.black,
+          height: 0.2,
+          width: MediaQuery.of(context).size.width * 0.9,
+        ),
+      ],
+    );
+  }
+}
+
 // class ProfilePage extends StatefulWidget {
 //   @override
 //   State<StatefulWidget> createState() {

@@ -7,6 +7,8 @@ import 'package:mvvm/screen/test_screen.dart';
 
 import 'package:mvvm/view_model/home_view_model.dart';
 
+import '../widget/note_add_button.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -153,9 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 onTap: () {
-                  setState(() {
-                    index_color = 2;
-                  });
+                  setState(
+                    () {
+                      index_color = 2;
+                    },
+                  );
                 },
               ),
               GestureDetector(
@@ -184,57 +188,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 onTap: () {
-                  setState(() {
-                    index_color = 3;
-                  });
+                  setState(
+                    () {
+                      index_color = 3;
+                    },
+                  );
                 },
               ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CustomAddButton extends StatelessWidget {
-  const CustomAddButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        height: MediaQuery.of(context).size.width * 0.1,
-        width: MediaQuery.of(context).size.width * 0.1,
-        decoration: BoxDecoration(
-            color: AppColors.Green, borderRadius: BorderRadius.circular(60)),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
-      onTap: () => showModalBottomSheet(
-        context: context,
-        builder: (context) => SizedBox(
-          height: MediaQuery.of(context).size.width * 0.6,
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 50,
-                  width: 300,
-                  child: TextField(),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('add'),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

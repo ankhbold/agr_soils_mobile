@@ -46,12 +46,16 @@ final List<Tab> myTabs = <Tab>[
   ),
 ];
 
-class FloatingFourthItem extends StatelessWidget {
+class FloatingFourthItem extends StatefulWidget {
   FloatingFourthItem({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<FloatingFourthItem> createState() => _FloatingFourthItemState();
+}
+
+class _FloatingFourthItemState extends State<FloatingFourthItem> {
   List<String> item = [
     "Буудай",
     "Рапс",
@@ -59,6 +63,7 @@ class FloatingFourthItem extends StatelessWidget {
     "Арвай",
     "Тэжээлийн ургамал",
   ];
+
   List<Color> color = [
     Colors.red,
     Colors.blue,

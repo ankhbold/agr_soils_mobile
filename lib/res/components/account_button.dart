@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class AccountButton extends StatelessWidget {
   final Icon icon;
@@ -26,7 +24,7 @@ class AccountButton extends StatelessWidget {
           onTap();
         },
         child: Ink(
-          height: MediaQuery.of(context).size.height * 0.06,
+          height: MediaQuery.of(context).size.height * 0.07,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: Colors.white,

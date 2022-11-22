@@ -1,8 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm/screen/profile_screen.dart';
 import 'package:mvvm/service/remote_services.dart';
-
+import 'package:geolocator/geolocator.dart';
 import '../service/apis/get_notes_data.dart';
 
 class TestScreen extends StatefulWidget {
@@ -13,11 +12,15 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  final now = DateTime.now();
   List<Post>? posts;
   var isloaded = false;
   @override
   void initState() {
     super.initState();
+
+    print(DateTime.now());
+
     getdata();
   }
 
@@ -30,16 +33,22 @@ class _TestScreenState extends State<TestScreen> {
     }
   }
 
-  void getHTTP() async {
-    try {
-      var response = await Dio().get(
-        'http://103.143.40.250:8100/api/note/type/getnotetype',
-      );
-      print(response);
-    } catch (e) {
-      print(e);
-    }
+  void getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    // await Geolocator.openLocationSettings();
+    print(position);
+    print('-------------------------------');
   }
+
+  // void getHTTP() async {
+  //   try {
+  //     var response = await Dio().get(
+  //       'http://103.143.40.250:8100/api/note/type/getnotetype',
+  //     );
+  //     print(response);
+  //   } catch (e) {}
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +56,14 @@ class _TestScreenState extends State<TestScreen> {
       body: FinalNotesWidget(isloaded: isloaded, posts: posts),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          getHTTP();
+          print('-------------------------------');
+
+          // getHTTP();
+          print('-------------------------------');
+          print(DateTime.now());
+          print('-------------------------------');
+          getLocation();
+          print('-------------------------------');
         },
         child: const Icon(Icons.add),
       ),
@@ -105,7 +121,7 @@ class FinalNotesWidget extends StatelessWidget {
                                   ),
                                 ),
                                 const Text(
-                                  'усалгаатай - 10',
+                                  'усалгаатай - 1',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -150,4 +166,3 @@ class FinalNotesWidget extends StatelessWidget {
     );
   }
 }
-

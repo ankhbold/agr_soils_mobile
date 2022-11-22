@@ -77,7 +77,7 @@ class _FieldPanelState extends State<FieldPanel> {
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.3,
                       ),
                       GestureDetector(
                         child: const RemoveButton(),

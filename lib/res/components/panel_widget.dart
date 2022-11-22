@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/screen/field.dart';
 
+import '../../screen/profile_screen.dart';
+import '../../widget/note_add_button.dart';
+
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
 
@@ -292,23 +295,43 @@ Widget buildMyFields() => Container(
           ),
           SizedBox(
             child: Column(
-              children: const [
+              children: [
                 SizedBox(
                   height: 20,
                 ),
-                Roow(),
+                InkWell(
+                    onTap: () {
+                      click = !click;
+                      clicks = !clicks;
+                    },
+                    child: Roow()),
                 SizedBox(
                   height: 20,
                 ),
-                Roow(),
+                InkWell(
+                    onTap: () {
+                      click = !click;
+                      clicks = !clicks;
+                    },
+                    child: Roow()),
                 SizedBox(
                   height: 20,
                 ),
-                Roow(),
+                InkWell(
+                    onTap: () {
+                      click = !click;
+                      clicks = !clicks;
+                    },
+                    child: Roow()),
                 SizedBox(
                   height: 20,
                 ),
-                Roow(),
+                InkWell(
+                    onTap: () {
+                      click = !click;
+                      clicks = !clicks;
+                    },
+                    child: Roow()),
                 SizedBox(
                   height: 20,
                 ),
@@ -405,4 +428,87 @@ class Roow extends StatelessWidget {
       ),
     );
   }
+}
+
+class PanelWidget2 extends StatefulWidget {
+  final ScrollController controller;
+
+  PanelWidget2({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  State<PanelWidget2> createState() => _PanelWidget2State();
+}
+
+class _PanelWidget2State extends State<PanelWidget2> {
+  @override
+  Widget build(BuildContext context) => ListView(children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Center(
+                  child: Container(
+                    height: 5,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                addHeader(screenwidth: MediaQuery.of(context).size.width),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                // SizedBox(
+                //   height: screenHeight * 0.03,
+                // ),
+                NotesTextField(
+                  screenHeight: MediaQuery.of(context).size.height,
+                  screenwidth: MediaQuery.of(context).size.width,
+                ),
+                InkWell(
+                    child: Ink(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        color: AppColors.Green,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.02,
+                      ),
+                      Text(
+                        'Зураг оруулахh',
+                        style: TextStyle(
+                            color: AppColors.Green,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                )),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Line3(),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  color: const Color.fromARGB(255, 240, 240, 240),
+                )
+              ],
+            ),
+          ),
+        ),
+      ]);
 }

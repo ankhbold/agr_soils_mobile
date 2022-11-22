@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/color.dart';
-
 class FieldsSheet extends StatelessWidget {
   const FieldsSheet({
     Key? key,

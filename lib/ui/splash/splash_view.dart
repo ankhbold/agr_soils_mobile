@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/view_model/services/splash_services.dart';
@@ -16,7 +14,6 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     splashServices.checkAuthentication(context);

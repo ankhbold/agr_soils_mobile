@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/res/color.dart';
 import 'package:mvvm/screen/field.dart';
+import 'package:mvvm/screen/insight_screen.dart';
 import 'package:mvvm/screen/notes_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
-import 'package:mvvm/screen/test_screen.dart';
-
 import 'package:mvvm/view_model/home_view_model.dart';
-
 import '../widget/note_add_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,12 +16,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HomeViewViewModel homeViewViewModel = HomeViewViewModel();
   int index_color = 0;
+
   List Screen = [
     const FieldScreen(),
-    const TestScreen(),
+    const NoteScreen(),
     const ScreenTwo(),
-    const ProfilePage()
+    const ProfilePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     // final userPrefernece = Provider.of<UserViewModel>(context);
@@ -122,11 +121,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               Column(
-                children: const [
+                children: [
                   // SizedBox(
                   //   height: MediaQuery.of(context).size.width * 0.015,
                   // ),
-                  CustomAddButton(),
+                  GestureDetector(
+                      child: Container(
+                        height: MediaQuery.of(context).size.width * 0.1,
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        decoration: BoxDecoration(
+                            color: Color(0xff0f766e),
+                            borderRadius: BorderRadius.circular(60)),
+                        child: Icon(
+                          Icons.add,
+                          size: note ? 20 : 35,
+                          color: note ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      onTap: () {
+                        note = !note;
+                      }),
                 ],
               ),
               GestureDetector(

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/res/components/round_button.dart';
-import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
 
 import 'package:mvvm/view_model/auth_view_model.dart';
-import 'package:mvvm/model/user_model.dart';
-import 'package:mvvm/view_model/user_view_model.dart';
+
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -28,7 +26,6 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
 
     _emailController.dispose();

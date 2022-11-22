@@ -1,32 +1,21 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/res/components/field_sheet_button.dart';
+import 'package:mvvm/location/location.dart';
 import 'package:mvvm/res/components/floating_fields.dart';
 import 'package:mvvm/res/components/floating_items.dart';
 import 'package:mvvm/res/components/panel_widget.dart';
-import 'package:mvvm/res/components/round_sheet_button.dart';
-import 'package:mvvm/res/components/season_sheet_button.dart';
+import 'package:mvvm/res/components/third_panel_widget.dart';
+import 'package:mvvm/screen/profile_screen.dart';
+import 'package:mvvm/widget/custom_app_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../res/components/field_panel.dart';
 import '../res/components/ndvi_button.dart';
+import '../widget/note_add_button.dart';
 
-final Set<Marker> _markers = {};
-
-LocationSettings locationSettings = const LocationSettings(
-  accuracy: LocationAccuracy.high,
-  distanceFilter: 100,
-);
-StreamSubscription<Position> positionStream =
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position? position) {
-  print(position == null
-      ? 'Unknown'
-      : '${position.latitude.toString()}, ${position.longitude.toString()}');
-});
+bool note = true;
 
 Future<Position> _determinePosition() async {
   bool serviceEnabled;
@@ -34,18 +23,23 @@ Future<Position> _determinePosition() async {
 
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
+    await Geolocator.openLocationSettings();
     return Future.error('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
+  // await Geolocator.openLocationSettings();
+  requestMLocationPermissions();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
+      await Geolocator.openLocationSettings();
       return Future.error('Location permissions are denied');
     }
   }
 
   if (permission == LocationPermission.deniedForever) {
+    await Geolocator.openLocationSettings();
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
@@ -63,9 +57,12 @@ List<String> items = [
   "Хураах огноо",
   "NDVI дундаж",
 ];
+//------
 bool click = true;
+//------
 bool clicks = true;
 
+//-------
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
 
@@ -77,6 +74,7 @@ class _FieldScreenState extends State<FieldScreen> {
   final MapType _currentMapType = MapType.satellite;
 
   late GoogleMapController _mapController;
+  final Map<String, Marker> _markers = {};
 
   LatLng firstLocation = const LatLng(50.054818, 105.820441);
 
@@ -101,67 +99,69 @@ class _FieldScreenState extends State<FieldScreen> {
     polygonCoords.add(const LatLng(50.053236, 105.808501));
 
     Set<Polygon> polygonSet = {};
-    polygonSet.add(Polygon(
+    polygonSet.add(
+      Polygon(
         polygonId: const PolygonId('test'),
         points: polygonCoords,
         strokeWidth: 2,
         fillColor: clicks
             ? const Color.fromARGB(255, 255, 173, 73).withOpacity(0.9)
             : const Color.fromARGB(255, 195, 107, 0).withOpacity(0.9),
-        strokeColor: const Color.fromARGB(255, 0, 0, 0))); //color of the border
+        strokeColor: const Color.fromARGB(255, 0, 0, 0),
+      ),
+    ); //color of the border
     return polygonSet;
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenwidth = MediaQuery.of(context).size.width;
-
-    final panelHeightClosed = MediaQuery.of(context).size.height * 0.088;
-    final panelHeightOpened = MediaQuery.of(context).size.height * 0.65;
+    final panelHeightClosed = note
+        ? MediaQuery.of(context).size.height * 0.1
+        : MediaQuery.of(context).size.height * 0.29;
+    final panelHeightOpened = note
+        ? MediaQuery.of(context).size.height * 0.65
+        : MediaQuery.of(context).size.height * 0.5;
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.06,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.005,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Center(
+            child: FloatingActionButton.small(
+              backgroundColor:
+                  const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+              elevation: 0,
+              onPressed: () {
+                _determinePosition().then(
+                  (value) async {
+                    print("my current location"); //wsg84
+                    print("${value.latitude} ${value.longitude}");
+                    CameraPosition cameraPosition = CameraPosition(
+                        zoom: 17,
+                        target: LatLng(value.latitude, value.longitude));
+                    final GoogleMapController controller = _mapController;
+                    addMarker(
+                        'current', LatLng(value.latitude, value.longitude));
+
+                    controller.animateCamera(
+                        CameraUpdate.newCameraPosition(cameraPosition));
+                    setState(() {});
+                  },
+                );
+              },
+              child: const Icon(
+                Icons.location_on,
+                color: AppColors.Green,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.035,
-                  ),
-                  const Season(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
-                  ),
-                  const FieldsSheet(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.02,
-                  ),
-                  const RoundSheetButton(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.02,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 0,
-              ),
-            ],
+            ),
           ),
         ],
       ),
-      body: click
+      extendBodyBehindAppBar: true,
+      appBar: customAppBar(context),
+      body: note
           ? FirstWidget(panelHeightOpened, panelHeightClosed, context)
-          : SecondWidget(panelHeightOpened, panelHeightClosed, context),
+          : ThirdWidget(panelHeightOpened, panelHeightClosed, context),
     );
   }
 
@@ -170,8 +170,6 @@ class _FieldScreenState extends State<FieldScreen> {
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
-        // _buildMap(),
-
         SlidingUpPanel(
           backdropEnabled: true,
           maxHeight: panelHeightOpened,
@@ -205,171 +203,34 @@ class _FieldScreenState extends State<FieldScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (controller) {
                     _mapController = controller;
+                    addMarker('test', firstLocation);
                   },
-                  circles: {
-                    Circle(
-                      circleId: const CircleId(
-                        'currentCircle',
-                      ),
-                      center: const LatLng(
-                        50.054818,
-                        105.820441,
-                      ),
-                      radius: 180,
-                      fillColor: const Color.fromARGB(255, 224, 146, 0)
-                          .withOpacity(0.9),
-                      strokeColor: const Color.fromARGB(255, 0, 0, 0),
-                      strokeWidth: 2,
-                    ),
-                  },
-                  polygons: myPolygon(),
-                ),
-              ),
-              Positioned(
-                bottom: 380,
-                left: 370,
-                child: FloatingActionButton.small(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  onPressed: () {
-                    _determinePosition().then(
-                      (value) async {
-                        print("my current location"); //wsg84
-                        print("${value.latitude} ${value.longitude}");
-                        CameraPosition cameraPosition = CameraPosition(
-                            zoom: 17,
-                            target: LatLng(value.latitude, value.longitude));
-                        final GoogleMapController controller = _mapController;
-
-                        controller.animateCamera(
-                            CameraUpdate.newCameraPosition(cameraPosition));
-                        setState(() {});
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    Icons.location_on,
-                    color: AppColors.Green,
-                  ),
+                  // polygons: myPolygon(),
+                  markers: _markers.values.toSet(),
                 ),
               ),
             ],
           ),
         ),
-
         Positioned(
           bottom: fabHeight,
-          child: const FloatingFab(),
+          child: note ? FloatingFab() : SizedBox(),
         ),
       ],
     );
   }
 
 //
-//
-//
-//
-//
-  Stack SecondWidget(double panelHeightOpened, double panelHeightClosed,
-      BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: <Widget>[
-        // _buildMap(),
-
-        SlidingUpPanel(
-          backdropEnabled: true,
-          maxHeight: panelHeightOpened,
-          minHeight: panelHeightClosed,
-          parallaxEnabled: true,
-          parallaxOffset: .5,
-          panelBuilder: (controller) => FieldPanel(
-            controller: controller,
-          ),
-          onPanelSlide: (position) => setState(
-            () {
-              final panelMaxScrollExtent =
-                  panelHeightOpened - panelHeightClosed;
-              fabHeight =
-                  position * panelMaxScrollExtent + panelHeightClosed + 10;
-            },
-          ),
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(30),
-          ),
-          body: Stack(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: firstLocation,
-                    zoom: 15,
-                  ),
-                  mapType: _currentMapType,
-                  onMapCreated: (controller) {
-                    _mapController = controller;
-                  },
-                  circles: {
-                    Circle(
-                      circleId: const CircleId('currentCircle'),
-                      center: const LatLng(
-                        47.92424770803818,
-                        106.90079705604086,
-                      ),
-                      radius: 100,
-                      fillColor: clicks
-                          ? const Color.fromARGB(255, 25, 96, 10)
-                              .withOpacity(0.9)
-                          : Colors.blue,
-                      strokeColor: const Color.fromARGB(255, 0, 0, 0),
-                      strokeWidth: 2,
-                    ),
-                  },
-                  polygons: myPolygon(),
-                ),
-              ),
-              Positioned(
-                bottom: 380,
-                left: 370,
-                child: FloatingActionButton.small(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  onPressed: () {
-                    // setState(() {
-                    //   click = !click;
-                    // });
-                    _determinePosition().then(
-                      (value) async {
-                        print("my current location"); //wsg84
-                        print("${value.latitude} ${value.longitude}");
-                        CameraPosition cameraPosition = CameraPosition(
-                            zoom: 17,
-                            target: LatLng(value.latitude, value.longitude));
-                        final GoogleMapController controller = _mapController;
-
-                        controller.animateCamera(
-                            CameraUpdate.newCameraPosition(cameraPosition));
-                        setState(() {});
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    Icons.location_on,
-                    color: AppColors.Green,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        Positioned(
-          bottom: fabHeight,
-          child: SecondFab(context),
-        ),
-      ],
-    );
+  addMarker(String id, LatLng location) {
+    var marker = Marker(
+        markerId: MarkerId(id),
+        position: location,
+        infoWindow: InfoWindow(title: 'Таны байгаа газар'));
+    _markers[id] = marker;
+    setState(() {});
   }
+
+//
 
   Column SecondFab(BuildContext context) {
     return Column(
@@ -415,5 +276,137 @@ class _FieldScreenState extends State<FieldScreen> {
         NdviButton(),
       ],
     );
+  }
+
+  Stack ThirdWidget(double panelHeightOpened, double panelHeightClosed,
+      BuildContext context) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: <Widget>[
+        SlidingUpPanel(
+          backdropEnabled: true,
+          maxHeight: panelHeightOpened,
+          minHeight: panelHeightClosed,
+          parallaxEnabled: true,
+          parallaxOffset: .5,
+          panelBuilder: (controller) => ThirdPanelWidget(
+            controller: controller,
+          ),
+          onPanelSlide: (position) => setState(
+            () {
+              final panelMaxScrollExtent =
+                  panelHeightOpened - panelHeightClosed;
+              fabHeight =
+                  position * panelMaxScrollExtent + panelHeightClosed + 10;
+            },
+          ),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(30),
+          ),
+          body: Stack(
+            children: [
+              SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: firstLocation,
+                    zoom: 14.5,
+                  ),
+                  mapType: _currentMapType,
+                  onMapCreated: (controller) {
+                    _mapController = controller;
+                    addMarker('test', firstLocation);
+                  },
+                  // polygons: myPolygon(),
+                  markers: _markers.values.toSet(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ThirdPanel extends StatefulWidget {
+  ThirdPanel({super.key});
+
+  @override
+  State<ThirdPanel> createState() => _ThirdPanelState();
+}
+
+class _ThirdPanelState extends State<ThirdPanel> {
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
+    return ListView(children: [
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              Center(
+                child: Container(
+                  height: 5,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              addHeader(screenwidth: screenwidth),
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              // SizedBox(
+              //   height: screenHeight * 0.03,
+              // ),
+              NotesTextField(
+                screenHeight: screenHeight,
+                screenwidth: screenwidth,
+              ),
+              InkWell(
+                  child: Ink(
+                width: screenwidth * 0.9,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera_alt,
+                      color: AppColors.Green,
+                    ),
+                    SizedBox(
+                      width: screenwidth * 0.02,
+                    ),
+                    Text(
+                      'Зураг оруулах',
+                      style: TextStyle(
+                          color: AppColors.Green, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              )),
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              Line3(),
+              Container(
+                height: screenHeight * 0.5,
+                color: const Color.fromARGB(255, 240, 240, 240),
+              )
+            ],
+          ),
+        ),
+      ),
+    ]);
   }
 }

@@ -10,7 +10,7 @@ class Season extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.33,
-      height: MediaQuery.of(context).size.height * 0.04,
+      height: MediaQuery.of(context).size.height * 0.035,
       child: FloatingActionButton.extended(
         heroTag: "btn1",
         backgroundColor: AppColors.Green.withOpacity(0.7),
@@ -20,7 +20,7 @@ class Season extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,8 +50,8 @@ class Season extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
-                      const SizedBox(
-                        width: 200,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
                       ),
                       IconButton(
                           onPressed: () {},
@@ -101,6 +101,9 @@ class Season extends StatelessWidget {
                         'Улирал нэмэх',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        width: 30,
                       ),
                     ],
                   )

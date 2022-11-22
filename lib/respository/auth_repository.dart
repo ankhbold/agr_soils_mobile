@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:http/http.dart';
 import 'package:mvvm/data/network/BaseApiServices.dart';
 import 'package:mvvm/data/network/NetworkApiService.dart';
 import 'package:mvvm/res/app_url.dart';

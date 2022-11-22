@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/view_model/user_view_model.dart';
-import 'package:provider/provider.dart';
 
 import '../screen/profile_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   bool _value = false;
+
   @override
   Widget build(BuildContext context) {
-    final userPrefernece = Provider.of<UserViewModel>(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: ProfileAppBar(context),

@@ -10,7 +10,7 @@ class Season extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.33,
-      height: MediaQuery.of(context).size.height * 0.035,
+      height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
         heroTag: "btn1",
         backgroundColor: AppColors.Green.withOpacity(0.7),
@@ -38,7 +38,7 @@ class Season extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   Row(
                     children: [
@@ -65,18 +65,18 @@ class Season extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Container(
                     height: 0.5,
                     color: const Color.fromARGB(115, 104, 104, 104),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 5,
                   ),
                   const Seasonsss(),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
                   ),
                   Row(
                     children: const [

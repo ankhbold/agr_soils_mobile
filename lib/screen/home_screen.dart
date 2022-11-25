@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Column(
                   children: [
-                    FloatingActionButton(
+                    FloatingActionButton.small(
                         backgroundColor: AppColors.Green,
                         child: Icon(
                           Icons.add,

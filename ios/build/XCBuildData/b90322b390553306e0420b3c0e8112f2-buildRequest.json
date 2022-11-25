@@ -1,0 +1,94 @@
+{
+  "_buildCommand2" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98e5199a3f70555689be7018ee7f9f878d"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e989da425bb6d6d5d8dbb95e4afffb82217"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e9818352c54edac2258b91768852065ce5e"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98312b4bc59bbbe2c06c205bf4da6737f5"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98355cff7d758029119bc2218cc297bc97"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e987cb9c58d33d05677fb576674bac57313"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98839a1650b1f10605b2db52456c9e6468"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98dc72abb4cc15cc774476b5dd78d48ae2"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e9821d372cc1e7c7587a12aeda843619e39"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98df83286ef0c813795b2a6e5600f49912"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98543ab73053b8b8a6189d809226b11707"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e989152bf3b88a1e7242d5cb4c469a589c6"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e986f0e8be830d0d3c28782ddeefee89819"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98ef10255b706f98e1e88fae00855b0968"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98b35b2234c62e83383ef7c2509ddd49f7"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e983786431ce548989b846bbf1a7384f58e"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e9822ec4dd39c676b6a04edc68704df6cd0"
+    }
+  ],
+  "containerPath" : "/Users/unurjargal/Documents/GitHub/agr_soils_mobile/ios/Pods/Pods.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/unurjargal/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/unurjargal/Library/Developer/Xcode/DerivedData/Pods-cxjkaxhhxozshygwnjtgdlomdjst/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/unurjargal/Library/Developer/Xcode/DerivedData/Pods-cxjkaxhhxozshygwnjtgdlomdjst/Index/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : false,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : false
+}

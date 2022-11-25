@@ -42,8 +42,8 @@ class Season extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const SizedBox(
-                        width: 30,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
                       ),
                       const Text(
                         'Улирал сонгох',
@@ -51,10 +51,12 @@ class Season extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.5,
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                           icon: const Icon(
                             Icons.cancel,
                             size: 35,
@@ -72,17 +74,9 @@ class Season extends StatelessWidget {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Seasons(),
+                  const Seasonsss(),
                   const SizedBox(
                     height: 20,
-                  ),
-                  const Seasonss(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Seasonss(),
-                  const SizedBox(
-                    height: 35,
                   ),
                   Row(
                     children: const [
@@ -128,66 +122,167 @@ class Season extends StatelessWidget {
         ),
       ),
     );
-//      Container(
-//       height: 40,
-//       width: MediaQuery.of(context).size.width * 0.3,
-//       decoration: BoxDecoration(
-//           color: Colors.white.withOpacity(0.9),
-//           borderRadius: BorderRadius.circular(50)),
-//       child: GestureDetector(
-//         onTap: () =>
-// showModalBottomSheet(
-//             shape:
-//                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-//             context: context,
-//             builder: (BuildContext context) {
-//               return
-// Container(
-//                 child: Column(
-//                   children: [
-//                     SizedBox(
-//                       height: 10,
-//                     ),
-//                     Container(
-//                       padding: EdgeInsets.only(right: 50, left: 50),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.center,
-//                         children: [
-//                           Container(
-//                             height: 5,
-//                             width: 50,
-//                             decoration: BoxDecoration(
-//                               borderRadius: BorderRadius.circular(25),
-//                               color: Colors.black,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 height: MediaQuery.of(context).size.height * 0.27,
-//               );
-//             }),
-//         child: Center(
-//             child:
-// Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             SizedBox(
-//               width: 5,
-//             ),
-//             Text('Улирал 2022'),
-//             Icon(
-//               Icons.arrow_drop_down,
-//               size: 18,
-//               color: Colors.black45,
-//             )
-//           ],
-//         )
-// ),
-//       ),
-//     );
+//
+  }
+}
+
+bool jan = true;
+bool feb = false;
+bool mar = false;
+
+class Seasonsss extends StatefulWidget {
+  const Seasonsss({super.key});
+
+  @override
+  State<Seasonsss> createState() => _SeasonsssState();
+}
+
+class _SeasonsssState extends State<Seasonsss> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CheckboxListTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.02,
+              ),
+              Text(
+                'Арвин-Хур 2022 он',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+              Text(
+                'Edit',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.Green,
+                    fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+          subtitle: Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+            child: Text(
+              'April 1 - Dec 31, 2022',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
+            ),
+          ),
+          checkColor: AppColors.Green,
+          activeColor: AppColors.whiteColor,
+          value: jan,
+          onChanged: (val) {
+            setState(() {
+              if (jan = true) {
+                feb = false;
+                mar = false;
+              }
+            });
+          },
+        ),
+        CheckboxListTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.02,
+              ),
+              Text(
+                'Арвин-Хур 2022 он',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+              Text(
+                'Edit',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.Green,
+                    fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+          subtitle: Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+            child: Text(
+              'April 1 - Dec 31, 2022',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
+            ),
+          ),
+          value: feb,
+          checkColor: AppColors.Green,
+          activeColor: AppColors.whiteColor,
+          onChanged: (val) {
+            setState(() {
+              if (feb = true) {
+                jan = false;
+                mar = false;
+              }
+            });
+          },
+        ),
+        CheckboxListTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.02,
+              ),
+              Text(
+                'Арвин-Хур 2022 он',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+              Text(
+                'Edit',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.Green,
+                    fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+          subtitle: Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02),
+            child: Text(
+              'April 1 - Dec 31, 2022',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
+            ),
+          ),
+          value: mar,
+          checkColor: AppColors.Green,
+          activeColor: AppColors.whiteColor,
+          onChanged: (val) {
+            setState(() {
+              if (mar = true) {
+                feb = false;
+                jan = false;
+              }
+            });
+          },
+        ),
+      ],
+    );
   }
 }
 

@@ -1,31 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/profile_screen.dart';
-
 import '../constants/color.dart';
-
-class CustomAddButton extends StatelessWidget {
-  const CustomAddButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenwidth = MediaQuery.of(context).size.width;
-    return InkWell(
-        onTap: () {},
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.Green,
-          ),
-          child: Icon(
-            Icons.add,
-            color: note ? Colors.white : Colors.green,
-          ),
-        ));
-  }
-}
 
 class addHeader extends StatelessWidget {
   const addHeader({
@@ -48,9 +23,7 @@ class addHeader extends StatelessWidget {
               child: Container(
             height: screenHeight * 0.05,
             child: TextButton(
-              onPressed: () {
-                note = !note;
-              },
+              onPressed: () {},
               child: Text(
                 'Буцах',
                 style: TextStyle(

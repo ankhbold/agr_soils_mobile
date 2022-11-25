@@ -64,7 +64,9 @@ class _RoundSheetButtonState extends State<RoundSheetButton> {
                         width: MediaQuery.of(context).size.width * 0.45,
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                           icon: const Icon(
                             Icons.cancel,
                             size: 40,

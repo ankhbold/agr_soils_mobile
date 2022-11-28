@@ -324,69 +324,73 @@ int current = 0;
 class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      height: MediaQuery.of(context).size.height * 0.125,
-      width: MediaQuery.of(context).size.width * 0.93,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              margin: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.03,
-                left: MediaQuery.of(context).size.width * 0.03,
-              ),
-              child: myTabs[current]),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
-            width: MediaQuery.of(context).size.width * 0.925,
-            child: ListView.builder(
-              itemCount: 8,
-              padding: const EdgeInsets.only(right: 3, left: 3),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) => Padding(
-                padding: const EdgeInsets.all(3),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.055,
-                  // width: MediaQuery.of(context).size.width * 0.3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(width: 0.15),
-                    color: current == index
-                        ? const Color(0xff0f766e)
-                        : const Color.fromARGB(255, 255, 255, 255),
-                  ),
-                  child: Center(
-                    child: GestureDetector(
-                      child: AnimatedContainer(
-                        margin: const EdgeInsets.only(left: 10, right: 10),
-                        duration: const Duration(milliseconds: 250),
-                        child: Text(
-                          items[index],
-                          style: TextStyle(
-                            color:
-                                current == index ? Colors.white : Colors.black,
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        height: MediaQuery.of(context).size.height * 0.125,
+        width: MediaQuery.of(context).size.width * 0.93,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                margin: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.03,
+                  left: MediaQuery.of(context).size.width * 0.03,
+                ),
+                child: myTabs[current]),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.925,
+              child: ListView.builder(
+                itemCount: 8,
+                padding: const EdgeInsets.only(right: 3, left: 3),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) => Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.055,
+                    // width: MediaQuery.of(context).size.width * 0.3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(width: 0.15),
+                      color: current == index
+                          ? const Color(0xff0f766e)
+                          : const Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    child: Center(
+                      child: GestureDetector(
+                        child: AnimatedContainer(
+                          margin: const EdgeInsets.only(left: 10, right: 10),
+                          duration: const Duration(milliseconds: 250),
+                          child: Text(
+                            items[index],
+                            style: TextStyle(
+                              color: current == index
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          setState(() {
+                            current = index;
+                          });
+                        },
                       ),
-                      onTap: () {
-                        setState(() {
-                          current = index;
-                        });
-                      },
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          // SizedBox(
-          //   height: 5,
-          // ),
-        ],
+            // SizedBox(
+            //   height: 5,
+            // ),
+          ],
+        ),
       ),
     );
   }

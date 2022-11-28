@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/res/color.dart';
 import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/insight_screen.dart';
 import 'package:mvvm/screen/notes_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
+
+HomeViewViewModel homeViewViewModel = HomeViewViewModel();
+int index_color = 0;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,9 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeViewViewModel homeViewViewModel = HomeViewViewModel();
-  int index_color = 0;
-
   List Screen = [
     const FieldScreen(),
     const NoteScreen(),
@@ -96,18 +97,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Column(
                   children: [
                     FloatingActionButton.small(
-                        backgroundColor: AppColors.Green,
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                        ),
-                        elevation: 0,
-                        onPressed: () {
-                          setState(() {
-                            fabshow = false;
+                      backgroundColor: AppColors.Green,
+                      child: Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
+                      elevation: 0,
+                      onPressed: () {
+                        setState(
+                          () {
+                            index_color = 0;
                             note = !note;
-                          });
-                        }),
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
                 GestureDetector(
@@ -161,192 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class NoteAdd extends StatefulWidget {
-  const NoteAdd({super.key});
-
-  @override
-  State<NoteAdd> createState() => _NoteAddState();
-}
-
-class _NoteAddState extends State<NoteAdd> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
-      child: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          buildNavigator(),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 50,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        note = !note;
-                      });
-                    },
-                    child: Text(
-                      'Буцах',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.Green,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 17,
-                  ),
-                  Text(
-                    'Тэмдэглэл',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 0,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Хадгалах',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.Green,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Line4(),
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.03,
-              right: MediaQuery.of(context).size.width * 0.03,
-            ),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.2,
-              // color: Colors.amber[500],
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Таны тэмдэглэл...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-          Line4(),
-          Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.03,
-              right: MediaQuery.of(context).size.width * 0.03,
-            ),
-            child: InkWell(
-              onTap: () {},
-              child: Ink(
-                height: MediaQuery.of(context).size.width * 0.12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.camera_alt,
-                      color: AppColors.Green,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Зураг оруулах',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.Green,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Line5()
-        ],
-      ),
-    );
-  }
-}
-
-Widget buildNavigator() => Container(
-      padding: EdgeInsets.only(right: 50, left: 50),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 5,
-            width: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
-
-class Line4 extends StatelessWidget {
-  const Line4({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors.black,
-          height: 0.2,
-          width: MediaQuery.of(context).size.width * 0.9,
-        ),
-      ],
-    );
-  }
-}
-
-class Line5 extends StatelessWidget {
-  const Line5({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors.black,
-          height: 0.2,
-          width: MediaQuery.of(context).size.width * 0.95,
-        ),
-      ],
     );
   }
 }

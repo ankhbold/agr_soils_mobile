@@ -79,6 +79,7 @@ dependencies:
   geocoding: ^2.0.5
   custom_info_window: ^1.0.1
   permission_handler: ^10.2.0
+  image_picker: ^0.8.6
 
 ##  geocoder: ^0.2.1
 #  geocode: ^1.0.2

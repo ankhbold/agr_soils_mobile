@@ -4,6 +4,7 @@ import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/home_screen.dart';
 
 import '../../screen/profile_screen.dart';
+import '../../screen/widgets/add_note.dart';
 import '../../widget/note_add_button.dart';
 
 class PanelWidget extends StatefulWidget {

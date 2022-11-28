@@ -21,7 +21,6 @@ bool click = true;
 bool clicks = true;
 //-------
 int clicked = 0;
-bool fabshow = true;
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -31,7 +30,7 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  final MapType _currentMapType = MapType.satellite;
+  final MapType _currentMapType = MapType.hybrid;
 
   late GoogleMapController _mapController;
   final Map<String, Marker> _markers = {};
@@ -60,7 +59,7 @@ class _FieldScreenState extends State<FieldScreen> {
         : MediaQuery.of(context).size.height * 0.26;
     final panelHeightOpened = note
         ? MediaQuery.of(context).size.height * 0.65
-        : MediaQuery.of(context).size.height * 0.26;
+        : MediaQuery.of(context).size.height * 0.65;
 
     return Scaffold(
         floatingActionButton: Row(
@@ -71,24 +70,15 @@ class _FieldScreenState extends State<FieldScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FloatingActionButton.small(
-                    backgroundColor: AppColors.Green,
-                    onPressed: () {
-                      setState(
-                        () {
-                          note = !note;
-                          fabshow = true;
-                        },
-                      );
-                    },
-                    child: Icon(Icons.cancel_rounded),
-                  ),
-                  FloatingActionButton.small(
-                      backgroundColor: AppColors.Green,
-                      child: Icon(Icons.note_add),
+                      backgroundColor:
+                          Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+                      child: Icon(
+                        Icons.note_add,
+                        color: AppColors.Green,
+                      ),
                       onPressed: () {
                         setState(() {
                           note = !note;
-                          fabshow = !fabshow;
                         });
                       }),
                   FloatingActionButton.small(

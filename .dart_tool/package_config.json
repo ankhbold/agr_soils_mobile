@@ -158,6 +158,12 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "flutter_switch",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_switch-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -384,6 +390,12 @@
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/mgrs_dart-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "modal_bottom_sheet",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "nested",
@@ -746,7 +758,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-11-28T09:57:26.891085Z",
+  "generated": "2022-11-29T07:55:37.992979Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

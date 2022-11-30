@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/res/color.dart';
 
-class NoteScreen extends StatefulWidget {
+class InsightScreen extends StatefulWidget {
   // PageController _pageController = PageController();
-  const NoteScreen({
+  const InsightScreen({
     super.key,
   });
 
   @override
-  State<NoteScreen> createState() => _ScreenState();
+  State<InsightScreen> createState() => _ScreenState();
 }
 
-class _ScreenState extends State<NoteScreen> {
+class _ScreenState extends State<InsightScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

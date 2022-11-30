@@ -56,10 +56,10 @@ class _FieldScreenState extends State<FieldScreen> {
   Widget build(BuildContext context) {
     final panelHeightClosed = note
         ? MediaQuery.of(context).size.height * 0.1
-        : MediaQuery.of(context).size.height * 0.26;
+        : MediaQuery.of(context).size.height * 0.3;
     final panelHeightOpened = note
         ? MediaQuery.of(context).size.height * 0.65
-        : MediaQuery.of(context).size.height * 0.65;
+        : MediaQuery.of(context).size.height * 0.6;
 
     return Scaffold(
         floatingActionButton: Row(
@@ -141,7 +141,7 @@ class _FieldScreenState extends State<FieldScreen> {
               final panelMaxScrollExtent =
                   panelHeightOpened - panelHeightClosed;
               fabHeight =
-                  position * panelMaxScrollExtent + panelHeightClosed + 10;
+                  position * panelMaxScrollExtent + panelHeightClosed + 2;
             },
           ),
           borderRadius: const BorderRadius.vertical(
@@ -172,7 +172,14 @@ class _FieldScreenState extends State<FieldScreen> {
           visible: note ? true : false,
           child: Positioned(
             bottom: fabHeight,
-            child: click ? FloatingFab() : SecondFab(context),
+            child: Column(
+              children: [
+                click ? FloatingFab() : SecondFab(context),
+                SizedBox(
+                  height: 5,
+                )
+              ],
+            ),
           ),
         ),
       ],

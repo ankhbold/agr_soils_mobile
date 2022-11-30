@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field.dart';
+
+bool status = false;
+bool _value = true;
 
 class RoundSheetButton extends StatefulWidget {
   const RoundSheetButton({
@@ -29,7 +34,7 @@ class _RoundSheetButtonState extends State<RoundSheetButton> {
           context: context,
           builder: (BuildContext context) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,35 +54,86 @@ class _RoundSheetButtonState extends State<RoundSheetButton> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Тохиргоо',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              size: 40,
+                              color: Color.fromARGB(
+                                255,
+                                188,
+                                188,
+                                188,
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(
-                        width: 30,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
                       ),
                       const Text(
-                        'Тохиргоо',
+                        'Тэмдэглэл харуулах',
                         style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                        ),
+                            fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.45,
+                        width: MediaQuery.of(context).size.width * 0.25,
                       ),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(
-                            Icons.cancel,
-                            size: 40,
-                            color: Color.fromARGB(
-                              255,
-                              188,
-                              188,
-                              188,
-                            ),
-                          ))
+                      Switch.adaptive(
+                          activeColor: AppColors.Green,
+                          value: _value,
+                          onChanged: (_) {
+                            setState(() {
+                              _value = !_value;
+                            });
+                          }),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.04,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      const Text(
+                        'Бусдын талбарыг харуулах',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      Switch.adaptive(
+                          activeColor: AppColors.Green,
+                          value: _value,
+                          onChanged: (newValue) => (() => _value = newValue)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.04,
+                      ),
                     ],
                   ),
                 ],

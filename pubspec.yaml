@@ -80,6 +80,8 @@ dependencies:
   custom_info_window: ^1.0.1
   permission_handler: ^10.2.0
   image_picker: ^0.8.6
+  flutter_switch: ^0.3.2
+  modal_bottom_sheet: ^2.1.2
 
 ##  geocoder: ^0.2.1
 #  geocode: ^1.0.2

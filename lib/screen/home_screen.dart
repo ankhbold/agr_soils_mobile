@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List Screen = [
     const FieldScreen(),
-    const NoteScreen(),
+    const InsightScreen(),
     const ScreenTwo(),
     const ProfilePage(),
   ];

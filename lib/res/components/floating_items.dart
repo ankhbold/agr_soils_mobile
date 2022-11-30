@@ -325,7 +325,8 @@ class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      // padding: const EdgeInsets.all(5),
+      padding: EdgeInsets.all(0),
       child: Container(
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),

@@ -23,6 +23,7 @@ int current = 0;
 int currents = 0;
 DateTime now = DateTime.now();
 String formattedDate = DateFormat('H a, MMMM d').format(now);
+String formatDate = DateFormat('MMM d').format(now);
 
 class InsightScreen extends StatefulWidget {
   const InsightScreen({super.key});
@@ -54,6 +55,7 @@ class _InsightScreenState extends State<InsightScreen> {
               color: Color.fromARGB(255, 226, 225, 225),
             ),
             AllFields(),
+            DefaultButton(OnTap: () {}, text: 'Бүгдийг харах')
           ],
         ));
   }
@@ -79,6 +81,7 @@ class ChooseLoc extends StatelessWidget {
                 child: RawScrollbar(
                   thumbColor: AppColors.Green,
                   thickness: 4,
+                  radius: Radius.circular(100),
                   // interactive: true,
                   thumbVisibility: true,
                   controller: _firstController,
@@ -126,7 +129,7 @@ class _NearState extends State<Near> {
       itemCount: text.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(3.0),
           child: Container(
             width: MediaQuery.of(context).size.width * 0.26,
             height: MediaQuery.of(context).size.height * 0.01,
@@ -315,13 +318,139 @@ class _AllFieldsState extends State<AllFields> {
               },
             ),
           ),
-          ListView(
+          Column(
             children: [
-              ListTile(
-                title: Image(image: AssetImage('')),
-              )
+              Roow(),
+              Roow(),
+              Roow(),
             ],
-          )
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Roow extends StatelessWidget {
+  const Roow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 25),
+      child: GestureDetector(
+        onTap: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.02,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.1,
+              child: Image.asset(
+                'assets/images/ones.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.05,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Тэлэх талбай 15 га',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                Text(
+                  'Буудай',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.35,
+            ),
+            Column(
+              children: [
+                Text(
+                  formatDate,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                Container(
+                  height: 20,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.red,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '-0.01',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DefaultButton extends StatefulWidget {
+  final VoidCallback OnTap;
+  final String text;
+  DefaultButton({super.key, required this.OnTap, required this.text});
+
+  @override
+  State<DefaultButton> createState() => _DefaultButtonState();
+}
+
+class _DefaultButtonState extends State<DefaultButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Line2(),
+          InkWell(
+            child: Ink(
+              height: 50,
+              child: Center(
+                child: Text(
+                  widget.text,
+                  style: TextStyle(
+                    color: AppColors.Green,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Line2()
         ],
       ),
     );

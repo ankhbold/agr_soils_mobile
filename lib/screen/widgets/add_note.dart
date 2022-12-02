@@ -166,7 +166,10 @@ class _NoteAddState extends State<NoteAdd> {
                 : Container(
                     height: 300,
                     width: 300,
-                    color: Colors.blue,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2),
+                      color: Color.fromARGB(255, 212, 212, 212),
+                    ),
                     child: Center(child: Text('data')),
                   ),
           )

@@ -214,10 +214,11 @@ class _FieldScreenState extends State<FieldScreen> {
                   height: MediaQuery.of(context).size.width * 0.2,
                   width: MediaQuery.of(context).size.width * 0.2,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 239, 239, 239)
-                        .withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                      color: const Color.fromARGB(255, 239, 239, 239)
+                          .withOpacity(0.85),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          width: click ? 2 : 0, color: AppColors.Green)),
                   child: InkWell(
                     onTap: () {
                       setState(() {
@@ -227,7 +228,15 @@ class _FieldScreenState extends State<FieldScreen> {
                     },
                     child: Ink(
                       child: Center(
-                        child: Tabs[index],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Tabs[index],
+                            Text(
+                              'Nov 23',
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

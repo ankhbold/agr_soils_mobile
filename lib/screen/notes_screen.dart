@@ -39,6 +39,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 226, 225, 225),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.Green,
         title: Column(
           children: [

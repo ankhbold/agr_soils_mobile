@@ -381,9 +381,17 @@ class Rectangular extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image.asset(
-        'assets/images/ones.png',
-        fit: BoxFit.cover,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 45,
+            child: Image.asset(
+              'assets/images/ones.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
       ),
     );
   }

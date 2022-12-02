@@ -93,7 +93,7 @@ Widget buildFAB(BuildContext context) => AnimatedCrossFade(
             Row(
               children: [
                 SizedBox(width: 8),
-                Listview(),
+                ListNDVI(),
               ],
             ),
             SizedBox(
@@ -104,8 +104,8 @@ Widget buildFAB(BuildContext context) => AnimatedCrossFade(
       ),
     );
 
-class Listview extends StatelessWidget {
-  const Listview({
+class ListNDVI extends StatelessWidget {
+  const ListNDVI({
     Key? key,
   }) : super(key: key);
 

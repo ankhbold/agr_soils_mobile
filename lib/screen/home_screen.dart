@@ -5,6 +5,7 @@ import 'package:mvvm/screen/field.dart';
 import 'package:mvvm/screen/insight_screen.dart';
 import 'package:mvvm/screen/notes_screen.dart';
 import 'package:mvvm/screen/profile_screen.dart';
+import 'package:mvvm/screen/widgets/weather.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
 
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Icon(
-                        Icons.speaker_notes,
+                        Icons.leaderboard,
                         color: index_color == 1
                             ? const Color(0xff368983)
                             : Colors.grey,
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Icon(
-                        Icons.leaderboard,
+                        Icons.speaker_notes,
                         color: index_color == 2
                             ? const Color(0xff368983)
                             : Colors.grey,

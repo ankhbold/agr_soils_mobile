@@ -122,7 +122,7 @@ class _GooMapState extends State<GooMap> {
                 target: LatLng(50.054818, 105.820441),
                 zoom: 16,
               ),
-              mapType: MapType.hybrid,
+              mapType: MapType.satellite,
               markers: _markers,
               polygons: _polygons,
               myLocationEnabled: true,

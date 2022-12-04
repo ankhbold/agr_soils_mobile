@@ -14,10 +14,22 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "args",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.9.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "auto_reload",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/auto_reload-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "boolean_selector",
@@ -62,6 +74,42 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "connectivity_plus",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus-2.3.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "connectivity_plus_linux",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_linux-1.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "connectivity_plus_macos",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_macos-1.2.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_platform_interface-1.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "connectivity_plus_web",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_web-1.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "connectivity_plus_windows",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_windows-1.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "console_log_handler",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/console_log_handler-1.1.6",
       "packageUri": "lib/",
@@ -96,6 +144,12 @@
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/custom_info_window-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "dbus",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/dbus-0.7.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "dio",
@@ -404,6 +458,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nm",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/nm-0.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "octo_image",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/octo_image-1.0.2",
       "packageUri": "lib/",
@@ -498,6 +558,12 @@
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_windows-0.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "petitparser",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-5.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "platform",
@@ -752,13 +818,19 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "xml",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/xml-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "mvvm",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-12-01T03:21:34.071643Z",
+  "generated": "2022-12-02T10:13:19.754924Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

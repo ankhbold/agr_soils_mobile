@@ -7,6 +7,7 @@ class AppColors {
   static const Color Green = Color(0xff0f766e);
   static const Color Black = Color.fromARGB(255, 0, 0, 0);
   static const Color Unactive = Color.fromARGB(255, 105, 105, 105);
+  static const Color grey = Color.fromARGB(255, 221, 228, 229);
 
   //HexColor('#0f766e')
 }

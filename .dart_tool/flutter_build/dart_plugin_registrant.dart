@@ -16,6 +16,7 @@ import 'package:google_maps_flutter_ios/google_maps_flutter_ios.dart';
 import 'package:image_picker_ios/image_picker_ios.dart';
 import 'package:path_provider_ios/path_provider_ios.dart';
 import 'package:shared_preferences_ios/shared_preferences_ios.dart';
+import 'package:connectivity_plus_linux/connectivity_plus_linux.dart';
 import 'package:path_provider_linux/path_provider_linux.dart';
 import 'package:shared_preferences_linux/shared_preferences_linux.dart';
 import 'package:path_provider_macos/path_provider_macos.dart';
@@ -131,6 +132,16 @@ class _PluginRegistrant {
       }
 
     } else if (Platform.isLinux) {
+      try {
+        ConnectivityLinux.registerWith();
+      } catch (err) {
+        print(
+          '`connectivity_plus_linux` threw an error: $err. '
+          'The app may not function as expected until you remove this plugin from pubspec.yaml'
+        );
+        rethrow;
+      }
+
       try {
         PathProviderLinux.registerWith();
       } catch (err) {

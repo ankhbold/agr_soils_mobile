@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/profile_screen.dart';
+import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/service/remote_services.dart';
 import 'package:geolocator/geolocator.dart';
 import '../service/apis/get_notes_data.dart';

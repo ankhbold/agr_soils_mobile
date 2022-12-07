@@ -353,8 +353,9 @@ class Roow extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        click = !click;
-        clicks = !clicks;
+        isFirstWidgetVisible = false;
+        isSecondWidgetVisible = false;
+        isThirdWidgetVisible = true;
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -451,70 +452,5 @@ class _PanelWidget2State extends State<PanelWidget2> {
           padding: EdgeInsets.zero,
           children: [
             NoteAdd(),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.6,
-            //   child: Center(
-            //     child: Column(
-            //       children: [
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.02,
-            //         ),
-            //         Center(
-            //           child: Container(
-            //             height: 5,
-            //             width: 50,
-            //             decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.circular(25),
-            //               color: Colors.black,
-            //             ),
-            //           ),
-            //         ),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.02,
-            //         ),
-            //         addHeader(screenwidth: MediaQuery.of(context).size.width),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.02,
-            //         ),
-            //         // SizedBox(
-            //         //   height: screenHeight * 0.03,
-            //         // ),
-            //         NotesTextField(
-            //           screenHeight: MediaQuery.of(context).size.height,
-            //           screenwidth: MediaQuery.of(context).size.width,
-            //         ),
-            //         InkWell(
-            //             child: Ink(
-            //           width: MediaQuery.of(context).size.width * 0.9,
-            //           child: Row(
-            //             children: [
-            //               Icon(
-            //                 Icons.camera_alt,
-            //                 color: AppColors.Green,
-            //               ),
-            //               SizedBox(
-            //                 width: MediaQuery.of(context).size.width * 0.02,
-            //               ),
-            //               Text(
-            //                 'Зураг оруулах',
-            //                 style: TextStyle(
-            //                     color: AppColors.Green,
-            //                     fontWeight: FontWeight.w500),
-            //               ),
-            //             ],
-            //           ),
-            //         )),
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.height * 0.02,
-            //         ),
-            //         Line3(),
-            //         Container(
-            //           height: MediaQuery.of(context).size.height * 0.5,
-            //           color: const Color.fromARGB(255, 240, 240, 240),
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ]);
 }

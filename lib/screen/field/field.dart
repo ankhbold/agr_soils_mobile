@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/location/location.dart';
+import 'package:mvvm/screen/field/field_panel.dart';
 import 'package:mvvm/screen/field/floating_fields.dart';
 import 'package:mvvm/screen/field/floating_items.dart';
 import 'package:mvvm/screen/field/panel_widget.dart';
@@ -24,6 +25,9 @@ bool click = true;
 bool clicks = true;
 //-------
 int clicked = 0;
+bool isFirstWidgetVisible = true;
+bool isSecondWidgetVisible = false;
+bool isThirdWidgetVisible = false;
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -54,7 +58,11 @@ class _FieldScreenState extends State<FieldScreen> {
     });
   }
 
-  void _setPolygon() {
+  void _setPolygon(LatLng point) {
+    setState(() {
+      print(
+          'Polygon | Latitude: ${point.latitude}  Longitude: ${point.longitude}');
+    });
     final String polygonIdVal = 'polygon_id_$_polygonIdCounter';
     _polygons.add(
       Polygon(
@@ -121,12 +129,9 @@ class _FieldScreenState extends State<FieldScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final panelHeightClosed = note
-        ? MediaQuery.of(context).size.height * 0.1
-        : MediaQuery.of(context).size.height * 0.3;
-    final panelHeightOpened = note
-        ? MediaQuery.of(context).size.height * 0.65
-        : MediaQuery.of(context).size.height * 0.6;
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
+
+    final panelHeightOpened = MediaQuery.of(context).size.height * 0.65;
 
     return Scaffold(
         floatingActionButton: _isPolygon
@@ -149,7 +154,9 @@ class _FieldScreenState extends State<FieldScreen> {
                             ),
                             onPressed: () {
                               setState(() {
-                                note = !note;
+                                isFirstWidgetVisible = false;
+                                isSecondWidgetVisible = true;
+                                isThirdWidgetVisible = false;
                               });
                             }),
                         FloatingActionButton.small(
@@ -195,90 +202,259 @@ class _FieldScreenState extends State<FieldScreen> {
 
   Stack FirstWidget(double panelHeightOpened, double panelHeightClosed,
       BuildContext context) {
+    final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.1;
+    final panelHeightOpened2 = MediaQuery.of(context).size.height * 0.65;
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
-        SlidingUpPanel(
-          backdropEnabled: true,
-          maxHeight: panelHeightOpened,
-          minHeight: panelHeightClosed,
-          parallaxEnabled: true,
-          parallaxOffset: .5,
-          panelBuilder: (controller) => note
-              ? PanelWidget(
-                  controller: controller,
-                )
-              : PanelWidget2(controller: controller),
-          onPanelSlide: (position) => setState(
-            () {
-              final panelMaxScrollExtent =
-                  panelHeightOpened - panelHeightClosed;
-              fabHeight =
-                  position * panelMaxScrollExtent + panelHeightClosed + 2;
-            },
-          ),
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(30),
-          ),
-          body: Stack(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: GoogleMap(
-                  polygons: _polygons,
-                  markers: _markers,
-                  initialCameraPosition: CameraPosition(
-                    target: firstLocation,
-                    zoom: 14.5,
+        Offstage(
+          offstage: !isFirstWidgetVisible,
+          child: SlidingUpPanel(
+            backdropEnabled: true,
+            maxHeight: panelHeightOpened,
+            minHeight: panelHeightClosed,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            panelBuilder: (controller) => PanelWidget(
+              controller: controller,
+            ),
+            onPanelSlide: (position) => setState(
+              () {
+                final panelMaxScrollExtent =
+                    panelHeightOpened - panelHeightClosed;
+                fabHeight =
+                    position * panelMaxScrollExtent + panelHeightClosed + 2;
+              },
+            ),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+            body: Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: GoogleMap(
+                    polygons: _polygons,
+                    markers: _markers,
+                    initialCameraPosition: CameraPosition(
+                      target: firstLocation,
+                      zoom: 14.5,
+                    ),
+                    mapType: _currentMapType,
+                    onMapCreated: (controller) {
+                      _mapController = controller;
+                      setState(() {
+                        _markers.add(
+                          Marker(
+                            markerId: MarkerId('0'),
+                            position: LatLng(-20.131886, -47.484488),
+                            infoWindow: InfoWindow(
+                                title: 'Roça',
+                                snippet: 'Um bom lugar para estar'),
+                          ),
+                        );
+                      });
+                    },
+                    onTap: (point) {
+                      setState(() {
+                        if (_isPolygon) {
+                          setState(() {
+                            polygonLatLngs.add(point);
+                            _setPolygon(point);
+
+                            _markers.clear();
+                          });
+                        } else if (_isMarker) {
+                          setState(() {
+                            _markers.add(
+                              Marker(
+                                markerId: MarkerId('0'),
+                                position: LatLng(-20.131886, -47.484488),
+                                infoWindow: InfoWindow(
+                                    title: 'Roça',
+                                    snippet: 'Um bom lugar para estar'),
+                              ),
+                            );
+                            _markers.clear();
+                            _polygons.clear();
+                            _setMarkers(point);
+                          });
+                        }
+                      });
+                    },
                   ),
-                  mapType: _currentMapType,
-                  onMapCreated: (controller) {
-                    _mapController = controller;
-                    setState(() {
-                      _markers.add(
-                        Marker(
-                          markerId: MarkerId('0'),
-                          position: LatLng(-20.131886, -47.484488),
-                          infoWindow: InfoWindow(
-                              title: 'Roça',
-                              snippet: 'Um bom lugar para estar'),
-                        ),
-                      );
-                    });
-                  },
-                  onTap: (point) {
-                    setState(() {
-                      if (_isPolygon) {
-                        setState(() {
-                          polygonLatLngs.add(point);
-                          _setPolygon();
-                        });
-                      } else if (_isMarker) {
-                        setState(() {
-                          _markers.add(
-                            Marker(
-                              markerId: MarkerId('0'),
-                              position: LatLng(-20.131886, -47.484488),
-                              infoWindow: InfoWindow(
-                                  title: 'Roça',
-                                  snippet: 'Um bom lugar para estar'),
-                            ),
-                          );
-                          _markers.clear();
-                          _polygons.clear();
-                          _setMarkers(point);
-                        });
-                      }
-                    });
-                  },
                 ),
-              ),
-            ],
+              ],
+            ),
+          ),
+        ),
+        Offstage(
+          offstage: !isSecondWidgetVisible,
+          child: SlidingUpPanel(
+            backdropEnabled: true,
+            maxHeight: panelHeightOpened2,
+            minHeight: panelHeightClosed2,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            panelBuilder: (controller) => PanelWidget2(
+              controller: controller,
+            ),
+            onPanelSlide: (position) => setState(
+              () {
+                final panelMaxScrollExtent =
+                    panelHeightOpened - panelHeightClosed;
+                fabHeight =
+                    position * panelMaxScrollExtent + panelHeightClosed + 2;
+              },
+            ),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+            body: Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: GoogleMap(
+                    polygons: _polygons,
+                    markers: _markers,
+                    initialCameraPosition: CameraPosition(
+                      target: firstLocation,
+                      zoom: 14.5,
+                    ),
+                    mapType: _currentMapType,
+                    onMapCreated: (controller) {
+                      _mapController = controller;
+                      setState(() {
+                        _markers.add(
+                          Marker(
+                            markerId: MarkerId('0'),
+                            position: LatLng(-20.131886, -47.484488),
+                            infoWindow: InfoWindow(
+                                title: 'Roça',
+                                snippet: 'Um bom lugar para estar'),
+                          ),
+                        );
+                      });
+                    },
+                    onTap: (point) {
+                      setState(() {
+                        if (_isPolygon) {
+                          setState(() {
+                            polygonLatLngs.add(point);
+                            _setPolygon(point);
+
+                            _markers.clear();
+                          });
+                        } else if (_isMarker) {
+                          setState(() {
+                            _markers.add(
+                              Marker(
+                                markerId: MarkerId('0'),
+                                position: LatLng(-20.131886, -47.484488),
+                                infoWindow: InfoWindow(
+                                    title: 'Roça',
+                                    snippet: 'Um bom lugar para estar'),
+                              ),
+                            );
+                            _markers.clear();
+                            _polygons.clear();
+                            _setMarkers(point);
+                          });
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Offstage(
+          offstage: !isThirdWidgetVisible,
+          child: SlidingUpPanel(
+            backdropEnabled: true,
+            maxHeight: panelHeightOpened2,
+            minHeight: panelHeightClosed2,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            panelBuilder: (controller) => FieldPanel(
+              controller: controller,
+            ),
+            onPanelSlide: (position) => setState(
+              () {
+                final panelMaxScrollExtent =
+                    panelHeightOpened - panelHeightClosed;
+                fabHeight =
+                    position * panelMaxScrollExtent + panelHeightClosed + 2;
+              },
+            ),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+            body: Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: GoogleMap(
+                    polygons: _polygons,
+                    markers: _markers,
+                    initialCameraPosition: CameraPosition(
+                      target: firstLocation,
+                      zoom: 14.5,
+                    ),
+                    mapType: _currentMapType,
+                    onMapCreated: (controller) {
+                      _mapController = controller;
+                      setState(() {
+                        _markers.add(
+                          Marker(
+                            markerId: MarkerId('0'),
+                            position: LatLng(-20.131886, -47.484488),
+                            infoWindow: InfoWindow(
+                                title: 'Roça',
+                                snippet: 'Um bom lugar para estar'),
+                          ),
+                        );
+                      });
+                    },
+                    onTap: (point) {
+                      setState(() {
+                        if (_isPolygon) {
+                          setState(() {
+                            polygonLatLngs.add(point);
+                            _setPolygon(point);
+
+                            _markers.clear();
+                          });
+                        } else if (_isMarker) {
+                          setState(() {
+                            _markers.add(
+                              Marker(
+                                markerId: MarkerId('0'),
+                                position: LatLng(-20.131886, -47.484488),
+                                infoWindow: InfoWindow(
+                                    title: 'Roça',
+                                    snippet: 'Um bom lugar para estar'),
+                              ),
+                            );
+                            _markers.clear();
+                            _polygons.clear();
+                            _setMarkers(point);
+                          });
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Visibility(
-          visible: note ? true : false,
+          visible: isFirstWidgetVisible ? true : false,
           child: Positioned(
             bottom: fabHeight,
             child: Column(

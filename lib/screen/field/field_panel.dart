@@ -122,8 +122,9 @@ class _RemoveButtonState extends State<RemoveButton> {
       ),
       onPressed: () {
         setState(() {
-          click = !click;
-          clicks = !clicks;
+          isFirstWidgetVisible = true;
+          isSecondWidgetVisible = false;
+          isThirdWidgetVisible = false;
         });
       },
     );

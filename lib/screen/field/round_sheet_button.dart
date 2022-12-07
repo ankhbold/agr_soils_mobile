@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/field/field.dart';
 
 bool status = false;
 bool _value = true;

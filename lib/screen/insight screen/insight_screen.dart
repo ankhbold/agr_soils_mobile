@@ -140,7 +140,7 @@ class _ChooseLocState extends State<ChooseLoc> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.77,
-                  height: MediaQuery.of(context).size.height * 0.062,
+                  height: MediaQuery.of(context).size.width * 0.15,
                   child: RawScrollbar(
                     thumbColor: AppColors.Green,
                     thickness: 4,
@@ -221,7 +221,7 @@ class _NearState extends State<Near> {
                   child: Ink(
                     child: FittedBox(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(
                           text[index],
                           style: TextStyle(

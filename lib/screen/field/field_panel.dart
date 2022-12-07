@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/color.dart';
-import '../../screen/field/field.dart';
-import '../../screen/profile screen/profile_screen.dart';
+import 'field.dart';
+import '../profile screen/profile_screen.dart';
 
 class FieldPanel extends StatefulWidget {
   final ScrollController controller;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/field%20screeb/field.dart';
+import 'package:mvvm/screen/field%20screen/field.dart';
 
-import 'package:mvvm/screen/field%20screeb/floating_fields.dart';
-import 'package:mvvm/screen/field%20screeb/ndvi_button.dart';
+import 'package:mvvm/screen/field%20screen/floating_fields.dart';
+import 'package:mvvm/screen/field%20screen/ndvi_sheet_button.dart';
 
 class FieldsSheet extends StatelessWidget {
   const FieldsSheet({

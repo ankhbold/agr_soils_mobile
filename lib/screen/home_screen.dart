@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/field%20screeb/field.dart';
+import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
 import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';

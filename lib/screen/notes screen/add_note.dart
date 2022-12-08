@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/field%20screeb/field.dart';
+import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/home_screen.dart';
 
 class NoteAdd extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/res/color.dart';
+import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/view_model/services/splash_services.dart';
 
 class SplashView extends StatefulWidget {

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mvvm/res/color.dart';
-import 'package:mvvm/screen/field/field.dart';
-import 'package:mvvm/screen/field/final_field.dart';
+import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/field%20screeb/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
 import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
-import 'package:mvvm/screen/widgets/weather.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
 
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
@@ -21,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List Screen = [
-    const FinalField(),
+    FieldScreen(),
     const InsightScreen(),
     const ScreenTwo(),
     const ProfilePage(),
@@ -109,7 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(
                           () {
                             index_color = 0;
+                            isFabVisible = false;
                             // note = !note;
+                            isFirstWidgetVisible = false;
+                            isAddFieldWidgetVisible = false;
+                            isSecondWidgetVisible = true;
+                            isThirdWidgetVisible = false;
                           },
                         );
                       },

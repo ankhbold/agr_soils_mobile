@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mvvm/res/color.dart';
+import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/insight%20screen/indices_screen.dart';
-import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/screen/insight%20screen/weather_screen.dart';
 import 'package:mvvm/screen/widgets/button/default_button.dart';
 

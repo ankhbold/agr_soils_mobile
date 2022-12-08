@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/res/color.dart';
+import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/notes%20screen/test_screen.dart';
 
 import '../../service/apis/get_notes_data.dart';

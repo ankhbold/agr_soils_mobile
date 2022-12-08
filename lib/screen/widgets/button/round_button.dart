@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/res/color.dart';
+import 'package:mvvm/constants/colors.dart';
 
 class RoundButton extends StatelessWidget {
   final String title;

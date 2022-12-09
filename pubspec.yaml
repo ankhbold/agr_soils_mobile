@@ -57,7 +57,7 @@ dependencies:
   hexcolor: ^2.0.4
   font_awesome_flutter: ^9.1.0
   otp_text_field: ^1.1.1
-  google_maps_flutter: ^2.1.8
+  # google_maps_flutter: ^2.1.8
   flutter_map: ^3.0.0
 #  latlong: ^0.6.1
   logging: ^0.11.4
@@ -84,6 +84,7 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   intl: ^0.17.0
   auto_reload: ^1.1.0
+  google_maps_flutter: ^2.2.1
 
 ##  geocoder: ^0.2.1
 #  geocode: ^1.0.2

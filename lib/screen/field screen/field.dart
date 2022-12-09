@@ -65,7 +65,8 @@ class _FieldScreenState extends State<FieldScreen> {
   void _setPolygon(LatLng point) {
     setState(() {
       print(
-          'Polygon | Latitude: ${point.latitude}  Longitude: ${point.longitude}');
+        'Polygon | Latitude: ${point.latitude}  Longitude: ${point.longitude}',
+      );
     });
     final String polygonIdVal = 'polygon_id_$_polygonIdCounter';
     _polygons.add(
@@ -74,7 +75,7 @@ class _FieldScreenState extends State<FieldScreen> {
         points: polygonLatLngs,
         strokeWidth: 2,
         strokeColor: AppColors.whiteColor,
-        fillColor: AppColors.whiteColor.withOpacity(0.15),
+        fillColor: Color.fromARGB(255, 255, 177, 32).withOpacity(0.15),
       ),
     );
   }
@@ -541,7 +542,7 @@ class _AddFieldState extends State<AddField> {
             setState(() {
               _isMarker = true;
               _isPolygon = false;
-              _polygons.clear();
+              // _polygons.clear();
               isAddFieldWidgetVisible = false;
               isFabVisible = true;
               isFirstWidgetVisible = true;

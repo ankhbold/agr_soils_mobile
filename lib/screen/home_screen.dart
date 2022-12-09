@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/field%20screen/add_note.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
-import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
 
@@ -19,9 +19,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List Screen = [
     FieldScreen(),
-    const InsightScreen(),
-    const ScreenTwo(),
-    const ProfilePage(),
+    InsightScreen(),
+    NotesTodoScreen(),
+    ProfilePage(),
   ];
 
   @override

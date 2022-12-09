@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
 
 import '../../constants/color.dart';
 import 'field.dart';
@@ -108,6 +109,7 @@ class _FieldPanelState extends State<FieldPanel> {
             const SizedBox(
               height: 10,
             ),
+            Weather(),
             const SizedBox(
               height: 10,
             ),

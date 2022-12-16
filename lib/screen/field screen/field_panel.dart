@@ -5,7 +5,7 @@ import '../../constants/color.dart';
 import 'field.dart';
 import '../profile screen/profile_screen.dart';
 
-class FieldPanel extends StatefulWidget {
+class FieldPanel extends StatelessWidget {
   final ScrollController controller;
 
   const FieldPanel({
@@ -13,11 +13,6 @@ class FieldPanel extends StatefulWidget {
     required this.controller,
   }) : super(key: key);
 
-  @override
-  State<FieldPanel> createState() => _FieldPanelState();
-}
-
-class _FieldPanelState extends State<FieldPanel> {
   @override
   Widget build(BuildContext context) => Container(
         decoration: const BoxDecoration(
@@ -28,7 +23,7 @@ class _FieldPanelState extends State<FieldPanel> {
           ),
         ),
         child: ListView(
-          controller: widget.controller,
+          controller: controller,
           padding: EdgeInsets.zero,
           children: <Widget>[
             Container(
@@ -118,16 +113,39 @@ class _FieldPanelState extends State<FieldPanel> {
       );
 }
 
-class RemoveButton extends StatefulWidget {
-  const RemoveButton({
-    Key? key,
-  }) : super(key: key);
+// class RemoveButton extends StatefulWidget {
+//   const RemoveButton({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  State<RemoveButton> createState() => _RemoveButtonState();
-}
+//   @override
+//   State<RemoveButton> createState() => _RemoveButtonState();
+// }
 
-class _RemoveButtonState extends State<RemoveButton> {
+// class _RemoveButtonState extends State<RemoveButton> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//       icon: Icon(
+//         Icons.remove_circle,
+//         color: Colors.black.withOpacity(0.5),
+//         size: 30,
+//       ),
+//       onPressed: () {
+//         setState(() {
+//           click = !click;
+//           fclick = !fclick;
+//           isFirstWidgetVisible = true;
+//           isSecondWidgetVisible = false;
+//           isThirdWidgetVisible = false;
+//         });
+//       },
+//     );
+//   }
+// }
+class RemoveButton extends StatelessWidget {
+  const RemoveButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -137,13 +155,11 @@ class _RemoveButtonState extends State<RemoveButton> {
         size: 30,
       ),
       onPressed: () {
-        setState(() {
-          click = !click;
-          fclick = !fclick;
-          isFirstWidgetVisible = true;
-          isSecondWidgetVisible = false;
-          isThirdWidgetVisible = false;
-        });
+        click = !click;
+        fclick = !fclick;
+        isFirstWidgetVisible = true;
+        isSecondWidgetVisible = false;
+        isThirdWidgetVisible = false;
       },
     );
   }

@@ -302,6 +302,66 @@ class _NotesTodoScreenState extends State<NotesTodoScreen> {
         ),
         toolbarHeight: screenHeight * 0.05,
       ),
+      backgroundColor: AppColors.grey,
+      body: Column(
+        children: [
+          Todolist(insertFunction: addItem, deleteFunction: deleteItem),
+          // we will add our widgets here.
+        ],
+      ),
+    );
+  }
+}
+
+class NotesTodoScree extends StatefulWidget {
+  const NotesTodoScree({Key? key}) : super(key: key);
+
+  @override
+  _NotesTodoScreeState createState() => _NotesTodoScreeState();
+}
+
+class _NotesTodoScreeState extends State<NotesTodoScree> {
+  // we have to create our functions here, where the two widgets can communicate
+
+  // create a database object so we can access database functions
+  var db = DatabaseConnect();
+
+  // function to add todo
+  void addItem(Todo todo) async {
+    await db.insertTodo(todo);
+    setState(() {});
+  }
+
+  // function to delete todo
+  void deleteItem(Todo todo) async {
+    await db.deleteTodo(todo);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.Green,
+        title: Column(
+          children: [
+            const Text(
+              'Тэмдэглэл',
+              style: TextStyle(fontSize: 18),
+            ),
+            // SizedBox(
+            //   height: screenHeight * 0.02,
+            // ),
+            // BuildTextField(),
+            // SizedBox(
+            //   height: screenHeight * 0.01,
+            // ),
+          ],
+        ),
+        toolbarHeight: screenHeight * 0.05,
+      ),
       backgroundColor: const Color(0xFFF5EBFF),
       body: Column(
         children: [

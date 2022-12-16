@@ -2,11 +2,35 @@ import 'package:flutter/material.dart';
 
 import '../../constants/color.dart';
 
-class FloatingFields extends StatefulWidget {
+class FloatingFields extends StatelessWidget {
   const FloatingFields({super.key});
 
   @override
-  State<FloatingFields> createState() => _FloatingFieldsState();
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      height: MediaQuery.of(context).size.height * 0.05,
+      width: MediaQuery.of(context).size.width * 0.7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              margin: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.03,
+                left: MediaQuery.of(context).size.width * 0.03,
+              ),
+              child: myTabs[current]),
+
+          // SizedBox(
+          //   height: 5,
+          // ),
+        ],
+      ),
+    );
+  }
 }
 
 final List<Tab> Tabss = <Tab>[
@@ -71,16 +95,11 @@ final List<Tab> myTabs = <Tab>[
   ),
 ];
 
-class FloatingFourthItem extends StatefulWidget {
+class FloatingFourthItem extends StatelessWidget {
   FloatingFourthItem({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<FloatingFourthItem> createState() => _FloatingFourthItemState();
-}
-
-class _FloatingFourthItemState extends State<FloatingFourthItem> {
   List<String> item = [
     "Буудай",
     "Рапс",
@@ -345,35 +364,6 @@ class FloatingItem extends StatelessWidget {
 }
 
 int current = 0;
-
-class _FloatingFieldsState extends State<FloatingFields> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      height: MediaQuery.of(context).size.height * 0.05,
-      width: MediaQuery.of(context).size.width * 0.7,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              margin: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.03,
-                left: MediaQuery.of(context).size.width * 0.03,
-              ),
-              child: myTabs[current]),
-
-          // SizedBox(
-          //   height: 5,
-          // ),
-        ],
-      ),
-    );
-  }
-}
 
 class Rectangular extends StatelessWidget {
   const Rectangular({super.key});

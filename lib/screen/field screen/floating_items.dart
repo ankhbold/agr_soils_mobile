@@ -46,16 +46,11 @@ final List<Tab> myTabs = <Tab>[
   ),
 ];
 
-class FloatingFourthItem extends StatefulWidget {
+class FloatingFourthItem extends StatelessWidget {
   FloatingFourthItem({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<FloatingFourthItem> createState() => _FloatingFourthItemState();
-}
-
-class _FloatingFourthItemState extends State<FloatingFourthItem> {
   List<String> item = [
     "Буудай",
     "Рапс",

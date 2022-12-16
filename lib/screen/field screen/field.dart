@@ -404,16 +404,9 @@ Future<Position> _determinePosition() async {
   return await Geolocator.getCurrentPosition();
 }
 
-class FieldSheet extends StatefulWidget {
-  const FieldSheet({
-    Key? key,
-  }) : super(key: key);
+class FieldSheet extends StatelessWidget {
+  const FieldSheet({super.key});
 
-  @override
-  State<FieldSheet> createState() => _FieldSheetState();
-}
-
-class _FieldSheetState extends State<FieldSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -486,16 +479,15 @@ class _FieldSheetState extends State<FieldSheet> {
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      setState(() {
-                        isFabVisible = false;
-                        _isPolygon = true;
-                        _isMarker = false;
-                        isAddFieldWidgetVisible = true;
-                        isFirstWidgetVisible = false;
 
-                        isSecondWidgetVisible = false;
-                        isThirdWidgetVisible = false;
-                      });
+                      isFabVisible = false;
+                      _isPolygon = true;
+                      _isMarker = false;
+                      isAddFieldWidgetVisible = true;
+                      isFirstWidgetVisible = false;
+
+                      isSecondWidgetVisible = false;
+                      isThirdWidgetVisible = false;
                     },
                     child: Ink(
                       child: Row(
@@ -523,14 +515,9 @@ class _FieldSheetState extends State<FieldSheet> {
   }
 }
 
-class AddField extends StatefulWidget {
+class AddField extends StatelessWidget {
   const AddField({super.key});
 
-  @override
-  State<AddField> createState() => _AddFieldState();
-}
-
-class _AddFieldState extends State<AddField> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -539,16 +526,14 @@ class _AddFieldState extends State<AddField> {
         height: MediaQuery.of(context).size.height * 0.06,
         child: TextButton(
           onPressed: () {
-            setState(() {
-              _isMarker = true;
-              _isPolygon = false;
-              // _polygons.clear();
-              isAddFieldWidgetVisible = false;
-              isFabVisible = true;
-              isFirstWidgetVisible = true;
-              isSecondWidgetVisible = false;
-              isThirdWidgetVisible = false;
-            });
+            _isMarker = true;
+            _isPolygon = false;
+            _polygons.clear();
+            isAddFieldWidgetVisible = false;
+            isFabVisible = true;
+            isFirstWidgetVisible = true;
+            isSecondWidgetVisible = false;
+            isThirdWidgetVisible = false;
           },
           child: Text(
             'Буцах',

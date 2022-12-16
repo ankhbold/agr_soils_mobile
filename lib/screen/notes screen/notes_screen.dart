@@ -41,6 +41,12 @@ class _ScreenTwoState extends State<ScreenTwo> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.Green,
+        leading: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            )),
         title: Column(
           children: [
             const Text(

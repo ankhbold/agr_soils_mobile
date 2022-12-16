@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/field%20screen/add_note.dart';
 import 'package:mvvm/screen/notes%20screen/todo/models/todo_model.dart';
 
 class UserInput extends StatelessWidget {
@@ -34,15 +33,16 @@ class UserInput extends StatelessWidget {
           const SizedBox(width: 10),
           // this will be the button
           FloatingActionButton(
-            heroTag: 'fsef',
+            heroTag: 'fse',
             onPressed: () {
+              // index_color = 2;
               // create a todo
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NotesTodoScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (_) => NotesTodoScree(),
+              //   ),
+              // );
               var myTodo = Todo(
                   title: textController.text,
                   creationDate: DateTime.now(),

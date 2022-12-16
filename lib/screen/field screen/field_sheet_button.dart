@@ -46,14 +46,9 @@ class FieldsSheet extends StatelessWidget {
   }
 }
 
-class SecondFab extends StatefulWidget {
+class SecondFab extends StatelessWidget {
   const SecondFab({super.key});
 
-  @override
-  State<SecondFab> createState() => _SecondFabState();
-}
-
-class _SecondFabState extends State<SecondFab> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,10 +73,8 @@ class _SecondFabState extends State<SecondFab> {
                           width: click ? 2 : 0, color: AppColors.Green)),
                   child: InkWell(
                     onTap: () {
-                      setState(() {
-                        clicks = !clicks;
-                        clicked = index;
-                      });
+                      clicks = !clicks;
+                      clicked = index;
                     },
                     child: Ink(
                       child: Center(
@@ -107,6 +100,67 @@ class _SecondFabState extends State<SecondFab> {
     );
   }
 }
+// class SecondFab extends StatefulWidget {
+//   const SecondFab({super.key});
+
+//   @override
+//   State<SecondFab> createState() => _SecondFabState();
+// }
+
+// class _SecondFabState extends State<SecondFab> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         SizedBox(
+//           height: MediaQuery.of(context).size.width * 0.22,
+//           width: MediaQuery.of(context).size.width,
+//           child: ListView.builder(
+//             scrollDirection: Axis.horizontal,
+//             itemCount: 8,
+//             itemBuilder: (BuildContext context, int index) {
+//               return Padding(
+//                 padding: const EdgeInsets.only(left: 8, bottom: 8),
+//                 child: Container(
+//                   height: MediaQuery.of(context).size.width * 0.2,
+//                   width: MediaQuery.of(context).size.width * 0.2,
+//                   decoration: BoxDecoration(
+//                       color: const Color.fromARGB(255, 239, 239, 239)
+//                           .withOpacity(0.85),
+//                       borderRadius: BorderRadius.circular(12),
+//                       border: Border.all(
+//                           width: click ? 2 : 0, color: AppColors.Green)),
+//                   child: InkWell(
+//                     onTap: () {
+//                       setState(() {
+//                         clicks = !clicks;
+//                         clicked = index;
+//                       });
+//                     },
+//                     child: Ink(
+//                       child: Center(
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                           children: [
+//                             Tabs[index],
+//                             Text(
+//                               'Nov 23',
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//         NdviButton(),
+//       ],
+//     );
+//   }
+// }
 //     Container(
 //       height: 40,
 //       width: MediaQuery.of(context).size.width * 0.25,

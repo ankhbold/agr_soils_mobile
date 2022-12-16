@@ -94,9 +94,9 @@ class _InsightState extends State<Insight> {
               Weather(),
               DefaultButton(
                 OnTap: () {
-                  setState(() {
-                    Navigator.pushNamed(context, 'page2');
-                  });
+                  // setState(() {
+                  Navigator.pushNamed(context, 'page2');
+                  // });
                 },
                 text: 'Дэлгэрэнгүй харах',
               ),
@@ -104,9 +104,9 @@ class _InsightState extends State<Insight> {
               AllFields(),
               DefaultButton(
                 OnTap: () {
-                  setState(() {
-                    Navigator.pushNamed(context, 'page3');
-                  });
+                  // setState(() {
+                  Navigator.pushNamed(context, 'page3');
+                  // });
                 },
                 text: 'Бүгдийг харах',
               ),

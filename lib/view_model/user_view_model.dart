@@ -14,7 +14,9 @@ class UserViewModel with ChangeNotifier {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     final String? user_id = sp.getString('user_id');
 
-    return UserModel(user_id: user_id.toString());
+    return UserModel(
+      user_id: user_id.toString(),
+    );
   }
 
   Future<bool> remove() async {

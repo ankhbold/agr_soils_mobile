@@ -86,67 +86,105 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
           GetNote note = listNote[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${note.createdAt}',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
+            child: Dismissible(
+              key: Key(note.id.toString()),
+              confirmDismiss: (direction) {
+                return showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: const Text('delete?'),
+                        actions: [
+                          TextButton(
+                              onPressed: () async {
+                                bool response =
+                                    await repository.deleteData(note.id);
+                                if (response) {
+                                  Navigator.pop(context, true);
+                                } else {
+                                  Navigator.pop(context, false);
+                                }
+                              },
+                              child: const Text('yes')),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('no')),
+                        ],
+                      );
+                    });
+              },
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.92,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${note.createdAt}',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'усалгаатай - 1',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${note.name}',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            Color.fromARGB(255, 127, 127, 127),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const Text(
-                                'усалгаатай - 1',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                '${note.nameEn}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 127, 127, 127),
-                                ),
-                              ),
-                            ],
+                                IconButton(
+                                    onPressed: () {}, icon: Icon(Icons.edit))
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.16,
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                              'assets/images/note.jpeg',
-                            )),
-                            borderRadius: BorderRadius.circular(10),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.16,
+                            width: MediaQuery.of(context).size.width * 0.92,
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                'assets/images/note.jpeg',
+                              )),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        Text('${note.name}'),
-                      ],
+                          Text('${note.nameEn}'),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const Line3(),
-              ],
+                  const Line3(),
+                ],
+              ),
             ),
           );
         },

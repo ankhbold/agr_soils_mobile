@@ -67,10 +67,10 @@ class _easonsssState extends State<easonsss> {
                       ),
                     ],
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(right: 140),
                     child: Text(
-                      'April 1 - Dec 31, 2022',
+                      '${seasons.startDate}',
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 12,

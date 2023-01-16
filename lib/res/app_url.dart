@@ -1,5 +1,4 @@
 class AppUrl {
-  // static var baseUrl = 'https://reqres.in' ;
   static var baseUrl = 'http://103.143.40.250:8100';
 
   static var loginEndPint = baseUrl + '/login/mobile';

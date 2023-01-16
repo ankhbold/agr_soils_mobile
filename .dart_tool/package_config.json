@@ -218,6 +218,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_snake_navigationbar",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_snake_navigationbar-0.6.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_switch",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_switch-0.3.2",
       "packageUri": "lib/",
@@ -830,7 +836,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-12-28T06:15:59.001006Z",
+  "generated": "2023-01-16T09:48:45.161540Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

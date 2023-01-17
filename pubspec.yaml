@@ -85,6 +85,7 @@ dependencies:
   intl: ^0.17.0
   auto_reload: ^1.1.0
   google_maps_flutter: ^2.2.1
+  latlong2: ^0.8.1
 
 ##  geocoder: ^0.2.1
 #  geocode: ^1.0.2

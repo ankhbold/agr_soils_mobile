@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/location/location.dart';
 import 'package:mvvm/screen/field%20screen/field_panel.dart';
 import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
@@ -13,6 +12,9 @@ import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 import 'package:mvvm/widget/custom_app_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+List<LatLng> polygonPoints = [];
+
+List<Marker> markers = [];
 bool _isPolygon = false; //Default
 bool fclick = true;
 bool _isMarker = true;
@@ -29,7 +31,6 @@ bool isThirdWidgetVisible = false;
 bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 bool _showText = true;
-Set<Polygon> _polygons = HashSet<Polygon>();
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -39,89 +40,7 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  Set<Marker> _markers = HashSet<Marker>();
-
-  List<LatLng> polygonLatLngs = <LatLng>[];
-  int _polygonIdCounter = 1;
-  int _markerIdCounter = 1;
-  void _setMarkers(LatLng point) {
-    final String markerIdVal = 'marker_id_$_markerIdCounter';
-    _markerIdCounter++;
-    setState(
-      () {
-        print(DateTime.now());
-        print(
-            'Marker | Latitude: ${point.latitude}  Longitude: ${point.longitude}');
-        _markers.add(
-          Marker(
-            markerId: MarkerId(markerIdVal),
-            position: point,
-          ),
-        );
-      },
-    );
-  }
-
-  void _setPolygon(LatLng point) {
-    setState(() {
-      print(
-        'Polygon | Latitude: ${point.latitude}  Longitude: ${point.longitude}',
-      );
-    });
-    final String polygonIdVal = 'polygon_id_$_polygonIdCounter';
-    _polygons.add(
-      Polygon(
-        polygonId: PolygonId(polygonIdVal),
-        points: polygonLatLngs,
-        strokeWidth: 2,
-        strokeColor: AppColors.whiteColor,
-        fillColor: Color.fromARGB(255, 255, 177, 32).withOpacity(0.15),
-      ),
-    );
-  }
-
-  void toggleTextVisibility() {
-    setState(() {
-      _showText = !_showText;
-    });
-  }
-
-  Widget _fabPolygon() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        FloatingActionButton.small(
-          backgroundColor: AppColors.Green,
-          onPressed: () {
-            setState(() {
-              _isMarker = true;
-              _isPolygon = false;
-              _polygons.clear();
-            });
-          },
-          child: Icon(Icons.remove),
-        ),
-        FloatingActionButton.extended(
-          onPressed: () {
-            //Remove the last point setted at the polygon
-            setState(() {
-              polygonLatLngs.removeLast();
-            });
-          },
-          icon: Icon(Icons.remove),
-          label: Text('Буцах'),
-          backgroundColor: Color.fromARGB(200, 15, 118, 109),
-        ),
-      ],
-    );
-  }
-
-  final MapType _currentMapType = MapType.hybrid;
-
-  late GoogleMapController _mapController;
-
-  LatLng firstLocation = const LatLng(50.054818, 105.820441);
+  LatLng firstLocation = LatLng(50.054818, 105.820441);
 
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
@@ -136,7 +55,45 @@ class _FieldScreenState extends State<FieldScreen> {
   // Future<Null> _refresh() async {
   //   click;
   // }
+  late MapController _mapController;
 
+  @override
+  void initState() {
+    _mapController = MapController();
+    super.initState();
+  }
+
+  void _navigateToPosition() {
+    _determinePosition().then(
+      (value) =>
+          _mapController.move(LatLng(value.latitude, value.longitude), 13.0),
+    );
+  }
+
+  void _addMarkers(point) {
+    markers.add(Marker(
+      point: point,
+      builder: (context) => Container(
+        child: const Icon(
+          Icons.location_on,
+          color: Color.fromARGB(255, 255, 255, 255),
+          size: 30.0,
+        ),
+      ),
+    ));
+  }
+
+  void _addPolygons(point) {
+    polygonPoints.add(point);
+  }
+
+  var layerOption = TileLayer(
+      urlTemplate:
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      additionalOptions: const {
+        'attribution':
+            'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+      });
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -146,15 +103,43 @@ class _FieldScreenState extends State<FieldScreen> {
     final panelHeightClosed3 = MediaQuery.of(context).size.height * 0.07;
 
     return Scaffold(
-      floatingActionButton: _isPolygon
-          ? polygonLatLngs.length > 0 && _isPolygon
-              ? _fabPolygon()
-              : null
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(
-                  child: Column(
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Center(
+            child: _isPolygon
+                ? Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              polygonPoints.removeLast();
+                            });
+                          },
+                          child: const Text('remove pol')),
+                      ElevatedButton(
+                        onPressed: _navigateToPosition,
+                        child: const Text('Go to location'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            if (_isPolygon) {
+                              _isMarker = true;
+                              _isPolygon = false;
+                              polygonPoints.clear();
+                            } else if (_isMarker) {
+                              _isMarker = false;
+                              _isPolygon = true;
+                              markers.clear();
+                            }
+                          });
+                        },
+                        child: const Text('___'),
+                      ),
+                    ],
+                  )
+                : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton.small(
@@ -179,25 +164,7 @@ class _FieldScreenState extends State<FieldScreen> {
                             const Color.fromARGB(255, 239, 239, 239)
                                 .withOpacity(0.85),
                         elevation: 0,
-                        onPressed: () {
-                          _determinePosition().then(
-                            (value) async {
-                              print("my current location"); //wsg84
-                              print("${value.latitude} ${value.longitude}");
-                              CameraPosition cameraPosition = CameraPosition(
-                                  zoom: 17,
-                                  target:
-                                      LatLng(value.latitude, value.longitude));
-                              final GoogleMapController controller =
-                                  _mapController;
-
-                              controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                      cameraPosition));
-                              setState(() {});
-                            },
-                          );
-                        },
+                        onPressed: () {},
                         child: const Icon(
                           Icons.location_on,
                           color: AppColors.Green,
@@ -205,60 +172,49 @@ class _FieldScreenState extends State<FieldScreen> {
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
+          ),
+        ],
+      ),
       extendBodyBehindAppBar: true,
       appBar: customAppBar(context),
       body: Stack(
         children: [
-          GoogleMap(
-            polygons: _polygons,
-            markers: _markers,
-            initialCameraPosition: CameraPosition(
-              target: firstLocation,
-              zoom: 14.5,
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+              onTap: (tapPosition, point) {
+                setState(() {
+                  if (_isPolygon) {
+                    setState(() {
+                      _addPolygons(point);
+                      markers.clear();
+                    });
+                  } else if (_isMarker) {
+                    _addMarkers(point);
+                    polygonPoints.clear();
+                  }
+                });
+              },
+              center: firstLocation,
+              zoom: 12.0,
             ),
-            mapType: _currentMapType,
-            onMapCreated: (controller) {
-              _mapController = controller;
-              setState(() {
-                _markers.add(
-                  Marker(
-                    markerId: MarkerId('0'),
-                    position: LatLng(-20.131886, -47.484488),
-                    infoWindow: InfoWindow(
-                        title: 'Roça', snippet: 'Um bom lugar para estar'),
+            children: [
+              layerOption,
+              MarkerLayer(
+                markers: markers,
+              ),
+              PolygonLayer(
+                polygons: [
+                  Polygon(
+                    points: polygonPoints,
+                    borderStrokeWidth: 4,
+                    borderColor: const Color.fromARGB(120, 244, 67, 54),
+                    isFilled: true,
+                    color: const Color.fromARGB(81, 244, 67, 54),
                   ),
-                );
-              });
-            },
-            onTap: (point) {
-              setState(() {
-                if (_isPolygon) {
-                  setState(() {
-                    polygonLatLngs.add(point);
-                    _setPolygon(point);
-
-                    _markers.clear();
-                  });
-                } else if (_isMarker) {
-                  setState(() {
-                    _markers.add(
-                      Marker(
-                        markerId: MarkerId('0'),
-                        position: LatLng(-20.131886, -47.484488),
-                        infoWindow: InfoWindow(
-                            title: 'Roça', snippet: 'Um bom lugar para estar'),
-                      ),
-                    );
-                    _markers.clear();
-                    _polygons.clear();
-                    _setMarkers(point);
-                  });
-                }
-              });
-            },
+                ],
+              ),
+            ],
           ),
           Offstage(
             offstage: !isFirstWidgetVisible,
@@ -386,7 +342,6 @@ Future<Position> _determinePosition() async {
 
   permission = await Geolocator.checkPermission();
   // await Geolocator.openLocationSettings();
-  requestMLocationPermissions();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
@@ -528,7 +483,7 @@ class AddField extends StatelessWidget {
           onPressed: () {
             _isMarker = true;
             _isPolygon = false;
-            _polygons.clear();
+            polygonPoints.clear();
             isAddFieldWidgetVisible = false;
             isFabVisible = true;
             isFirstWidgetVisible = true;

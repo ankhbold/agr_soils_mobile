@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/home_screen.dart';
+import 'package:mvvm/utils/routes/routes.dart';
+import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +45,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: const HomeScreen(),
-        // initialRoute: RoutesName.splash,
-        // onGenerateRoute: Routes.generateRoute,
+        // home: const HomeScreen(),
+        initialRoute: RoutesName.splash,
+        onGenerateRoute: Routes.generateRoute,
       ),
     );
   }

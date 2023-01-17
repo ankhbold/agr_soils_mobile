@@ -100,7 +100,7 @@ class _ListProfileState extends State<ListProfile> {
             color: Colors.black54,
           ),
           text: Text(
-            Globals.getUseremail(),
+            Globals.getUsername(),
             style: TextStyle(),
           ),
         ),

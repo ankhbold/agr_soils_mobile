@@ -40,7 +40,7 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  LatLng firstLocation = LatLng(50.054818, 105.820441);
+  LatLng firstLocation = LatLng(50.028372, 105.817248);
 
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
@@ -87,14 +87,6 @@ class _FieldScreenState extends State<FieldScreen> {
     polygonPoints.add(point);
   }
 
-  var layerOption = TileLayer(
-    urlTemplate:
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    additionalOptions: const {
-      'attribution':
-          'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
-    },
-  );
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -200,19 +192,28 @@ class _FieldScreenState extends State<FieldScreen> {
                 });
               },
               center: firstLocation,
-              zoom: 12.0,
+              zoom: 11.5,
             ),
             children: [
               // layerOption,
-              layerOption,
               TileLayer(
-                  backgroundColor: Colors.transparent,
-                  wmsOptions: WMSTileLayerOptions(
-                    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-                    layers: ['agrgis:agr_parcel'],
-                    transparent: true,
-                    format: 'image/png',
-                  )),
+                urlTemplate:
+                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                additionalOptions: const {
+                  'attribution':
+                      'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+                },
+              ),
+              TileLayer(
+                backgroundColor: Colors.transparent,
+                wmsOptions: WMSTileLayerOptions(
+                  baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+                  layers: ['agrgis:agr_parcel'],
+                  transparent: true,
+                  format: 'image/png',
+                  version: '1.1.1',
+                ),
+              ),
               MarkerLayer(
                 markers: markers,
               ),

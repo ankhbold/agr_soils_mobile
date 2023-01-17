@@ -3,7 +3,6 @@ class Globals {
 
   static var username = '';
   static var isLogin = false;
-  static var email = '';
 
   static printInteger() {
     print(anInteger);
@@ -19,14 +18,6 @@ class Globals {
   }
 
   static getUsername() {
-    return username;
-  }
-
-  static ChangeUseremail(String a) {
-    email = a;
-  }
-
-  static getUseremail() {
     return username;
   }
 

@@ -30,9 +30,8 @@ class AuthViewModel with ChangeNotifier {
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
 
-    _myRepo.loginApi(data).then((value) {      
-
-      Globals.changeUsername(value['data']['username']);          
+    _myRepo.loginApi(data).then((value) {
+      Globals.changeUsername(value['data']['username']);
 
       setLoading(false);
       if (value['status']) {
@@ -41,8 +40,8 @@ class AuthViewModel with ChangeNotifier {
         userPreference
             .saveUser(UserModel(user_id: value['data']['id'].toString()));
 
-        Utils.flushBarErrorMessage('Login Successfully', context);
-        Globals.changeIsLogin(true);        
+        Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
+        Globals.changeIsLogin(true);
 
         Future<UserModel> getUserDate() => UserViewModel().getUser();
         getUserDate().then((value) {
@@ -71,7 +70,7 @@ class AuthViewModel with ChangeNotifier {
 
     _myRepo.signUpApi(data).then((value) {
       setSignUpLoading(false);
-      Utils.flushBarErrorMessage('SignUp Successfully', context);
+      Utils.flushBarErrorMessage('Амжилттай бүргүүллээ', context);
       Navigator.pushNamed(context, RoutesName.home);
       if (kDebugMode) {
         print(value.toString());

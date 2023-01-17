@@ -5,6 +5,7 @@ import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
+import 'package:mvvm/conf_global.dart';
 
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
 int index_color = 0;
@@ -67,6 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   onTap: () {
+                    print('***----**');
+                    print(Globals.getIsLogin());
+                    print('***----**');
                     setState(() {
                       index_color = 0;
                     });

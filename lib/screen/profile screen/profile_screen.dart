@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/screen/widgets/button/account_button.dart';
 import 'package:mvvm/screen/profile%20screen/settings_screen.dart';
 import 'package:mvvm/screen/profile%20screen/account_profile.dart';
+import 'package:mvvm/conf_global.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -61,8 +62,8 @@ class ListProfile extends StatelessWidget {
             Icons.account_circle,
             color: Colors.black54,
           ),
-          text: const Text(
-            'batitgel@gmail.com',
+          text: Text(
+            Globals.getUsername(),                
             style: TextStyle(),
           ),
           onTap: () {

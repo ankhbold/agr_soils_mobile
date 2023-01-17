@@ -62,7 +62,41 @@ class _AccountProfileState extends State<AccountProfile> {
               color: Colors.black54,
             ),
             text: const Text(
-              'Мэйл хаяг солих',
+              'batitgel@gmail.com',
+              style: TextStyle(),
+            ),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => AccountProfile()),
+              // );
+            },
+          ),
+          const Line(),
+          AccountButton(
+            icon: const Icon(
+              Icons.mail,
+              color: Colors.black54,
+            ),
+            text: const Text(
+              '94091515',
+              style: TextStyle(),
+            ),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => AccountProfile()),
+              // );
+            },
+          ),
+          const Line(),
+          AccountButton(
+            icon: const Icon(
+              Icons.mail,
+              color: Colors.black54,
+            ),
+            text: const Text(
+              'company',
               style: TextStyle(),
             ),
             onTap: () {
@@ -79,7 +113,7 @@ class _AccountProfileState extends State<AccountProfile> {
               color: Colors.black54,
             ),
             text: const Text(
-              'Нууц үг солих                 ',
+              'Нууц үг                ',
               style: TextStyle(),
             ),
             onTap: () {},

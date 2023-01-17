@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/utils/routes/routes.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
+import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:get/get.dart';
 
 void main() {
   ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -39,18 +37,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => UserViewModel())
       ],
-      child: GetMaterialApp(
+      child: MaterialApp(
         showPerformanceOverlay: false,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        // getPages: AppPage.list,
-        // initialRoute: AppRoute.dashboard,
-        // // home: const HomeScreen(),
-        initialRoute: RoutesName.splash,
-        onGenerateRoute: Routes.generateRoute,
+        home: const HomeScreen(),
+        // initialRoute: RoutesName.splash,
+        // onGenerateRoute: Routes.generateRoute,
       ),
     );
   }

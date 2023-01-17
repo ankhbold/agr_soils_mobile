@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
+import 'package:mvvm/service/remote_services.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../service/apis/get_notes_data.dart';
-
-import '../../service/remote_services.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -14,6 +13,25 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   final now = DateTime.now();
+  List<Post>? posts;
+  var isloaded = false;
+  @override
+  void initState() {
+    super.initState();
+
+    print(DateTime.now());
+
+    getdata();
+  }
+
+  getdata() async {
+    posts = await RemoteService().getPosts();
+    if (posts != null) {
+      setState(() {
+        isloaded = true;
+      });
+    }
+  }
 
   void getLocation() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -35,7 +53,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FinalNotesWidget(),
+      body: FinalNotesWidget(isloaded: isloaded, posts: posts),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print('-------------------------------');
@@ -53,68 +71,30 @@ class _TestScreenState extends State<TestScreen> {
   }
 }
 
-class FinalNotesWidget extends StatefulWidget {
-  FinalNotesWidget({
+class FinalNotesWidget extends StatelessWidget {
+  const FinalNotesWidget({
     Key? key,
+    required this.isloaded,
+    required this.posts,
   }) : super(key: key);
 
-  @override
-  State<FinalNotesWidget> createState() => _FinalNotesWidgetState();
-}
-
-class _FinalNotesWidgetState extends State<FinalNotesWidget> {
-  List<GetNote> listNote = [];
-  Repository repository = Repository();
-  getGetNoteApi() async {
-    listNote = await repository.getGetNoteApi();
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getGetNoteApi();
-    super.initState();
-  }
+  final bool isloaded;
+  final List<Post>? posts;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      child: ListView.builder(
-        itemCount: listNote.length,
-        itemBuilder: (BuildContext context, int index) {
-          GetNote note = listNote[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Dismissible(
-              key: Key(note.id.toString()),
-              confirmDismiss: (direction) {
-                return showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: const Text('delete?'),
-                        actions: [
-                          TextButton(
-                              onPressed: () async {
-                                bool response =
-                                    await repository.deleteData(note.id);
-                                if (response) {
-                                  Navigator.pop(context, true);
-                                } else {
-                                  Navigator.pop(context, false);
-                                }
-                              },
-                              child: const Text('yes')),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('no')),
-                        ],
-                      );
-                    });
-              },
+    return GestureDetector(
+      onTap: () {},
+      child: Visibility(
+        visible: isloaded,
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+        child: ListView.builder(
+          itemCount: posts?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
               child: Column(
                 children: [
                   Container(
@@ -130,39 +110,31 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.92,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${note.createdAt}',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const Text(
-                                      'усалгаатай - 1',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${note.name}',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color:
-                                            Color.fromARGB(255, 127, 127, 127),
-                                      ),
-                                    ),
-                                  ],
+                                Text(
+                                  "${posts![index].createdAt}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                                IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.edit))
+                                const Text(
+                                  'усалгаатай - 1',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  posts![index].name,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 127, 127, 127),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -177,7 +149,9 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          Text('${note.nameEn}'),
+                          Text(
+                            posts![index].name,
+                          )
                         ],
                       ),
                     ),
@@ -185,9 +159,9 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                   const Line3(),
                 ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

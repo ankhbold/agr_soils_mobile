@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/notes%20screen/test_screen.dart';
 
+import '../../service/apis/get_notes_data.dart';
+import '../../service/remote_services.dart';
+
 // import '../data/listdata.dart';
 
 class ScreenTwo extends StatefulWidget {
@@ -12,21 +15,22 @@ class ScreenTwo extends StatefulWidget {
 }
 
 class _ScreenTwoState extends State<ScreenTwo> {
-  // var isloaded = false;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getdata();
-  // }
+  List<Post>? posts;
+  var isloaded = false;
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
 
-  // getdata() async {
-  //   posts = await RemoteService().getPosts();
-  //   if (posts != null) {
-  //     setState(() {
-  //       isloaded = true;
-  //     });
-  //   }
-  // }
+  getdata() async {
+    posts = await RemoteService().getPosts();
+    if (posts != null) {
+      setState(() {
+        isloaded = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +41,12 @@ class _ScreenTwoState extends State<ScreenTwo> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.Green,
-        // leading: IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(
-        //       Icons.arrow_back_ios,
-        //       color: Colors.white,
-        //     )),
+        leading: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            )),
         title: Column(
           children: [
             const Text(
@@ -60,7 +64,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
         ),
         toolbarHeight: screenHeight * 0.12,
       ),
-      body: FinalNotesWidget(),
+      body: FinalNotesWidget(isloaded: isloaded, posts: posts),
     );
   }
 }

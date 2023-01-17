@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mvvm/screen/widgets/button/account_button.dart';
 import 'package:mvvm/screen/profile%20screen/settings_screen.dart';
 import 'package:mvvm/screen/profile%20screen/account_profile.dart';
-import 'package:mvvm/service/apis/get_user_data.dart';
-
-import '../../service/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -33,28 +30,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class ListProfile extends StatefulWidget {
+class ListProfile extends StatelessWidget {
   const ListProfile({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<ListProfile> createState() => _ListProfileState();
-}
-
-class _ListProfileState extends State<ListProfile> {
-  List<User>? user;
-  UserRepository repository = UserRepository();
-  getUserApi() async {
-    // user = await repository.getUserApi(user.id);
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getUserApi();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

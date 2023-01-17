@@ -1,82 +1,20 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:mvvm/service/apis/get_notes_data.dart';
 
-const uri3 = 'http://103.143.40.250:8100/api/note/type/getnotetype';
-const uri4 = 'http://103.143.40.250:8100/api/note/post/store';
-const uri5 = 'http://103.143.40.250:8100/api/note/delete';
-const uri6 = 'http://103.143.40.250:8100/api/note/update';
+import 'apis/get_notes_data.dart';
 
-class Repository {
-  Future getGetNoteApi() async {
-    try {
-      final response = await http.get(
-          // Uri.parse('https://63aa6bd6594f75dc1dcff51c.mockapi.io/name'));
-          Uri.parse(uri3));
-
-      // var data = jsonDecode(response.body.toString());
-      if (response.statusCode == 200) {
-        Iterable it = jsonDecode(response.body);
-
-        List<GetNote> note = it.map((e) => GetNote.fromJson(e)).toList();
-        return note;
-      } else {
-        throw Exception('fail');
-      }
-    } catch (e) {
-      return e.toString();
+class RemoteService {
+  Future<List<Post>?> getPosts() async {
+    var client = http.Client();
+    var uri = Uri.parse(
+      // 'http://103.143.40.250:8100/api/parcel/parcelnote/store?description=%27test%27&x_coordinate=105.665262&y_coordinate=49.950589&note_date=2022-11-07',
+      'http://103.143.40.250:8100/api/note/type/getnotetype',
+      // 'https://jsonplaceholder.typicode.com/posts',
+    );
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return postFromJson(json);
     }
-  }
-
-  Future createData(String name) async {
-    try {
-      final response = await http.post(
-          Uri.parse('http://103.143.40.250:8100/api/note/post/store'),
-          body: {
-            'name': name,
-          });
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future updatePage(String id, String name, String nameEn) async {
-    try {
-      final response = await http.put(
-        Uri.parse('$uri6/$id'),
-        body: {
-          'name': name,
-          'name_en': nameEn,
-        },
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future deleteData(int id) async {
-    try {
-      final response = await http.delete(
-        Uri.parse('$uri5/$id'),
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
+    return null;
   }
 }

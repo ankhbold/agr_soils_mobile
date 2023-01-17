@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
+import 'package:mvvm/screen/login_view.dart';
 import 'package:mvvm/screen/widgets/button/account_button.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'profile_screen.dart';
 
-class AccountProfile extends StatelessWidget {
+class AccountProfile extends StatefulWidget {
   const AccountProfile({super.key});
 
+  @override
+  State<AccountProfile> createState() => _AccountProfileState();
+}
+
+class _AccountProfileState extends State<AccountProfile> {
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context);
@@ -96,8 +101,13 @@ class AccountProfile extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              userPrefernece.remove().then((value) {
-                Navigator.pushNamed(context, RoutesName.login);
+              setState(() {
+                userPrefernece.remove().then((value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                  );
+                });
               });
             },
             child: Ink(

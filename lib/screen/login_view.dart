@@ -148,12 +148,12 @@ class _LoginViewState extends State<LoginView> {
                 // Navigator.push(
                 //     context, MaterialPageRoute(builder: (_) => HomeScreen()));
                 if (_emailController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Please enter email', context);
+                  Utils.flushBarErrorMessage('Мэйл хаягаа оруулна уу', context);
                 } else if (_passwordController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Please enter password', context);
+                  Utils.flushBarErrorMessage('Нууц үг оруулна уу', context);
                 } else if (_passwordController.text.length < 3) {
                   Utils.flushBarErrorMessage(
-                      'Please enter 6 digit password', context);
+                      '6 оронтой тоо оруулна уу', context);
                 } else {
                   Map data = {
                     'username': _emailController.text.toString(),

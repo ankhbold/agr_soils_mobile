@@ -74,7 +74,7 @@ class _AccountProfileState extends State<AccountProfile> {
           const Line(),
           AccountButton(
             icon: const Icon(
-              Icons.mail,
+              Icons.phone,
               color: Colors.black54,
             ),
             text: const Text(
@@ -91,7 +91,7 @@ class _AccountProfileState extends State<AccountProfile> {
           const Line(),
           AccountButton(
             icon: const Icon(
-              Icons.mail,
+              Icons.build,
               color: Colors.black54,
             ),
             text: const Text(

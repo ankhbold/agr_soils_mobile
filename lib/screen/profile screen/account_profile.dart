@@ -4,6 +4,7 @@ import 'package:mvvm/screen/login_view.dart';
 import 'package:mvvm/screen/widgets/button/account_button.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:mvvm/conf_global.dart';
 
 import 'profile_screen.dart';
 
@@ -103,6 +104,7 @@ class _AccountProfileState extends State<AccountProfile> {
             onTap: () {
               setState(() {
                 userPrefernece.remove().then((value) {
+                  Globals.changeIsLogin(false);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginView()),

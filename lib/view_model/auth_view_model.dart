@@ -6,6 +6,7 @@ import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:mvvm/conf_global.dart';
 
 class AuthViewModel with ChangeNotifier {
   final _myRepo = AuthRepository();
@@ -29,10 +30,10 @@ class AuthViewModel with ChangeNotifier {
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
 
-    _myRepo.loginApi(data).then((value) {
-      print('*****');
-      print(value);
-      print('*****');
+    _myRepo.loginApi(data).then((value) {      
+
+      Globals.changeUsername(value['data']['username']);          
+
       setLoading(false);
       if (value['status']) {
         final userPreference =
@@ -41,14 +42,12 @@ class AuthViewModel with ChangeNotifier {
             .saveUser(UserModel(user_id: value['data']['id'].toString()));
 
         Utils.flushBarErrorMessage('Login Successfully', context);
+        Globals.changeIsLogin(true);        
 
-        ////
-        print('------');
         Future<UserModel> getUserDate() => UserViewModel().getUser();
         getUserDate().then((value) {
           print(value.user_id.toString());
         });
-        ////
 
         Navigator.pushNamed(context, RoutesName.home);
         if (kDebugMode) {

@@ -17,7 +17,7 @@ List<LatLng> polygonPoints = [];
 List<Marker> markers = [];
 bool _isPolygon = false; //Default
 bool fclick = true;
-bool _isMarker = true;
+bool _isMarker = false;
 bool note = true;
 //------
 bool click = true;
@@ -88,12 +88,13 @@ class _FieldScreenState extends State<FieldScreen> {
   }
 
   var layerOption = TileLayer(
-      urlTemplate:
-          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-      additionalOptions: const {
-        'attribution':
-            'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
-      });
+    urlTemplate:
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    additionalOptions: const {
+      'attribution':
+          'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+    },
+  );
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -132,6 +133,9 @@ class _FieldScreenState extends State<FieldScreen> {
                               _isMarker = false;
                               _isPolygon = true;
                               markers.clear();
+                            } else {
+                              _isMarker = false;
+                              _isPolygon = false;
                             }
                           });
                         },
@@ -199,7 +203,16 @@ class _FieldScreenState extends State<FieldScreen> {
               zoom: 12.0,
             ),
             children: [
+              // layerOption,
               layerOption,
+              TileLayer(
+                  backgroundColor: Colors.transparent,
+                  wmsOptions: WMSTileLayerOptions(
+                    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+                    layers: ['agrgis:agr_parcel'],
+                    transparent: true,
+                    format: 'image/png',
+                  )),
               MarkerLayer(
                 markers: markers,
               ),

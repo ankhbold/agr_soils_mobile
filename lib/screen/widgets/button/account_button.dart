@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/constants/colors.dart';
 
 class AccountButton extends StatelessWidget {
   final Icon icon;
@@ -27,7 +28,7 @@ class AccountButton extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.07,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.Green,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,19 +44,6 @@ class AccountButton extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5, child: text),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 15,
-                    color: Colors.black54,
-                  )
-                ],
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.02,
               ),
             ],
           ),

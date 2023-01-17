@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/widgets/button/account_button.dart';
-import 'package:mvvm/screen/profile%20screen/settings_screen.dart';
+import 'package:mvvm/screen/login_view.dart';
 import 'package:mvvm/screen/profile%20screen/account_profile.dart';
 import 'package:mvvm/conf_global.dart';
+import 'package:mvvm/screen/widgets/button/account_button.dart';
+import 'package:mvvm/screen/widgets/button/account_button_less.dart';
+import 'package:mvvm/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -31,13 +34,20 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class ListProfile extends StatelessWidget {
+class ListProfile extends StatefulWidget {
   const ListProfile({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ListProfile> createState() => _ListProfileState();
+}
+
+class _ListProfileState extends State<ListProfile> {
+  @override
   Widget build(BuildContext context) {
+    final userPrefernece = Provider.of<UserViewModel>(context);
+
     return ListView(
       children: [
         SizedBox(
@@ -56,118 +66,113 @@ class ListProfile extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.05,
         ),
         const Line(),
-
-        AccountButton(
-          icon: const Icon(
-            Icons.account_circle,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),                
-            style: TextStyle(),
-          ),
-          onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => AccountProfile()),
-            // );
-            Navigator.pushNamed(context, 'page2');
-          },
-        ),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.account_circle,
+                  color: Colors.black54,
+                ),
+                text: Text(
+                  Globals.getUsername(),
+                  style: TextStyle(),
+                ),
+              )
+            : AccountButton(
+                icon: Icon(
+                  Icons.account_box_rounded,
+                  color: Colors.white,
+                ),
+                text: Text(
+                  'Sign in',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                  );
+                }),
 
         const Line(),
-        AccountButton(
+        AccountButtonLess(
           icon: const Icon(
             Icons.settings,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Тохиргоо                 ',
+          text: Text(
+            Globals.getUseremail(),
             style: TextStyle(),
           ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SettingsScreen(),
-              ),
-            );
-          },
         ),
         const Line2(),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.015,
         ),
         const Line(),
-        AccountButton(
+        AccountButtonLess(
           icon: const Icon(
             Icons.computer_outlined,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Вэб хувилбар         ',
+          text: Text(
+            Globals.getUsername(),
             style: TextStyle(),
           ),
-          onTap: () {},
         ),
         const Line(),
-        AccountButton(
+        AccountButtonLess(
           icon: const Icon(
             Icons.update,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Шинчлэгдсэн түүх ',
+          text: Text(
+            Globals.getUsername(),
             style: TextStyle(),
           ),
-          onTap: () {},
         ),
         const Line2(),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.015,
         ),
         const Line(),
-        AccountButton(
-          icon: const Icon(
+        AccountButtonLess(
+          icon: Icon(
             Icons.comment,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Санал хүсэлт          ',
+          text: Text(
+            Globals.getUsername(),
             style: TextStyle(),
           ),
-          onTap: () {},
         ),
         const Line(),
-        AccountButton(
+        AccountButtonLess(
           icon: const Icon(
             Icons.bookmark_outline,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Гарын авлага          ',
+          text: Text(
+            Globals.getUsername(),
             style: TextStyle(),
           ),
-          onTap: () {},
         ),
         const Line(),
-        AccountButton(
+        AccountButtonLess(
           icon: const Icon(
             Icons.help_outline_sharp,
             color: Colors.black54,
           ),
-          text: const Text(
-            'Тусламж                   ',
+          text: Text(
+            Globals.getUsername(),
             style: TextStyle(),
           ),
-          onTap: () {},
         ),
         const Line2(),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.015,
         ),
         // InkWell(
-        //   onTap: () {
+        //   : () {
         //     userPrefernece.remove().then((value) {
         //       Navigator.pushNamed(context, RoutesName.login);
         //     });
@@ -184,6 +189,32 @@ class ListProfile extends StatelessWidget {
         // ),
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.03,
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              userPrefernece.remove().then((value) {
+                Globals.changeIsLogin(false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginView()),
+                );
+              });
+            });
+          },
+          child: Ink(
+            height: MediaQuery.of(context).size.height * 0.06,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: const Center(
+              child: Text(
+                'Гарах',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ),
         ),
         const Center(
           child: Text(
@@ -320,7 +351,7 @@ class Line4 extends StatelessWidget {
 //             child: Stack(
 //               children: <Widget>[
                 // InkWell(
-                //   onTap: () {
+                //   : () {
                 //     userPrefernece.remove().then((value) {
                 //       Navigator.pushNamed(context, RoutesName.login);
                 //     });
@@ -385,7 +416,7 @@ class Line4 extends StatelessWidget {
 //                   style: TextStyle(
 //                       fontSize: 17, color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   // Navigator.push(context, MaterialPageRoute(builder: (context) => SplashScreen(title: "Splash Screen")));
 //                 },
 //               ),
@@ -399,7 +430,7 @@ class Line4 extends StatelessWidget {
 //                       fontSize: _drawerFontSize,
 //                       color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()),);
 //                 },
 //               ),
@@ -417,7 +448,7 @@ class Line4 extends StatelessWidget {
 //                       fontSize: _drawerFontSize,
 //                       color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   // Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage()),);
 //                 },
 //               ),
@@ -437,7 +468,7 @@ class Line4 extends StatelessWidget {
 //                       fontSize: _drawerFontSize,
 //                       color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   // Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()),);
 //                 },
 //               ),
@@ -457,7 +488,7 @@ class Line4 extends StatelessWidget {
 //                       fontSize: _drawerFontSize,
 //                       color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   // Navigator.push( context, MaterialPageRoute(builder: (context) => ForgotPasswordVerificationPage()), );
 //                 },
 //               ),
@@ -477,7 +508,7 @@ class Line4 extends StatelessWidget {
 //                       fontSize: _drawerFontSize,
 //                       color: Theme.of(context).accentColor),
 //                 ),
-//                 onTap: () {
+//                 : () {
 //                   SystemNavigator.pop();
 //                 },
 //               ),

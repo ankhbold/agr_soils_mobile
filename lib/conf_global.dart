@@ -1,18 +1,18 @@
 class Globals {
-  static var anInteger = 0;
+  // static var anInteger = 0;
 
   static var username = '';
   static var isLogin = false;
   static var email = '';
 
-  static printInteger() {
-    print(anInteger);
-  }
+  // static printInteger() {
+  //   print(anInteger);
+  // }
 
-  static changeInteger(int a) {
-    anInteger = a;
-    printInteger(); // this can be replaced with any static method
-  }
+  // static changeInteger(int a) {
+  //   anInteger = a;
+  //   printInteger(); // this can be replaced with any static method
+  // }
 
   static changeUsername(String a) {
     username = a;
@@ -22,12 +22,12 @@ class Globals {
     return username;
   }
 
-  static ChangeUseremail(String a) {
+  static changeUserEmail(String a) {
     email = a;
   }
 
-  static getUseremail() {
-    return username;
+  static getUserEmail() {
+    return email;
   }
 
   static changeIsLogin(bool a) {

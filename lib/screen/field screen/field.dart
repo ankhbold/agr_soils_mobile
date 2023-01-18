@@ -31,6 +31,7 @@ bool isThirdWidgetVisible = false;
 bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 bool _showText = true;
+var test_layer = 'agrgis:agr_parcel';
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -209,9 +210,9 @@ class _FieldScreenState extends State<FieldScreen> {
                   backgroundColor: Colors.transparent,
                   wmsOptions: WMSTileLayerOptions(
                     baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-                    layers: ['agrgis:agr_parcel'],
+                    layers: [test_layer.setParams({})],
                     transparent: true,
-                    format: 'image/png',
+                    format: 'image/png',                    
                   )),
               MarkerLayer(
                 markers: markers,

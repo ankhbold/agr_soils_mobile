@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
-import 'package:mvvm/screen/field%20screen/round_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 
 AppBar customAppBar(BuildContext context) {
@@ -16,19 +15,20 @@ AppBar customAppBar(BuildContext context) {
             height: MediaQuery.of(context).size.height * 0.005,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.035,
+                width: MediaQuery.of(context).size.width * 0.025,
               ),
               const Season(),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.25,
+                width: MediaQuery.of(context).size.width * 0.4,
               ),
               const FieldsSheet(),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.02,
               ),
-              const RoundSheetButton(),
+              // const RoundSheetButton(),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.02,
               ),

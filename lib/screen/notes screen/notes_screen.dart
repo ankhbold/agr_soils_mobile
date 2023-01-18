@@ -30,13 +30,13 @@ class _ScreenTwoState extends State<ScreenTwo> {
             SizedBox(
               height: screenHeight * 0.02,
             ),
-            const BuildTextField(),
-            SizedBox(
-              height: screenHeight * 0.01,
-            ),
+            // const BuildTextField(),
+            // SizedBox(
+            //   height: screenHeight * 0.01,
+            // ),
           ],
         ),
-        toolbarHeight: screenHeight * 0.12,
+        // toolbarHeight: screenHeight * 0.12,
       ),
       body: FinalNotesWidget(),
     );

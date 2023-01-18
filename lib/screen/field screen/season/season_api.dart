@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mvvm/screen/field%20screen/season/get_season.dart';
+import 'package:mvvm/screen/field%20screen/season/get_seasons.dart';
 
 // const uri = 'https://63aa6bd6594f75dc1dcff51c.mockapi.io/name';
 const uri2 = 'http://103.143.40.250:8100/api/get/season';
@@ -10,8 +10,8 @@ const uri4 = 'http://103.143.40.250:8100/api/note/post/store';
 const uri5 = 'http://103.143.40.250:8100/api/note/delete';
 const uri6 = 'http://103.143.40.250:8100/api/note/update';
 
-class Repository {
-  Future getGetNoteApi() async {
+class RepositorySeason {
+  Future getSeasonApi() async {
     try {
       final response = await http.get(
           // Uri.parse('https://63aa6bd6594f75dc1dcff51c.mockapi.io/name'));
@@ -21,8 +21,9 @@ class Repository {
       if (response.statusCode == 200) {
         Iterable it = jsonDecode(response.body);
 
-        List<GetSeason> note = it.map((e) => GetSeason.fromJson(e)).toList();
-        return note;
+        List<GetSeasons> season =
+            it.map((e) => GetSeasons.fromJson(e)).toList();
+        return season;
       } else {
         throw Exception('fail');
       }
@@ -31,55 +32,55 @@ class Repository {
     }
   }
 
-  Future createData(String name, String nameEn) async {
-    try {
-      final response = await http.post(
-          Uri.parse('http://103.143.40.250:8100/api/note/post/store'),
-          body: {
-            'name': name,
-            'name_en': nameEn,
-          });
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
+  // Future createData(String name, String nameEn) async {
+  //   try {
+  //     final response = await http.post(
+  //         Uri.parse('http://103.143.40.250:8100/api/note/post/store'),
+  //         body: {
+  //           'name': name,
+  //           'name_en': nameEn,
+  //         });
+  //     if (response.statusCode == 200) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     return e.toString();
+  //   }
+  // }
 
-  Future updatePage(String id, String name, String nameEn) async {
-    try {
-      final response = await http.put(
-        Uri.parse('$uri6/$id'),
-        body: {
-          'name': name,
-          'name_en': nameEn,
-        },
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
+  // Future updatePage(String id, String name, String nameEn) async {
+  //   try {
+  //     final response = await http.put(
+  //       Uri.parse('$uri6/$id'),
+  //       body: {
+  //         'name': name,
+  //         'name_en': nameEn,
+  //       },
+  //     );
+  //     if (response.statusCode == 200) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     return e.toString();
+  //   }
+  // }
 
-  Future deleteData(int id) async {
-    try {
-      final response = await http.delete(
-        Uri.parse('$uri5/$id'),
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
+  // Future deleteData(int id) async {
+  //   try {
+  //     final response = await http.delete(
+  //       Uri.parse('$uri5/$id'),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     return e.toString();
+  //   }
+  // }
 }

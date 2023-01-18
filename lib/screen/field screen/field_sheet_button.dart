@@ -13,7 +13,7 @@ class FieldsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.25,
+      width: MediaQuery.of(context).size.width * 0.2,
       height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
           heroTag: Text("btn2"),
@@ -32,13 +32,6 @@ class FieldsSheet extends StatelessWidget {
                 Icons.add,
                 size: 25,
                 color: Color.fromARGB(255, 255, 255, 255),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.001,
-              ),
-              Text(
-                'Талбай',
-                style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
               ),
             ],
           )),

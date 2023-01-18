@@ -1,7 +1,7 @@
-class GetSeason {
-  GetSeason({
-    required this.id,
-    required this.seasonName,
+class GetSeasons {
+  GetSeasons({
+    this.id,
+    this.seasonName,
     required this.isActive,
     this.description,
     required this.proPersonId,
@@ -13,7 +13,7 @@ class GetSeason {
     this.updatedBy,
   });
 
-  GetSeason.fromJson(dynamic json) {
+  GetSeasons.fromJson(dynamic json) {
     id = json['id'];
     seasonName = json['season_name'];
     isActive = json['is_active'];
@@ -26,7 +26,7 @@ class GetSeason {
     createdBy = json['created_by'];
     updatedBy = json['updated_by'];
   }
-  String? id;
+  int? id;
   String? seasonName;
   bool? isActive;
   dynamic description;

@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/field%20screen/season/get_seasons.dart';
+import 'package:mvvm/screen/field%20screen/season/season_api.dart';
 
-class Season extends StatelessWidget {
+class Season extends StatefulWidget {
   const Season({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<Season> createState() => _SeasonState();
+}
+
+class _SeasonState extends State<Season> {
+  var isloaded = false;
+  List<GetSeasons> listSeason = [];
+  RepositorySeason repository = RepositorySeason();
+  getSeasonApi() async {
+    listSeason = await repository.getSeasonApi();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getSeasonApi();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,21 +99,21 @@ class Season extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: ListView.builder(
-                      itemCount: 5,
+                      itemCount: listSeason.length,
                       itemBuilder: (BuildContext context, int index) {
+                        GetSeasons season = listSeason[index];
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: const [
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
                                   SizedBox(
                                     width: 35,
                                   ),
                                   Text(
-                                    'Арвин-Хур 2022 он',
+                                    '${season.seasonName}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400),
@@ -108,15 +130,20 @@ class Season extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 140),
-                                child: Text(
-                                  'April 1 - Dec 31, 2022',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 35,
+                                  ),
+                                  Text(
+                                    '${season.createdAt}',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

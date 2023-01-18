@@ -100,14 +100,14 @@ class _ListProfileState extends State<ListProfile> {
             color: Colors.black54,
           ),
           text: Text(
-            Globals.getUsername(),
+            Globals.getUserEmail(),
             style: TextStyle(),
           ),
         ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
+        // const Line2(),
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.015,
+        // ),
         const Line(),
         AccountButtonLess(
           icon: const Icon(
@@ -115,7 +115,7 @@ class _ListProfileState extends State<ListProfile> {
             color: Colors.black54,
           ),
           text: Text(
-            Globals.getUsername(),
+            Globals.getUserPhone(),
             style: TextStyle(),
           ),
         ),
@@ -126,14 +126,14 @@ class _ListProfileState extends State<ListProfile> {
             color: Colors.black54,
           ),
           text: Text(
-            Globals.getUsername(),
+            '${Globals.getFirstName()} ${Globals.getLastName()}',
             style: TextStyle(),
           ),
         ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
+        // const Line2(),
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.015,
+        // ),
         const Line(),
         AccountButtonLess(
           icon: Icon(
@@ -167,10 +167,10 @@ class _ListProfileState extends State<ListProfile> {
             style: TextStyle(),
           ),
         ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
+        // const Line2(),
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.015,
+        // ),
         // InkWell(
         //   : () {
         //     userPrefernece.remove().then((value) {

@@ -32,6 +32,10 @@ class AuthViewModel with ChangeNotifier {
 
     _myRepo.loginApi(data).then((value) {
       Globals.changeUsername(value['data']['username']);
+      Globals.changeUserEmail(value['data']['email']);
+      Globals.changeUserPhone(value['data']['phone']);
+      Globals.changeFirstName(value['data']['firstname']);
+      Globals.changeLastName(value['data']['lastname']);
 
       setLoading(false);
       if (value['status']) {

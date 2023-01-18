@@ -87,6 +87,15 @@ class _FieldScreenState extends State<FieldScreen> {
     polygonPoints.add(point);
   }
 
+  var wmsLayer = WMSTileLayerOptions(
+      baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580',
+      layers: ['agrgis:agr_parcel'],
+      transparent: true,
+      format: 'image/png',
+      version: '1.1.1',
+      otherParameters: {
+        // 'person_id': '13',
+      });
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -205,15 +214,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 },
               ),
               TileLayer(
-                backgroundColor: Colors.transparent,
-                wmsOptions: WMSTileLayerOptions(
-                  baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-                  layers: ['agrgis:agr_parcel'],
-                  transparent: true,
-                  format: 'image/png',
-                  version: '1.1.1',
-                ),
-              ),
+                  backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
               MarkerLayer(
                 markers: markers,
               ),

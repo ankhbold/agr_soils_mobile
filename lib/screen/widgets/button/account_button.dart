@@ -46,7 +46,7 @@ class AccountButton extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.2,
               ),
             ],
-          ),
+          ), 
         ),
       ),
     );

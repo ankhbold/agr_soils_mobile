@@ -57,9 +57,9 @@ dependencies:
   hexcolor: ^2.0.4
   
   otp_text_field: ^1.1.1
-  # google_maps_flutter: ^2.1.8
-  flutter_map: ^3.0.0
-#  latlong: ^0.6.1
+
+  flutter_map: any
+
   logging: ^0.11.4
   validate: ^1.7.0
   latlong: ^0.6.1
@@ -68,14 +68,12 @@ dependencies:
   sqflite: ^2.1.0+1
   cached_network_image: ^3.2.2
 
-  # provider: ^4.3.1
+
   dio: ^4.0.0
   flutter_secure_storage: ^3.3.5
   location: ^4.4.0
   geolocator: ^9.0.2
-  # google_maps_flutter: ^2.2.1
-#  flutter_osm_plugin: ^0.40.3
-  # flutter_map: any
+
   geocoding: ^2.0.5
   custom_info_window: ^1.0.1
   permission_handler: ^10.2.0
@@ -86,19 +84,6 @@ dependencies:
   auto_reload: ^1.1.0
   google_maps_flutter: ^2.2.1
   latlong2: ^0.8.1
-
-##  geocoder: ^0.2.1
-#  geocode: ^1.0.2
-#  tuple: ^1.0.2
-#  latlong: ^0.6.1
-#  positioned_tap_detector_2: ^1.0.0
-#  transparent_image: ^1.0.0
-#  async: ^2.1.0
-#  flutter_image: ^3.0.0
-#  vector_math: ^2.0.0
-#  proj4dart: ^1.0.4
-#  meta: ^1.1.0
-#  collection: ^1.14.0
 location: ^4.4.0
 flutter_launcher_icons: ^0.11.0
 

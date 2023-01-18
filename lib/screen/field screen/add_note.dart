@@ -9,7 +9,7 @@ import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/screen/notes%20screen/todo/models/db_model.dart';
 import 'package:mvvm/screen/notes%20screen/todo/models/todo_model.dart';
 import 'package:mvvm/screen/notes%20screen/widgets/todo_list.dart';
-import 'package:mvvm/screen/notes%20screen/widgets/user_input.dart';
+import 'package:mvvm/service/remote_services.dart';
 
 class NoteAdd extends StatefulWidget {
   const NoteAdd({super.key});
@@ -31,14 +31,8 @@ class _NoteAddState extends State<NoteAdd> {
     }
   }
 
-  var db = DatabaseConnect();
-
-  // function to add todo
-  void addItem(Todo todo) async {
-    await db.insertTodo(todo);
-    setState(() {});
-  }
-
+  final titleController = TextEditingController();
+  Repository repository = Repository();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,11 +87,17 @@ class _NoteAddState extends State<NoteAdd> {
                     width: 0,
                   ),
                   TextButton(
-                    onPressed: () {
-                      setState(() {
-                        index_color == 2;
-                        print(DateTime.now());
-                      });
+                    onPressed: () async {
+                      print(DateTime.now());
+                      bool response =
+                          await repository.createData(titleController.text);
+                      if (response) {
+                        setState(() {
+                          index_color == 2;
+                        });
+                      } else {
+                        throw Exception('fail to post');
+                      }
                     },
                     child: Text(
                       'Хадгалах',
@@ -122,15 +122,15 @@ class _NoteAddState extends State<NoteAdd> {
               height: MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width * 0.2,
               // color: Colors.amber[500],
-              child: UserInput(insertFunction: addItem),
-              // child: TextField(
-              //   maxLines: 3,
-              //   keyboardType: TextInputType.multiline,
-              //   decoration: InputDecoration(
-              //     hintText: 'Таны тэмдэглэл...',
-              //     border: InputBorder.none,
-              //   ),
-              // ),
+              child: TextField(
+                maxLines: 3,
+                controller: titleController,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  hintText: 'Таны тэмдэглэл...',
+                  border: InputBorder.none,
+                ),
+              ),
             ),
           ),
           Line4(),

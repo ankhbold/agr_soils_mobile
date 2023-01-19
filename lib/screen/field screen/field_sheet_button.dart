@@ -16,25 +16,26 @@ class FieldsSheet extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.2,
       height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
-          heroTag: Text("btn2"),
-          backgroundColor: Color(0xff0f766e).withOpacity(0.8),
-          onPressed: () => showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17)),
-              context: context,
-              builder: (BuildContext context) {
-                return FieldSheet();
-              }),
-          label: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add,
-                size: 25,
-                color: Color.fromARGB(255, 255, 255, 255),
-              ),
-            ],
-          )),
+        heroTag: Text("btn2"),
+        backgroundColor: Color(0xff0f766e).withOpacity(0.8),
+        onPressed: () => showModalBottomSheet(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+            context: context,
+            builder: (BuildContext context) {
+              return FieldSheet();
+            }),
+        label: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add,
+              size: 25,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

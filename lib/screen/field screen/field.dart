@@ -5,13 +5,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/field_panel.dart';
+import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
 import 'package:mvvm/screen/field%20screen/floating_items.dart';
 import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 import 'package:mvvm/widget/custom_app_bar.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'ndvi_sheet_button.dart';
 
 List<LatLng> polygonPoints = [];
 
@@ -106,30 +105,12 @@ class _FieldScreenState extends State<FieldScreen> {
                 ? Row(
                     children: [
                       ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              polygonPoints.removeLast();
-                            });
-                          },
-                          child: const Text('remove pol')),
-                      ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            if (_isPolygon) {
-                              _isMarker = true;
-                              _isPolygon = false;
-                              polygonPoints.clear();
-                            } else if (_isMarker) {
-                              _isMarker = false;
-                              _isPolygon = true;
-                              markers.clear();
-                            } else {
-                              _isMarker = false;
-                              _isPolygon = false;
-                            }
+                            polygonPoints.removeLast();
                           });
                         },
-                        child: const Text('___'),
+                        child: const Text('remove pol'),
                       ),
                     ],
                   )
@@ -501,219 +482,6 @@ class AddField extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class FieldsSheet extends StatefulWidget {
-  const FieldsSheet({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<FieldsSheet> createState() => _FieldsSheetState();
-}
-
-class _FieldsSheetState extends State<FieldsSheet> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.18,
-      height: MediaQuery.of(context).size.height * 0.04,
-      child: FloatingActionButton(
-        onPressed: () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  padding: EdgeInsets.all(30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 5,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Үйлдлүүд',
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 500,
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              Navigator.pop(context);
-                              isFabVisible = false;
-                              // note = !note;
-                              isFirstWidgetVisible = false;
-                              isAddFieldWidgetVisible = false;
-                              isSecondWidgetVisible = true;
-                              isThirdWidgetVisible = false;
-                            });
-                          },
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.touch_app,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Тэмдэглэл нэмэх'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 500,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-
-                            isFabVisible = false;
-                            _isPolygon = true;
-                            _isMarker = false;
-                            isAddFieldWidgetVisible = true;
-                            isFirstWidgetVisible = false;
-
-                            isSecondWidgetVisible = false;
-                            isThirdWidgetVisible = false;
-                          },
-                          child: Ink(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.draw_rounded,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Хүрээ Зурах'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }),
-      ),
-      // child: FloatingActionButton.extended(
-      //     heroTag: Text("btn2"),
-      //     backgroundColor: Color(0xff0f766e).withOpacity(0.8),
-      //     onPressed: () => showModalBottomSheet(
-      //         shape: RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.circular(17)),
-      //         context: context,
-      // builder: (BuildContext context) {
-      //   return FieldSheet();
-      // }),
-      //     label: Row(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         Icon(
-      //           Icons.add,
-      //           size: 25,
-      //           color: Color.fromARGB(255, 255, 255, 255),
-      //         ),
-      //       ],
-      //     )),
-    );
-  }
-}
-
-class SecondFab extends StatefulWidget {
-  const SecondFab({super.key});
-
-  @override
-  State<SecondFab> createState() => _SecondFabState();
-}
-
-class _SecondFabState extends State<SecondFab> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.width * 0.22,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 8,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8, bottom: 8),
-                child: Container(
-                  height: MediaQuery.of(context).size.width * 0.2,
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 239, 239, 239)
-                          .withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          width: click ? 2 : 0, color: AppColors.Green)),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        clicks = !clicks;
-                        clicked = index;
-                      });
-                    },
-                    child: Ink(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Tabs[index],
-                            Text(
-                              'Nov 23',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        NdviButton(),
-      ],
     );
   }
 }

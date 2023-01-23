@@ -53,7 +53,6 @@ class _ListProfileState extends State<ListProfile> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.06,
         ),
-
         Center(
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,
@@ -73,7 +72,7 @@ class _ListProfileState extends State<ListProfile> {
                   color: Colors.black54,
                 ),
                 text: Text(
-                  Globals.getUsername(),
+                  '${Globals.getUsername()} (${Globals.email})',
                   style: TextStyle(),
                 ),
               )
@@ -92,138 +91,88 @@ class _ListProfileState extends State<ListProfile> {
                     MaterialPageRoute(builder: (context) => LoginView()),
                   );
                 }),
-
         const Line(),
-        AccountButtonLess(
-          icon: const Icon(
-            Icons.settings,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUseremail(),
-            style: TextStyle(),
-          ),
-        ),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.accessibility,
+                  color: Colors.black54,
+                ),
+                text: Text(
+                  '${Globals.getFirstName()} ${Globals.getLastName()}',
+                  style: TextStyle(),
+                ),
+              )
+            : SizedBox(
+                height: 1,
+              ),
+        const Line(),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.phone,
+                  color: Colors.black54,
+                ),
+                text: Text(
+                  Globals.getUserPhone(),
+                  style: TextStyle(),
+                ),
+              )
+            : SizedBox(
+                height: 1,
+              ),
         const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
-        const Line(),
-        AccountButtonLess(
-          icon: const Icon(
-            Icons.computer_outlined,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),
-            style: TextStyle(),
-          ),
-        ),
-        const Line(),
-        AccountButtonLess(
-          icon: const Icon(
-            Icons.update,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),
-            style: TextStyle(),
-          ),
-        ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
-        const Line(),
-        AccountButtonLess(
-          icon: Icon(
-            Icons.comment,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),
-            style: TextStyle(),
-          ),
-        ),
-        const Line(),
-        AccountButtonLess(
-          icon: const Icon(
-            Icons.bookmark_outline,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),
-            style: TextStyle(),
-          ),
-        ),
-        const Line(),
-        AccountButtonLess(
-          icon: const Icon(
-            Icons.help_outline_sharp,
-            color: Colors.black54,
-          ),
-          text: Text(
-            Globals.getUsername(),
-            style: TextStyle(),
-          ),
-        ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.015,
-        ),
-        // InkWell(
-        //   : () {
-        //     userPrefernece.remove().then((value) {
-        //       Navigator.pushNamed(context, RoutesName.login);
-        //     });
-        //   },
-        //   child: Center(
-        //     child: Text(
-        //       'Гарах',
-        //       style: TextStyle(
-        //         fontSize: 20,
-        //         color: Colors.red,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.03,
         ),
-        InkWell(
-          onTap: () {
-            setState(() {
-              userPrefernece.remove().then((value) {
-                Globals.changeIsLogin(false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginView()),
-                );
-              });
-            });
-          },
-          child: Ink(
-            height: MediaQuery.of(context).size.height * 0.06,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+        Globals.isLogin
+            ? InkWell(
+                onTap: () {
+                  setState(() {
+                    userPrefernece.remove().then((value) {
+                      Globals.changeIsLogin(false);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginView()),
+                      );
+                    });
+                  });
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Гарах',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+              )
+            : SizedBox(
+                height: 1,
+              ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20,
             ),
-            child: const Center(
-              child: Text(
-                'Гарах',
-                style: TextStyle(color: Colors.red),
+            Text(
+              'Тариалангийн систем, 1.0.0\nios 15.5',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
               ),
             ),
-          ),
-        ),
-        const Center(
-          child: Text(
-            'Тариалангийн систем, 1.0.0\nios 15.5',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
-            ),
-          ),
+          ],
         ),
       ],
     );

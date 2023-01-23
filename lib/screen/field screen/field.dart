@@ -19,19 +19,14 @@ bool _isPolygon = false; //Default
 bool fclick = true;
 bool _isMarker = false;
 bool note = true;
-//------
 bool click = true;
-//------
 bool clicks = true;
-//-------
 int clicked = 0;
 bool isFirstWidgetVisible = true;
 bool isSecondWidgetVisible = false;
 bool isThirdWidgetVisible = false;
 bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
-bool _showText = true;
-var test_layer = 'agrgis:agr_parcel';
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -41,7 +36,7 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  LatLng firstLocation = LatLng(50.054818, 105.820441);
+  LatLng firstLocation = LatLng(50.028372, 105.817248);
 
   static double fabHeightClosed = 95.0;
   double fabHeight = fabHeightClosed;
@@ -53,9 +48,7 @@ class _FieldScreenState extends State<FieldScreen> {
       child: FloatingFields(),
     ),
   ];
-  // Future<Null> _refresh() async {
-  //   click;
-  // }
+
   late MapController _mapController;
 
   @override
@@ -88,13 +81,12 @@ class _FieldScreenState extends State<FieldScreen> {
     polygonPoints.add(point);
   }
 
-  var layerOption = TileLayer(
-    urlTemplate:
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    additionalOptions: const {
-      'attribution':
-          'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
-    },
+  var wmsLayer = WMSTileLayerOptions(
+    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580',
+    layers: ['agrgis:agr_parcel'],
+    transparent: true,
+    format: 'image/png',
+    version: '1.1.1',
   );
   @override
   Widget build(BuildContext context) {
@@ -113,34 +105,12 @@ class _FieldScreenState extends State<FieldScreen> {
                 ? Row(
                     children: [
                       ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              polygonPoints.removeLast();
-                            });
-                          },
-                          child: const Text('remove pol')),
-                      ElevatedButton(
-                        onPressed: _navigateToPosition,
-                        child: const Text('Go to location'),
-                      ),
-                      ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            if (_isPolygon) {
-                              _isMarker = true;
-                              _isPolygon = false;
-                              polygonPoints.clear();
-                            } else if (_isMarker) {
-                              _isMarker = false;
-                              _isPolygon = true;
-                              markers.clear();
-                            } else {
-                              _isMarker = false;
-                              _isPolygon = false;
-                            }
+                            polygonPoints.removeLast();
                           });
                         },
-                        child: const Text('___'),
+                        child: const Text('remove pol'),
                       ),
                     ],
                   )
@@ -148,28 +118,13 @@ class _FieldScreenState extends State<FieldScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton.small(
-                          backgroundColor: Color.fromARGB(255, 239, 239, 239)
-                              .withOpacity(0.85),
-                          child: Icon(
-                            Icons.note_add,
-                            color: AppColors.Green,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isFabVisible = false;
-                              // note = !note;
-                              isFirstWidgetVisible = false;
-                              isAddFieldWidgetVisible = false;
-                              isSecondWidgetVisible = true;
-                              isThirdWidgetVisible = false;
-                            });
-                          }),
-                      FloatingActionButton.small(
                         backgroundColor:
                             const Color.fromARGB(255, 239, 239, 239)
                                 .withOpacity(0.85),
                         elevation: 0,
-                        onPressed: () {},
+                        onPressed: () {
+                          _navigateToPosition();
+                        },
                         child: const Icon(
                           Icons.location_on,
                           color: AppColors.Green,
@@ -201,19 +156,19 @@ class _FieldScreenState extends State<FieldScreen> {
                 });
               },
               center: firstLocation,
-              zoom: 12.0,
+              zoom: 11.5,
             ),
             children: [
-              // layerOption,
-              layerOption,
               TileLayer(
-                  backgroundColor: Colors.transparent,
-                  wmsOptions: WMSTileLayerOptions(
-                    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-                    layers: [test_layer.setParams({})],
-                    transparent: true,
-                    format: 'image/png',                    
-                  )),
+                urlTemplate:
+                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                additionalOptions: const {
+                  'attribution':
+                      'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+                },
+              ),
+              TileLayer(
+                  backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
               MarkerLayer(
                 markers: markers,
               ),
@@ -373,9 +328,14 @@ Future<Position> _determinePosition() async {
   return await Geolocator.getCurrentPosition();
 }
 
-class FieldSheet extends StatelessWidget {
+class FieldSheet extends StatefulWidget {
   const FieldSheet({super.key});
 
+  @override
+  State<FieldSheet> createState() => _FieldSheetState();
+}
+
+class _FieldSheetState extends State<FieldSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -422,6 +382,17 @@ class FieldSheet extends StatelessWidget {
                   height: 40,
                   width: 500,
                   child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        Navigator.pop(context);
+                        isFabVisible = false;
+                        // note = !note;
+                        isFirstWidgetVisible = false;
+                        isAddFieldWidgetVisible = false;
+                        isSecondWidgetVisible = true;
+                        isThirdWidgetVisible = false;
+                      });
+                    },
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -433,7 +404,7 @@ class FieldSheet extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text('Газрын зураг дээр сонголт хийх'),
+                          Text('Тэмдэглэл нэмэх'),
                         ],
                       ),
                     ),

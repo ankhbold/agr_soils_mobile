@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/field%20screen/add_note.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
+import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
 import 'package:mvvm/conf_global.dart';
@@ -21,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List Screen = [
     FieldScreen(),
     InsightScreen(),
-    NotesTodoScreen(),
+    ScreenTwo(),
     ProfilePage(),
   ];
 
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.008,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -60,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: index_color == 0
                             ? const Color(0xff368983)
                             : Colors.grey,
-                        size: MediaQuery.of(context).size.width * 0.06,
+                        size: MediaQuery.of(context).size.width * 0.07,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.006,
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: index_color == 1
                             ? const Color(0xff368983)
                             : Colors.grey,
-                        size: MediaQuery.of(context).size.width * 0.06,
+                        size: MediaQuery.of(context).size.width * 0.07,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.006,
@@ -97,31 +96,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                 ),
-                Column(
-                  children: [
-                    FloatingActionButton.small(
-                      backgroundColor: AppColors.Green,
-                      child: Icon(
-                        Icons.add,
-                        size: 30,
-                      ),
-                      elevation: 0,
-                      onPressed: () {
-                        setState(
-                          () {
-                            index_color = 0;
-                            isFabVisible = false;
-                            // note = !note;
-                            isFirstWidgetVisible = false;
-                            isAddFieldWidgetVisible = false;
-                            isSecondWidgetVisible = true;
-                            isThirdWidgetVisible = false;
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     FloatingActionButton.small(
+                //       backgroundColor: AppColors.Green,
+                //       child: Icon(
+                //         Icons.add,
+                //         size: 30,
+                //       ),
+                //       elevation: 0,
+                //       onPressed: () {
+                //         setState(
+                //           () {
+                //             index_color = 0;
+                //             isFabVisible = false;
+                //             // note = !note;
+                //             isFirstWidgetVisible = false;
+                //             isAddFieldWidgetVisible = false;
+                //             isSecondWidgetVisible = true;
+                //             isThirdWidgetVisible = false;
+                //           },
+                //         );
+                //       },
+                //     ),
+                //   ],
+                // ),
                 GestureDetector(
                   child: Column(
                     children: [
@@ -130,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: index_color == 2
                             ? const Color(0xff368983)
                             : Colors.grey,
-                        size: MediaQuery.of(context).size.width * 0.06,
+                        size: MediaQuery.of(context).size.width * 0.07,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.006,
@@ -153,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: index_color == 3
                             ? const Color(0xff368983)
                             : Colors.grey,
-                        size: MediaQuery.of(context).size.width * 0.06,
+                        size: MediaQuery.of(context).size.width * 0.07,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.006,

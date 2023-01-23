@@ -4,6 +4,9 @@ class Globals {
   static var username = '';
   static var isLogin = false;
   static var email = '';
+  static var phone = '';
+  static var firstname = '';
+  static var lastname = '';
 
   // static printInteger() {
   //   print(anInteger);
@@ -28,6 +31,30 @@ class Globals {
 
   static getUserEmail() {
     return email;
+  }
+
+  static changeUserPhone(String a) {
+    phone = a;
+  }
+
+  static getUserPhone() {
+    return phone;
+  }
+
+  static changeFirstName(String a) {
+    firstname = a;
+  }
+
+  static getFirstName() {
+    return firstname;
+  }
+
+  static changeLastName(String a) {
+    lastname = a;
+  }
+
+  static getLastName() {
+    return lastname;
   }
 
   static changeIsLogin(bool a) {

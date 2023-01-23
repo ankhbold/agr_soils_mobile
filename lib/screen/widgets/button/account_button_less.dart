@@ -12,7 +12,7 @@ class AccountButtonLess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Ink(
+    return Container(
       height: MediaQuery.of(context).size.height * 0.07,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -32,8 +32,9 @@ class AccountButtonLess extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.5, child: text),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.2,
-          ),],
-    ),
+          ),
+        ],
+      ),
     );
   }
 }

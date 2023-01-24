@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mvvm/constants/color.dart';
@@ -9,15 +8,15 @@ import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
 import 'package:mvvm/screen/field%20screen/floating_items.dart';
 import 'package:mvvm/screen/field%20screen/panel_widget.dart';
-import 'package:mvvm/widget/custom_app_bar.dart';
+import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:syncfusion_flutter_maps/maps.dart';
 
 List<LatLng> polygonPoints = [];
 
-List<Marker> markers = [];
-bool _isPolygon = false; //Default
+bool isPolygon = false; //Default
 bool fclick = true;
-bool _isMarker = false;
+bool isMarker = false;
 bool note = true;
 bool click = true;
 bool clicks = true;
@@ -49,45 +48,157 @@ class _FieldScreenState extends State<FieldScreen> {
     ),
   ];
 
-  late MapController _mapController;
+  void changeStage() {
+    setState(() {
+      isFabVisible = false;
+      isFirstWidgetVisible = false;
+      isAddFieldWidgetVisible = false;
+      isSecondWidgetVisible = true;
+      isThirdWidgetVisible = false;
+    });
+  }
 
+  // var dataJson = Globals.jsonDataByCompanyId;
+//sfmaps
+  late MapLatLng _markerPosition;
+  int selectedIndex = 1;
+  late MapShapeSource dataSource;
+  // late MapZoomPanBehavior _mapZoomPanBehavior;
+  late _CustomZoomPanBehavior _mapZoomPanBehavior;
+  late MapTileLayerController _controller;
+  late List<Model> data;
+//
   @override
   void initState() {
-    _mapController = MapController();
+    data = <Model>[
+      Model('Дунд ширээ 135 га',
+          Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Хоёр даваа ', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 8 /16/ ha',
+          Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 14', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Генерал толгой 1',
+          Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Хоёр даваа 1', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Эрээн 6', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Баруун ширээ', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model(
+          'Усалгаатай 10', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 1', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Шарилжит 2', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model(
+          'Рашаант 243га', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Шарилжит 4', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 2', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 5', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 4', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 7 /312/',
+          Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Рашаант 3', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Эрээн 10', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Эрээн 3', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Эрээн 4', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Эрээн 4', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Хутаг-Өндөр /2nd 10/',
+          Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+      Model('Мойлын ар 4', Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)),
+    ];
+    _controller = MapTileLayerController();
+
+    _mapZoomPanBehavior = _CustomZoomPanBehavior()
+      ..focalLatLng = MapLatLng(49.987250, 105.785922)
+      // ..maxZoomLevel
+      // ..minZoomLevel
+      ..enableDoubleTapZooming = true
+      ..zoomLevel = 11
+      ..onTap = updateMarkerChange;
+
+    dataSource = MapShapeSource.network(
+      'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247',
+      shapeDataField: 'name',
+      dataCount: data.length,
+      primaryValueMapper: (int index) => data[index].name,
+      shapeColorValueMapper: (int index) => data[index].color,
+      // shapeColorMappers: shape
+    );
+
     super.initState();
   }
 
   void _navigateToPosition() {
-    _determinePosition().then(
-      (value) =>
-          _mapController.move(LatLng(value.latitude, value.longitude), 13.0),
-    );
+    // _determinePosition().then(
+    //   (value) =>
+    //       _controller.move(LatLng(value.latitude, value.longitude), 13.0),
+    // );
   }
 
-  void _addMarkers(point) {
-    markers.add(Marker(
-      point: point,
-      builder: (context) => Container(
-        child: const Icon(
-          Icons.location_on,
-          color: Color.fromARGB(255, 255, 255, 255),
-          size: 30.0,
-        ),
-      ),
-    ));
+  void changePolygonStage() {
+    setState(() {
+      isFabVisible = false;
+      isPolygon = true;
+      isMarker = false;
+      isAddFieldWidgetVisible = true;
+      isFirstWidgetVisible = false;
+      isSecondWidgetVisible = false;
+      isThirdWidgetVisible = false;
+    });
   }
 
-  void _addPolygons(point) {
-    polygonPoints.add(point);
-  }
+  void updateMarkerChange(Offset position) {
+    _markerPosition = _controller.pixelToLatLng(position);
 
-  var wmsLayer = WMSTileLayerOptions(
-    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580',
-    layers: ['agrgis:agr_parcel'],
-    transparent: true,
-    format: 'image/png',
-    version: '1.1.1',
-  );
+    if (_controller.markersCount > 0) {
+      _controller.clearMarkers();
+    }
+    _controller.insertMarker(0);
+  }
+  // void _addMarkers(point) {
+  //   markers.add(Marker(
+  //     point: point,
+  //     builder: (context) => Container(
+  //       child: const Icon(
+  //         Icons.location_on,
+  //         color: Color.fromARGB(255, 255, 255, 255),
+  //         size: 30.0,
+  //       ),
+  //     ),
+  //   ));
+  // }
+
+  // void _addPolygons(point) {
+  //   polygonPoints.add(point);
+  // }
+
+  // var tilelayer = TileLayer(
+  //     urlTemplate:
+  //         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  //     additionalOptions: const {
+  //       'attribution':
+  //           'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+  //     },
+  //     subdomains: [
+  //       'a',
+  //       'b',
+  //       'c'
+  //     ]);
+  // var wmsLayer = WMSTileLayerOptions(
+  //   baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580',
+  //   layers: ['agrgis:agr_parcel'],
+  //   transparent: true,
+  //   format: 'image/png',
+  //   version: '1.1.1',
+  // );
+  // var polygonLayer = PolygonLayer(
+  //   polygons: [
+  //     Polygon(
+  //       points: polygonPoints,
+  //       borderStrokeWidth: 4,
+  //       borderColor: const Color.fromARGB(120, 244, 67, 54),
+  //       isFilled: true,
+  //       color: const Color.fromARGB(81, 244, 67, 54),
+  //     ),
+  //   ],
+  // );
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -101,7 +212,7 @@ class _FieldScreenState extends State<FieldScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Center(
-            child: _isPolygon
+            child: isPolygon
                 ? Row(
                     children: [
                       ElevatedButton(
@@ -123,7 +234,9 @@ class _FieldScreenState extends State<FieldScreen> {
                                 .withOpacity(0.85),
                         elevation: 0,
                         onPressed: () {
-                          _navigateToPosition();
+                          _mapZoomPanBehavior.focalLatLng =
+                              MapLatLng(49.987250, 105.785922);
+                          _mapZoomPanBehavior.zoomLevel = 11;
                         },
                         child: const Icon(
                           Icons.location_on,
@@ -136,52 +249,110 @@ class _FieldScreenState extends State<FieldScreen> {
         ],
       ),
       extendBodyBehindAppBar: true,
-      appBar: customAppBar(context),
       body: Stack(
         children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              onTap: (tapPosition, point) {
-                setState(() {
-                  if (_isPolygon) {
-                    setState(() {
-                      _addPolygons(point);
-                      markers.clear();
-                    });
-                  } else if (_isMarker) {
-                    _addMarkers(point);
-                    polygonPoints.clear();
-                  }
-                });
-              },
-              center: firstLocation,
-              zoom: 11.5,
-            ),
-            children: [
-              TileLayer(
-                urlTemplate:
-                    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                additionalOptions: const {
-                  'attribution':
-                      'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
+          MapTileLayer(
+            initialFocalLatLng: MapLatLng(49.987250, 105.785922),
+            initialZoomLevel: 12,
+            zoomPanBehavior: _mapZoomPanBehavior,
+            onWillZoom: (MapZoomDetails detail) {
+              return true;
+            },
+            controller: _controller,
+            markerBuilder: (BuildContext context, int index) {
+              return MapMarker(
+                  latitude: _markerPosition.latitude,
+                  longitude: _markerPosition.longitude,
+                  child: Icon(
+                    Icons.location_on,
+                    color: Colors.red,
+                    size: 30,
+                  ));
+            },
+            urlTemplate:
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            sublayers: [
+              MapShapeSublayer(
+                // color: Color.fromARGB(255, 253, 213, 34).withOpacity(0.5)
+                source: dataSource,
+                strokeColor: Colors.white,
+                strokeWidth: 1,
+                selectedIndex: selectedIndex,
+                selectionSettings: MapSelectionSettings(
+                  strokeWidth: 1,
+                  color: Color.fromARGB(255, 255, 0, 0).withOpacity(0.5),
+                  strokeColor: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+                ),
+                onSelectionChanged: (int index) {
+                  setState(() {
+                    _mapZoomPanBehavior.zoomLevel = 13;
+                    selectedIndex = index;
+                    _mapZoomPanBehavior.focalLatLng = MapLatLng(
+                      _markerPosition.latitude,
+                      _markerPosition.longitude,
+                    );
+                  });
                 },
               ),
-              TileLayer(
-                  backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
-              MarkerLayer(
-                markers: markers,
+            ],
+          ),
+          // FlutterMap(
+          //   mapController: _mapController,
+          //   options: MapOptions(
+          //     onTap: (tapPosition, point) {
+          //       setState(() {
+          //         if (isPolygon) {
+          //           setState(() {
+          //             _addPolygons(point);
+          //             markers.clear();
+          //           });
+          //         } else if (isMarker) {
+          //           _addMarkers(point);
+          //           polygonPoints.clear();
+          //         }
+          //       });
+          //     },
+          //     center: firstLocation,
+          //     zoom: 11.5,
+          //   ),
+          //   children: [
+          //     tilelayer,
+          //     MarkerLayer(
+          //       markers: markers,
+          //     ),
+          //    polygonLayer,
+          //   ],
+          // ),
+          Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
-              PolygonLayer(
-                polygons: [
-                  Polygon(
-                    points: polygonPoints,
-                    borderStrokeWidth: 4,
-                    borderColor: const Color.fromARGB(120, 244, 67, 54),
-                    isFilled: true,
-                    color: const Color.fromARGB(81, 244, 67, 54),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.025,
                   ),
+                  const Season(),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                  ),
+                  FieldsSheet(
+                    notecreate: changeStage,
+                    polygoncreate: changePolygonStage,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.02,
+                  ),
+                  // const RoundSheetButton(),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * 0.02,
+                  // ),
                 ],
+              ),
+              const SizedBox(
+                height: 0,
               ),
             ],
           ),
@@ -324,135 +495,7 @@ Future<Position> _determinePosition() async {
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
-
   return await Geolocator.getCurrentPosition();
-}
-
-class FieldSheet extends StatefulWidget {
-  const FieldSheet({super.key});
-
-  @override
-  State<FieldSheet> createState() => _FieldSheetState();
-}
-
-class _FieldSheetState extends State<FieldSheet> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.27,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.only(right: 50, left: 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    height: 5,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Үйлдлүүд',
-                      style: TextStyle(
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 40,
-                  width: 500,
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        Navigator.pop(context);
-                        isFabVisible = false;
-                        // note = !note;
-                        isFirstWidgetVisible = false;
-                        isAddFieldWidgetVisible = false;
-                        isSecondWidgetVisible = true;
-                        isThirdWidgetVisible = false;
-                      });
-                    },
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.touch_app,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text('Тэмдэглэл нэмэх'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 7,
-                ),
-                Container(
-                  height: 40,
-                  width: 500,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-
-                      isFabVisible = false;
-                      _isPolygon = true;
-                      _isMarker = false;
-                      isAddFieldWidgetVisible = true;
-                      isFirstWidgetVisible = false;
-
-                      isSecondWidgetVisible = false;
-                      isThirdWidgetVisible = false;
-                    },
-                    child: Ink(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.draw_rounded,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text('Хүрээ Зурах'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class AddField extends StatelessWidget {
@@ -466,8 +509,8 @@ class AddField extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.06,
         child: TextButton(
           onPressed: () {
-            _isMarker = true;
-            _isPolygon = false;
+            isMarker = true;
+            isPolygon = false;
             polygonPoints.clear();
             isAddFieldWidgetVisible = false;
             isFabVisible = true;
@@ -484,4 +527,36 @@ class AddField extends StatelessWidget {
       ),
     );
   }
+}
+
+class DataModel {
+  DataModel(this.key, this.color, this.id);
+
+  final String key;
+  final Color color;
+  final double id;
+  // final double size;
+}
+
+class _CustomZoomPanBehavior extends MapZoomPanBehavior {
+  _CustomZoomPanBehavior();
+  late MapTapCallback onTap;
+
+  @override
+  void handleEvent(PointerEvent event) {
+    if (event is PointerUpEvent) {
+      onTap(event.localPosition);
+    }
+    super.handleEvent(event);
+  }
+}
+
+typedef MapTapCallback = void Function(Offset position);
+
+class Model {
+  const Model(this.name, this.color);
+
+  final String name;
+
+  final Color color;
 }

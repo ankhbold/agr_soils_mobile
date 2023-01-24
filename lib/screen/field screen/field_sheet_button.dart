@@ -3,39 +3,167 @@ import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
+import 'package:mvvm/screen/field%20screen/geojson/get_geo_api.dart';
 import 'package:mvvm/screen/field%20screen/ndvi_sheet_button.dart';
 
-class FieldsSheet extends StatelessWidget {
-  const FieldsSheet({
-    Key? key,
-  }) : super(key: key);
+class FieldsSheet extends StatefulWidget {
+  final Function notecreate;
+  final Function polygoncreate;
 
+  const FieldsSheet(
+      {super.key, required this.notecreate, required this.polygoncreate});
+
+  @override
+  State<FieldsSheet> createState() => _FieldsSheetState();
+}
+
+class _FieldsSheetState extends State<FieldsSheet> {
+  // late List<dynamic> _geojson;
+  void _getGeoJson() async {
+    NetworkHelper networkHelper = NetworkHelper(url: uri);
+    var geoJson = await networkHelper.getGeo();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getGeoJson();
+  }
+
+  late final List<dynamic> seasons;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.2,
       height: MediaQuery.of(context).size.height * 0.04,
       child: FloatingActionButton.extended(
-        heroTag: Text("btn2"),
-        backgroundColor: Color(0xff0f766e).withOpacity(0.8),
-        onPressed: () => showModalBottomSheet(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-            context: context,
-            builder: (BuildContext context) {
-              return FieldSheet();
-            }),
-        label: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add,
-              size: 25,
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
-          ],
-        ),
-      ),
+          heroTag: Text("btn2"),
+          backgroundColor: Color(0xff0f766e).withOpacity(0.8),
+          onPressed: () {
+            // print(_geojson);
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17)),
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.27,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(right: 50, left: 50),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Container(
+                                  height: 5,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Үйлдлүүд',
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 500,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      widget.notecreate();
+                                      // ChangeStage();
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.touch_app,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Тэмдэглэл нэмэх'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 7,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 500,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      widget.polygoncreate();
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  child: Ink(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.draw_rounded,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Хүрээ Зурах'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          },
+          label: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add,
+                size: 25,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+            ],
+          )),
     );
   }
 }

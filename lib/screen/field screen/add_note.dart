@@ -31,6 +31,17 @@ class _NoteAddState extends State<NoteAdd> {
     }
   }
 
+  void changeToNote() {
+    setState(() {
+      index_color = 2;
+      isFabVisible = true;
+      note = !note;
+      isFirstWidgetVisible = true;
+      isSecondWidgetVisible = false;
+      isThirdWidgetVisible = false;
+    });
+  }
+
   final titleController = TextEditingController();
   Repository repository = Repository();
   @override
@@ -93,7 +104,7 @@ class _NoteAddState extends State<NoteAdd> {
                           await repository.createData(titleController.text);
                       if (response) {
                         setState(() {
-                          index_color == 2;
+                          changeToNote();
                         });
                       } else {
                         throw Exception('fail to post');

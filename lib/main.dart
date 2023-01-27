@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: const HomeScreen(),
+        home: HomeScreen(),
         // initialRoute: RoutesName.splash,
         // onGenerateRoute: Routes.generateRoute,
       ),

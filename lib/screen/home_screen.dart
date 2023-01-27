@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.account_box_rounded,
               // color: Colors.black,
             ),
-            label: 'Аккоунт',
+            label: 'Хэрэглэгч',
           ),
         ],
       ),

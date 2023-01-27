@@ -84,7 +84,8 @@ dependencies:
   auto_reload: ^1.1.0
 
   latlong2: ^0.8.1
-  syncfusion_flutter_maps: ^20.4.44
+  syncfusion_flutter_maps: ^20.4.38 
+  syncfusion_flutter_treemap: ^20.4.44-beta
 location: ^4.4.0
 flutter_launcher_icons: ^0.11.0
 

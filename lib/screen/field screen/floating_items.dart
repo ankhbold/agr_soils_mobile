@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/screen/field%20screen/floatingss/first_float.dart';
 
 import '../../constants/color.dart';
 
@@ -11,13 +12,12 @@ class FloatingFab extends StatefulWidget {
 
 List<String> items = [
   "NDVI",
-  "NDVI - ялгавартай",
-  "Хур Тунадас",
-  "Таримал",
-  "Ургац/дундаж",
-  "Үрэлсэн огноо",
-  "Хураах огноо",
-  "NDVI дундаж",
+  "EVI",
+  "Хур тунадас",
+  "Таримлын төрөл",
+  "Ургацын дундаж",
+  "Тариалсан огноо",
+  "Хураасан огноо",
 ];
 final List<Tab> myTabs = <Tab>[
   const Tab(
@@ -40,9 +40,6 @@ final List<Tab> myTabs = <Tab>[
   ),
   const Tab(
     child: FloatingSecondItem(),
-  ),
-  const Tab(
-    child: FloatingThirdItem(),
   ),
 ];
 
@@ -128,11 +125,17 @@ class FloatingSecondItem extends StatelessWidget {
                       children: const [
                         Text(
                           'Бага (Ургамал)',
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 10,
+                          ),
                         ),
                         Text(
                           'Их',
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 10,
+                          ),
                         ),
                       ],
                     ),
@@ -217,95 +220,6 @@ class FloatingThirdItem extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FloatingItem extends StatelessWidget {
-  const FloatingItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.65,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          'Бага (Ургамал)',
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                        Text(
-                          'Их',
-                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: 5,
-                      width: MediaQuery.of(context).size.width * 0.65,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              AppColors.Green,
-                              Colors.green,
-                              Colors.yellow,
-                              Colors.orange,
-                              Colors.red,
-                            ],
-                          )),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.01,
-              ),
-              SizedBox(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      'Үүлтэй',
-                      style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      height: 5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(129, 158, 158, 158),
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ],

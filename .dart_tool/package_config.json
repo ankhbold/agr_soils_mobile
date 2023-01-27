@@ -704,6 +704,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "syncfusion_flutter_treemap",
+      "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_treemap-20.4.44-beta",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "synchronized",
       "rootUri": "file:///Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+3",
       "packageUri": "lib/",
@@ -776,7 +782,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-01-24T09:07:55.899244Z",
+  "generated": "2023-01-26T11:29:18.732491Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

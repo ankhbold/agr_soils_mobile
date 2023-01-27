@@ -4,20 +4,20 @@ import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/insight%20screen/indices_screen.dart';
 import 'package:mvvm/screen/insight%20screen/weather_screen.dart';
 import 'package:mvvm/screen/widgets/button/default_button.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 bool weather = true;
 
 final ScrollController _firstController = ScrollController();
 bool darsan = true;
 List<String> text = [
-  'Надтай ойрхон\nбайхгүй',
   'Сэлэнгэ\n67 талбар',
   'Сэлэнгэ\n67 талбар',
   'Сэлэнгэ\n67 талбар',
   'Сэлэнгэ\n67 талбар',
 ];
 List<String> texts = [
-  'бүх талбар',
+  'бүх талбай',
   'Буудай',
 ];
 
@@ -100,6 +100,9 @@ class _InsightState extends State<Insight> {
                 },
                 text: 'Дэлгэрэнгүй харах',
               ),
+              Container(height: 15, color: AppColors.grey),
+              Chart(),
+              DefaultButton(OnTap: () {}, text: 'Бүгдийг харах'),
               Container(height: 15, color: AppColors.grey),
               AllFields(),
               DefaultButton(
@@ -253,9 +256,9 @@ class _WeatherState extends State<Weather> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: MediaQuery.of(context).size.height * 0.15,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: EdgeInsets.only(
@@ -281,88 +284,75 @@ class _WeatherState extends State<Weather> {
                 SizedBox(
                   width: 25,
                 ),
-                Row(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(Icons.air),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      'Салхи\n(5 m/s)',
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Хур тунадас\n(0 mm)',
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 22,
-                    bottom: 5,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Spraying time. ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.air),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              'Салхи\n(5 m/s)',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Text(
-                          'Гэж юу вэ?',
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
+                        SizedBox(
+                          width: 15,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.015,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [0.1, 0.6, 0.9],
-                      colors: [
-                        AppColors.grey,
-                        AppColors.Green,
-                        AppColors.Black,
+                        Row(
+                          children: [
+                            Icon(Icons.air),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              'Хур тунадас\n(0 mm)',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.air),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              'Салхи\n(5 m/s)',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.air),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              'Хур тунадас\n(0 mm)',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text('3:00 pm'),
-                      Text('9:00 pm'),
-                      Text('3:00 am'),
-                      Text('9:00 am'),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
@@ -419,10 +409,10 @@ class _AllFieldsState extends State<AllFields> {
               bottom: 12,
             ),
             child: Text(
-              'Ургамалуудын индэкс',
+              'Ургамалжилтын индэкс',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 21,
+                fontSize: 16,
                 // letterSpacing: 0,
               ),
             ),
@@ -454,6 +444,7 @@ class _AllFieldsState extends State<AllFields> {
                           child: Text(
                             texts[index],
                             style: TextStyle(
+                              fontSize: 14,
                               color: currents == index
                                   ? Colors.white
                                   : Colors.black,
@@ -523,7 +514,7 @@ class Roow extends StatelessWidget {
                     Text(
                       'Тэлэх талбай 15 га',
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
@@ -578,4 +569,48 @@ class Roow extends StatelessWidget {
       ),
     );
   }
+}
+
+class Chart extends StatefulWidget {
+  const Chart({super.key});
+
+  @override
+  State<Chart> createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
+  late TooltipBehavior _tooltipBehavior;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<ChartData> chartData = [
+      ChartData(2022, 10),
+      ChartData(2024, 20),
+      ChartData(2026, 30),
+    ];
+    return SfCartesianChart(
+        primaryXAxis:
+            CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
+        title: ChartTitle(text: 'Агаарын температур'),
+        tooltipBehavior: _tooltipBehavior,
+        series: <ChartSeries>[
+          // Renders line chart
+          LineSeries<ChartData, int>(
+              dataSource: chartData,
+              xValueMapper: (ChartData data, _) => data.x,
+              yValueMapper: (ChartData data, _) => data.y)
+        ]);
+  }
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final int x;
+  final double y;
 }

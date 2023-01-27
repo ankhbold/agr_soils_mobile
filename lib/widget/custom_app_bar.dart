@@ -1,44 +1,44 @@
-import 'package:flutter/material.dart';
-import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
-import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
+// import 'package:flutter/material.dart';
+// import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
+// import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 
-AppBar customAppBar(BuildContext context) {
-  return AppBar(
-    automaticallyImplyLeading: false,
-    toolbarHeight: MediaQuery.of(context).size.height * 0.06,
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    actions: [
-      Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.005,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.025,
-              ),
-              const Season(),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.4,
-              ),
-              const FieldsSheet(),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.02,
-              ),
-              // const RoundSheetButton(),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.02,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 0,
-          ),
-        ],
-      ),
-    ],
-  );
-}
+// AppBar customAppBar(BuildContext context) {
+//   return AppBar(
+//     automaticallyImplyLeading: false,
+//     toolbarHeight: MediaQuery.of(context).size.height * 0.06,
+//     backgroundColor: Colors.transparent,
+//     elevation: 0,
+//     actions: [
+//       Column(
+//         children: [
+//           SizedBox(
+//             height: MediaQuery.of(context).size.height * 0.005,
+//           ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               SizedBox(
+//                 width: MediaQuery.of(context).size.width * 0.025,
+//               ),
+//               const Season(),
+//               SizedBox(
+//                 width: MediaQuery.of(context).size.width * 0.4,
+//               ),
+//               const FieldsSheet(),
+//               SizedBox(
+//                 width: MediaQuery.of(context).size.width * 0.02,
+//               ),
+//               // const RoundSheetButton(),
+//               SizedBox(
+//                 width: MediaQuery.of(context).size.width * 0.02,
+//               ),
+//             ],
+//           ),
+//           const SizedBox(
+//             height: 0,
+//           ),
+//         ],
+//       ),
+//     ],
+//   );
+// }

@@ -812,6 +812,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "20.4.44"
+  syncfusion_flutter_treemap:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_treemap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.4.44-beta"
   synchronized:
     dependency: transitive
     description:

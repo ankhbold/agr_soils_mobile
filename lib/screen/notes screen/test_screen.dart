@@ -57,7 +57,7 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${note.nameEn}',
+                                '${note.name}',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
@@ -71,7 +71,7 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                                 ),
                               ),
                               Text(
-                                '${note.name}',
+                                '${note.createdAt}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -93,7 +93,7 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
                           ),
                         ),
                         Text(
-                          '${note.nameEn}',
+                          '${note.description}',
                         )
                       ],
                     ),

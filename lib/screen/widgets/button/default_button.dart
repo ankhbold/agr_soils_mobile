@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/constants/color.dart';
 
 import '../../profile screen/profile_screen.dart';
 
@@ -26,7 +27,7 @@ class _DefaultButtonState extends State<DefaultButton> {
                 child: Text(
                   widget.text,
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: AppColors.Green,
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                   ),

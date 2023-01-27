@@ -3,7 +3,6 @@ import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
-import 'package:mvvm/screen/field%20screen/geojson/get_geo_api.dart';
 import 'package:mvvm/screen/field%20screen/ndvi_sheet_button.dart';
 
 class FieldsSheet extends StatefulWidget {
@@ -20,8 +19,8 @@ class FieldsSheet extends StatefulWidget {
 class _FieldsSheetState extends State<FieldsSheet> {
   // late List<dynamic> _geojson;
   void _getGeoJson() async {
-    NetworkHelper networkHelper = NetworkHelper(url: uri);
-    var geoJson = await networkHelper.getGeo();
+    // NetworkHelper networkHelper = NetworkHelper(url: uri);
+    // var geoJson = await networkHelper.getGeo();
   }
 
   @override
@@ -140,7 +139,7 @@ class _FieldsSheetState extends State<FieldsSheet> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text('Хүрээ Зурах'),
+                                        Text('Талбай зурах'),
                                       ],
                                     ),
                                   ),

@@ -5,25 +5,25 @@ import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Material(
-      child: Container(
-        color: Colors.green,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Зүгээрдэээ Итгэлэээ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
-  };
+  // ErrorWidget.builder = (FlutterErrorDetails details) {
+  //   return Material(
+  //     child: Container(
+  //       color: Colors.green,
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: const [
+  //           Text(
+  //             'Зүгээрдэээ Итгэлэээ',
+  //             style: TextStyle(
+  //                 color: Colors.white,
+  //                 fontSize: 25,
+  //                 fontWeight: FontWeight.bold),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // };
   runApp(const MyApp());
 }
 

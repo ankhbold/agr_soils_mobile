@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:mvvm/screen/field%20screen/field_panel.dart';
 import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floating_fields.dart';
-import 'package:mvvm/screen/field%20screen/floating_items.dart';
+import 'package:mvvm/screen/field%20screen/floatingss/floating_items.dart';
 import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -40,8 +40,11 @@ class FieldScreen extends StatefulWidget {
 
 class _FieldScreenState extends State<FieldScreen> {
   LatLng firstLocation = LatLng(50.028372, 105.817248);
-
-  static double fabHeightClosed = 95.0;
+  var sate =
+      'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
+  var png =
+      'http://api.agromonitoring.com/image/1.0/10063c34200/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
+  static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
   final List<Tab> myTabs = <Tab>[
     const Tab(
@@ -65,7 +68,7 @@ class _FieldScreenState extends State<FieldScreen> {
   // var dataJson = Globals.jsonDataByCompanyId;
 //sfmaps
   late MapLatLng _markerPosition;
-  var selectedIndex = 1;
+  var selectedIndex = -1;
   late MapShapeSource dataSource;
   // late MapZoomPanBehavior _mapZoomPanBehavior;
   late _CustomZoomPanBehavior _mapZoomPanBehavior;
@@ -125,7 +128,6 @@ class _FieldScreenState extends State<FieldScreen> {
         primaryValueMapper: (int index) => data[index].properties.name,
         shapeColorValueMapper: (int index) =>
             Color.fromARGB(255, 253, 213, 34).withOpacity(0.9),
-        // shapeColorMappers: shape
       );
     }
     if (mounted) {
@@ -236,37 +238,37 @@ class _FieldScreenState extends State<FieldScreen> {
                 urlTemplate:
                     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 sublayers: [
-                  MapShapeSublayer(
-                    // showDataLabels: true,
-                    dataLabelSettings: MapDataLabelSettings(
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflowMode: MapLabelOverflow.visible,
-                    ),
-                    source: dataSource,
-                    strokeColor: Colors.white.withOpacity(0.5),
-                    strokeWidth: 2,
-                    selectedIndex: selectedIndex,
-                    selectionSettings: MapSelectionSettings(
-                      strokeWidth: 2,
-                      color:
-                          Color.fromARGB(255, 255, 255, 255).withOpacity(0.7),
-                      strokeColor: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    onSelectionChanged: (int index) {
-                      setState(() {
-                        _mapZoomPanBehavior.zoomLevel = 13;
-                        selectedIndex = index;
-                        _mapZoomPanBehavior.focalLatLng = MapLatLng(
-                          _markerPosition.latitude,
-                          _markerPosition.longitude,
-                        );
-                      });
-                    },
-                  ),
+                  // MapShapeSublayer(
+                  //   // showDataLabels: true,
+                  //   dataLabelSettings: MapDataLabelSettings(
+                  //     textStyle: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 12,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //     overflowMode: MapLabelOverflow.visible,
+                  //   ),
+                  //   source: MapShapeSource.network(png),
+                  //   strokeColor: Colors.white.withOpacity(0.5),
+                  //   strokeWidth: 2,
+                  //   selectedIndex: selectedIndex,
+                  //   selectionSettings: MapSelectionSettings(
+                  //     strokeWidth: 2,
+                  //     color:
+                  //         Color.fromARGB(255, 255, 255, 255).withOpacity(0.7),
+                  //     strokeColor: Color.fromARGB(255, 255, 255, 255),
+                  //   ),
+                  //   onSelectionChanged: (int index) {
+                  //     setState(() {
+                  //       _mapZoomPanBehavior.zoomLevel = 13;
+                  //       selectedIndex = index;
+                  //       _mapZoomPanBehavior.focalLatLng = MapLatLng(
+                  //         _markerPosition.latitude,
+                  //         _markerPosition.longitude,
+                  //       );
+                  //     });
+                  //   },
+                  // ),
                 ],
               ),
             ],
@@ -316,7 +318,7 @@ class _FieldScreenState extends State<FieldScreen> {
                   final panelMaxScrollExtent =
                       panelHeightOpened - panelHeightClosed;
                   fabHeight =
-                      position * panelMaxScrollExtent + panelHeightClosed + 2;
+                      position * panelMaxScrollExtent + panelHeightClosed;
                 },
               ),
               borderRadius: const BorderRadius.vertical(

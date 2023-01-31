@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/hexcolor-Swift.h</key>
 		<data>
-		hv6ORBjAS850HY9JxUP3KuKO1m8=
+		KhxDYzAuJ/AnWegp4ZmCsHFegcU=
 		</data>
 		<key>Headers/hexcolor-umbrella.h</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		gI7eqmSUe9BqHAJ7Eeo6ZrE5TSs=
+		YF8Obraht+bnO83UJH7nexULGLA=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		MlmDgncbtEe+3T7EETvWCGa8sQg=
+		ojtnnVmdqtQw8V53OH8iOzb/U5o=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -70,7 +70,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/aoXghN/Q2hU0v3/MXCb+tZFc1CUIkN9Z8xnPdcthSU=
+			P1JSYWmc6HrqOC95lt4xTQqeLcCBapdH3bCgEl+60ds=
 			</data>
 		</dict>
 		<key>Headers/hexcolor-umbrella.h</key>
@@ -112,7 +112,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			SS78lREhMR2gEgwPEQf2ju5guv8HQdgWVmKfv6rMp3I=
+			T9dsG/JKKsmEiWu5q+C5JSOEjhwSyN7h1X1/zwUoRlY=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -133,7 +133,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			a/C5lsXOXYfuCQtKFH+gqAN64JssK6ljyzIw9wyAjTg=
+			cp9bmObxg7P1OcvJgLmEIpyJCOwbCCq2fKh1rBzlSAE=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

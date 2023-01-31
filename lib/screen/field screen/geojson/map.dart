@@ -1,130 +1,80 @@
-import 'dart:convert';
+// import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:mvvm/model/postModel.dart';
-import 'package:http/http.dart' as http;
-import 'package:syncfusion_flutter_maps/maps.dart';
+// import 'package:flutter/material.dart';
+// import 'package:mapbox_gl/mapbox_gl.dart';
+// import 'package:http/http.dart' as http;
 
-class Mapss extends StatefulWidget {
-  const Mapss({super.key});
+// class MapBoxPage extends StatefulWidget {
+//   const MapBoxPage({super.key});
 
-  @override
-  State<Mapss> createState() => _MapssState();
-}
+//   @override
+//   State<MapBoxPage> createState() => _MapBoxPageState();
+// }
 
-class _MapssState extends State<Mapss> {
-  late MapLatLng _markerPosition;
-  var selectedIndex = 1;
-  late MapShapeSource dataSource;
+// class _MapBoxPageState extends State<MapBoxPage> {
+//   late Future<GeoJsonData> _geoJsonData;
 
-  late MapTileLayerController _controller;
-  late List<PostModel> data = [];
-  late MapZoomPanBehavior _mapZoomPanBehavior;
-//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _geoJsonData = fetchGeoJson();
+//   }
 
-  @override
-  void initState() {
-    _controller = MapTileLayerController();
-    fetch();
+//   Future<GeoJsonData> fetchGeoJson() async {
+//     final response = await http.get(
+//       Uri.parse(
+//           'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247'),
+//     );
 
-    _mapZoomPanBehavior = MapZoomPanBehavior(
-      focalLatLng: MapLatLng(49.987250, 105.785922),
-      enableDoubleTapZooming: true,
-      zoomLevel: 11,
-    );
-    super.initState();
-  }
+//     if (response.statusCode == 200) {
+//       return GeoJsonData(
+//         data: json.decode(response.body),
+//       );
+//     } else {
+//       throw Exception('Failed to load GeoJSON data');
+//     }
+//   }
 
-  Future fetch() async {
-    data = [];
-    var headers = {
-      'Cookie':
-          'XSRF-TOKEN=eyJpdiI6IlpSMnNmMm81VjhZMUpJRnE2YU1vR3c9PSIsInZhbHVlIjoiNEpwZERyT00zOW1OaGhBOTFvY2R2T0Y4UjdLUTBDanp5emdCWVUrOWlPZm1WUHZRU1QrWHNYTmh2NUZWTjRYTHRtbmxPZlh4SE9Ya3VJQWpJNXhkbVNQMFkyRDNJaHBEbVlXdHhJWHNMRldLOUF0TWxxNG8vZ1djUDBXc3NNdTEiLCJtYWMiOiIwOWRiZjk3YjMyYWJkZDUzOWNhNTgzMjM4ZTFlNjRiZGY2Y2E3MWIyMzRlMzVlOWIzNDUyYzM4ZmJkNTNmMTVkIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IjhwdENBOWd6d2ZKZEdhU0paL0doYnc9PSIsInZhbHVlIjoiOWJ1VmQ0TlVIOUI3TmVkVzNWaFZ4ZEJXM2FtVWpKV3A5YXBvNWNZMjBSYmhJeFBBMmJ3ODRtbFJ1ZTNrdEVjc0NRc05jQzhlSnNrdnBzNW9EMTVLTllIdVRUQU5EcmcxNkpDM1NBdy9PaW5kSXFYNUphYS9URnBzcVN1OUZiaXciLCJtYWMiOiIwY2I2OTQ2ZWZlNjRmZTU2NDdhMDM5MzVmMjFkZDJmMzg0OTFlOGY5NDA4NjgzMDEzNTVhYmQyYzRiZWUzZjcwIiwidGFnIjoiIn0%3D'
-    };
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: const Color.fromARGB(255, 33, 32, 32),
+//         title: const Text('Flutter MapBox'),
+//       ),
+//       body: FutureBuilder<GeoJsonData>(
+//         future: _geoJsonData,
+//         builder: (context, snapshot) {
+//           if (snapshot.hasData) {
+//             return MapboxMap(
+//               accessToken: 'YOUR_ACCESS_TOKEN',
+//               initialCameraPosition: CameraPosition(
+//                 target: LatLng(37.78825, -122.4324),
+//                 zoom: 11.0,
+//               ),
+//               styleString: 'mapbox://styles/mapbox/light-v10',
+//               geoJson: snapshot.data,
+//               onMapCreated: (mapController) {},
+//             );
+//           } else if (snapshot.hasError) {
+//             return Text('${snapshot.error}');
+//           }
+//           return CircularProgressIndicator();
+//         },
+//       ),
+//       // MapboxMap(
+//       //   accessToken:
+//       //       'sk.eyJ1IjoiYW5raGJvbGQwMSIsImEiOiJjbGRpaDIwc2QwYThzM3ZxcGRpOXRzc3M5In0.oDJug09qGqDIVSIzrZFi1w',
+//       //   initialCameraPosition:
+//       //       CameraPosition(target: LatLng(49.946688, 105.806398), zoom: 12),
+//       //   styleString: 'mapbox://styles/ankhbold01/cldiba59300b501r0ijd45bc9',
+//       // ),
+//     );
+//   }
+// }
 
-    final response = await http.get(
-        Uri.parse(
-            'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247'),
-        headers: headers);
+// class GeoJsonData {
+//   final dynamic data;
 
-    if (response.statusCode == 200) {
-      final datadd = json.decode(response.body);
-      print(datadd);
-      data = (datadd['features'] as List)
-          .map((e) => PostModel.fromJson(e))
-          .toList();
-    } else {
-      print(response.reasonPhrase);
-    }
-    if (data.isNotEmpty) {
-      dataSource = MapShapeSource.network(
-        'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247',
-        shapeDataField: 'name',
-        dataCount: data.length,
-        primaryValueMapper: (int index) => data[index].properties.name,
-        shapeColorValueMapper: (int index) =>
-            Color.fromARGB(255, 253, 213, 34).withOpacity(0.5),
-        // shapeColorMappers: shape
-      );
-    }
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  void updateMarkerChange(Offset position) {
-    _markerPosition = _controller.pixelToLatLng(position);
-
-    if (_controller.markersCount > 0) {
-      _controller.clearMarkers();
-    }
-    _controller.insertMarker(0);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          MapTileLayer(
-            zoomPanBehavior: _mapZoomPanBehavior,
-            controller: _controller,
-            markerBuilder: (BuildContext context, int index) {
-              return MapMarker(
-                  latitude: _markerPosition.latitude,
-                  longitude: _markerPosition.longitude,
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.transparent,
-                    size: 30,
-                  ));
-            },
-            initialFocalLatLng: MapLatLng(49.987250, 105.785922),
-            initialZoomLevel: 12,
-            urlTemplate:
-                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            sublayers: [
-              MapShapeSublayer(
-                color: Color.fromARGB(255, 253, 213, 34).withOpacity(0.5),
-                source: dataSource,
-                strokeColor: Colors.white,
-                strokeWidth: 1,
-                selectionSettings: MapSelectionSettings(
-                  color: Colors.white,
-                  strokeColor: Color.fromARGB(255, 142, 255, 198),
-                  strokeWidth: 3,
-                ),
-                selectedIndex: selectedIndex,
-                onSelectionChanged: (int index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   GeoJsonData({this.data});
+// }

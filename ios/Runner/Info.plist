@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>MGLMapboxAccessToken</key>
+<string>sk.eyJ1IjoiYW5raGJvbGQwMSIsImEiOiJjbGRpaDIwc2QwYThzM3ZxcGRpOXRzc3M5In0.oDJug09qGqDIVSIzrZFi1w</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

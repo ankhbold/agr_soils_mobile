@@ -57,6 +57,7 @@ class _FloatingFourthItemState extends State<FloatingFourthItem> {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
       child: ListView.builder(
+        shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemCount: item.length,
         itemBuilder: (BuildContext context, int index) {

@@ -270,7 +270,8 @@ class _ChooseLoccState extends State<ChooseLocc> {
                     height: MediaQuery.of(context).size.height * 0.055,
                     width: MediaQuery.of(context).size.height * 0.055,
                     decoration: BoxDecoration(
-                      color: AppColors.Green,
+                      // color: AppColors.Green,
+                      gradient: AppColors.grad,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Icon(

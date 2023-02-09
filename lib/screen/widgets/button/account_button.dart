@@ -28,8 +28,8 @@ class AccountButton extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.07,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: AppColors.Green,
-          ),
+              // color: AppColors.Green,
+              gradient: AppColors.grad),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

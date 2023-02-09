@@ -19,7 +19,8 @@ class _PanelWidgetState extends State<PanelWidget> {
   @override
   Widget build(BuildContext context) => Container(
         decoration: const BoxDecoration(
-          color: AppColors.Green,
+          // color: AppColors.Green,
+          gradient: AppColors.grad,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),

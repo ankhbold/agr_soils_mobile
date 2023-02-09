@@ -102,7 +102,12 @@ class _InsightState extends State<Insight> {
               ),
               Container(height: 15, color: AppColors.grey),
               Chart(),
-              DefaultButton(OnTap: () {}, text: 'Бүгдийг харах'),
+              DefaultButton(
+                  OnTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => ChartPage()));
+                  },
+                  text: 'Бүгдийг харах'),
               Container(height: 15, color: AppColors.grey),
               AllFields(),
               DefaultButton(
@@ -170,7 +175,8 @@ class _ChooseLocState extends State<ChooseLoc> {
                       height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.height * 0.055,
                       decoration: BoxDecoration(
-                        color: AppColors.Green,
+                        // color: AppColors.Green,
+                        gradient: AppColors.grad,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Icon(
@@ -208,8 +214,9 @@ class _NearState extends State<Near> {
           padding: const EdgeInsets.all(3.0),
           child: Container(
             decoration: BoxDecoration(
-                color:
-                    current == index ? const Color(0xff0f766e) : AppColors.grey,
+                gradient: current == index ? AppColors.grad : AppColors.gradi,
+                // color:
+                //     current == index ? const Color(0xff0f766e) : AppColors.grey,
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Padding(
@@ -257,6 +264,7 @@ class _WeatherState extends State<Weather> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -266,92 +274,105 @@ class _WeatherState extends State<Weather> {
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.sunny,
-                  color: Color.fromARGB(255, 255, 196, 0),
-                  size: 60,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  '-13',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.sunny,
+                        color: Color.fromARGB(255, 255, 196, 0),
+                        size: 60,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '-13',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 25,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 25,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.air),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              'Салхи\n(5 m/s)',
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.air),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              'Хур тунадас\n(0 mm)',
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.air),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              'Салхи\n(5 m/s)',
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.air),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              'Хур тунадас\n(0 mm)',
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.55,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.air),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                'Салхи\n(5 m/s)',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.air),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                'Хур тунадас\n(0 mm)',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.air),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                'Салхи\n(5 m/s)',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.air),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                'Хур тунадас\n(0 mm)',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -597,7 +618,7 @@ class _ChartState extends State<Chart> {
     return SfCartesianChart(
         primaryXAxis:
             CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
-        title: ChartTitle(text: 'Агаарын температур'),
+        title: ChartTitle(text: 'Сенсор мэдээлэл'),
         tooltipBehavior: _tooltipBehavior,
         series: <ChartSeries>[
           // Renders line chart
@@ -613,4 +634,36 @@ class ChartData {
   ChartData(this.x, this.y);
   final int x;
   final double y;
+}
+
+class ChartPage extends StatefulWidget {
+  const ChartPage({super.key});
+
+  @override
+  State<ChartPage> createState() => _ChartPageState();
+}
+
+class _ChartPageState extends State<ChartPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Сенсор мэдээлэл'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: AppColors.grad,
+          ),
+        ),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: ListView.builder(
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return Chart();
+          },
+        ),
+      ),
+    );
+  }
 }

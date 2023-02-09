@@ -17,8 +17,12 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
   List<GetNote> listNote = [];
   getGetNoteApi() async {
     listNote = await repository.getGetNoteApi();
-    setState(() {});
+    setState(() {
+      isloaded = true;
+    });
   }
+
+  var isloaded = false;
 
   @override
   void initState() {
@@ -30,80 +34,84 @@ class _FinalNotesWidgetState extends State<FinalNotesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: ListView.builder(
-        itemCount: listNote.length,
-        itemBuilder: (BuildContext context, int index) {
-          GetNote note = listNote[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${note.name}',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
+    return Visibility(
+      visible: isloaded,
+      replacement: Center(child: CircularProgressIndicator()),
+      child: GestureDetector(
+        onTap: () {},
+        child: ListView.builder(
+          itemCount: listNote.length,
+          itemBuilder: (BuildContext context, int index) {
+            GetNote note = listNote[index];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.92,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${note.name}',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                'усалгаатай - 1',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
+                                const Text(
+                                  'усалгаатай - 1',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '${note.createdAt}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 127, 127, 127),
+                                Text(
+                                  '${note.createdAt}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 127, 127, 127),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.16,
-                          width: MediaQuery.of(context).size.width * 0.92,
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                              'assets/images/note.jpeg',
-                            )),
-                            borderRadius: BorderRadius.circular(10),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.16,
+                            width: MediaQuery.of(context).size.width * 0.92,
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                'assets/images/note.jpeg',
+                              )),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${note.description}',
-                        )
-                      ],
+                          Text(
+                            '${note.description}',
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const Line3(),
-              ],
-            ),
-          );
-        },
+                  const Line3(),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

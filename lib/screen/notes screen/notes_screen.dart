@@ -18,25 +18,44 @@ class _ScreenTwoState extends State<ScreenTwo> {
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 226, 225, 225),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.Green,
-        title: Column(
-          children: [
-            const Text(
-              'Тэмдэглэл',
-              style: TextStyle(fontSize: 18),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          // backgroundColor: AppColors.Green,
+          flexibleSpace: Container(
+            // height: 200,
+            decoration: const BoxDecoration(
+              gradient: AppColors.grad,
             ),
-            SizedBox(
-              height: screenHeight * 0.02,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'Тэмдэглэл',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+                // SizedBox(
+                //   height: screenHeight * 0.02,
+                // ),
+                // Container(
+                //   decoration: BoxDecoration(color: Colors.white),
+                //   height: 30,
+                //   width: 400,
+                // ),
+                SizedBox(
+                  height: screenHeight * 0.02,
+                ),
+                const BuildTextField(),
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
+              ],
             ),
-            // const BuildTextField(),
-            // SizedBox(
-            //   height: screenHeight * 0.01,
-            // ),
-          ],
+          ),
+          // title:
+          // toolbarHeight: screenHeight * 0.12,
         ),
-        // toolbarHeight: screenHeight * 0.12,
       ),
       body: FinalNotesWidget(),
     );
@@ -51,6 +70,7 @@ class BuildTextField extends StatefulWidget {
 }
 
 class _BuildTextFieldState extends State<BuildTextField> {
+  void updateList(String value) {}
   @override
   Widget build(BuildContext context) {
     return Container(

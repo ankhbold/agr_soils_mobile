@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
+import 'package:mvvm/screen/insight%20screen/weather/services/data_services.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 
 final ScrollController _scrollController = ScrollController();
@@ -13,6 +14,8 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  final ApiResponse dataState = ApiResponse();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

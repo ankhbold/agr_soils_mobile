@@ -34,11 +34,15 @@ class _FieldsSheetState extends State<FieldsSheet> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.2,
-      height: MediaQuery.of(context).size.height * 0.04,
-      child: FloatingActionButton.extended(
-          heroTag: Text("btn2"),
-          backgroundColor: Color(0xff0f766e).withOpacity(0.8),
-          onPressed: () {
+      height: MediaQuery.of(context).size.height * 0.045,
+      decoration: BoxDecoration(
+        color: Color.fromARGB(36, 255, 255, 255),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: InkWell(
+          // heroTag: Text("btn2"),
+          // color: Color.fromARGB(255, 255, 255, 255),
+          onTap: () {
             // print(_geojson);
             showModalBottomSheet(
                 shape: RoundedRectangleBorder(
@@ -153,7 +157,7 @@ class _FieldsSheetState extends State<FieldsSheet> {
                   );
                 });
           },
-          label: Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(

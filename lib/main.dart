@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/screen/field%20screen/service_satelete.dart';
 import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await fetchSate();
   // ErrorWidget.builder = (FlutterErrorDetails details) {
   //   return Material(
   //     child: Container(
@@ -24,6 +26,7 @@ void main() {
   //     ),
   //   );
   // };
+
   runApp(const MyApp());
 }
 

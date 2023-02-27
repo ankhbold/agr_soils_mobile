@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
@@ -28,46 +29,86 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Screen[index_color],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: index_color,
-        // showUnselectedLabels: false,
-        iconSize: 25,
-        selectedItemColor: AppColors.Green,
-        onTap: (index) => setState(
-          () => index_color = index,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          gradient: AppColors.grad,
         ),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.nfc,
-              // color: Colors.black,
-            ),
-            label: 'Талбар',
+        child: Padding(
+          padding:
+              const EdgeInsets.only(bottom: 12.0, left: 10, right: 10, top: 5),
+          child: GNav(
+            tabBackgroundColor: Color.fromARGB(47, 255, 255, 255),
+            color: Color.fromARGB(255, 255, 255, 255),
+            activeColor: Colors.white,
+            backgroundColor: Colors.transparent,
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            tabBorderRadius: 30,
+            onTabChange: (index) {
+              setState(() {
+                index_color = index;
+              });
+            },
+            tabs: [
+              GButton(
+                icon: Icons.nfc,
+                text: ' Талбай',
+              ),
+              GButton(
+                icon: Icons.leaderboard,
+                text: ' Статистик',
+              ),
+              GButton(
+                icon: Icons.speaker_notes,
+                text: ' Тэмдэглэл',
+              ),
+              GButton(
+                icon: Icons.account_box_rounded,
+                text: ' Хэрэглэгч',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.leaderboard,
-              // color: Colors.black,
-            ),
-            label: 'Статистик',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.speaker_notes,
-              // color: Colors.black,
-            ),
-            label: 'Тэмдэглэл',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_box_rounded,
-              // color: Colors.black,
-            ),
-            label: 'Хэрэглэгч',
-          ),
-        ],
+        ),
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   currentIndex: index_color,
+      //   // showUnselectedLabels: false,
+      //   iconSize: 25,
+      //   selectedItemColor: AppColors.Green,
+      //   onTap: (index) => setState(
+      //     () => index_color = index,
+      //   ),
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.nfc,
+      //         // color: Colors.black,
+      //       ),
+      //       label: 'Талбар',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.leaderboard,
+      //         // color: Colors.black,
+      //       ),
+      //       label: 'Статистик',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.speaker_notes,
+      //         // color: Colors.black,
+      //       ),
+      //       label: 'Тэмдэглэл',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(
+      //         Icons.account_box_rounded,
+      //         // color: Colors.black,
+      //       ),
+      //       label: 'Хэрэглэгч',
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

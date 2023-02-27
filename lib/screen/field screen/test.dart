@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // import '../../constants/color.dart';
@@ -65,11 +66,11 @@ class _PanelssState extends State<Panelss> {
   List<String> items = [
     "NDVI",
     "EVI",
-    // "Хур тунадас",
-    // "Таримлын төрөл",
-    // "Ургацын дундаж",
-    // "Тариалсан огноо",
-    // "Хураасан огноо",
+    "Хур тунадас",
+    "Таримлын төрөл",
+    "Ургацын дундаж",
+    "Тариалсан огноо",
+    "Хураасан огноо",
   ];
   final List<Tab> myTabs = <Tab>[
     const Tab(

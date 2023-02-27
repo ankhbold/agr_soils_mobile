@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/insight%20screen/indices_screen.dart';
@@ -600,13 +603,44 @@ class Chart extends StatefulWidget {
 }
 
 class _ChartState extends State<Chart> {
+  TrackballBehavior? _trackballBehavior;
+
   late TooltipBehavior _tooltipBehavior;
+  Future<String> _loadSalesDataAsset() async {
+    return rootBundle.loadString('assets/images/chart_data.json');
+  }
+
+  Future loadSalesData() async {
+    final String jsonString =
+        await _loadSalesDataAsset(); // Deserialization  step 1
+    final dynamic jsonResponse =
+        json.decode(jsonString); // Deserialization  step 2
+    setState(() {
+      // ignore: always_specify_types
+      for (final Map<dynamic, dynamic> i in jsonResponse) {
+        chartData!.add(_SampleData.fromJson(i)); // Deserialization step 3
+      }
+    });
+  }
 
   @override
   void initState() {
-    _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
+    chartData = <_SampleData>[];
+    loadSalesData();
+    _trackballBehavior = TrackballBehavior(
+        enable: true,
+        lineColor: AppColors.Green,
+        lineWidth: 15,
+        activationMode: ActivationMode.singleTap,
+        markerSettings: const TrackballMarkerSettings(
+            borderWidth: 4,
+            height: 10,
+            width: 10,
+            markerVisibility: TrackballVisibilityMode.visible));
   }
+
+  List<_SampleData>? chartData;
 
   @override
   Widget build(BuildContext context) {
@@ -616,17 +650,64 @@ class _ChartState extends State<Chart> {
       ChartData(2026, 30),
     ];
     return SfCartesianChart(
-        primaryXAxis:
-            CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
+        key: GlobalKey(),
+        plotAreaBorderWidth: 0,
         title: ChartTitle(text: 'Сенсор мэдээлэл'),
-        tooltipBehavior: _tooltipBehavior,
-        series: <ChartSeries>[
-          // Renders line chart
-          LineSeries<ChartData, int>(
-              dataSource: chartData,
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y)
-        ]);
+        legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
+        primaryXAxis: DateTimeAxis(
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            intervalType: DateTimeIntervalType.months,
+            dateFormat: DateFormat.m(),
+            name: 'Сар',
+            majorGridLines: const MajorGridLines(width: 0)),
+        primaryYAxis: NumericAxis(
+            rangePadding: ChartRangePadding.none,
+            name: '...',
+            minimum: 70,
+            maximum: 110,
+            interval: 10,
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(color: Colors.transparent)),
+        series: _getDefaultLineSeries(),
+        trackballBehavior: _trackballBehavior);
+
+    // return SfCartesianChart(
+    //     plotAreaBorderWidth: 0,
+    //     primaryXAxis: DateTimeAxis(
+    //         // edgeLabelPlacement: EdgeLabelPlacement.shift,
+    //         // intervalType: DateTimeIntervalType.years,
+    //         // dateFormat: DateFormat.y(),
+    //         // name: 'Years',
+    //         majorGridLines: const MajorGridLines(width: 0)),
+    //     primaryYAxis: NumericAxis(
+    //         rangePadding: ChartRangePadding.none,
+    //         name: 'Price',
+    //         minimum: 70,
+    //         maximum: 110,
+    //         interval: 10,
+    //         axisLine: const AxisLine(width: 0),
+    //         majorTickLines: const MajorTickLines(color: Colors.transparent)),
+    //     title: ChartTitle(text: 'Сенсор мэдээлэл'),
+    //     tooltipBehavior: _tooltipBehavior,
+    //     trackballBehavior: _trackballBehavior,
+    //     series: <ChartSeries>[
+    //       // Renders line chart
+    //       LineSeries<ChartData, int>(
+    //           dataSource: chartData,
+    //           xValueMapper: (ChartData data, _) => data.x,
+    //           yValueMapper: (ChartData data, _) => data.y)
+    //     ]);
+  }
+
+  List<LineSeries<_SampleData, DateTime>> _getDefaultLineSeries() {
+    return <LineSeries<_SampleData, DateTime>>[
+      LineSeries<_SampleData, DateTime>(
+        dataSource: chartData!,
+        xValueMapper: (_SampleData sales, _) => sales.x,
+        yValueMapper: (_SampleData sales, _) => sales.y1,
+        name: 'Product A',
+      ),
+    ];
   }
 }
 
@@ -666,4 +747,18 @@ class _ChartPageState extends State<ChartPage> {
       ),
     );
   }
+}
+
+class _SampleData {
+  _SampleData(this.x, this.y1, this.y2);
+  factory _SampleData.fromJson(Map<dynamic, dynamic> parsedJson) {
+    return _SampleData(
+      DateTime.parse(parsedJson['x']),
+      parsedJson['y1'],
+      parsedJson['y2'],
+    );
+  }
+  DateTime x;
+  num y1;
+  num y2;
 }

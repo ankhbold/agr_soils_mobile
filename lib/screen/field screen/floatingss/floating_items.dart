@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/floatingss/first_float.dart';
 
 class FloatingFab extends StatefulWidget {
@@ -11,11 +12,11 @@ class FloatingFab extends StatefulWidget {
 List<String> items = [
   "NDVI",
   "EVI",
-  // "Хур тунадас",
-  // "Таримлын төрөл",
-  // "Ургацын дундаж",
-  // "Тариалсан огноо",
-  // "Хураасан огноо",
+  "Хур тунадас",
+  "Таримлын төрөл",
+  "Ургацын дундаж",
+  "Тариалсан огноо",
+  "Хураасан огноо",
 ];
 final List<Tab> myTabs = <Tab>[
   const Tab(
@@ -98,76 +99,109 @@ class _FloatingFourthItemState extends State<FloatingFourthItem> {
   }
 }
 
+bool sungahh = true;
 int current = 0;
 
 class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.1,
-        width: MediaQuery.of(context).size.width * 0.975,
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.65),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 5,
-                right: 5,
-                left: 5,
+    final height1 = MediaQuery.of(context).size.height * 0.1;
+    final height2 = MediaQuery.of(context).size.height * 0.3;
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Container(
+          height: sungahh ? height1 : height2,
+          width: MediaQuery.of(context).size.width * 0.98,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.65),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 5,
+                  right: 5,
+                  left: 5,
+                ),
+                child: SizedBox(child: myTabs[current]),
               ),
-              child: SizedBox(child: myTabs[current]),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.035,
-              width: MediaQuery.of(context).size.width * 0.925,
-              child: ListView.builder(
-                itemCount: 2,
-                padding: const EdgeInsets.only(right: 3, left: 3),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 3),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    // width: MediaQuery.of(context).size.width * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(width: 0.15),
-                      color: current == index
-                          ? const Color(0xff0f766e)
-                          : const Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    child: Center(
-                      child: GestureDetector(
-                        child: AnimatedContainer(
-                          margin: const EdgeInsets.symmetric(horizontal: 12),
-                          duration: const Duration(milliseconds: 250),
-                          child: Text(
-                            items[index],
-                            style: TextStyle(
-                              color: current == index
-                                  ? Colors.white
-                                  : Colors.black,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.035,
+                    width: MediaQuery.of(context).size.width * 0.82,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      padding: const EdgeInsets.only(right: 3, left: 3),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) => Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 3),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.055,
+                          // width: MediaQuery.of(context).size.width * 0.3,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(width: 0.15),
+                            color: current == index
+                                ? const Color(0xff0f766e)
+                                : const Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          child: Center(
+                            child: GestureDetector(
+                              child: AnimatedContainer(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                duration: const Duration(milliseconds: 250),
+                                child: Text(
+                                  items[index],
+                                  style: TextStyle(
+                                    color: current == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  current = index;
+                                });
+                              },
                             ),
                           ),
                         ),
-                        onTap: () {
-                          setState(() {
-                            current = index;
-                          });
-                        },
                       ),
                     ),
                   ),
-                ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        sungahh = !sungahh;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Container(
+                        height: 30,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: AppColors.Green,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Icon(
+                          Icons.more_horiz,
+                          size: 35,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

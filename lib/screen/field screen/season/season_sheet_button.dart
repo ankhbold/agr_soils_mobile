@@ -40,13 +40,14 @@ class _SeasonState extends State<Season> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.33,
-      height: MediaQuery.of(context).size.height * 0.04,
-      child: FloatingActionButton.extended(
-        heroTag: Text("btn1"),
-        backgroundColor: AppColors.Green.withOpacity(0.7),
-        onPressed: () {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+      ),
+      width: MediaQuery.of(context).size.width * 0.265,
+      height: MediaQuery.of(context).size.height * 0.03,
+      child: InkWell(
+        onTap: () {
           showModalBottomSheet(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
@@ -113,28 +114,33 @@ class _SeasonState extends State<Season> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      children: const [
-                        SizedBox(
-                          width: 30,
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Icon(
+                              Icons.add,
+                              size: 30,
+                              color: Colors.black54,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Улирал нэмэх',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                          ],
                         ),
-                        Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Улирал нэмэх',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                      ],
+                      ),
                     )
                   ],
                 ),
@@ -143,19 +149,25 @@ class _SeasonState extends State<Season> {
           );
           // print(repository.);
         },
-        label: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Улирал 2022',
-              style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-            ),
-            Icon(
-              Icons.arrow_drop_down,
-              size: 20,
-              color: Color.fromARGB(255, 255, 255, 255),
-            )
-          ],
+        child: Ink(
+          // heroTag: Text("btn1"),
+          color: AppColors.Green.withOpacity(0.7),
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                ' Улирал 2022',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255), fontSize: 14),
+              ),
+              Icon(
+                Icons.arrow_drop_down,
+                size: 20,
+                color: Color.fromARGB(255, 255, 255, 255),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -174,6 +186,7 @@ class SeasonsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.3,
+      width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         itemCount: seasons.length,
         itemBuilder: (BuildContext context, int index) {
@@ -195,7 +208,7 @@ class SeasonsList extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
-                      width: 100,
+                      width: 200,
                     ),
                     Text(
                       'Edit',

@@ -31,8 +31,20 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
 
     _myRepo.loginApi(data).then((value) {
-      Globals.changeUsername(value['data']['username']);
-      Globals.changeUserEmail(value['data']['email']);
+      print(value);
+      var in_email = '';
+      var in_username = '';
+
+      if (value['data']['email']) {
+        in_email = value['data']['email'];
+      }
+
+      if (value['data']['username']) {
+        in_username = value['data']['username'];
+      }
+
+      Globals.changeUsername(in_username);
+      Globals.changeUserEmail(in_email);
       Globals.changeUserPhone(value['data']['phone']);
       Globals.changeFirstName(value['data']['firstname']);
       Globals.changeLastName(value['data']['lastname']);

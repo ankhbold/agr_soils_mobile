@@ -81,18 +81,17 @@ dependencies:
   flutter_switch: ^0.3.2
   modal_bottom_sheet: ^2.1.2
   intl: ^0.17.0
-  auto_reload: ^1.1.0
 
   latlong2: ^0.8.1
-  syncfusion_flutter_maps: ^20.4.38 
-  syncfusion_flutter_treemap: ^20.4.44-beta
+
   flutter_map: ^3.1.0
-  mapbox_gl: ^0.16.0
+
   bloc: ^8.1.1
   geojson: ^1.0.0
   google_nav_bar: ^5.0.6
-  dropdown_textfield: ^1.0.8
+  
   google_fonts: ^4.0.3
+
 location: ^4.4.0
 flutter_launcher_icons: ^0.11.0
 

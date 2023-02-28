@@ -4,9 +4,7 @@ import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/widgets/button/round_button.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
-
 import 'package:mvvm/view_model/auth_view_model.dart';
-
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -28,13 +26,10 @@ class _LoginViewState extends State<LoginView> {
   @override
   void dispose() {
     super.dispose();
-
     _emailController.dispose();
     _passwordController.dispose();
-
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
-
     _obsecurePassword.dispose();
   }
 
@@ -119,28 +114,30 @@ class _LoginViewState extends State<LoginView> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
                   child: ValueListenableBuilder(
-                      valueListenable: _obsecurePassword,
-                      builder: (context, value, child) {
-                        return TextField(
-                          controller: _passwordController,
-                          obscureText: _obsecurePassword.value,
-                          focusNode: passwordFocusNode,
-                          obscuringCharacter: "*",
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Нууц үг оруулна уу',
-                            // labelText: 'Нууц үг',
-                            suffixIcon: InkWell(
-                                onTap: () {
-                                  _obsecurePassword.value =
-                                      !_obsecurePassword.value;
-                                },
-                                child: Icon(_obsecurePassword.value
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility)),
+                    valueListenable: _obsecurePassword,
+                    builder: (context, value, child) {
+                      return TextField(
+                        controller: _passwordController,
+                        obscureText: _obsecurePassword.value,
+                        focusNode: passwordFocusNode,
+                        obscuringCharacter: "*",
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Нууц үг оруулна уу',
+                          // labelText: 'Нууц үг',
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              _obsecurePassword.value =
+                                  !_obsecurePassword.value;
+                            },
+                            child: Icon(_obsecurePassword.value
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

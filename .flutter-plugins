@@ -1,9 +1,4 @@
 # This is a generated file; do not edit or check into version control.
-connectivity_plus=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus-2.3.9/
-connectivity_plus_linux=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_linux-1.3.1/
-connectivity_plus_macos=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_macos-1.2.6/
-connectivity_plus_web=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_web-1.2.5/
-connectivity_plus_windows=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_windows-1.2.2/
 flutter_plugin_android_lifecycle=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7/
 flutter_secure_storage=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.5/
 fluttertoast=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.1.2/
@@ -23,8 +18,6 @@ image_picker_for_web=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.d
 image_picker_ios=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_ios-0.8.6+6/
 location=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0/
 location_web=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/location_web-3.1.1/
-mapbox_gl=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/mapbox_gl-0.16.0/
-mapbox_gl_web=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/mapbox_gl_web-0.16.0/
 path_provider=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.12/
 path_provider_android=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.22/
 path_provider_foundation=/Users/unurjargal/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_foundation-2.1.1/

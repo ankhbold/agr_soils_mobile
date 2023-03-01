@@ -34,11 +34,11 @@ class AuthViewModel with ChangeNotifier {
       var in_email = '';
       var in_username = '';
 
-      if (value['data']['email']) {
+      if (value['data']['email'] != null) {
         in_email = value['data']['email'];
       }
 
-      if (value['data']['username']) {
+      if (value['data']['username'] != null) {
         in_username = value['data']['username'];
       }
 

@@ -31,7 +31,6 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
 
     _myRepo.loginApi(data).then((value) {
-      print(value);
       var in_email = '';
       var in_username = '';
 
@@ -54,7 +53,7 @@ class AuthViewModel with ChangeNotifier {
         final userPreference =
             Provider.of<UserViewModel>(context, listen: false);
         userPreference
-            .saveUser(UserModel(user_id: value['data']['id'].toString()));
+            .saveUser(UserModel(user_id: value['data']['user_id'].toString()));
 
         Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
         Globals.changeIsLogin(true);

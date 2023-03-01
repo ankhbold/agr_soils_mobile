@@ -30,7 +30,7 @@ class _NoteAddState extends State<NoteAdd> {
 
   void changeToNote() {
     setState(() {
-      index_color = 2;
+      // index_color = 2;
       isFabVisible = true;
       note = !note;
       isFirstWidgetVisible = true;

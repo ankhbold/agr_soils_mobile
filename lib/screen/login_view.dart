@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/screen/widgets/button/round_button.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';
@@ -171,10 +172,9 @@ class _LoginViewState extends State<LoginView> {
               title: 'Нэвтрэх',
               loading: authViewMode.loading,
               onPress: () {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (_) => HomeScreen()));
                 if (_emailController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Мэйл хаягаа оруулна уу', context);
+                  Utils.flushBarErrorMessage(
+                      'Нэвтрэх нэрээ оруулна уу', context);
                 } else if (_passwordController.text.isEmpty) {
                   Utils.flushBarErrorMessage('Нууц үг оруулна уу', context);
                 } else if (_passwordController.text.length < 3) {
@@ -187,6 +187,7 @@ class _LoginViewState extends State<LoginView> {
                   };
                   authViewMode.loginApi(data, context);
                   print('api hit');
+                  setState(() {});
                 }
               },
             ),

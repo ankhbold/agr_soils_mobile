@@ -4,6 +4,7 @@ import 'package:mvvm/screen/profile%20screen/account_profile.dart';
 import 'package:mvvm/conf_global.dart';
 import 'package:mvvm/screen/widgets/button/account_button.dart';
 import 'package:mvvm/screen/widgets/button/account_button_less.dart';
+import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -72,7 +73,7 @@ class _ListProfileState extends State<ListProfile> {
                   color: Colors.black54,
                 ),
                 text: Text(
-                  '${Globals.getUsername()} (${Globals.email})',
+                  '${Globals.getUsername()}',
                   style: TextStyle(),
                 ),
               )
@@ -107,6 +108,53 @@ class _ListProfileState extends State<ListProfile> {
                 height: 1,
               ),
         const Line(),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.home_work,
+                  color: Colors.black54,
+                ),
+                text: Text(
+                  Globals.getUserCompany(),
+                  style: TextStyle(),
+                ),
+              )
+            : SizedBox(
+                height: 1,
+              ),
+        const Line(),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.badge,
+                  color: Colors.black54,
+                ),
+                text: Text(
+                  Globals.getPosition(),
+                  style: TextStyle(),
+                ),
+              )
+            : SizedBox(
+                height: 1,
+              ),
+        Line(),
+        Globals.isLogin
+            ? AccountButtonLess(
+                icon: const Icon(
+                  Icons.mail,
+                  color: Colors.black54,
+                ),
+                text: isEmpty
+                    ? Text(
+                        Globals.email,
+                        style: TextStyle(),
+                      )
+                    : Text('Оруулаагүй'),
+              )
+            : SizedBox(
+                height: 1,
+              ),
+        Line(),
         Globals.isLogin
             ? AccountButtonLess(
                 icon: const Icon(

@@ -105,7 +105,7 @@ int current = 0;
 class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
-    final height1 = MediaQuery.of(context).size.height * 0.1;
+    final height1 = MediaQuery.of(context).size.height * 0.125;
     final height2 = MediaQuery.of(context).size.height * 0.3;
     return Container(
       child: Padding(
@@ -141,7 +141,7 @@ class _FloatingFabState extends State<FloatingFab> {
                       itemBuilder: (BuildContext context, int index) => Padding(
                         padding: EdgeInsets.symmetric(horizontal: 3),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.055,
+                          height: MediaQuery.of(context).size.height * 0.01,
                           // width: MediaQuery.of(context).size.width * 0.3,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),

@@ -44,7 +44,7 @@ class _SeasonState extends State<Season> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.265,
+      width: MediaQuery.of(context).size.width * 0.3,
       height: MediaQuery.of(context).size.height * 0.03,
       child: InkWell(
         onTap: () {
@@ -75,6 +75,7 @@ class _SeasonState extends State<Season> {
                       height: 5,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.05,
@@ -85,17 +86,21 @@ class _SeasonState extends State<Season> {
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.4,
                         ),
                         IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: const Icon(
-                              Icons.cancel,
-                              size: 35,
-                              color: Color.fromARGB(255, 188, 188, 188),
-                            ))
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.cancel,
+                            size: 30,
+                            color: Color.fromARGB(255, 188, 188, 188),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -208,7 +213,7 @@ class SeasonsList extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
-                      width: 200,
+                      width: MediaQuery.of(context).size.width * 0.5,
                     ),
                     Text(
                       'Edit',

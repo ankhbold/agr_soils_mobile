@@ -7,8 +7,8 @@ import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
 
+var index_color = 0;
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
-int index_color = 0;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,6 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ScreenTwo(),
     ProfilePage(),
   ];
+  void onTabTapped(int index) {
+    setState(() {
+      print(index);
+      index_color = index;
+      // Globals.changeIndexColor(index);
+      // print(Globals.getIndexColor());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: AppColors.grad,
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 12.0, left: 10, right: 10, top: 5),
+          padding: const EdgeInsets.only(bottom: 12.0, top: 5),
           child: GNav(
             tabBackgroundColor: Color.fromARGB(47, 255, 255, 255),
             color: Color.fromARGB(255, 255, 255, 255),
             activeColor: Colors.white,
             backgroundColor: Colors.transparent,
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             tabBorderRadius: 30,
-            onTabChange: (index) {
-              setState(() {
-                index_color = index;
-              });
-            },
+            onTabChange: onTabTapped,
             tabs: [
               GButton(
                 icon: Icons.nfc,

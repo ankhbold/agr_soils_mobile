@@ -12,7 +12,7 @@ class FloatingItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 26,
+          height: MediaQuery.of(context).size.height * 0.04,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Column(
             children: [

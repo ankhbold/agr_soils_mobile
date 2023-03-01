@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/screen/login_view.dart';
+import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/screen/signp_view.dart';
 import 'package:mvvm/ui/splash/intro_screen.dart';
 import 'package:mvvm/ui/splash/splash_view.dart';
@@ -26,6 +27,9 @@ class Routes {
       case RoutesName.signUp:
         return MaterialPageRoute(
             builder: (BuildContext context) => const SignUpView());
+      case RoutesName.note:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ScreenTwo());
 
       default:
         return MaterialPageRoute(builder: (_) {

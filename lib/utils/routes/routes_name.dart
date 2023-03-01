@@ -8,4 +8,5 @@ class RoutesName {
   //home screen routes name
   static const String home = 'home_sceen';
   static const String intro = 'intro_sceen';
+  static const String note = 'note_sceen';
 }

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/conf_global.dart';
 import 'package:mvvm/screen/field%20screen/field_panel.dart';
 import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floatingss/floating_items.dart';
 import 'package:mvvm/screen/field%20screen/geojson/get_geo_api.dart';
 import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
+import 'package:mvvm/screen/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../constants/color.dart';
 
@@ -33,6 +35,8 @@ void isMap() {
   mapsol = true;
 }
 
+var heightS = 10.5;
+
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
 
@@ -41,7 +45,8 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  LatLng firstLocation = LatLng(50.028372, 105.817248);
+  final String personId = '626247';
+  LatLng firstLocation = LatLng(49.939048, 105.841644);
   // var wms = 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580';wmssss
   var wms =
       'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247';
@@ -54,17 +59,18 @@ class _FieldScreenState extends State<FieldScreen> {
   // 'http://api.agromonitoring.com/tile/1.0/%7Bz%7D/%7Bx%7D/%7By%7D/11063b8b600/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
   static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
-  var wmsLayer = WMSTileLayerOptions(
-    baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580',
-    // baseUrl:
-    //     'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id?company_person_id=626247',
-
-    layers: ['agrgis:agr_parcel'],
-    transparent: true,
-    format: 'image/png',
-    version: '1.1.1',
-    // styles:
-  );
+  var wmsLayer = Globals.isLogin
+      ? WMSTileLayerOptions(
+          baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+          layers: ['agrgis:agr_parcel'],
+          transparent: true,
+          format: 'image/png',
+          version: '1.1.1',
+          otherParameters: {
+            // 'person_id': personId,
+          })
+      : WMSTileLayerOptions(
+          baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
 
   void changeStage() {
     setState(() {
@@ -98,7 +104,7 @@ class _FieldScreenState extends State<FieldScreen> {
   @override
   void initState() {
     // fetch();
-
+    index_color;
     _mapController = MapController();
     super.initState();
   }
@@ -138,6 +144,7 @@ class _FieldScreenState extends State<FieldScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final personId = '62647';
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.24;
     final panelHeightOpened = MediaQuery.of(context).size.height * 0.8;
     final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.2;
@@ -188,7 +195,16 @@ class _FieldScreenState extends State<FieldScreen> {
                           elevation: 0,
                           onPressed: () {
                             setState(() {
-                              _navigateToPosition();
+                              print('object');
+                              print(Globals.getPersonId());
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (BuildContext context) =>
+                              //           ScreenTwo()),
+                              // );
+                              // indexcolor == 2;
+                              // _navigateToPosition();
                               // isMap();
                             });
                           },
@@ -223,7 +239,7 @@ class _FieldScreenState extends State<FieldScreen> {
                   });
                 },
                 center: firstLocation,
-                zoom: 11.5,
+                zoom: heightS,
               ),
               children: [
                 // layerOption,
@@ -242,7 +258,20 @@ class _FieldScreenState extends State<FieldScreen> {
 
                 TileLayer(
                   backgroundColor: Colors.transparent,
-                  wmsOptions: wmsLayer,
+                  wmsOptions: Globals.isLogin
+                      ? WMSTileLayerOptions(
+                          baseUrl:
+                              'http://103.143.40.250:8080/geoserver/agrgis/wms/?',
+                          layers: ['agrgis:agr_parcel'],
+                          transparent: true,
+                          format: 'image/png',
+                          version: '1.3.0',
+                          otherParameters: {
+                            'person_id': Globals.personId,
+                          })
+                      : WMSTileLayerOptions(
+                          baseUrl:
+                              'http://103.143.40.250:8080/geoserver/agrgis/wms'),
                 ),
 
                 MarkerLayer(
@@ -420,7 +449,7 @@ class _FieldScreenState extends State<FieldScreen> {
             ),
           ],
         ),
-        height: 115,
+        height: MediaQuery.of(context).size.height * 0.12,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -446,7 +475,7 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
             ),
             SizedBox(
-              width: 40,
+              width: MediaQuery.of(context).size.width * 0.07,
             ),
             Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
@@ -462,7 +491,7 @@ class _FieldScreenState extends State<FieldScreen> {
                     },
                     child: Container(
                       height: 40,
-                      width: 130,
+                      width: MediaQuery.of(context).size.width * 0.32,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(36, 255, 255, 255),
                           borderRadius: BorderRadius.circular(12)),

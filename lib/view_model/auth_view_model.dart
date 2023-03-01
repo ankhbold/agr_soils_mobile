@@ -8,6 +8,9 @@ import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:mvvm/conf_global.dart';
 
+bool isEmpty = false;
+bool wrong = false;
+
 class AuthViewModel with ChangeNotifier {
   final _myRepo = AuthRepository();
 
@@ -31,46 +34,78 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
 
     _myRepo.loginApi(data).then((value) {
-      print(value);
-      var in_email = '';
-      var in_username = '';
-
-      if (value['data']['email'] != null) {
-        in_email = value['data']['email'];
-      }
-
-      if (value['data']['username'] != null) {
-        in_username = value['data']['username'];
-      }
-
-      Globals.changeUsername(in_username);
-      Globals.changeUserEmail(in_email);
-      Globals.changeUserPhone(value['data']['phone']);
-      Globals.changeFirstName(value['data']['firstname']);
-      Globals.changeLastName(value['data']['lastname']);
-
-      setLoading(false);
+      // print(value);
       if (value['status']) {
+        print(value['data']['firstname']);
+        var in_email = '';
+        var in_username = '';
+        var in_position = '';
+        var in_company = '';
+        var in_personId = '';
+        var in_firstname = '';
+        var in_lastname = '';
+        var in_phone = '';
+        if (value['data']['email'] != null) {
+          isEmpty = true;
+          in_email = value['data']['email'];
+        }
+
+        if (value['data']['username'] != null) {
+          in_username = value['data']['username'];
+        }
+
+        if (value['data']['position_name'] != null) {
+          in_position = value['data']['position_name'];
+        }
+        if (value['data']['prof_company_name'] != null) {
+          in_company = value['data']['prof_company_name'];
+        }
+        if (value['data']['company_id'] != null) {
+          in_personId = value['data']['company_id'].toString();
+        }
+
+        if (value['data']['firstname'] != null) {
+          in_firstname = value['data']['firstname'];
+        }
+        if (value['data']['lastname'] != null) {
+          in_lastname = value['data']['lastname'];
+        }
+        if (value['data']['phone'] != null) {
+          in_phone = value['data']['phone'];
+        }
+        Globals.changeUsername(in_username);
+        Globals.changeUserEmail(in_email);
+        Globals.changeUserPhone(in_phone.toString());
+        Globals.changeUserCompany(in_company.toString());
+
+        Globals.changeFirstName(in_firstname);
+        Globals.changeLastName(in_lastname);
+        Globals.changePosition(in_position);
+        setLoading(false);
+        Globals.changePersonId(in_personId);
+
         final userPreference =
             Provider.of<UserViewModel>(context, listen: false);
         userPreference
-            .saveUser(UserModel(user_id: value['data']['id'].toString()));
+            .saveUser(UserModel(user_id: value['data']['user_id'].toString()));
 
         Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
+
         Globals.changeIsLogin(true);
 
         Future<UserModel> getUserDate() => UserViewModel().getUser();
         getUserDate().then((value) {
-          print(value.user_id.toString());
+          // print(value.user_id.toString());
         });
 
         Navigator.pushNamed(context, RoutesName.home);
         if (kDebugMode) {
-          print(value.toString());
+          // print(value.toString());
         }
       } else {
         Utils.flushBarErrorMessage(
             'Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);
+        wrong = true;
       }
     }).onError((error, stackTrace) {
       setLoading(false);
@@ -89,7 +124,7 @@ class AuthViewModel with ChangeNotifier {
       Utils.flushBarErrorMessage('Амжилттай бүргүүллээ', context);
       Navigator.pushNamed(context, RoutesName.home);
       if (kDebugMode) {
-        print(value.toString());
+        // print(value.toString());
       }
     }).onError((error, stackTrace) {
       setSignUpLoading(false);

@@ -7,10 +7,28 @@ class Globals {
   static var phone = '';
   static var firstname = '';
   static var lastname = '';
-
+  static var position = '';
+  static var company = '';
+  static var index_color = 0;
+  static var personId = '';
   // static printInteger() {
   //   print(anInteger);
   // }
+  static changeIndexColor(int a) {
+    index_color = a;
+  }
+
+  static getIndexColor() {
+    return index_color;
+  }
+
+  static changePersonId(String a) {
+    personId = a;
+  }
+
+  static getPersonId() {
+    return personId;
+  }
 
   // static changeInteger(int a) {
   //   anInteger = a;
@@ -23,6 +41,14 @@ class Globals {
 
   static getUsername() {
     return username;
+  }
+
+  static changePosition(String a) {
+    position = a;
+  }
+
+  static getPosition() {
+    return position;
   }
 
   static changeUserEmail(String a) {
@@ -39,6 +65,14 @@ class Globals {
 
   static getUserPhone() {
     return phone;
+  }
+
+  static changeUserCompany(String a) {
+    company = a;
+  }
+
+  static getUserCompany() {
+    return company;
   }
 
   static changeFirstName(String a) {

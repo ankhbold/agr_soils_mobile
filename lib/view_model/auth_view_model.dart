@@ -34,7 +34,6 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
 
     _myRepo.loginApi(data).then((value) {
-      // print(value);
       if (value['status']) {
         print(value['data']['firstname']);
         var in_email = '';

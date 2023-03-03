@@ -163,6 +163,7 @@ class _FieldScreenState extends State<FieldScreen> {
     print(point);
   }
 
+  double _zoom = 10.0;
   void zoomToFeature(LatLng center) {
     // Set the map's zoom level and center point to the feature's geometry
     _mapController.move(center, 16.0);
@@ -170,6 +171,15 @@ class _FieldScreenState extends State<FieldScreen> {
 
   void _addPolygons(point) {
     polygonPoints.add(point);
+  }
+
+  Future<void> _handleTap(LatLng latLng) async {
+    // do something asynchronous here, like fetching data from a server
+    // and wait for it to complete before animating the map
+    await Future.delayed(Duration(seconds: 1));
+
+    // animate the map to the new zoom level centered around the tapped coordinates
+    _mapController.move(latLng, _zoom + 2);
   }
 
   @override
@@ -243,23 +253,27 @@ class _FieldScreenState extends State<FieldScreen> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                onTap: (tapPosition, point) async {
-                  setState(() {
-                    if (isPolygon) {
-                      setState(() {
-                        _addPolygons(point);
-                        markers.clear();
-                      });
-                    } else if (isMarker) {
-                      _addMarkers(point);
-                      polygonPoints.clear();
-                    } else {
-                      print(point);
-                    }
-                  });
+                onTap: (tapPosition, LatLng latLng) async {
+                  await _handleTap(latLng);
                 },
+                // onTap: (tapPosition, point) async {
+                //   setState(() {
+                //     if (isPolygon) {
+                //       setState(() {
+                //         _addPolygons(point);
+                //         markers.clear();
+                //       });
+                //     } else if (isMarker) {
+                //       _addMarkers(point);
+                //       polygonPoints.clear();
+                //     } else {
+                //       print(point);
+                //       _mapController.move(latLng, _zoom + 2);
+                //     }
+                //   });
+                // },
                 center: firstLocation,
-                zoom: heightS,
+                zoom: _zoom,
               ),
               children: [
                 // layerOption,

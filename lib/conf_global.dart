@@ -11,6 +11,7 @@ class Globals {
   static var company = '';
   static var index_color = 0;
   static var personId = '';
+  static var prof_company_id = '';
   // static printInteger() {
   //   print(anInteger);
   // }
@@ -30,6 +31,13 @@ class Globals {
     return personId;
   }
 
+  static changePCI(String a) {
+    prof_company_id = a;
+  }
+
+  static getPCI() {
+    return prof_company_id;
+  }
   // static changeInteger(int a) {
   //   anInteger = a;
   //   printInteger(); // this can be replaced with any static method

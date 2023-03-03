@@ -118,8 +118,61 @@ class _FloatingFabState extends State<FloatingFab> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              sungahh
+                  ? SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Text(
+                                'Байгалийн үндсэн өнгөний индекс',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            Text(
+                              'Их',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100(),
+                            Text(
+                              'Дундаж',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100(),
+                            Text(
+                              'Эрэмбэлэгдсэн дундаж',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100(),
+                            Text(
+                              'Бага',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100(),
+                            Text(
+                              'Хазайлт',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100(),
+                            Text(
+                              'нягтралын',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            Line100()
+                          ],
+                        ),
+                      ],
+                    ),
               Padding(
                 padding: const EdgeInsets.only(
                   top: 5,
@@ -203,6 +256,22 @@ class _FloatingFabState extends State<FloatingFab> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Line100 extends StatelessWidget {
+  const Line100({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        color: Color.fromARGB(156, 0, 0, 0),
+        height: 1,
+        width: MediaQuery.of(context).size.width * 0.95,
       ),
     );
   }

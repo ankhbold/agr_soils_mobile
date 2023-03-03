@@ -48,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Color.fromARGB(255, 255, 255, 255),
             activeColor: Colors.white,
             backgroundColor: Colors.transparent,
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            padding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 15,
+            ),
             tabBorderRadius: 30,
             onTabChange: onTabTapped,
             tabs: [

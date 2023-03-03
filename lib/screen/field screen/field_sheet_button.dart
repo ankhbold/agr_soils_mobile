@@ -34,7 +34,7 @@ class _FieldsSheetState extends State<FieldsSheet> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.2,
-      height: MediaQuery.of(context).size.height * 0.05,
+      height: MediaQuery.of(context).size.height * 0.055,
       decoration: BoxDecoration(
         color: Color.fromARGB(36, 255, 255, 255),
         borderRadius: BorderRadius.circular(12),

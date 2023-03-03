@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,6 +14,7 @@ import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 import 'package:mvvm/screen/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../constants/color.dart';
+import 'package:http/http.dart' as http;
 
 bool mapsol = true;
 List<LatLng> polygonPoints = [];
@@ -35,6 +37,7 @@ void isMap() {
   mapsol = true;
 }
 
+late Map<String, dynamic> _wmsResponse;
 var heightS = 10.5;
 
 class FieldScreen extends StatefulWidget {
@@ -45,18 +48,27 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  final String personId = '626247';
+  Future<void> fetchWmsResponse() async {
+    final url = Uri.parse(
+        'http://103.143.40.250:8080/geoserver/agrgis/wms?service=WMS&version=1.1.0&request=GetMap&layers=agrgis%3Aagr_parcel&bbox=104.83374631177468%2C48.61366916210431%2C106.18761342734588%2C50.393568299264835&width=584&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      setState(() {
+        _wmsResponse = json.decode(response.body);
+      });
+      print(_wmsResponse['features'][0]['geometry']);
+    } else {
+      throw Exception('Failed to fetch WMS response');
+    }
+  }
+
   LatLng firstLocation = LatLng(49.939048, 105.841644);
-  // var wms = 'http://103.143.40.250:8080/geoserver/agrgis/wms?person_id=3580';wmssss
-  var wms =
-      'http://103.143.40.250:8100/mobile/parcel/jsondata/by/person_id?company_person_id=626247';
 
   var sate =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
   var png =
-      // 'http://api.agromonitoring.com/image/1.0/10063c34200/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
-  // 'http://api.agromonitoring.com/tile/1.0/%7Bz%7D/%7Bx%7D/%7By%7D/11063b8b600/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
+
   static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
   var wmsLayer = Globals.isLogin
@@ -67,11 +79,27 @@ class _FieldScreenState extends State<FieldScreen> {
           format: 'image/png',
           version: '1.1.1',
           otherParameters: {
-            // 'person_id': personId,
-          })
+            'CQL_FILTER': 'person_id = ${Globals.personId}',
+            // 'person_id': '8sdvcsd2',
+          },
+        )
       : WMSTileLayerOptions(
           baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
-
+  var tileLayer = TileLayer(
+    urlTemplate: 'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+  );
+  var polygonLayer = PolygonLayer(
+    polygons: [
+      Polygon(
+        points: polygonPoints,
+        borderStrokeWidth: 2,
+        borderColor: Color.fromARGB(255, 255, 255, 255),
+        isFilled: true,
+        color: Color.fromARGB(81, 255, 255, 255),
+      ),
+    ],
+  );
   void changeStage() {
     setState(() {
       isFabVisible = false;
@@ -106,6 +134,7 @@ class _FieldScreenState extends State<FieldScreen> {
     // fetch();
     index_color;
     _mapController = MapController();
+    fetchWmsResponse();
     super.initState();
   }
 
@@ -134,17 +163,17 @@ class _FieldScreenState extends State<FieldScreen> {
     print(point);
   }
 
+  void zoomToFeature(LatLng center) {
+    // Set the map's zoom level and center point to the feature's geometry
+    _mapController.move(center, 16.0);
+  }
+
   void _addPolygons(point) {
     polygonPoints.add(point);
   }
 
-  // late MapShapeSource dataSource;
-
-  late LatLng _tapLocation;
-
   @override
   Widget build(BuildContext context) {
-    final personId = '62647';
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.24;
     final panelHeightOpened = MediaQuery.of(context).size.height * 0.8;
     final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.2;
@@ -195,17 +224,8 @@ class _FieldScreenState extends State<FieldScreen> {
                           elevation: 0,
                           onPressed: () {
                             setState(() {
-                              print('object');
-                              print(Globals.getPersonId());
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (BuildContext context) =>
-                              //           ScreenTwo()),
-                              // );
-                              // indexcolor == 2;
-                              // _navigateToPosition();
-                              // isMap();
+                              fetchWmsResponse();
+                              print('company id : ${Globals.getPersonId()}');
                             });
                           },
                           child: const Icon(
@@ -223,7 +243,7 @@ class _FieldScreenState extends State<FieldScreen> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                onTap: (tapPosition, point) {
+                onTap: (tapPosition, point) async {
                   setState(() {
                     if (isPolygon) {
                       setState(() {
@@ -243,52 +263,20 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
               children: [
                 // layerOption,
+                tileLayer,
+
                 TileLayer(
-                  urlTemplate:
-                      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                  additionalOptions: const {
-                    'attribution':
-                        'Map data &copy; <a href="https://www.esri.com/en-us/home">Esri</a>',
-                  },
-                ),
+                    backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
+
                 TileLayer(
                   backgroundColor: Colors.transparent,
                   urlTemplate: png,
                 ),
-
-                TileLayer(
-                  backgroundColor: Colors.transparent,
-                  wmsOptions: Globals.isLogin
-                      ? WMSTileLayerOptions(
-                          baseUrl:
-                              'http://103.143.40.250:8080/geoserver/agrgis/wms/?',
-                          layers: ['agrgis:agr_parcel'],
-                          transparent: true,
-                          format: 'image/png',
-                          version: '1.3.0',
-                          otherParameters: {
-                            'person_id': Globals.personId,
-                          })
-                      : WMSTileLayerOptions(
-                          baseUrl:
-                              'http://103.143.40.250:8080/geoserver/agrgis/wms'),
-                ),
-
                 MarkerLayer(
                   markers: markers,
                 ),
 
-                PolygonLayer(
-                  polygons: [
-                    Polygon(
-                      points: polygonPoints,
-                      borderStrokeWidth: 2,
-                      borderColor: Color.fromARGB(255, 255, 255, 255),
-                      isFilled: true,
-                      color: Color.fromARGB(81, 255, 255, 255),
-                    ),
-                  ],
-                ),
+                polygonLayer,
               ],
             ),
 
@@ -449,7 +437,7 @@ class _FieldScreenState extends State<FieldScreen> {
             ),
           ],
         ),
-        height: MediaQuery.of(context).size.height * 0.12,
+        height: MediaQuery.of(context).size.height * 0.13,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -464,7 +452,7 @@ class _FieldScreenState extends State<FieldScreen> {
                     color: Color.fromARGB(36, 255, 255, 255),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Season()),
+                  child: MyHomePage()),
             ),
 
             Padding(
@@ -474,9 +462,9 @@ class _FieldScreenState extends State<FieldScreen> {
                 polygoncreate: changePolygonStage,
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.07,
-            ),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width * 0.07,
+            // ),
             Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -490,10 +478,10 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     },
                     child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.32,
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(36, 255, 255, 255),
+                          color: Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                         padding: EdgeInsets.only(),
@@ -505,12 +493,13 @@ class _FieldScreenState extends State<FieldScreen> {
                               child: Icon(
                                 Icons.search,
                                 size: 20,
-                                color: AppColors.whiteColor,
+                                color: AppColors.Green,
                               ),
                             ),
                             Text(
                               'Талбай хайх',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: AppColors.Green, fontSize: 15),
                             ),
                           ],
                         ),

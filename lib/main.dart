@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/field%20screen/service_satelete.dart';
-import 'package:mvvm/screen/login_view.dart';
+import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/utils/routes/routes.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
@@ -8,7 +7,7 @@ import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  await fetchSate();
+  // await fetchSate();
   // ErrorWidget.builder = (FlutterErrorDetails details) {
   //   return Material(
   //     child: Container(
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: LoginView(),
+        // home: FieldScreen(),
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),

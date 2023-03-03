@@ -10,6 +10,15 @@ import '../profile screen/profile_screen.dart';
 
 // import '../data/listdata.dart';
 
+void getWMSResponse() async {
+  var url =
+      'http://103.143.40.250:8080/geoserver/agrgis/wms?service=WMS&version=1.1.0&request=GetMap&layers=agrgis%3Aagr_parcel&bbox=104.83374631177468%2C48.61366916210431%2C106.18761342734588%2C50.393568299264835&width=584&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers';
+  var response = await http.get(Uri.parse(url));
+
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+}
+
 class ScreenTwo extends StatefulWidget {
   const ScreenTwo({super.key});
 
@@ -31,6 +40,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
 
   @override
   void initState() {
+    getWMSResponse();
     super.initState();
     FetchUserList();
     print(DateTime.now());

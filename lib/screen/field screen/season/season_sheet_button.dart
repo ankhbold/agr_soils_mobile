@@ -1,41 +1,92 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/field%20screen/season/season_api.dart';
+import 'package:http/http.dart' as http;
+import 'package:mvvm/conf_global.dart';
+import 'package:mvvm/constants/color.dart';
 
-class Season extends StatefulWidget {
-  const Season({
-    Key? key,
-  }) : super(key: key);
-
+class MyHomePage extends StatefulWidget {
   @override
-  State<Season> createState() => _SeasonState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _SeasonState extends State<Season> {
-  late List<dynamic> _seasons;
+class Season {
+  final int id;
+  final String name;
+  final String startDate;
+  final String endDate;
 
-  var isloaded = false;
+  Season({
+    required this.id,
+    required this.name,
+    required this.startDate,
+    required this.endDate,
+  });
 
-  void _getSeasons() async {
-    RepositorySeason networkHelper = RepositorySeason(url: uri);
-    var data = await networkHelper.getData();
-
-    if (data != null) {
-      setState(() {
-        _seasons = data['data'];
-      });
-    }
+  factory Season.fromJson(Map<String, dynamic> json) {
+    return Season(
+      id: json['season_id'],
+      name: json['season_name'],
+      startDate: json['start_date'],
+      endDate: json['end_date'],
+    );
   }
+}
 
-  getSeasonApi() async {
-    setState(() {});
+class _MyHomePageState extends State<MyHomePage> {
+  List<Season> seasons = [];
+  Season? selectedSeason;
+  Future<void> showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   void initState() {
-    _getSeasons();
-
     super.initState();
+    print('skjbhjbvkjjvbjhbdvhdhbsvh hjdfbv');
+    print(Globals.prof_company_id);
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final url =
+        'http://103.143.40.250:8100/api/get/season/profcompany?prof_company_id=${Globals.prof_company_id}';
+    final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && data['status']) {
+      final seasonData = data['data'] as List<dynamic>;
+      final seasons =
+          seasonData.map((seasonJson) => Season.fromJson(seasonJson)).toList();
+      setState(() {
+        this.seasons = seasons;
+        selectedSeason = seasons.isNotEmpty ? seasons[0] : null;
+      });
+    }
   }
 
   @override
@@ -44,205 +95,53 @@ class _SeasonState extends State<Season> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.3,
-      height: MediaQuery.of(context).size.height * 0.03,
-      child: InkWell(
-        onTap: () {
-          showModalBottomSheet(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-            context: context,
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: Container(
-                        height: 5,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      width: MediaQuery.of(context).size.width * 0.4,
+      height: MediaQuery.of(context).size.height * 0.04,
+      child: Center(
+        child: DropdownButton(
+          elevation: 10,
+          borderRadius: BorderRadius.circular(12),
+          // isExpanded: true,
+          iconEnabledColor: Colors.white,
+          dropdownColor: Color.fromARGB(255, 21, 142, 128),
+          hint: Text(
+            'Улирал сонгох',
+            style: TextStyle(color: Colors.white),
+          ),
+          value: selectedSeason,
+          onChanged: (Season? season) {
+            setState(() {
+              selectedSeason = season;
+            });
+          },
+          items: seasons
+              .map((season) => DropdownMenuItem(
+                    value: season,
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.05,
+                        Text(
+                          season.name,
+                          style: TextStyle(color: Colors.white),
                         ),
-                        const Text(
-                          'Улирал сонгох',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(
-                            Icons.cancel,
-                            size: 30,
-                            color: Color.fromARGB(255, 188, 188, 188),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.02,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: 0.5,
-                      color: const Color.fromARGB(115, 104, 104, 104),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    SeasonsList(
-                      seasons: _seasons,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Icon(
-                              Icons.add,
-                              size: 30,
-                              color: Colors.black54,
-                            ),
-                            SizedBox(
-                              width: 10,
+                        Row(
+                          children: [
+                            Text(
+                              season.startDate,
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
                             ),
                             Text(
-                              'Улирал нэмэх',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
-                            ),
-                            SizedBox(
-                              width: 30,
+                              ' - ${season.endDate}',
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
                             ),
                           ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          );
-          // print(repository.);
-        },
-        child: Ink(
-          // heroTag: Text("btn1"),
-          color: AppColors.Green.withOpacity(0.7),
-
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                ' Улирал 2022',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255), fontSize: 14),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: 20,
-                color: Color.fromARGB(255, 255, 255, 255),
-              )
-            ],
-          ),
+                        )
+                      ],
+                    ),
+                  ))
+              .toList(),
         ),
-      ),
-    );
-//
-  }
-}
-
-class SeasonsList extends StatelessWidget {
-  final List<dynamic> seasons;
-  const SeasonsList({
-    Key? key,
-    required this.seasons,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
-      width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
-        itemCount: seasons.length,
-        itemBuilder: (BuildContext context, int index) {
-          // GetSeason season = listSeason[index];
-          return Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 35,
-                    ),
-                    Text(
-                      seasons[index]['season_name'],
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                    ),
-                    Text(
-                      'Edit',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.Green,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        seasons[index]['start_date'],
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mvvm/conf_global.dart';
-import 'package:mvvm/constants/color.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -95,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.41,
       height: MediaQuery.of(context).size.height * 0.04,
       child: Center(
         child: DropdownButton(
@@ -115,31 +114,31 @@ class _MyHomePageState extends State<MyHomePage> {
             });
           },
           items: seasons
-              .map((season) => DropdownMenuItem(
-                    value: season,
-                    child: Column(
-                      children: [
-                        Text(
-                          season.name,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              season.startDate,
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white),
-                            ),
-                            Text(
-                              ' - ${season.endDate}',
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ))
+              .map(
+                (season) => DropdownMenuItem(
+                  value: season,
+                  child: Column(
+                    children: [
+                      Text(
+                        season.name,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            season.startDate,
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                          Text(
+                            ' - ${season.endDate}',
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
               .toList(),
         ),
       ),

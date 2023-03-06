@@ -20,6 +20,7 @@ bool mapsol = true;
 List<LatLng> polygonPoints = [];
 
 List<Marker> markers = [];
+bool isChoose = true;
 bool isPolygon = false; //Default
 bool fclick = true;
 bool isMarker = false;
@@ -33,9 +34,6 @@ bool isThirdWidgetVisible = false;
 bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 late MapController _mapController;
-void isMap() {
-  mapsol = true;
-}
 
 late Map<String, dynamic> _wmsResponse;
 var heightS = 10.5;
@@ -122,12 +120,6 @@ class _FieldScreenState extends State<FieldScreen> {
     });
   }
 
-  void isField() {
-    setState(() {
-      mapsol = true;
-    });
-  }
-
   GeoRepository repository = GeoRepository();
   @override
   void initState() {
@@ -165,8 +157,7 @@ class _FieldScreenState extends State<FieldScreen> {
 
   double _zoom = 10.0;
   void zoomToFeature(LatLng center) {
-    // Set the map's zoom level and center point to the feature's geometry
-    _mapController.move(center, 16.0);
+    _mapController.move(center, 15.0);
   }
 
   void _addPolygons(point) {
@@ -174,12 +165,9 @@ class _FieldScreenState extends State<FieldScreen> {
   }
 
   Future<void> _handleTap(LatLng latLng) async {
-    // do something asynchronous here, like fetching data from a server
-    // and wait for it to complete before animating the map
     await Future.delayed(Duration(seconds: 1));
 
-    // animate the map to the new zoom level centered around the tapped coordinates
-    _mapController.move(latLng, _zoom + 2);
+    _mapController.move(latLng, _zoom + 2.5);
   }
 
   @override
@@ -253,25 +241,30 @@ class _FieldScreenState extends State<FieldScreen> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                onTap: (tapPosition, LatLng latLng) async {
-                  await _handleTap(latLng);
-                },
-                // onTap: (tapPosition, point) async {
-                //   setState(() {
-                //     if (isPolygon) {
-                //       setState(() {
-                //         _addPolygons(point);
-                //         markers.clear();
-                //       });
-                //     } else if (isMarker) {
-                //       _addMarkers(point);
-                //       polygonPoints.clear();
-                //     } else {
-                //       print(point);
-                //       _mapController.move(latLng, _zoom + 2);
-                //     }
-                //   });
+                // onTap: (tapPosition, LatLng latLng) async {
+                // await _handleTap(latLng);
                 // },
+                onTap: (tapPosition, LatLng latlng) async {
+                  setState(() {
+                    if (isPolygon) {
+                      setState(() {
+                        _addPolygons(latlng);
+                        markers.clear();
+                      });
+                    } else if (isMarker) {
+                      setState(() {
+                        _addMarkers(latlng);
+                        polygonPoints.clear();
+                      });
+                    } else if (isChoose) {
+                      setState(() {
+                        markers.clear();
+                        print(latlng);
+                        _handleTap(latlng);
+                      });
+                    }
+                  });
+                },
                 center: firstLocation,
                 zoom: _zoom,
               ),
@@ -488,7 +481,11 @@ class _FieldScreenState extends State<FieldScreen> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        mapsol = !mapsol;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => PanelWidget(
+                                    controller: ScrollController())));
                       });
                     },
                     child: Container(
@@ -569,7 +566,8 @@ class AddField extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.06,
         child: TextButton(
           onPressed: () {
-            isMarker = true;
+            isChoose = true;
+            isMarker = false;
             isPolygon = false;
             polygonPoints.clear();
             isAddFieldWidgetVisible = false;
@@ -609,9 +607,7 @@ class _TextFieldFieldState extends State<TextFieldField> {
           children: [
             InkWell(
               onTap: () {
-                setState(() {
-                  mapsol = true;
-                });
+                setState(() {});
               },
               child: Container(
                 height: 40,

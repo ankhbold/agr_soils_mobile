@@ -95,6 +95,8 @@ class _FieldsSheetState extends State<FieldsSheet> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
+                                      isMarker = true;
+                                      isChoose = false;
                                       widget.notecreate();
                                       // ChangeStage();
                                     });

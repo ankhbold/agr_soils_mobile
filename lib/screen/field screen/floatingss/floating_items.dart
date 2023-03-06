@@ -106,7 +106,7 @@ class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
     final height1 = MediaQuery.of(context).size.height * 0.125;
-    final height2 = MediaQuery.of(context).size.height * 0.3;
+    final height2 = MediaQuery.of(context).size.height * 0.335;
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(5.0),

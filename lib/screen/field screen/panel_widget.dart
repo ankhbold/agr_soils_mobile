@@ -17,81 +17,81 @@ class PanelWidget extends StatefulWidget {
 
 class _PanelWidgetState extends State<PanelWidget> {
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: const BoxDecoration(
-          // color: AppColors.whiteColor,
-          gradient: AppColors.grad,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
-        ),
-        child: Column(
-          children: <Widget>[
-            // CustomNavigator(),
-            // Padding(
-            //   padding: EdgeInsets.only(right: 50, left: 50),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Container(
-            //         height: 5,
-            //         width: 50,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(25),
-            //           color: const Color.fromARGB(255, 255, 255, 255),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
+  Widget build(BuildContext context) => Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            // color: AppColors.whiteColor,
+            gradient: AppColors.grad,
+            // borderRadius: BorderRadius.only(
+            //   bottomLeft: Radius.circular(15),
+            //   bottomRight: Radius.circular(15),
             // ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.012,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        mapsol = !mapsol;
-                      });
-                    },
-                    icon: Icon(Icons.arrow_back_ios),
-                    color: Colors.white,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.search,
-                          size: 20,
-                          color: AppColors.Green,
+          ),
+          child: Column(
+            children: <Widget>[
+              // CustomNavigator(),
+              // Padding(
+              //   padding: EdgeInsets.only(right: 50, left: 50),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       Container(
+              //         height: 5,
+              //         width: 50,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(25),
+              //           color: const Color.fromARGB(255, 255, 255, 255),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          Navigator.pop(context);
+                        });
+                      },
+                      icon: Icon(Icons.arrow_back_ios),
+                      color: Colors.white,
+                    ),
+                    Container(
+                      height: 40,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: 20,
+                            color: AppColors.Green,
+                          ),
+                          border: InputBorder.none,
+                          hintText: 'Талбай хайна уу',
                         ),
-                        border: InputBorder.none,
-                        hintText: 'Талбай хайна уу',
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // Planted(),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            MyFields(),
-          ],
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Planted(),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              MyFields(),
+            ],
+          ),
         ),
       );
 }
@@ -116,74 +116,74 @@ class MyFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                width: 5,
-              ),
-              // Container(
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: const [
-              //       Text(
-              //         'Миний талбай',
-              //         style: TextStyle(
-              //           fontSize: 18,
-              //           fontWeight: FontWeight.w600,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 11,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   width: 60,
-              // ),
-              // Column(
-              //   children: [
-              //     TextButton(
-              //       onPressed: () {},
-              //       child: const Text(
-              //         'Ургамлын индексээр',
-              //         style: TextStyle(
-              //           fontSize: 15,
-              //           fontWeight: FontWeight.w400,
-              //           color: Color(0xffB7B7B7),
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBox(
-              //       height: 16,
-              //     ),
-              //   ],
-              // ),
-              const SizedBox(
-                width: 1,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 510,
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Roow(),
-                );
-              },
-            ),
-          ),
-        ],
+    return
+        // Container(
+        //   child: Column(
+        //     children: [
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     const SizedBox(
+        //       width: 5,
+        //     ),
+        //     Container(
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: const [
+        //           Text(
+        //             'Миний талбай',
+        //             style: TextStyle(
+        //               fontSize: 18,
+        //               fontWeight: FontWeight.w600,
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             height: 11,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 60,
+        //     ),
+        //     Column(
+        //       children: [
+        //         TextButton(
+        //           onPressed: () {},
+        //           child: const Text(
+        //             'Ургамлын индексээр',
+        //             style: TextStyle(
+        //               fontSize: 15,
+        //               fontWeight: FontWeight.w400,
+        //               color: Color(0xffB7B7B7),
+        //             ),
+        //           ),
+        //         ),
+        //         const SizedBox(
+        //           height: 16,
+        //         ),
+        //       ],
+        //     ),
+        //     const SizedBox(
+        //       width: 1,
+        //     ),
+        //   ],
+        // ),
+        Expanded(
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Roow(),
+          );
+        },
       ),
     );
+    //     ],
+    //   ),
+    // );
   }
 }
 

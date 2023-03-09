@@ -38,7 +38,7 @@ class GetNote {
     interNo = json['inter_no'];
     startYear = json['start_year'];
   }
-  late int id;
+  int? id;
   String? code;
   bool? isActive;
   String? name;

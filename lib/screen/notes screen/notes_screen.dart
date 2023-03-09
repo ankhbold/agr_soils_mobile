@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mvvm/screen/notes%20screen/search.dart';
 
 import '../../service/apis/get_notes_data.dart';
+import '../../service/remote_services.dart';
 import '../profile screen/profile_screen.dart';
 
 // import '../data/listdata.dart';
@@ -28,13 +29,15 @@ class ScreenTwo extends StatefulWidget {
 
 class _ScreenTwoState extends State<ScreenTwo> {
   FetchUserList _userList = FetchUserList();
-  // List<GetNote> listNote = [];
-  // getGetNoteApi() async {
-  //   listNote = await repository.getGetNoteApi();
-  //   setState(() {
-  //     isloaded = true;
-  //   });
-  // }
+  Repository repository = Repository();
+
+  List<GetNote> listNote = [];
+  getGetNoteApi() async {
+    listNote = await repository.getGetNoteApi();
+    setState(() {
+      isloaded = true;
+    });
+  }
 
   var isloaded = false;
 
@@ -44,7 +47,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
     super.initState();
     FetchUserList();
     print(DateTime.now());
-    // getGetNoteApi();
+    getGetNoteApi();
   }
 
   @override
@@ -79,6 +82,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
             return ListView.builder(
                 itemCount: data?.length,
                 itemBuilder: (context, index) {
+                  GetNote note = listNote[index];
                   if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   }
@@ -127,6 +131,14 @@ class _ScreenTwoState extends State<ScreenTwo> {
                                               255, 127, 127, 127),
                                         ),
                                       ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            setState(() async {
+                                              _userList
+                                                  .deleteData(note.id as int);
+                                            });
+                                          },
+                                          child: null)
                                     ],
                                   ),
                                 ),
@@ -186,5 +198,21 @@ class FetchUserList {
       print('error: $e');
     }
     return results;
+  }
+
+  String uri5 = 'http://103.143.40.250:8100/api/note/delete';
+  Future deleteData(int id) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$uri5/$id'),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return e.toString();
+    }
   }
 }

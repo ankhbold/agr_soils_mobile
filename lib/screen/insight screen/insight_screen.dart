@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/insight%20screen/indices_screen.dart';
+import 'package:mvvm/screen/insight%20screen/weather.dart';
 import 'package:mvvm/screen/insight%20screen/weather_screen.dart';
 import 'package:mvvm/screen/widgets/button/default_button.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -94,7 +95,7 @@ class _InsightState extends State<Insight> {
           child: ListView(
             children: [
               ChooseLoc(),
-              Weather(),
+              Weathers(),
               DefaultButton(
                 OnTap: () {
                   // setState(() {
@@ -251,137 +252,6 @@ class _NearState extends State<Near> {
           ),
         );
       },
-    );
-  }
-}
-
-class Weather extends StatefulWidget {
-  const Weather({super.key});
-
-  @override
-  State<Weather> createState() => _WeatherState();
-}
-
-class _WeatherState extends State<Weather> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.15,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.only(
-              left: 20,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.sunny,
-                        color: Color.fromARGB(255, 255, 196, 0),
-                        size: 60,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '-13',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 25,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.55,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.air),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'Салхи\n(5 m/s)',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.air),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'Хур тунадас\n(0 mm)',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.air),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'Салхи\n(5 m/s)',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.air),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'Хур тунадас\n(0 mm)',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

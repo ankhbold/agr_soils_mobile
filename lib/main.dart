@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:mvvm/utils/routes/routes.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
@@ -48,7 +47,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        // home: FieldScreen(),
+        // home: ScreenTwo(),
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),

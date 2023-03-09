@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'add_note.dart';
+
+double long = 49.939048;
+double lat = 105.841644;
 
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
@@ -16,6 +20,10 @@ class PanelWidget extends StatefulWidget {
 }
 
 class _PanelWidgetState extends State<PanelWidget> {
+  void pop() {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Container(
@@ -55,7 +63,13 @@ class _PanelWidgetState extends State<PanelWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          Navigator.pop(context);
+                          pop();
+                          TapMove(LatLng(lat, long));
+                          isAddFieldWidgetVisible = false;
+                          // isFabVisible = false;
+                          isFirstWidgetVisible = false;
+                          isSecondWidgetVisible = false;
+                          isThirdWidgetVisible = true;
                         });
                       },
                       icon: Icon(Icons.arrow_back_ios),
@@ -89,7 +103,29 @@ class _PanelWidgetState extends State<PanelWidget> {
               // const SizedBox(
               //   height: 10,
               // ),
-              MyFields(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              pop();
+                              TapMove(LatLng(49.939048, 105.841644));
+                              isAddFieldWidgetVisible = false;
+                              // isFabVisible = false;
+                              isFirstWidgetVisible = false;
+                              isSecondWidgetVisible = false;
+                              isThirdWidgetVisible = true;
+                            });
+                          },
+                          child: Roow()),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -108,84 +144,6 @@ class _PanelWidgetState extends State<PanelWidget> {
 //     );
 //   }
 // }
-
-class MyFields extends StatelessWidget {
-  const MyFields({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return
-        // Container(
-        //   child: Column(
-        //     children: [
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const SizedBox(
-        //       width: 5,
-        //     ),
-        //     Container(
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: const [
-        //           Text(
-        //             'Миний талбай',
-        //             style: TextStyle(
-        //               fontSize: 18,
-        //               fontWeight: FontWeight.w600,
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //           SizedBox(
-        //             height: 11,
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       width: 60,
-        //     ),
-        //     Column(
-        //       children: [
-        //         TextButton(
-        //           onPressed: () {},
-        //           child: const Text(
-        //             'Ургамлын индексээр',
-        //             style: TextStyle(
-        //               fontSize: 15,
-        //               fontWeight: FontWeight.w400,
-        //               color: Color(0xffB7B7B7),
-        //             ),
-        //           ),
-        //         ),
-        //         const SizedBox(
-        //           height: 16,
-        //         ),
-        //       ],
-        //     ),
-        //     const SizedBox(
-        //       width: 1,
-        //     ),
-        //   ],
-        // ),
-        Expanded(
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Roow(),
-          );
-        },
-      ),
-    );
-    //     ],
-    //   ),
-    // );
-  }
-}
 
 class Planted extends StatelessWidget {
   const Planted({

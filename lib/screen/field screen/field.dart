@@ -34,9 +34,14 @@ bool isThirdWidgetVisible = false;
 bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 late MapController _mapController;
-
+double _zoom = 10.0;
 late Map<String, dynamic> _wmsResponse;
 var heightS = 10.5;
+Future<void> TapMove(LatLng latLng) async {
+  await Future.delayed(Duration(seconds: 1));
+
+  _mapController.move(LatLng(49.939048, 105.841644), _zoom + 2.5);
+}
 
 class FieldScreen extends StatefulWidget {
   const FieldScreen({Key? key}) : super(key: key);
@@ -155,7 +160,6 @@ class _FieldScreenState extends State<FieldScreen> {
     print(point);
   }
 
-  double _zoom = 10.0;
   void zoomToFeature(LatLng center) {
     _mapController.move(center, 15.0);
   }

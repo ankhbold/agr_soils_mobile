@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
-import 'package:mvvm/screen/insight%20screen/weather/services/data_services.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
+
+import '../field screen/field_panel.dart';
 
 final ScrollController _scrollController = ScrollController();
 
@@ -242,20 +243,20 @@ class _ChooseLoccState extends State<ChooseLocc> {
           padding: EdgeInsets.only(left: 15, top: 15, right: 10),
           child: Row(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.77,
-                height: MediaQuery.of(context).size.height * 0.062,
-                child: RawScrollbar(
-                  thumbColor: AppColors.Green,
-                  thickness: 4,
-                  radius: Radius.circular(100),
-                  // interactive: true,
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.77,
+              //   height: MediaQuery.of(context).size.height * 0.062,
+              //   child: RawScrollbar(
+              //     thumbColor: AppColors.Green,
+              //     thickness: 4,
+              //     radius: Radius.circular(100),
+              //     // interactive: true,
 
-                  thumbVisibility: true,
-                  controller: _scrollController,
-                  child: Nearr(),
-                ),
-              ),
+              //     thumbVisibility: true,
+              //     controller: _scrollController,
+              //     child: Nearr(),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: InkWell(
@@ -292,57 +293,57 @@ class _ChooseLoccState extends State<ChooseLocc> {
   }
 }
 
-class Nearr extends StatefulWidget {
-  const Nearr({super.key});
+// class Nearr extends StatefulWidget {
+//   const Nearr({super.key});
 
-  @override
-  State<Nearr> createState() => _NearrState();
-}
+//   @override
+//   State<Nearr> createState() => _NearrState();
+// }
 
-class _NearrState extends State<Nearr> {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      controller: _scrollController,
-      itemCount: text.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.29,
-            height: MediaQuery.of(context).size.height * 0.01,
-            decoration: BoxDecoration(
-                color:
-                    current == index ? const Color(0xff0f766e) : AppColors.grey,
-                borderRadius: BorderRadius.circular(8)),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      current = index;
-                    });
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        text[index],
-                        style: TextStyle(
-                          color: current == index ? Colors.white : Colors.black,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+// class _NearrState extends State<Nearr> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       scrollDirection: Axis.horizontal,
+//       controller: _scrollController,
+//       itemCount: text.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return Padding(
+//           padding: const EdgeInsets.all(3.0),
+//           child: Container(
+//             width: MediaQuery.of(context).size.width * 0.29,
+//             height: MediaQuery.of(context).size.height * 0.01,
+//             decoration: BoxDecoration(
+//                 color:
+//                     current == index ? const Color(0xff0f766e) : AppColors.grey,
+//                 borderRadius: BorderRadius.circular(8)),
+//             child: Center(
+//               child: Padding(
+//                 padding: const EdgeInsets.all(2.0),
+//                 child: InkWell(
+//                   onTap: () {
+//                     setState(() {
+//                       current = index;
+//                     });
+//                   },
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Text(
+//                         text[index],
+//                         style: TextStyle(
+//                           color: current == index ? Colors.white : Colors.black,
+//                           fontSize: 13,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

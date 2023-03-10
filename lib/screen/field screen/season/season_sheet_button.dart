@@ -66,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    print('skjbhjbvkjjvbjhbdvhdhbsvh hjdfbv');
-    print(Globals.prof_company_id);
+    // print('skjbhjbvkjjvbjhbdvhdhbsvh hjdfbv');
+    // print(Globals.prof_company_id);
     fetchData();
   }
 
@@ -98,6 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
       height: MediaQuery.of(context).size.height * 0.04,
       child: Center(
         child: DropdownButton(
+          underline: Container(
+            height: 0,
+            color: Colors.transparent,
+          ),
           elevation: 10,
           borderRadius: BorderRadius.circular(12),
           // isExpanded: true,

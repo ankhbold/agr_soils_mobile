@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
+import 'package:mvvm/screen/insight%20screen/weather.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
-
-import '../field screen/field_panel.dart';
 
 final ScrollController _scrollController = ScrollController();
 
@@ -15,8 +14,6 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  final ApiResponse dataState = ApiResponse();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +51,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         body: ListView(
           children: [
             ChooseLocc(),
-            WeatherWide(),
+            Weathers(),
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: Line3(),
@@ -243,20 +240,20 @@ class _ChooseLoccState extends State<ChooseLocc> {
           padding: EdgeInsets.only(left: 15, top: 15, right: 10),
           child: Row(
             children: [
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.77,
-              //   height: MediaQuery.of(context).size.height * 0.062,
-              //   child: RawScrollbar(
-              //     thumbColor: AppColors.Green,
-              //     thickness: 4,
-              //     radius: Radius.circular(100),
-              //     // interactive: true,
+              Container(
+                width: MediaQuery.of(context).size.width * 0.77,
+                height: MediaQuery.of(context).size.height * 0.062,
+                child: RawScrollbar(
+                  thumbColor: AppColors.Green,
+                  thickness: 4,
+                  radius: Radius.circular(100),
+                  // interactive: true,
 
-              //     thumbVisibility: true,
-              //     controller: _scrollController,
-              //     child: Nearr(),
-              //   ),
-              // ),
+                  thumbVisibility: true,
+                  controller: _scrollController,
+                  child: Near(),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: InkWell(

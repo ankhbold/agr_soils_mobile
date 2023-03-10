@@ -14,7 +14,7 @@ class GeoRepository {
     var data = json.decode(response.body);
 
     // Print the desired parameter
-    print(data['title']);
+    // print(data['title']);
     return data;
   }
 }

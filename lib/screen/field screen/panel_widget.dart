@@ -4,8 +4,8 @@ import 'package:mvvm/constants/colors.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'add_note.dart';
 
-double long = 49.939048;
-double lat = 105.841644;
+double lat = 49.939048;
+double long = 105.841644;
 
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
@@ -64,12 +64,12 @@ class _PanelWidgetState extends State<PanelWidget> {
                       onPressed: () {
                         setState(() {
                           pop();
-                          TapMove(LatLng(lat, long));
-                          isAddFieldWidgetVisible = false;
-                          // isFabVisible = false;
-                          isFirstWidgetVisible = false;
-                          isSecondWidgetVisible = false;
-                          isThirdWidgetVisible = true;
+
+                          // isAddFieldWidgetVisible = false;
+                          // isFabVisible = true;
+                          // isFirstWidgetVisible = false;
+                          // isSecondWidgetVisible = false;
+                          // isThirdWidgetVisible = true;
                         });
                       },
                       icon: Icon(Icons.arrow_back_ios),
@@ -96,13 +96,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ],
                 ),
               ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // Planted(),
-              // const SizedBox(
-              //   height: 10,
-              // ),
+
               Expanded(
                 child: ListView.builder(
                   itemCount: 10,
@@ -112,7 +106,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                       child: InkWell(
                           onTap: () {
                             setState(() {
-                              pop();
+                              Navigator.pop(context);
                               TapMove(LatLng(49.939048, 105.841644));
                               isAddFieldWidgetVisible = false;
                               // isFabVisible = false;
@@ -131,19 +125,6 @@ class _PanelWidgetState extends State<PanelWidget> {
         ),
       );
 }
-
-// class CustomNavigator extends StatelessWidget {
-//   const CustomNavigator({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: MediaQuery.of(context).size.height * 0.015,
-//     );
-//   }
-// }
 
 class Planted extends StatelessWidget {
   const Planted({

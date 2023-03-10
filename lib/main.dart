@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/screen/field%20screen/geojson/map.dart';
+import 'package:mvvm/screen/home_screen.dart';
+import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
 import 'package:mvvm/utils/routes/routes.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
@@ -47,9 +50,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        // home: ScreenTwo(),
-        initialRoute: RoutesName.splash,
-        onGenerateRoute: Routes.generateRoute,
+        home: HomeScreen(),
+        // initialRoute: RoutesName.splash,
+        // onGenerateRoute: Routes.generateRoute,
       ),
     );
   }

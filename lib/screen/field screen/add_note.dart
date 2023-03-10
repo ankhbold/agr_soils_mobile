@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
+import 'package:mvvm/screen/notes%20screen/screen_three.dart';
 import 'package:mvvm/service/remote_services.dart';
 
 class NoteAdd extends StatefulWidget {
@@ -97,7 +98,13 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                   TextButton(
                     onPressed: () async {
-                      print(DateTime.now());
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (_) => ScreenThree(),
+                      //   ),
+                      // );
+                      // print(DateTime.now());
                       bool response =
                           await repository.createData(titleController.text);
                       if (response) {

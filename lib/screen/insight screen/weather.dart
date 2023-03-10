@@ -1,11 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+
+// LatLng(latitude:49.981314, longitude:105.826702)
+double lat = 49.981314;
+double lon = 105.826702;
+final LatLong = LatLng(49.981314, 105.826702);
 
 class ApiResponse {
   Future<Weather> getWeather() async {
     String url =
-        'http://api.openweathermap.org/data/2.5/weather?lat=49.939048&lon=105.841644&APPID=6adf87802066a3ee22591eb3f8abfe0c';
+        'http://api.openweathermap.org/data/2.5/weather?lat=${LatLong.latitude}&lon=${LatLong.longitude}&APPID=6adf87802066a3ee22591eb3f8abfe0c';
     final response = await http.get(Uri.parse(url));
     return Weather.fromJson(json.decode(response.body));
   }
@@ -28,7 +34,7 @@ class _WeathersState extends State<Weathers> {
         builder: (context, snapshot) {
           return snapshot.hasData
               ? Container(
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -76,9 +82,12 @@ class _WeathersState extends State<Weathers> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.air),
+                                          Icon(
+                                            Icons.air,
+                                            size: 20,
+                                          ),
                                           SizedBox(
-                                            width: 2,
+                                            width: 5,
                                           ),
                                           Text(
                                             "Салхи\n${snapshot.data!.wind.speed.toStringAsFixed(1)} km/h",
@@ -91,12 +100,12 @@ class _WeathersState extends State<Weathers> {
                                       ),
                                       Row(
                                         children: [
-                                          Icon(Icons.air),
-                                          SizedBox(
-                                            width: 2,
-                                          ),
+                                          // Icon(Icons.air),
+                                          // SizedBox(
+                                          //   width: 2,
+                                          // ),
                                           Text(
-                                            'Хур тунадас\n(0 mm)',
+                                            'Чийгшил\n${snapshot.data!.main.humidity.toStringAsFixed(1)} %',
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -106,18 +115,130 @@ class _WeathersState extends State<Weathers> {
                                   SizedBox(
                                     height: 10,
                                   ),
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceEvenly,
+                                  //   children: [
+                                  //     Row(
+                                  //       children: [
+                                  //         Icon(Icons.air),
+                                  //         SizedBox(
+                                  //           width: 2,
+                                  //         ),
+                                  //         Text(
+                                  //           'Салхи\n(5 m/s)',
+                                  //           style: TextStyle(fontSize: 13),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //     SizedBox(
+                                  //       width: 15,
+                                  //     ),
+                                  //     Row(
+                                  //       children: [
+                                  //         Icon(Icons.air),
+                                  //         SizedBox(
+                                  //           width: 2,
+                                  //         ),
+                                  //         Text(
+                                  //           'Хур тунадас\n(0 mm)',
+                                  //           style: TextStyle(fontSize: 13),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const Center(
+                  child:
+                      CircularProgressIndicator(backgroundColor: Colors.black),
+                );
+        });
+  }
+}
+
+class WeatherClick extends StatefulWidget {
+  const WeatherClick({super.key});
+
+  @override
+  State<WeatherClick> createState() => _WeatherClickState();
+}
+
+class _WeatherClickState extends State<WeatherClick> {
+  final ApiResponse dataState = ApiResponse();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Weather>(
+        future: dataState.getWeather(),
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? Container(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 20,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.sunny,
+                                    color: Color.fromARGB(255, 255, 196, 0),
+                                    size: 60,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '${(snapshot.data!.main.temp - 273.15).toInt()}°',
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 25,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.55,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.air),
+                                          Icon(
+                                            Icons.air,
+                                            size: 20,
+                                          ),
                                           SizedBox(
-                                            width: 2,
+                                            width: 5,
                                           ),
                                           Text(
-                                            'Салхи\n(5 m/s)',
+                                            "Салхи\n${snapshot.data!.wind.speed.toStringAsFixed(1)} km/h",
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -127,18 +248,54 @@ class _WeathersState extends State<Weathers> {
                                       ),
                                       Row(
                                         children: [
-                                          Icon(Icons.air),
-                                          SizedBox(
-                                            width: 2,
-                                          ),
+                                          // Icon(Icons.air),
+                                          // SizedBox(
+                                          //   width: 2,
+                                          // ),
                                           Text(
-                                            'Хур тунадас\n(0 mm)',
+                                            'Чийгшил\n${snapshot.data!.main.humidity.toStringAsFixed(1)} %',
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceEvenly,
+                                  //   children: [
+                                  //     Row(
+                                  //       children: [
+                                  //         Icon(Icons.air),
+                                  //         SizedBox(
+                                  //           width: 2,
+                                  //         ),
+                                  //         Text(
+                                  //           'Салхи\n(5 m/s)',
+                                  //           style: TextStyle(fontSize: 13),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //     SizedBox(
+                                  //       width: 15,
+                                  //     ),
+                                  //     Row(
+                                  //       children: [
+                                  //         Icon(Icons.air),
+                                  //         SizedBox(
+                                  //           width: 2,
+                                  //         ),
+                                  //         Text(
+                                  //           'Хур тунадас\n(0 mm)',
+                                  //           style: TextStyle(fontSize: 13),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),

@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   void onTabTapped(int index) {
     setState(() {
-      print(index);
+      ;
       index_color = index;
       // Globals.changeIndexColor(index);
       // print(Globals.getIndexColor());

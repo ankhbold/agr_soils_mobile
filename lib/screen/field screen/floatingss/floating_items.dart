@@ -83,7 +83,7 @@ class _FloatingFourthItemState extends State<FloatingFourthItem> {
                   item[index],
                   style: TextStyle(
                     overflow: TextOverflow.fade,
-                    color: Color.fromARGB(255, 0, 0, 0),
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 13,
                   ),
                 ),
@@ -114,7 +114,7 @@ class _FloatingFabState extends State<FloatingFab> {
           height: sungahh ? height1 : height2,
           width: MediaQuery.of(context).size.width * 0.98,
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.65),
+            color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -136,37 +136,44 @@ class _FloatingFabState extends State<FloatingFab> {
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 'Байгалийн үндсэн өнгөний индекс',
-                                style: TextStyle(fontSize: 13),
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.white),
                               ),
                             ),
                             Text(
                               'Их',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100(),
                             Text(
                               'Дундаж',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100(),
                             Text(
                               'Эрэмбэлэгдсэн дундаж',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100(),
                             Text(
                               'Бага',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100(),
                             Text(
                               'Хазайлт',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100(),
                             Text(
                               'нягтралын',
-                              style: TextStyle(fontSize: 13),
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.white),
                             ),
                             Line100()
                           ],
@@ -269,7 +276,7 @@ class Line100 extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
       child: Container(
-        color: Color.fromARGB(156, 0, 0, 0),
+        color: Color.fromARGB(156, 255, 255, 255),
         height: 1,
         width: MediaQuery.of(context).size.width * 0.95,
       ),

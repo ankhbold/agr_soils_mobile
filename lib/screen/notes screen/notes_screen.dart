@@ -16,8 +16,8 @@ void getWMSResponse() async {
       'http://103.143.40.250:8080/geoserver/agrgis/wms?service=WMS&version=1.1.0&request=GetMap&layers=agrgis%3Aagr_parcel&bbox=104.83374631177468%2C48.61366916210431%2C106.18761342734588%2C50.393568299264835&width=584&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers';
   var response = await http.get(Uri.parse(url));
 
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
+  // print('Response status: ${response.statusCode}');
+  // print('Response body: ${response.body}');
 }
 
 class ScreenTwo extends StatefulWidget {
@@ -28,15 +28,13 @@ class ScreenTwo extends StatefulWidget {
 }
 
 class _ScreenTwoState extends State<ScreenTwo> {
+  bool isLoading = false;
   FetchUserList _userList = FetchUserList();
   Repository repository = Repository();
-
   List<GetNote> listNote = [];
   getGetNoteApi() async {
     listNote = await repository.getGetNoteApi();
-    setState(() {
-      isloaded = true;
-    });
+    isloaded = true;
   }
 
   var isloaded = false;
@@ -46,7 +44,8 @@ class _ScreenTwoState extends State<ScreenTwo> {
     getWMSResponse();
     super.initState();
     FetchUserList();
-    print(DateTime.now());
+
+    // print(DateTime.now());
     getGetNoteApi();
   }
 
@@ -79,95 +78,118 @@ class _ScreenTwoState extends State<ScreenTwo> {
           future: _userList.getuserList(),
           builder: (context, snapshot) {
             var data = snapshot.data;
-            return ListView.builder(
-                itemCount: data?.length,
-                itemBuilder: (context, index) {
-                  GetNote note = listNote[index];
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.92,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${data?[index].name}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      const Text(
-                                        'усалгаатай - 1',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${data?[index].createdAt}',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color.fromARGB(
-                                              255, 127, 127, 127),
-                                        ),
-                                      ),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            setState(() async {
+            return isLoading
+                ? CircularProgressIndicator()
+                : ListView.builder(
+                    itemCount: data?.length,
+                    itemBuilder: (context, index) {
+                      GetNote note = listNote[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.92,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${data?[index].name}',
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Text(
+                                                'усалгаатай - 1',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${data?[index].createdAt}',
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color.fromARGB(
+                                                      255, 127, 127, 127),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () async {
                                               _userList
                                                   .deleteData(note.id as int);
-                                            });
-                                          },
-                                          child: null)
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.16,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.92,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/note.jpeg',
+                                              setState(() {
+                                                listNote.removeAt(index);
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 50,
+                                              child: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                // color: Color.fromARGB(
+                                                //     255, 185, 52, 43),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.16,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.92,
+                                      decoration: BoxDecoration(
+                                        image: const DecorationImage(
+                                          image: AssetImage(
+                                            'assets/images/note.jpeg',
+                                          ),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${data?[index].description}',
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  '${data?[index].description}',
-                                )
-                              ],
+                              ),
                             ),
-                          ),
+                            const Line3(),
+                          ],
                         ),
-                        const Line3(),
-                      ],
-                    ),
-                  );
-                });
+                      );
+                    });
           }),
     );
   }
@@ -207,6 +229,7 @@ class FetchUserList {
         Uri.parse('$uri5/$id'),
       );
       if (response.statusCode == 200) {
+        SnackBar(content: Text('Тэмдэглэл устлаа.'));
         return true;
       } else {
         return false;
@@ -214,5 +237,9 @@ class FetchUserList {
     } catch (e) {
       return e.toString();
     }
+  }
+
+  Future<void> refreshList() async {
+    results = await getuserList();
   }
 }

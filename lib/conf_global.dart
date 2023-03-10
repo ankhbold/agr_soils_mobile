@@ -12,6 +12,8 @@ class Globals {
   static var index_color = 0;
   static var personId = '';
   static var prof_company_id = '';
+  static var latit = '';
+  static var longit = '';
   // static printInteger() {
   //   print(anInteger);
   // }
@@ -29,6 +31,14 @@ class Globals {
 
   static getPersonId() {
     return personId;
+  }
+
+  static changeLatitude(double a) {
+    latit = '';
+  }
+
+  static getLatitude() {
+    return latit;
   }
 
   static changePCI(String a) {

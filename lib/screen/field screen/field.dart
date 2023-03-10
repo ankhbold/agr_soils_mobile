@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mvvm/conf_global.dart';
-import 'package:mvvm/screen/field%20screen/field_panel.dart';
 import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
 import 'package:mvvm/screen/field%20screen/floatingss/floating_items.dart';
 import 'package:mvvm/screen/field%20screen/geojson/get_geo_api.dart';
@@ -14,7 +13,6 @@ import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 import 'package:mvvm/screen/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../constants/color.dart';
-import 'package:http/http.dart' as http;
 
 bool mapsol = true;
 List<LatLng> polygonPoints = [];
@@ -51,20 +49,6 @@ class FieldScreen extends StatefulWidget {
 }
 
 class _FieldScreenState extends State<FieldScreen> {
-  Future<void> fetchWmsResponse() async {
-    final url = Uri.parse(
-        'http://103.143.40.250:8080/geoserver/agrgis/wms?service=WMS&version=1.1.0&request=GetMap&layers=agrgis%3Aagr_parcel&bbox=104.83374631177468%2C48.61366916210431%2C106.18761342734588%2C50.393568299264835&width=584&height=768&srs=EPSG%3A4326&styles=&format=application/openlayers');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      setState(() {
-        _wmsResponse = json.decode(response.body);
-      });
-      print(_wmsResponse['features'][0]['geometry']);
-    } else {
-      throw Exception('Failed to fetch WMS response');
-    }
-  }
-
   LatLng firstLocation = LatLng(49.939048, 105.841644);
 
   var sate =
@@ -103,6 +87,7 @@ class _FieldScreenState extends State<FieldScreen> {
       ),
     ],
   );
+
   void changeStage() {
     setState(() {
       isFabVisible = false;
@@ -131,7 +116,7 @@ class _FieldScreenState extends State<FieldScreen> {
     // fetch();
     index_color;
     _mapController = MapController();
-    fetchWmsResponse();
+
     super.initState();
   }
 
@@ -183,9 +168,13 @@ class _FieldScreenState extends State<FieldScreen> {
     final panelHeightClosed3 = MediaQuery.of(context).size.height * 0.07;
     final panelHeightClosed4 = MediaQuery.of(context).size.height * 0.265;
     final panelHeightClosed5 = MediaQuery.of(context).size.height * 0.44;
-
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     return Scaffold(
-        appBar: fieldBar(),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -200,19 +189,20 @@ class _FieldScreenState extends State<FieldScreen> {
                             });
                           },
                           child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(60),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(60),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.backspace,
+                                size: 20,
+                                color: AppColors.Green,
                               ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.backspace,
-                                  size: 20,
-                                  color: AppColors.Green,
-                                ),
-                              )),
+                            ),
+                          ),
                         ),
                       ],
                     )
@@ -226,7 +216,6 @@ class _FieldScreenState extends State<FieldScreen> {
                           elevation: 0,
                           onPressed: () {
                             setState(() {
-                              fetchWmsResponse();
                               print('company id : ${Globals.getPersonId()}');
                             });
                           },
@@ -262,6 +251,7 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     } else if (isChoose) {
                       setState(() {
+                        Globals.changeLatitude(latlng.latitude);
                         markers.clear();
                         print(latlng);
                         _handleTap(latlng);
@@ -290,6 +280,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 polygonLayer,
               ],
             ),
+            fieldBar(),
 
             Offstage(
                 offstage: mapsol,
@@ -367,31 +358,31 @@ class _FieldScreenState extends State<FieldScreen> {
                 ),
               ),
             ),
-            Offstage(
-              offstage: !isThirdWidgetVisible,
-              child: SlidingUpPanel(
-                backdropEnabled: true,
-                color: Colors.transparent,
-                maxHeight: panelHeightOpened,
-                minHeight: panelHeightClosed4,
-                parallaxEnabled: true,
-                parallaxOffset: .5,
-                panelBuilder: (controller) => FieldPanel(
-                  controller: controller,
-                ),
-                onPanelSlide: (position) => setState(
-                  () {
-                    final panelMaxScrollExtent =
-                        panelHeightOpened - panelHeightClosed;
-                    fabHeight =
-                        position * panelMaxScrollExtent + panelHeightClosed + 2;
-                  },
-                ),
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(30),
-                ),
-              ),
-            ),
+            // Offstage(
+            //   offstage: !isThirdWidgetVisible,
+            //   child: SlidingUpPanel(
+            //     backdropEnabled: true,
+            //     color: Colors.transparent,
+            //     maxHeight: panelHeightOpened,
+            //     minHeight: panelHeightClosed4,
+            //     parallaxEnabled: true,
+            //     parallaxOffset: .5,
+            //     panelBuilder: (controller) => FieldPanel(
+            //       controller: controller,
+            //     ),
+            //     onPanelSlide: (position) => setState(
+            //       () {
+            //         final panelMaxScrollExtent =
+            //             panelHeightOpened - panelHeightClosed;
+            //         fabHeight =
+            //             position * panelMaxScrollExtent + panelHeightClosed + 2;
+            //       },
+            //     ),
+            //     borderRadius: const BorderRadius.vertical(
+            //       top: Radius.circular(30),
+            //     ),
+            //   ),
+            // ),
             Offstage(
               offstage: !isAddFieldWidgetVisible,
               child: SlidingUpPanel(

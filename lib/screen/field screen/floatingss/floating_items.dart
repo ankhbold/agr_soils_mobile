@@ -22,6 +22,9 @@ final List<Tab> myTabs = <Tab>[
   const Tab(
     child: FloatingItem(),
   ),
+  const Tab(
+    child: FloatingItem(),
+  ),
   Tab(
     child: FloatingFourthItem(),
   ),
@@ -208,7 +211,7 @@ class _FloatingFabState extends State<FloatingFab> {
                             border: Border.all(width: 0.15),
                             color: current == index
                                 ? const Color(0xff0f766e)
-                                : const Color.fromARGB(255, 255, 255, 255),
+                                : Color.fromARGB(211, 255, 255, 255),
                           ),
                           child: Center(
                             child: GestureDetector(

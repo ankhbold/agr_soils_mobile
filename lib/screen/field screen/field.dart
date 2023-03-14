@@ -56,6 +56,7 @@ class _FieldScreenState extends State<FieldScreen> {
   var png =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
 
+  var falseColor = '';
   static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
   var wmsLayer = Globals.isLogin

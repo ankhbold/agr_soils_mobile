@@ -44,7 +44,6 @@ class _ScreenTwoState extends State<ScreenTwo> {
     getWMSResponse();
     super.initState();
     FetchUserList();
-
     // print(DateTime.now());
     getGetNoteApi();
   }

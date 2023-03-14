@@ -72,14 +72,6 @@ class _PanelssState extends State<Panelss> {
     "Тариалсан огноо",
     "Хураасан огноо",
   ];
-  final List<Tab> myTabs = <Tab>[
-    const Tab(
-      child: FloatingItem(),
-    ),
-    Tab(
-      child: FloatingFourthItem(),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {

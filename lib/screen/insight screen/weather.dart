@@ -46,7 +46,7 @@ class _WeathersState extends State<Weathers> {
                         child: Row(
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
+                              width: MediaQuery.of(context).size.width * 0.365,
                               child: Row(
                                 children: [
                                   Icon(
@@ -55,7 +55,7 @@ class _WeathersState extends State<Weathers> {
                                     size: 60,
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: 8,
                                   ),
                                   Text(
                                     '${(snapshot.data!.main.temp - 273.15).toInt()}°',
@@ -65,7 +65,7 @@ class _WeathersState extends State<Weathers> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 25,
+                                    width: 20,
                                   ),
                                 ],
                               ),
@@ -96,7 +96,7 @@ class _WeathersState extends State<Weathers> {
                                         ],
                                       ),
                                       SizedBox(
-                                        width: 15,
+                                        width: 10,
                                       ),
                                       Row(
                                         children: [

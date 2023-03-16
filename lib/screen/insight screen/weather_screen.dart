@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
 import 'package:mvvm/screen/insight%20screen/weather.dart';
@@ -14,6 +15,26 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() {
+          _isVisible = false;
+        });
+      } else if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        setState(() {
+          _isVisible = true;
+        });
+      }
+    });
+
+    super.initState();
+  }
+
+  bool _isVisible = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,48 +69,153 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
           preferredSize: Size.fromHeight(kToolbarHeight),
         ),
-        body: ListView(
+        body: Column(
           children: [
-            ChooseLocc(),
-            Weathers(),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Line3(),
+            Visibility(
+              visible: _isVisible,
+              child: Column(
+                children: [
+                  ChooseLocc(),
+                  Weathers(),
+                  Container(
+                    height: 80,
+                    padding: EdgeInsets.only(
+                      // top: 15,
+                      left: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'хур тунадасны хэмжээ, магадлал',
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Column(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+
+                                children: [
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text('цаг'),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text('хэмжээ'),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text('магадлал'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Line3(),
+                  ),
+                ],
+              ),
             ),
             Container(
               height: 15,
               color: AppColors.grey,
             ),
-            Container(
-              child: Column(
-                children: [
-                  Text('Today,$formatDate'),
-                ],
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: 15,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.18,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Өнөөдөр,$formatDate',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.sunny,
+                                    size: 30,
+                                    color: Color.fromARGB(255, 255, 183, 59),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: Text(
+                                      '-16',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Text(
+                                    'үүлэрхэг',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 68, 98, 110),
+                                        fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                      Text('Салхи\n(5 m/s)'),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Line3(),
+                    ],
+                  );
+                },
               ),
             )
-            // Container(
-            //   height: 50,
-            //   padding: EdgeInsets.only(top: 15, left: 20),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text('Precipitation amount and probability'),
-            //       ListView(
-            //         scrollDirection: Axis.horizontal,
-            //         children: [
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //           Text('time'),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ));
   }

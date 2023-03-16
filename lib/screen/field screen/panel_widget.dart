@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mvvm/constants/colors.dart';
+import 'package:mvvm/screen/field%20screen/crop.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
 import 'add_note.dart';
 
@@ -28,32 +29,10 @@ class _PanelWidgetState extends State<PanelWidget> {
   Widget build(BuildContext context) => Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-            // color: AppColors.whiteColor,
             gradient: AppColors.grad,
-            // borderRadius: BorderRadius.only(
-            //   bottomLeft: Radius.circular(15),
-            //   bottomRight: Radius.circular(15),
-            // ),
           ),
           child: Column(
             children: <Widget>[
-              // CustomNavigator(),
-              // Padding(
-              //   padding: EdgeInsets.only(right: 50, left: 50),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       Container(
-              //         height: 5,
-              //         width: 50,
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(25),
-              //           color: const Color.fromARGB(255, 255, 255, 255),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -64,12 +43,6 @@ class _PanelWidgetState extends State<PanelWidget> {
                       onPressed: () {
                         setState(() {
                           pop();
-
-                          // isAddFieldWidgetVisible = false;
-                          // isFabVisible = true;
-                          // isFirstWidgetVisible = false;
-                          // isSecondWidgetVisible = false;
-                          // isThirdWidgetVisible = true;
                         });
                       },
                       icon: Icon(Icons.arrow_back_ios),
@@ -96,7 +69,17 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ],
                 ),
               ),
-
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Crop(),
+                    ),
+                  );
+                },
+                child: Text('crop rotation'),
+              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: 10,

@@ -98,12 +98,6 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                   TextButton(
                     onPressed: () async {
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (_) => ScreenThree(),
-                      //   ),
-                      // );
                       // print(DateTime.now());
                       bool response =
                           await repository.createData(titleController.text);

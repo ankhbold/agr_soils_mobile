@@ -280,7 +280,7 @@ class Line3 extends StatelessWidget {
         Container(
           color: Colors.black,
           height: 0.2,
-          width: MediaQuery.of(context).size.width,
+          // width: MediaQuery.of(context).size.width,
         ),
       ],
     );

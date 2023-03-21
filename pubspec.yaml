@@ -92,6 +92,8 @@ dependencies:
   
   google_fonts: ^4.0.3
   geopoint: ^1.0.0
+  syncfusion_flutter_datagrid: ^20.4.54
+  equatable: ^2.0.5
 
 location: ^4.4.0
 flutter_launcher_icons: ^0.11.0

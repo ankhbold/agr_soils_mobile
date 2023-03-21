@@ -8,6 +8,8 @@ import 'package:mvvm/utils/utils.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../conf_global.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -187,6 +189,7 @@ class _LoginViewState extends State<LoginView> {
                   };
                   authViewMode.loginApi(data, context);
                   print('api hit');
+                  print(Globals.getPCI());
                   setState(() {});
                 }
               },

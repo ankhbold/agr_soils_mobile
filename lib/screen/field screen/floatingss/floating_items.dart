@@ -109,7 +109,7 @@ class _FloatingFabState extends State<FloatingFab> {
   @override
   Widget build(BuildContext context) {
     final height1 = MediaQuery.of(context).size.height * 0.125;
-    final height2 = MediaQuery.of(context).size.height * 0.335;
+    final height2 = MediaQuery.of(context).size.height * 0.39;
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -196,7 +196,7 @@ class _FloatingFabState extends State<FloatingFab> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.035,
-                    width: MediaQuery.of(context).size.width * 0.82,
+                    width: MediaQuery.of(context).size.width * 0.8,
                     child: ListView.builder(
                       itemCount: 5,
                       padding: const EdgeInsets.only(right: 3, left: 3),
@@ -249,7 +249,7 @@ class _FloatingFabState extends State<FloatingFab> {
                       padding: const EdgeInsets.only(right: 15),
                       child: Container(
                         height: 30,
-                        width: 40,
+                        width: MediaQuery.of(context).size.width * 0.11,
                         decoration: BoxDecoration(
                             color: AppColors.Green,
                             borderRadius: BorderRadius.circular(10)),
@@ -281,7 +281,7 @@ class Line100 extends StatelessWidget {
       child: Container(
         color: Color.fromARGB(156, 255, 255, 255),
         height: 1,
-        width: MediaQuery.of(context).size.width * 0.95,
+        width: MediaQuery.of(context).size.width * 0.9,
       ),
     );
   }

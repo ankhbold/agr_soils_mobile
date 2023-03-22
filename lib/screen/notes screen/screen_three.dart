@@ -30,7 +30,6 @@ class _ScreenThreeState extends State<ScreenThree> {
 
   @override
   void initState() {
-    getWMSResponse();
     super.initState();
     FetchUserList();
     // print(DateTime.now());

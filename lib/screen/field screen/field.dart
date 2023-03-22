@@ -124,7 +124,7 @@ class _FieldScreenState extends State<FieldScreen> {
   void _navigateToPosition() {
     determinePosition().then(
       (value) {
-        _mapController.move(LatLng(value.latitude, value.longitude), 13.0);
+        _mapController.move(LatLng(value.latitude, value.longitude), 17.0);
       },
     );
   }
@@ -217,7 +217,8 @@ class _FieldScreenState extends State<FieldScreen> {
                           elevation: 0,
                           onPressed: () {
                             setState(() {
-                              print('company id : ${Globals.getPersonId()}');
+                              // print('company id : ${Globals.getPersonId()}');
+                              _navigateToPosition();
                             });
                           },
                           child: const Icon(
@@ -485,7 +486,7 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     },
                     child: Container(
-                      height: 50,
+                      height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 255, 255),
@@ -493,15 +494,12 @@ class _FieldScreenState extends State<FieldScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Icon(
-                                Icons.search,
-                                size: 20,
-                                color: AppColors.Green,
-                              ),
+                            Icon(
+                              Icons.search,
+                              size: 20,
+                              color: AppColors.Green,
                             ),
                             Text(
                               'Талбай хайх',

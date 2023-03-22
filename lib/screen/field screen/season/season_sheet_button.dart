@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.41,
+      width: MediaQuery.of(context).size.width * 0.40,
       height: MediaQuery.of(context).size.height * 0.04,
       child: Center(
         child: DropdownButton(

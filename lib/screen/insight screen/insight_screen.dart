@@ -475,7 +475,6 @@ class Chart extends StatefulWidget {
 class _ChartState extends State<Chart> {
   TrackballBehavior? _trackballBehavior;
 
-  late TooltipBehavior _tooltipBehavior;
   Future<String> _loadSalesDataAsset() async {
     return rootBundle.loadString('assets/images/chart_data.json');
   }
@@ -514,11 +513,6 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> chartData = [
-      ChartData(2022, 10),
-      ChartData(2024, 20),
-      ChartData(2026, 30),
-    ];
     return SfCartesianChart(
         key: GlobalKey(),
         plotAreaBorderWidth: 0,

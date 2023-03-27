@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/home_screen.dart';
 import 'package:mvvm/screen/widgets/button/round_button.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/utils/utils.dart';

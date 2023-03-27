@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NdviButton extends StatelessWidget {
+class NdviButton extends StatefulWidget {
   NdviButton({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<NdviButton> createState() => _NdviButtonState();
+}
+
+class _NdviButtonState extends State<NdviButton> {
   int current = 0;
 
   @override

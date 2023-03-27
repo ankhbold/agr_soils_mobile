@@ -38,7 +38,7 @@ class _ScreenThreeState extends State<ScreenThree> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    // double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 226, 225, 225),

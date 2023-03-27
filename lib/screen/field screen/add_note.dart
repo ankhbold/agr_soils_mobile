@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/field%20screen/field.dart';
-import 'package:mvvm/screen/notes%20screen/screen_three.dart';
 import 'package:mvvm/service/remote_services.dart';
 
 class NoteAdd extends StatefulWidget {

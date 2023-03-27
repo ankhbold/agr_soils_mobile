@@ -50,7 +50,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                     ),
                     Container(
                       height: 40,
-                      width: 350,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(12)),
@@ -91,11 +91,11 @@ class _PanelWidgetState extends State<PanelWidget> {
                             setState(() {
                               Navigator.pop(context);
                               TapMove(LatLng(49.939048, 105.841644));
+                              isThirdWidgetVisible = true;
                               isAddFieldWidgetVisible = false;
                               // isFabVisible = false;
                               isFirstWidgetVisible = false;
                               isSecondWidgetVisible = false;
-                              isThirdWidgetVisible = true;
                             });
                           },
                           child: Roow()),
@@ -295,7 +295,7 @@ class Roow extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.25,
+              width: MediaQuery.of(context).size.width * 0.2,
             ),
             Column(
               children: [

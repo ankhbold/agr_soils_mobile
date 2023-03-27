@@ -4,7 +4,6 @@ import 'package:mvvm/screen/field%20screen/field.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 // import '../../constants/color.dart';
-import 'floatingss/first_float.dart';
 import 'floatingss/floating_items.dart';
 import 'panel_widget.dart';
 

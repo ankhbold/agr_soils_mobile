@@ -13,6 +13,7 @@ import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
 import 'package:mvvm/screen/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../constants/color.dart';
+import 'field_panel.dart';
 
 bool mapsol = true;
 List<LatLng> polygonPoints = [];
@@ -33,7 +34,7 @@ bool isAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 late MapController _mapController;
 double _zoom = 10.0;
-late Map<String, dynamic> _wmsResponse;
+
 var heightS = 10.5;
 Future<void> TapMove(LatLng latLng) async {
   await Future.delayed(Duration(seconds: 1));
@@ -360,31 +361,31 @@ class _FieldScreenState extends State<FieldScreen> {
                 ),
               ),
             ),
-            // Offstage(
-            //   offstage: !isThirdWidgetVisible,
-            //   child: SlidingUpPanel(
-            //     backdropEnabled: true,
-            //     color: Colors.transparent,
-            //     maxHeight: panelHeightOpened,
-            //     minHeight: panelHeightClosed4,
-            //     parallaxEnabled: true,
-            //     parallaxOffset: .5,
-            //     panelBuilder: (controller) => FieldPanel(
-            //       controller: controller,
-            //     ),
-            //     onPanelSlide: (position) => setState(
-            //       () {
-            //         final panelMaxScrollExtent =
-            //             panelHeightOpened - panelHeightClosed;
-            //         fabHeight =
-            //             position * panelMaxScrollExtent + panelHeightClosed + 2;
-            //       },
-            //     ),
-            //     borderRadius: const BorderRadius.vertical(
-            //       top: Radius.circular(30),
-            //     ),
-            //   ),
-            // ),
+            Offstage(
+              offstage: !isThirdWidgetVisible,
+              child: SlidingUpPanel(
+                backdropEnabled: true,
+                color: Colors.transparent,
+                maxHeight: panelHeightOpened,
+                minHeight: panelHeightClosed4,
+                parallaxEnabled: true,
+                parallaxOffset: .5,
+                panelBuilder: (controller) => FieldPanel(
+                  controller: controller,
+                ),
+                onPanelSlide: (position) => setState(
+                  () {
+                    final panelMaxScrollExtent =
+                        panelHeightOpened - panelHeightClosed;
+                    fabHeight =
+                        position * panelMaxScrollExtent + panelHeightClosed + 2;
+                  },
+                ),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(30),
+                ),
+              ),
+            ),
             Offstage(
               offstage: !isAddFieldWidgetVisible,
               child: SlidingUpPanel(

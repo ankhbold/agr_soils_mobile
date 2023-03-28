@@ -69,16 +69,84 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ],
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => Crop(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Тариалсан',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '3 936 ha out of 3 936 ha',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 203, 203, 203),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: SizedBox(),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => Crop(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Ургац нэмэх',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 41, 41),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500),
                     ),
-                  );
-                },
-                child: Text('crop rotation'),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 13,
+              ),
+              Container(
+                height: 20,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              SizedBox(
+                height: 13,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.05,
+                  ),
+                  Text(
+                    'Миний талбарууд',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               Expanded(
                 child: ListView.builder(

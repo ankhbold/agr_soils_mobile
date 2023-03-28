@@ -551,18 +551,6 @@ class CropButton extends StatelessWidget {
                         cropName,
                         style: TextStyle(color: AppColors.Green),
                       ),
-                      // Text(
-                      //   _employeeDataSource.effectiveRows[
-                      //           details.rowColumnIndex
-                      //                   .rowIndex -
-                      //               1]
-                      //       .getCells()[details
-                      //           .rowColumnIndex.columnIndex]
-                      //       .value
-                      //       .toString(),
-                      //   style: TextStyle(
-                      //       color: AppColors.Green),
-                      // ),
                       SizedBox(
                         width: 5,
                       ),

@@ -25,8 +25,14 @@ final List<Tab> myTabs = <Tab>[
   const Tab(
     child: FloatingItem(),
   ),
+  const Tab(
+    child: FloatingItem(),
+  ),
   Tab(
     child: FloatingFourthItem(),
+  ),
+  const Tab(
+    child: FloatingItem(),
   ),
 ];
 

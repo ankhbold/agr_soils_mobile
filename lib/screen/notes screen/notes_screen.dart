@@ -1,15 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mvvm/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:mvvm/screen/notes%20screen/search.dart';
-
 import '../../service/apis/get_notes_data.dart';
-import '../../service/remote_services.dart';
 import '../profile screen/profile_screen.dart';
-
-// import '../data/listdata.dart';
 
 class ScreenTwo extends StatefulWidget {
   const ScreenTwo({super.key});
@@ -19,21 +14,20 @@ class ScreenTwo extends StatefulWidget {
 }
 
 class _ScreenTwoState extends State<ScreenTwo> {
-  bool isLoading = false;
+  bool isLoading = true;
+
   FetchUserList _userList = FetchUserList();
-  Repository repository = Repository();
+  // Repository repository = Repository();
   List<GetNote> listNote = [];
   getGetNoteApi() async {
-    listNote = await repository.getGetNoteApi();
-    isloaded = true;
+    listNote = await _userList.getuserList();
+    isLoading = false;
   }
-
-  var isloaded = false;
 
   @override
   void initState() {
     super.initState();
-    FetchUserList();
+    // FetchUserList();
     // print(DateTime.now());
     getGetNoteApi();
   }
@@ -68,7 +62,7 @@ class _ScreenTwoState extends State<ScreenTwo> {
           builder: (context, snapshot) {
             var data = snapshot.data;
             return isLoading
-                ? CircularProgressIndicator()
+                ? Center(child: CircularProgressIndicator())
                 : ListView.builder(
                     itemCount: data?.length,
                     itemBuilder: (context, index) {
@@ -128,8 +122,10 @@ class _ScreenTwoState extends State<ScreenTwo> {
                                           ),
                                           InkWell(
                                             onTap: () async {
-                                              _userList
-                                                  .deleteData(note.id as int);
+                                              isLoading = true;
+                                              _userList.deleteData(
+                                                  note.id as int,
+                                                  isLoading = false);
                                               setState(() {
                                                 listNote.removeAt(index);
                                               });
@@ -212,13 +208,14 @@ class FetchUserList {
   }
 
   String uri5 = 'http://103.143.40.250:8100/api/note/delete';
-  Future deleteData(int id) async {
+  Future deleteData(int id, bool isLoadin) async {
     try {
       final response = await http.delete(
         Uri.parse('$uri5/$id'),
       );
       if (response.statusCode == 200) {
         SnackBar(content: Text('Тэмдэглэл устлаа.'));
+
         return true;
       } else {
         return false;

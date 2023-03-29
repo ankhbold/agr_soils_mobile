@@ -83,7 +83,7 @@ class _ListProfileState extends State<ListProfile> {
                   color: Colors.white,
                 ),
                 text: Text(
-                  'Sign in',
+                  'Нэвтрэх',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 onTap: () {

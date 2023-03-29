@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           dropdownColor: Color.fromARGB(255, 21, 142, 128),
           hint: Text(
             'Улирал сонгох',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           value: selectedSeason,
           onChanged: (Season? season) {
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         season.name,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                       Row(
                         children: [

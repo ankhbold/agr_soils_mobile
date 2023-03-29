@@ -96,7 +96,7 @@ class _CropState extends State<Crop> {
                         // color: Colors.green,
 
                         ),
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,

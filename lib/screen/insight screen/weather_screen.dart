@@ -141,7 +141,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.18,
+                          height: MediaQuery.of(context).size.height * 0.2,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,

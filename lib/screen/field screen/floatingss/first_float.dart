@@ -8,6 +8,7 @@ class FloatingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
@@ -21,25 +22,27 @@ class FloatingItem extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        'Бага',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 13,
-                        ),
-                      ),
-                      Text(
-                        ' (Ургамлын нормчлогдсон индекс)',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 154, 197, 194),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Бага',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            ' (Ургамлын нормчлогдсон индекс)',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 154, 197, 194),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    width: 65,
                   ),
                   Text(
                     'Их',
@@ -70,7 +73,7 @@ class ColorIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 8,
+      height: MediaQuery.of(context).size.height * 0.008,
       child: Row(
         children: [
           Expanded(

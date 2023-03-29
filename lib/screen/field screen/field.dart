@@ -445,12 +445,15 @@ class _FieldScreenState extends State<FieldScreen> {
         height: MediaQuery.of(context).size.height * 0.13,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // SizedBox(
             //   width: 5,
             // ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 12.0, left: 10),
+              padding: const EdgeInsets.only(
+                bottom: 12.0,
+              ),
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 3, vertical: 7),
                   decoration: BoxDecoration(
@@ -461,7 +464,9 @@ class _FieldScreenState extends State<FieldScreen> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(bottom: 12.0, left: 10, right: 10),
+              padding: EdgeInsets.only(
+                bottom: 12.0,
+              ),
               child: FieldsSheet(
                 notecreate: changeStage,
                 polygoncreate: changePolygonStage,
@@ -505,7 +510,7 @@ class _FieldScreenState extends State<FieldScreen> {
                             Text(
                               'Талбай хайх',
                               style: TextStyle(
-                                  color: AppColors.Green, fontSize: 15),
+                                  color: AppColors.Green, fontSize: 12),
                             ),
                           ],
                         ),

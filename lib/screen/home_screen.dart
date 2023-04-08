@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/field%20screen/field.dart';
-import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
-import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
-import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
-import 'package:mvvm/view_model/home_view_model.dart';
+
+import '../constants/colors.dart';
+import '../view_model/home_view_model.dart';
+import 'field%20screen/field.dart';
+import 'insight%20screen/insight_screen.dart';
+import 'notes%20screen/notes_screen.dart';
+import 'profile%20screen/profile_screen.dart';
 
 var index_color = 0;
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
@@ -26,15 +27,26 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   void onTabTapped(int index) {
     setState(() {
-      ;
       index_color = index;
       // Globals.changeIndexColor(index);
       // print(Globals.getIndexColor());
     });
   }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   final authViewMode = Provider.of<AuthViewModel>(context, listen: false);
+    //   Map data = {
+    //     'username': "ankhbold",
+    //     'password': "89006176",
+    //   };
+    //   authViewMode.loginApi(data, context);
+    // });
     return Scaffold(
       body: Screen[index_color],
       bottomNavigationBar: Container(

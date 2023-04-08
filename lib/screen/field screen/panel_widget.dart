@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/field%20screen/crop.dart';
-import 'package:mvvm/screen/field%20screen/field.dart';
+
+import '../../constants/colors.dart';
+import '../field%20screen/crop.dart';
+import '../field%20screen/field.dart';
 import 'add_note.dart';
 
 double lat = 49.939048;

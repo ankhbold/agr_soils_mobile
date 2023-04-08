@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mvvm/model/user_model.dart';
+import 'package:mvvm/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserViewModel with ChangeNotifier {

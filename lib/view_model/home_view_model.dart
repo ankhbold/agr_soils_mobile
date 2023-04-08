@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:mvvm/data/response/api_response.dart';
-import 'package:mvvm/model/movies_model.dart';
+import 'package:mvvm/models/movies_model.dart';
 import 'package:mvvm/respository/home_repository.dart';
 
 class HomeViewViewModel with ChangeNotifier {

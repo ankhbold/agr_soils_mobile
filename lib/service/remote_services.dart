@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mvvm/service/apis/get_notes_data.dart';
+
+import 'apis/get_notes_data.dart';
 
 // const uri = 'https://63aa6bd6594f75dc1dcff51c.mockapi.io/name';
 // const uri2 = 'http://103.143.40.250:8100/api/get/season';
@@ -35,18 +36,16 @@ class Repository {
     String name,
   ) async {
     try {
-      final response = await http.post(
-          Uri.parse('http://103.143.40.250:8100/api/note/post/store'),
-          body: {
-            'name': name,
-          });
+      final response = await http.post(Uri.parse('http://103.143.40.250:8100/api/note/post/store'), body: {
+        'name': name,
+      });
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
-      return e.toString();
+      throw Exception(e.toString());
     }
   }
 

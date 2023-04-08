@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mvvm/conf_global.dart';
+
+import '../../../conf_global.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -66,8 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // print('skjbhjbvkjjvbjhbdvhdhbsvh hjdfbv');
-    // print(Globals.prof_company_id);
     fetchData();
   }
 
@@ -120,6 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
           items: seasons
               .map(
                 (season) => DropdownMenuItem(
+                  onTap: () {
+                    setState(() {
+                      selectedSeason = season;
+                    });
+                  },
                   value: season,
                   child: Column(
                     children: [

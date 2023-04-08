@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class Crop extends StatefulWidget {
   @override
@@ -78,101 +78,101 @@ class _CropState extends State<Crop> {
           onCellTap: (DataGridCellTapDetails details) {
             print(details.rowColumnIndex.columnIndex);
             print(details.rowColumnIndex.rowIndex);
-            showMaterialModalBottomSheet(
-              backgroundColor: AppColors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              duration: Duration(milliseconds: 500),
-              enableDrag: true,
-              bounce: false,
-              // expand: true,
-              context: context,
-              builder: (BuildContext context) {
-                return SingleChildScrollView(
-                  // controller: ModalScrollController.of(context),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        // color: Colors.green,
+            // showMaterialModalBottomSheet(
+            //   backgroundColor: AppColors.grey,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(15.0),
+            //   ),
+            //   duration: Duration(milliseconds: 500),
+            //   enableDrag: true,
+            //   bounce: false,
+            //   // expand: true,
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return SingleChildScrollView(
+            //       // controller: ModalScrollController.of(context),
+            //       child: Container(
+            //         decoration: BoxDecoration(
+            //             // color: Colors.green,
 
-                        ),
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(15),
-                            ),
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                          height: 80,
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                height: 4.5,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Line2(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              CropButton(
-                                title: 'Crop',
-                                cropName: _employeeDataSource.effectiveRows[
-                                        details.rowColumnIndex.rowIndex - 1]
-                                    .getCells()[
-                                        details.rowColumnIndex.columnIndex]
-                                    .value
-                                    .toString(),
-                              ),
-                              CropButton(
-                                title: 'Crop',
-                                cropName: _employeeDataSource.effectiveRows[
-                                        details.rowColumnIndex.rowIndex - 1]
-                                    .getCells()[
-                                        details.rowColumnIndex.columnIndex]
-                                    .value
-                                    .toString(),
-                              ),
-                              CropButton(
-                                title: 'Crop',
-                                cropName: _employeeDataSource.effectiveRows[
-                                        details.rowColumnIndex.rowIndex - 1]
-                                    .getCells()[
-                                        details.rowColumnIndex.columnIndex]
-                                    .value
-                                    .toString(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
+            //             ),
+            //         height: MediaQuery.of(context).size.height * 0.6,
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: <Widget>[
+            //             Container(
+            //               decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.only(
+            //                   topLeft: Radius.circular(15),
+            //                   topRight: Radius.circular(15),
+            //                 ),
+            //                 color: Color.fromARGB(255, 255, 255, 255),
+            //               ),
+            //               height: 80,
+            //               width: MediaQuery.of(context).size.width,
+            //               child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.start,
+            //                 children: [
+            //                   SizedBox(
+            //                     height: 5,
+            //                   ),
+            //                   Container(
+            //                     height: 4.5,
+            //                     width: 50,
+            //                     decoration: BoxDecoration(
+            //                         color: Colors.black,
+            //                         borderRadius: BorderRadius.circular(12)),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //             Line2(),
+            //             SizedBox(
+            //               height: 10,
+            //             ),
+            //             Container(
+            //               width: MediaQuery.of(context).size.width,
+            //               height: MediaQuery.of(context).size.height * 0.4,
+            //               color: Colors.white,
+            //               child: Column(
+            //                 children: [
+            //                   CropButton(
+            //                     title: 'Crop',
+            //                     cropName: _employeeDataSource.effectiveRows[
+            //                             details.rowColumnIndex.rowIndex - 1]
+            //                         .getCells()[
+            //                             details.rowColumnIndex.columnIndex]
+            //                         .value
+            //                         .toString(),
+            //                   ),
+            //                   CropButton(
+            //                     title: 'Crop',
+            //                     cropName: _employeeDataSource.effectiveRows[
+            //                             details.rowColumnIndex.rowIndex - 1]
+            //                         .getCells()[
+            //                             details.rowColumnIndex.columnIndex]
+            //                         .value
+            //                         .toString(),
+            //                   ),
+            //                   CropButton(
+            //                     title: 'Crop',
+            //                     cropName: _employeeDataSource.effectiveRows[
+            //                             details.rowColumnIndex.rowIndex - 1]
+            //                         .getCells()[
+            //                             details.rowColumnIndex.columnIndex]
+            //                         .value
+            //                         .toString(),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
           },
           columns: [
             GridColumn(

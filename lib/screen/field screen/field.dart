@@ -1,22 +1,22 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/conf_global.dart';
-import 'package:mvvm/screen/field%20screen/field_sheet_button.dart';
-import 'package:mvvm/screen/field%20screen/floatingss/floating_items.dart';
-import 'package:mvvm/screen/field%20screen/geojson/get_geo_api.dart';
-import 'package:mvvm/screen/field%20screen/panel_widget.dart';
-import 'package:mvvm/screen/field%20screen/season/season_sheet_button.dart';
-import 'package:mvvm/screen/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import '../../conf_global.dart';
 import '../../constants/color.dart';
+import '../field%20screen/field_sheet_button.dart';
+import '../field%20screen/floatingss/floating_items.dart';
+import '../field%20screen/geojson/get_geo_api.dart';
+import '../field%20screen/panel_widget.dart';
+import '../field%20screen/season/season_sheet_button.dart';
 import 'field_panel.dart';
 
 bool mapsol = true;
-List<LatLng> polygonPoints = [];
 
 List<Marker> markers = [];
 bool isChoose = true;
@@ -51,7 +51,9 @@ class FieldScreen extends StatefulWidget {
 
 class _FieldScreenState extends State<FieldScreen> {
   LatLng firstLocation = LatLng(49.939048, 105.841644);
-
+  List<LatLng> polygonPoints = [];
+  List<Polygon> polygons = [];
+  List<LatLng> currentPolygon = [];
   var sate =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
   var png =
@@ -72,22 +74,10 @@ class _FieldScreenState extends State<FieldScreen> {
             // 'person_id': '8sdvcsd2',
           },
         )
-      : WMSTileLayerOptions(
-          baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
+      : WMSTileLayerOptions(baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
   var tileLayer = TileLayer(
     urlTemplate: 'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-  );
-  var polygonLayer = PolygonLayer(
-    polygons: [
-      Polygon(
-        points: polygonPoints,
-        borderStrokeWidth: 2,
-        borderColor: Color.fromARGB(255, 255, 255, 255),
-        isFilled: true,
-        color: Color.fromARGB(81, 255, 255, 255),
-      ),
-    ],
   );
 
   void changeStage() {
@@ -115,8 +105,6 @@ class _FieldScreenState extends State<FieldScreen> {
   GeoRepository repository = GeoRepository();
   @override
   void initState() {
-    // fetch();
-    index_color;
     _mapController = MapController();
 
     super.initState();
@@ -153,10 +141,19 @@ class _FieldScreenState extends State<FieldScreen> {
 
   void _addPolygons(point) {
     polygonPoints.add(point);
+    polygons.add(
+      Polygon(
+        points: polygonPoints,
+        borderStrokeWidth: 2,
+        borderColor: Color.fromARGB(255, 255, 255, 255),
+        color: Color.fromARGB(81, 255, 255, 255),
+      ),
+    );
+    setState(() {});
   }
 
   Future<void> _handleTap(LatLng latLng) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 300));
 
     _mapController.move(latLng, _zoom + 2.5);
   }
@@ -164,9 +161,9 @@ class _FieldScreenState extends State<FieldScreen> {
   @override
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.24;
-    final panelHeightOpened = MediaQuery.of(context).size.height * 0.8;
-    final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.2;
-    final panelHeightOpened2 = MediaQuery.of(context).size.height * 0.6;
+    final panelHeightOpened = MediaQuery.of(context).size.height * 0.9;
+    final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.3;
+    final panelHeightOpened2 = MediaQuery.of(context).size.height * 0.85;
     final panelHeightClosed3 = MediaQuery.of(context).size.height * 0.07;
     final panelHeightClosed4 = MediaQuery.of(context).size.height * 0.265;
     final panelHeightClosed5 = MediaQuery.of(context).size.height * 0.44;
@@ -212,9 +209,7 @@ class _FieldScreenState extends State<FieldScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FloatingActionButton.small(
-                          backgroundColor:
-                              const Color.fromARGB(255, 239, 239, 239)
-                                  .withOpacity(0.85),
+                          backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
                           elevation: 0,
                           onPressed: () {
                             setState(() {
@@ -253,6 +248,7 @@ class _FieldScreenState extends State<FieldScreen> {
                         polygonPoints.clear();
                       });
                     } else if (isChoose) {
+                      print('orsin');
                       setState(() {
                         Globals.changeLatitude(latlng.latitude);
                         markers.clear();
@@ -269,8 +265,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 // layerOption,
                 tileLayer,
 
-                TileLayer(
-                    backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
+                TileLayer(backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
 
                 TileLayer(
                   backgroundColor: Colors.transparent,
@@ -280,9 +275,13 @@ class _FieldScreenState extends State<FieldScreen> {
                   markers: markers,
                 ),
 
-                polygonLayer,
+                PolygonLayer(
+                  polygons: polygons,
+                  // polygonCulling: true,
+                ),
               ],
             ),
+
             fieldBar(),
 
             Offstage(
@@ -350,10 +349,8 @@ class _FieldScreenState extends State<FieldScreen> {
                 ),
                 onPanelSlide: (position) => setState(
                   () {
-                    final panelMaxScrollExtent =
-                        panelHeightOpened - panelHeightClosed;
-                    fabHeight =
-                        position * panelMaxScrollExtent + panelHeightClosed + 2;
+                    final panelMaxScrollExtent = panelHeightOpened - panelHeightClosed;
+                    fabHeight = position * panelMaxScrollExtent + panelHeightClosed + 2;
                   },
                 ),
                 borderRadius: const BorderRadius.vertical(
@@ -375,10 +372,8 @@ class _FieldScreenState extends State<FieldScreen> {
                 ),
                 onPanelSlide: (position) => setState(
                   () {
-                    final panelMaxScrollExtent =
-                        panelHeightOpened - panelHeightClosed;
-                    fabHeight =
-                        position * panelMaxScrollExtent + panelHeightClosed + 2;
+                    final panelMaxScrollExtent = panelHeightOpened - panelHeightClosed;
+                    fabHeight = position * panelMaxScrollExtent + panelHeightClosed + 2;
                   },
                 ),
                 borderRadius: const BorderRadius.vertical(
@@ -394,13 +389,23 @@ class _FieldScreenState extends State<FieldScreen> {
                 minHeight: panelHeightClosed3,
                 parallaxEnabled: true,
                 parallaxOffset: .5,
-                panelBuilder: (controller) => AddField(),
+                panelBuilder: (controller) => AddField(
+                  clear: () {
+                    isChoose = true;
+                    isMarker = false;
+                    isPolygon = false;
+                    polygonPoints.clear();
+                    isAddFieldWidgetVisible = false;
+                    isFabVisible = true;
+                    isFirstWidgetVisible = true;
+                    isSecondWidgetVisible = false;
+                    isThirdWidgetVisible = false;
+                  },
+                ),
                 onPanelSlide: (position) => setState(
                   () {
-                    final panelMaxScrollExtent =
-                        panelHeightOpened - panelHeightClosed;
-                    fabHeight =
-                        position * panelMaxScrollExtent + panelHeightClosed + 2;
+                    final panelMaxScrollExtent = panelHeightOpened - panelHeightClosed;
+                    fabHeight = position * panelMaxScrollExtent + panelHeightClosed + 2;
                   },
                 ),
                 borderRadius: const BorderRadius.vertical(
@@ -447,22 +452,19 @@ class _FieldScreenState extends State<FieldScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // SizedBox(
-            //   width: 5,
-            // ),
             Padding(
               padding: const EdgeInsets.only(
                 bottom: 12.0,
               ),
               child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 3, vertical: 7),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(36, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: MyHomePage()),
+                padding: EdgeInsets.symmetric(horizontal: 3, vertical: 7),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(36, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: MyHomePage(),
+              ),
             ),
-
             Padding(
               padding: EdgeInsets.only(
                 bottom: 12.0,
@@ -472,9 +474,6 @@ class _FieldScreenState extends State<FieldScreen> {
                 polygoncreate: changePolygonStage,
               ),
             ),
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.07,
-            // ),
             Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -485,18 +484,14 @@ class _FieldScreenState extends State<FieldScreen> {
                     onTap: () {
                       setState(() {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => PanelWidget(
-                                    controller: ScrollController())));
+                            context, MaterialPageRoute(builder: (_) => PanelWidget(controller: ScrollController())));
                       });
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(12)),
+                          color: Color.fromARGB(255, 255, 255, 255), borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                         padding: EdgeInsets.only(),
                         child: Row(
@@ -509,8 +504,7 @@ class _FieldScreenState extends State<FieldScreen> {
                             ),
                             Text(
                               'Талбай хайх',
-                              style: TextStyle(
-                                  color: AppColors.Green, fontSize: 12),
+                              style: TextStyle(color: AppColors.Green, fontSize: 12),
                             ),
                           ],
                         ),
@@ -549,14 +543,14 @@ Future<Position> determinePosition() async {
 
   if (permission == LocationPermission.deniedForever) {
     await Geolocator.openLocationSettings();
-    return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
+    return Future.error('Location permissions are permanently denied, we cannot request permissions.');
   }
   return await Geolocator.getCurrentPosition();
 }
 
 class AddField extends StatelessWidget {
-  const AddField({super.key});
+  AddField({super.key, this.clear});
+  Function? clear;
 
   @override
   Widget build(BuildContext context) {
@@ -566,20 +560,11 @@ class AddField extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.06,
         child: TextButton(
           onPressed: () {
-            isChoose = true;
-            isMarker = false;
-            isPolygon = false;
-            polygonPoints.clear();
-            isAddFieldWidgetVisible = false;
-            isFabVisible = true;
-            isFirstWidgetVisible = true;
-            isSecondWidgetVisible = false;
-            isThirdWidgetVisible = false;
+            clear!();
           },
           child: Text(
             'Буцах',
-            style: TextStyle(
-                color: Color.fromARGB(255, 183, 45, 37), fontSize: 18),
+            style: TextStyle(color: Color.fromARGB(255, 183, 45, 37), fontSize: 18),
           ),
         ),
       ),
@@ -613,8 +598,7 @@ class _TextFieldFieldState extends State<TextFieldField> {
                 height: 40,
                 width: 150,
                 decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(12)),
+                    color: const Color.fromARGB(255, 255, 255, 255), borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: EdgeInsets.only(),
                   child: Row(

@@ -1,10 +1,13 @@
 import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/colors.dart';
 import 'package:http/http.dart' as http;
-import 'package:mvvm/screen/notes%20screen/search.dart';
+
+import '../../constants/colors.dart';
 import '../../service/apis/get_notes_data.dart';
-import '../profile screen/profile_screen.dart';
+import '../../widget/loader.dart';
+import '../../widget/snackbar.dart';
 
 class ScreenTwo extends StatefulWidget {
   const ScreenTwo({super.key});
@@ -18,24 +21,22 @@ class _ScreenTwoState extends State<ScreenTwo> {
 
   FetchUserList _userList = FetchUserList();
   // Repository repository = Repository();
-  List<GetNote> listNote = [];
+  List<GetNote> listNote = [], currentListNote = [];
   getGetNoteApi() async {
-    listNote = await _userList.getuserList();
+    listNote = await _userList.getNoteList();
+    currentListNote = listNote;
     isLoading = false;
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    // FetchUserList();
-    // print(DateTime.now());
     getGetNoteApi();
   }
 
   @override
   Widget build(BuildContext context) {
-    // double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 226, 225, 225),
       appBar: AppBar(
@@ -45,137 +46,150 @@ class _ScreenTwoState extends State<ScreenTwo> {
           'Тэмдэглэл',
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: SearchUser());
-              },
-              icon: Icon(Icons.search, size: 30),
-            ),
-          ),
-        ],
       ),
-      body: FutureBuilder<List<GetNote>>(
-          future: _userList.getuserList(),
-          builder: (context, snapshot) {
-            var data = snapshot.data;
-            return isLoading
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: data?.length,
-                    itemBuilder: (context, index) {
-                      GetNote note = listNote[index];
+      body: Container(
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    CupertinoSearchTextField(
+                      placeholder: "Тэмдэглэл хайх",
+                      onChanged: (String value) {
+                        currentListNote = currentListNote.where((element) => element.name!.contains(value)).toList();
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.92,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                        if (value == '') {
+                          currentListNote = listNote;
+                        }
+                        setState(() {});
+                        // print(value);
+                        // fieldValue('The text has changed to: $value');
+                      },
+                      onSubmitted: (String value) {
+                        currentListNote = currentListNote.where((element) => element.name!.contains(value)).toList();
+                        if (value == '') {
+                          currentListNote = listNote;
+                        }
+                        setState(() {});
+                        // fieldValue('Submitted text: $value');
+                      },
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: currentListNote.length,
+                            itemBuilder: (context, index) {
+                              GetNote note = currentListNote[index];
+                              return Container(
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context).size.width * 0.92,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          currentListNote[index].createdAt!,
+                                                          style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          currentListNote[index].name!,
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                        // Text(
+                                                        //   '${data[index].}',
+                                                        //   style: const TextStyle(
+                                                        //     fontSize: 14,
+                                                        //     fontWeight: FontWeight.w400,
+                                                        //     color: Color.fromARGB(
+                                                        //         255, 127, 127, 127),
+                                                        //   ),
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        LoadingIndicator(context: context).showLoadingIndicator();
+                                                        _userList.deleteNote(note.id as int).then(
+                                                          (value) {
+                                                            LoadingIndicator(context: context).hideLoadingIndicator();
+                                                            ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                                                              message: "Амжилттай устгалаа",
+                                                            ));
+                                                            setState(() {
+                                                              currentListNote.removeAt(index);
+                                                            });
+                                                          },
+                                                        ).catchError((onError) {
+                                                          LoadingIndicator(context: context).hideLoadingIndicator();
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        height: 40,
+                                                        width: 50,
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                          color: Colors.red,
+                                                        ),
+                                                        decoration: BoxDecoration(
+                                                          // color: Color.fromARGB(
+                                                          //     255, 185, 52, 43),
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                height: MediaQuery.of(context).size.height * 0.16,
+                                                width: MediaQuery.of(context).size.width * 0.92,
+                                                decoration: BoxDecoration(
+                                                  image: const DecorationImage(
+                                                    image: AssetImage(
+                                                      'assets/images/note.jpeg',
+                                                    ),
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
                                               Text(
-                                                '${data?[index].name}',
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              const Text(
-                                                'усалгаатай - 1',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              Text(
-                                                '${data?[index].createdAt}',
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromARGB(
-                                                      255, 127, 127, 127),
-                                                ),
-                                              ),
+                                                '${currentListNote[index].description ?? ""}',
+                                              )
                                             ],
                                           ),
-                                          InkWell(
-                                            onTap: () async {
-                                              isLoading = true;
-                                              _userList.deleteData(
-                                                  note.id as int,
-                                                  isLoading = false);
-                                              setState(() {
-                                                listNote.removeAt(index);
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 50,
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                // color: Color.fromARGB(
-                                                //     255, 185, 52, 43),
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.16,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.92,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                            'assets/images/note.jpeg',
-                                          ),
                                         ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
-                                    Text(
-                                      '${data?[index].description}',
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                            const Line3(),
-                          ],
-                        ),
-                      );
-                    });
-          }),
+                              );
+                            }))
+                  ],
+                )),
     );
   }
 }
@@ -185,7 +199,7 @@ class FetchUserList {
   List<GetNote> results = [];
   String urlList = 'http://103.143.40.250:8100/api/note/type/getnotetype';
 
-  Future<List<GetNote>> getuserList({String? query}) async {
+  Future<List<GetNote>> getNoteList({String? query}) async {
     var url = Uri.parse(urlList);
     try {
       var response = await http.get(url);
@@ -193,10 +207,7 @@ class FetchUserList {
         data = json.decode(response.body);
         results = data.map((e) => GetNote.fromJson(e)).toList();
         if (query != null) {
-          results = results
-              .where((element) =>
-                  element.name!.toLowerCase().contains((query.toLowerCase())))
-              .toList();
+          results = results.where((element) => element.name!.toLowerCase().contains((query.toLowerCase()))).toList();
         }
       } else {
         print("fetch error");
@@ -208,24 +219,17 @@ class FetchUserList {
   }
 
   String uri5 = 'http://103.143.40.250:8100/api/note/delete';
-  Future deleteData(int id, bool isLoadin) async {
+  Future deleteNote(int id) async {
     try {
       final response = await http.delete(
         Uri.parse('$uri5/$id'),
       );
-      if (response.statusCode == 200) {
-        SnackBar(content: Text('Тэмдэглэл устлаа.'));
-
-        return true;
-      } else {
-        return false;
-      }
     } catch (e) {
-      return e.toString();
+      throw Exception(e.toString());
     }
   }
 
   Future<void> refreshList() async {
-    results = await getuserList();
+    results = await getNoteList();
   }
 }

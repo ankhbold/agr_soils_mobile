@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
+
+import '../../constants/color.dart';
+import '../insight%20screen/insight_screen.dart';
 
 class IndicesScreen extends StatefulWidget {
   const IndicesScreen({super.key});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/widgets/button/round_button.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
-import 'package:mvvm/utils/utils.dart';
-import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../conf_global.dart';
+import '../constants/colors.dart';
+import '../utils/routes/routes_name.dart';
+import '../utils/utils.dart';
+import '../view_model/auth_view_model.dart';
+import 'widgets/button/round_button.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -38,6 +38,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final authViewMode = Provider.of<AuthViewModel>(context);
+    _emailController.text = 'ankhbold';
+    _passwordController.text = '89006176';
 
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(

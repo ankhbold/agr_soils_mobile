@@ -1,17 +1,17 @@
 class Globals {
   // static var anInteger = 0;
 
-  static var username = '';
-  static var isLogin = false;
+  static var username = 'ankhbold';
+  static var isLogin = true;
   static var email = '';
-  static var phone = '';
-  static var firstname = '';
-  static var lastname = '';
+  static var phone = '89006176';
+  static var firstname = 'Анхболд';
+  static var lastname = 'Баатарболд';
   static var position = '';
-  static var company = '';
+  static var company = 'Aгрономич';
   static var index_color = 0;
-  static var personId = '';
-  static var prof_company_id = '';
+  static var personId = '584719';
+  static var prof_company_id = '1';
   static var latit = '';
   static var longit = '';
   // static printInteger() {

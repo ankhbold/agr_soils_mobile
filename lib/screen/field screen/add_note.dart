@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/field%20screen/field.dart';
-import 'package:mvvm/service/remote_services.dart';
+
+import '../../constants/color.dart';
+import '../../service/remote_services.dart';
+import '../../widget/loader.dart';
+import '../../widget/outlined_btn.dart';
+import '../../widget/snackbar.dart';
+import '../field%20screen/field.dart';
 
 class NoteAdd extends StatefulWidget {
   const NoteAdd({super.key});
@@ -15,7 +20,16 @@ class NoteAdd extends StatefulWidget {
 }
 
 class _NoteAddState extends State<NoteAdd> {
+  List<String> types = ['Disease', 'Pests', 'Weeds', 'Lodging', 'Waterlogging', 'Other'];
+  List<Color> colors = [
+    Colors.blue,
+    Colors.red,
+    Colors.pinkAccent,
+    Colors.green,
+    Colors.yellow,
+  ];
   File? image;
+  String? selectedType;
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -27,6 +41,8 @@ class _NoteAddState extends State<NoteAdd> {
     }
   }
 
+  DateTime currentDateTime = DateTime.now();
+  DateTime chooseDateTime = DateTime.now();
   void changeToNote() {
     setState(() {
       // index_color = 2;
@@ -43,7 +59,7 @@ class _NoteAddState extends State<NoteAdd> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.9,
       child: ListView(
         padding: const EdgeInsets.all(8),
         children: <Widget>[
@@ -97,16 +113,43 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                   TextButton(
                     onPressed: () async {
-                      // print(DateTime.now());
-                      bool response =
-                          await repository.createData(titleController.text);
-                      if (response) {
+                      LoadingIndicator(context: context).showLoadingIndicator();
+                      await repository.createData(titleController.text).then((value) {
+                        LoadingIndicator(context: context).hideLoadingIndicator();
+                        if (value!) {
+                          setState(() {
+                            changeToNote();
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                            message: 'fail to post',
+                          ));
+                        }
                         setState(() {
-                          changeToNote();
+                          isChoose = true;
+                          isMarker = false;
+                          isFabVisible = true;
+
+                          isFirstWidgetVisible = true;
+                          isSecondWidgetVisible = false;
+                          isThirdWidgetVisible = false;
                         });
-                      } else {
-                        throw Exception('fail to post');
-                      }
+                      }).catchError((onError) {
+                        LoadingIndicator(context: context).hideLoadingIndicator();
+                        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                          message: onError,
+                        ));
+                        setState(() {
+                          isChoose = true;
+                          isMarker = false;
+                          isFabVisible = true;
+
+                          isFirstWidgetVisible = true;
+                          isSecondWidgetVisible = false;
+                          isThirdWidgetVisible = false;
+                        });
+                        // Navigator.pop(context);
+                      });
                     },
                     child: Text(
                       'Хадгалах',
@@ -119,6 +162,35 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                 ],
               ),
+            ),
+          ),
+          Line4(),
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Flexible(
+                  child: Container(
+                    margin: EdgeInsets.only(right: 20),
+                    child: Text('Өнгө'),
+                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: colors.map((e) {
+                      return Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(color: e, shape: BoxShape.circle),
+                      );
+                    }).toList(),
+                  ),
+                )
+              ],
             ),
           ),
           Line4(),
@@ -179,9 +251,43 @@ class _NoteAddState extends State<NoteAdd> {
               ),
             ),
           ),
+          Line4(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Төрөл',
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              DropdownButton(
+                alignment: AlignmentDirectional.topStart,
+                hint: Text('Тэмдэглэлийн төрлөө сонгоно уу'),
+                value: selectedType,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: types.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedType = newValue;
+                  });
+                },
+              )
+            ],
+          ),
           Line5(),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).viewInsets.bottom),
             child: image != null
                 ? Image.file(
                     image!,
@@ -190,15 +296,71 @@ class _NoteAddState extends State<NoteAdd> {
                     fit: BoxFit.cover,
                   )
                 : Container(
-                    height: 300,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2),
-                      color: Color.fromARGB(255, 212, 212, 212),
-                    ),
-                    child: Center(child: Text('data')),
+                    width: 0,
+                    height: 0,
                   ),
-          )
+          ),
+          InkWell(
+            onTap: () {
+              showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.25,
+                                child: CupertinoDatePicker(
+                                  initialDateTime: chooseDateTime,
+                                  use24hFormat: true,
+                                  onDateTimeChanged: (DateTime newDateTime) {
+                                    setState(() => chooseDateTime = newDateTime);
+                                  },
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(20),
+                                child: CustomOutlinedBtn(
+                                  text: 'Сонгох',
+                                  onTap: () {
+                                    Navigator.pop(context, chooseDateTime);
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }).then((value) {
+                if (value != null) {
+                  setState(() {
+                    currentDateTime = value;
+                  });
+                }
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 10),
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Он сар өдөр'),
+                    Text(
+                      currentDateTime.toString().split(".")[0],
+                      style: TextStyle(color: Colors.lightBlue),
+                    ),
+                  ],
+                ),
+              ]),
+            ),
+          ),
+          Line4(),
         ],
       ),
     );

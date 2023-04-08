@@ -1,6 +1,6 @@
-import 'package:mvvm/data/network/BaseApiServices.dart';
-import 'package:mvvm/data/network/NetworkApiService.dart';
-import 'package:mvvm/res/app_url.dart';
+import '../data/network/BaseApiServices.dart';
+import '../data/network/NetworkApiService.dart';
+import '../res/app_url.dart';
 
 class AuthRepository {
   BaseApiServices _apiServices = NetworkApiService();

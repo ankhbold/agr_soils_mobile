@@ -20,14 +20,21 @@ class NoteAdd extends StatefulWidget {
 }
 
 class _NoteAddState extends State<NoteAdd> {
-  List<String> types = ['Disease', 'Pests', 'Weeds', 'Lodging', 'Waterlogging', 'Other'];
-  List<Color> colors = [
-    Colors.blue,
-    Colors.red,
-    Colors.pinkAccent,
-    Colors.green,
-    Colors.yellow,
+  List<String> types = [
+    'Disease',
+    'Pests',
+    'Weeds',
+    'Lodging',
+    'Waterlogging',
+    'Other'
   ];
+  // List<Color> colors = [
+  //   Colors.blue,
+  //   Colors.red,
+  //   Colors.pinkAccent,
+  //   Colors.green,
+  //   Colors.yellow,
+  // ];
   File? image;
   String? selectedType;
   Future pickImage() async {
@@ -114,14 +121,18 @@ class _NoteAddState extends State<NoteAdd> {
                   TextButton(
                     onPressed: () async {
                       LoadingIndicator(context: context).showLoadingIndicator();
-                      await repository.createData(titleController.text).then((value) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
+                      await repository
+                          .createData(titleController.text)
+                          .then((value) {
+                        LoadingIndicator(context: context)
+                            .hideLoadingIndicator();
                         if (value!) {
                           setState(() {
                             changeToNote();
                           });
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(CustomSnackBar(
                             message: 'fail to post',
                           ));
                         }
@@ -135,8 +146,10 @@ class _NoteAddState extends State<NoteAdd> {
                           isThirdWidgetVisible = false;
                         });
                       }).catchError((onError) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
-                        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                        LoadingIndicator(context: context)
+                            .hideLoadingIndicator();
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(CustomSnackBar(
                           message: onError,
                         ));
                         setState(() {
@@ -162,35 +175,6 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                 ],
               ),
-            ),
-          ),
-          Line4(),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: Row(
-              children: [
-                Flexible(
-                  child: Container(
-                    margin: EdgeInsets.only(right: 20),
-                    child: Text('Өнгө'),
-                  ),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  flex: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
-                    children: colors.map((e) {
-                      return Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(color: e, shape: BoxShape.circle),
-                      );
-                    }).toList(),
-                  ),
-                )
-              ],
             ),
           ),
           Line4(),
@@ -287,7 +271,8 @@ class _NoteAddState extends State<NoteAdd> {
           ),
           Line5(),
           Padding(
-            padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(
+                top: 10, bottom: MediaQuery.of(context).viewInsets.bottom),
             child: image != null
                 ? Image.file(
                     image!,
@@ -313,12 +298,14 @@ class _NoteAddState extends State<NoteAdd> {
                           child: Column(
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.25,
                                 child: CupertinoDatePicker(
                                   initialDateTime: chooseDateTime,
                                   use24hFormat: true,
                                   onDateTimeChanged: (DateTime newDateTime) {
-                                    setState(() => chooseDateTime = newDateTime);
+                                    setState(
+                                        () => chooseDateTime = newDateTime);
                                   },
                                 ),
                               ),
@@ -345,7 +332,8 @@ class _NoteAddState extends State<NoteAdd> {
               });
             },
             child: Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 10),
+              padding:
+                  EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 10),
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

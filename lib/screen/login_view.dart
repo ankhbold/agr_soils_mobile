@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
     _emailController.text = 'ankhbold';
     _passwordController.text = '89006176';
 
-    final height = MediaQuery.of(context).size.height * 1;
+    // final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
@@ -50,16 +50,10 @@ class _LoginViewState extends State<LoginView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: height * .20,
-            ),
-            SizedBox(
                 height: 100,
                 child: Image.asset(
                   'assets/images/logo.png',
                 )),
-            SizedBox(
-              height: height * .04,
-            ),
             Center(
               child: Text(
                 // textAlign: TextAlign.center,
@@ -95,12 +89,7 @@ class _LoginViewState extends State<LoginView> {
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Нэвтрэх нэр оруулна уу',
-                      // labelText: 'Хэрэглэгчийн нэр',
                     ),
-                    // onFieldSubmitted: (valu) {
-                    //   Utils.fieldFocusChange(
-                    //       context, emailFocusNode, passwordFocusNode);
-                    // },
                   ),
                 ),
               ),
@@ -194,23 +183,6 @@ class _LoginViewState extends State<LoginView> {
                   setState(() {});
                 }
               },
-            ),
-            SizedBox(
-              height: height * .02,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, RoutesName.signUp);
-              },
-              child: Text("Бүртгэл үүсгэх",
-                  style: GoogleFonts.montserrat(
-                    letterSpacing: 0.05,
-                    textStyle: TextStyle(
-
-                        // color: Color.fromARGB(150, 0, 0, 0),
-                        color: AppColors.Green,
-                        fontWeight: FontWeight.w500),
-                  )),
             ),
           ],
         ),

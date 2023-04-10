@@ -8,6 +8,8 @@ import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../register/register_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -45,184 +47,222 @@ class ListProfile extends StatefulWidget {
 }
 
 class _ListProfileState extends State<ListProfile> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context);
 
-    return ListView(
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.06,
-        ),
-        Center(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-            child: Image.asset(
-              'assets/images/logo.png',
-            ),
-          ),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-        ),
-        const Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.account_circle,
-                  color: Colors.black54,
-                ),
-                text: Text(
-                  '${Globals.getUsername()}',
-                  style: TextStyle(),
-                ),
-              )
-            : AccountButton(
-                icon: Icon(
-                  Icons.account_box_rounded,
-                  color: Colors.white,
-                ),
-                text: Text(
-                  'Нэвтрэх',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginView()),
-                  );
-                }),
-        const Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.accessibility,
-                  color: Colors.black54,
-                ),
-                text: Text(
-                  '${Globals.getFirstName()} ${Globals.getLastName()}',
-                  style: TextStyle(),
-                ),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        const Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.home_work,
-                  color: Colors.black54,
-                ),
-                text: Text(
-                  Globals.getUserCompany(),
-                  style: TextStyle(),
-                ),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        const Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.badge,
-                  color: Colors.black54,
-                ),
-                text: Text(
-                  Globals.getPosition(),
-                  style: TextStyle(),
-                ),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.mail,
-                  color: Colors.black54,
-                ),
-                text: isEmpty
-                    ? Text(
-                        Globals.email,
-                        style: TextStyle(),
-                      )
-                    : Text('Оруулаагүй'),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        Line(),
-        Globals.isLogin
-            ? AccountButtonLess(
-                icon: const Icon(
-                  Icons.phone,
-                  color: Colors.black54,
-                ),
-                text: Text(
-                  Globals.getUserPhone(),
-                  style: TextStyle(),
-                ),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        const Line2(),
-        SizedBox(
-          height: MediaQuery.of(context).size.width * 0.03,
-        ),
-        Globals.isLogin
-            ? InkWell(
-                onTap: () {
-                  setState(() {
-                    userPrefernece.remove().then((value) {
-                      Globals.changeIsLogin(false);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginView()),
-                      );
-                    });
-                  });
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffDADADA),
+      ),
+      body: Column(
+        children: [
+          DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Color(0xff065F46),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TabBar(
+                        unselectedLabelColor: Colors.white,
+                        labelColor: Color(0xff065F46),
+                        indicator: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        indicatorPadding: EdgeInsets.all(5),
+                        overlayColor: MaterialStateProperty.all(Colors.green),
+                        onTap: (value) {
+                          currentIndex = value;
+                          setState(() {});
+                        },
+                        tabs: [
+                          Tab(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Text('Нэвтрэх'),
+                            ),
+                          ),
+                          Tab(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Text('Бүртгүүлэх'),
+                            ),
+                          ),
+                        ]),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Гарах',
-                      style: TextStyle(
-                          color: Colors.red, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              )
-            : SizedBox(
-                height: 1,
-              ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Тариалангийн систем, 1.0.0\nios 15.5',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
-      ],
+                  currentIndex == 0
+                      ? Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: LoginView(),
+                        )
+                      : Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: RegisterPage(),
+                        ),
+                ],
+              )),
+          // Center(
+          //   child: SizedBox(
+          //     height: MediaQuery.of(context).size.height * 0.1,
+          //     child: Image.asset(
+          //       'assets/images/logo.png',
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.height * 0.05,
+          // ),
+          // const Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.account_circle,
+          //           color: Colors.black54,
+          //         ),
+          //         text: Text(
+          //           '${Globals.getUsername()}',
+          //           style: TextStyle(),
+          //         ),
+          //       )
+          //     : LoginView(),
+          // const Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.accessibility,
+          //           color: Colors.black54,
+          //         ),
+          //         text: Text(
+          //           '${Globals.getFirstName()} ${Globals.getLastName()}',
+          //           style: TextStyle(),
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // const Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.home_work,
+          //           color: Colors.black54,
+          //         ),
+          //         text: Text(
+          //           Globals.getUserCompany(),
+          //           style: TextStyle(),
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // const Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.badge,
+          //           color: Colors.black54,
+          //         ),
+          //         text: Text(
+          //           Globals.getPosition(),
+          //           style: TextStyle(),
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.mail,
+          //           color: Colors.black54,
+          //         ),
+          //         text: isEmpty
+          //             ? Text(
+          //                 Globals.email,
+          //                 style: TextStyle(),
+          //               )
+          //             : Text('Оруулаагүй'),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // Line(),
+          // Globals.isLogin
+          //     ? AccountButtonLess(
+          //         icon: const Icon(
+          //           Icons.phone,
+          //           color: Colors.black54,
+          //         ),
+          //         text: Text(
+          //           Globals.getUserPhone(),
+          //           style: TextStyle(),
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // const Line2(),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.width * 0.03,
+          // ),
+          // Globals.isLogin
+          //     ? InkWell(
+          //         onTap: () {
+          //           setState(() {
+          //             userPrefernece.remove().then((value) {
+          //               Globals.changeIsLogin(false);
+          //               Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute(builder: (context) => LoginView()),
+          //               );
+          //             });
+          //           });
+          //         },
+          //         child: Container(
+          //           height: MediaQuery.of(context).size.height * 0.06,
+          //           width: MediaQuery.of(context).size.width,
+          //           decoration: const BoxDecoration(
+          //             color: Colors.white,
+          //           ),
+          //           child: const Center(
+          //             child: Text(
+          //               'Гарах',
+          //               style: TextStyle(
+          //                   color: Colors.red, fontWeight: FontWeight.w500),
+          //             ),
+          //           ),
+          //         ),
+          //       )
+          //     : SizedBox(
+          //         height: 1,
+          //       ),
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   children: [
+          //     SizedBox(
+          //       width: 20,
+          //     ),
+          //     Text(
+          //       'Тариалангийн систем, 1.0.0\nios 15.5',
+          //       style: TextStyle(
+          //         color: Colors.grey,
+          //         fontSize: 12,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
     );
   }
 }

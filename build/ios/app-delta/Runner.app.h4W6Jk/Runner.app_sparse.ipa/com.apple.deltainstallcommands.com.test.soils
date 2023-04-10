@@ -1,0 +1,57 @@
+ipaD
+1
+1 1.0.0
++Frameworks/App.framework/App
++Frameworks/App.framework/_CodeSignature/CodeResources
++Frameworks/App.framework/flutter_assets/AssetManifest.json
++Frameworks/App.framework/flutter_assets/FontManifest.json
++Frameworks/App.framework/flutter_assets/NOTICES.Z
++Frameworks/App.framework/flutter_assets/shaders/ink_sparkle.frag
++Frameworks/FMDB.framework/FMDB
++Frameworks/FMDB.framework/Info.plist
++Frameworks/FMDB.framework/_CodeSignature/CodeResources
++Frameworks/Toast.framework/Info.plist
++Frameworks/Toast.framework/Toast
++Frameworks/Toast.framework/_CodeSignature/CodeResources
++Frameworks/flutter_secure_storage.framework/Info.plist
++Frameworks/flutter_secure_storage.framework/_CodeSignature/CodeResources
++Frameworks/flutter_secure_storage.framework/flutter_secure_storage
++Frameworks/fluttertoast.framework/Info.plist
++Frameworks/fluttertoast.framework/_CodeSignature/CodeResources
++Frameworks/fluttertoast.framework/fluttertoast
++Frameworks/geocoding_ios.framework/Info.plist
++Frameworks/geocoding_ios.framework/_CodeSignature/CodeResources
++Frameworks/geocoding_ios.framework/geocoding_ios
++Frameworks/geolocator_apple.framework/Info.plist
++Frameworks/geolocator_apple.framework/_CodeSignature/CodeResources
++Frameworks/geolocator_apple.framework/geolocator_apple
++Frameworks/hexcolor.framework/Info.plist
++Frameworks/hexcolor.framework/_CodeSignature/CodeResources
++Frameworks/hexcolor.framework/hexcolor
++Frameworks/image_picker_ios.framework/Info.plist
++Frameworks/image_picker_ios.framework/_CodeSignature/CodeResources
++Frameworks/image_picker_ios.framework/image_picker_ios
++Frameworks/location.framework/Info.plist
++Frameworks/location.framework/_CodeSignature/CodeResources
++Frameworks/location.framework/location
++Frameworks/path_provider_foundation.framework/Info.plist
++Frameworks/path_provider_foundation.framework/_CodeSignature/CodeResources
++Frameworks/path_provider_foundation.framework/path_provider_foundation
++Frameworks/shared_preferences_foundation.framework/Info.plist
++Frameworks/shared_preferences_foundation.framework/_CodeSignature/CodeResources
++Frameworks/shared_preferences_foundation.framework/shared_preferences_foundation
++Frameworks/sqflite.framework/Info.plist
++Frameworks/sqflite.framework/_CodeSignature/CodeResources
++Frameworks/sqflite.framework/sqflite
++Frameworks/webview_flutter.framework/Info.plist
++Frameworks/webview_flutter.framework/_CodeSignature/CodeResources
++Frameworks/webview_flutter.framework/webview_flutter
++Info.plist
++PkgInfo
++Runner
++_CodeSignature/CodeResources
+xEOF
+#CreateSparseIPA UUID: 6B15CA16-1CCB-388F-88A6-CFC34538C5F9
+#Bundle id: com.test.soils
+#Old bundle version: 1 1.0.0
+#New bundle version: 1 1.0.0

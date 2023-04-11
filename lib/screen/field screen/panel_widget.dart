@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/screen/notes%20screen/add_note.dart';
 
 import '../../constants/colors.dart';
 import '../field%20screen/crop.dart';
 import '../field%20screen/field.dart';
-import 'add_note.dart';
 
 double lat = 49.939048;
 double long = 105.841644;
@@ -53,8 +53,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                       height: 40,
                       width: MediaQuery.of(context).size.width * 0.8,
                       decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(12)),
+                          color: const Color.fromARGB(255, 255, 255, 255), borderRadius: BorderRadius.circular(12)),
                       child: TextField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -81,17 +80,12 @@ class _PanelWidgetState extends State<PanelWidget> {
                     children: [
                       Text(
                         'Тариалсан',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
+                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       Text(
                         '3 936 ha out of 3 936 ha',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 203, 203, 203),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400),
+                            color: Color.fromARGB(255, 203, 203, 203), fontSize: 15, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
@@ -109,10 +103,8 @@ class _PanelWidgetState extends State<PanelWidget> {
                     },
                     child: Text(
                       'Ургац нэмэх',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 41, 41),
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 255, 41, 41), fontSize: 17, fontWeight: FontWeight.w500),
                     ),
                   ),
                   SizedBox(
@@ -142,10 +134,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ),
                   Text(
                     'Миний талбарууд',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -201,19 +190,14 @@ class Planted extends StatelessWidget {
                   children: const [
                     Text(
                       'Тариалан',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
                     ),
                     SizedBox(
                       height: 2,
                     ),
                     Text(
                       '0 ha out of 0 ha',
-                      style: TextStyle(
-                          color: Color.fromARGB(95, 255, 255, 255),
-                          fontSize: 13),
+                      style: TextStyle(color: Color.fromARGB(95, 255, 255, 255), fontSize: 13),
                     )
                   ],
                 ),
@@ -249,8 +233,7 @@ class Planted extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.94,
               height: 20,
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 219, 227, 231),
-                  borderRadius: BorderRadius.circular(7)),
+                  color: const Color.fromARGB(255, 219, 227, 231), borderRadius: BorderRadius.circular(7)),
             ),
           ),
         ],
@@ -258,57 +241,6 @@ class Planted extends StatelessWidget {
     );
   }
 }
-
-// class TextFieldField extends StatefulWidget {
-//   const TextFieldField({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   State<TextFieldField> createState() => _TextFieldFieldState();
-// }
-
-// class _TextFieldFieldState extends State<TextFieldField> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       child: Padding(
-//         padding: EdgeInsets.only(right: 10, left: 10),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             GestureDetector(
-
-//               child: Container(
-//                 height: 40,
-//                 width: 280,
-//                 decoration: BoxDecoration(
-//                     color: const Color.fromARGB(255, 255, 255, 255),
-//                     borderRadius: BorderRadius.circular(12)),
-//                 child: Padding(
-//                   padding: EdgeInsets.only(),
-
-//                     child: TextField(
-//                       decoration: InputDecoration(
-//                         prefixIcon: Icon(
-//                           Icons.search,
-//                           size: 20,
-//                           color: AppColors.Green,
-//                         ),
-//                         border: InputBorder.none,
-//                         hintText: 'Талбай хайна уу',
-//                       ),
-//                     ),
-
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class Roow extends StatelessWidget {
   const Roow({
@@ -412,8 +344,7 @@ class PanelWidget2 extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      ListView(controller: controller, padding: EdgeInsets.zero, children: [
+  Widget build(BuildContext context) => ListView(controller: controller, padding: EdgeInsets.zero, children: [
         NoteAdd(),
       ]);
 }

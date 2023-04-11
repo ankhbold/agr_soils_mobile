@@ -3,6 +3,7 @@ class Globals {
 
   static var username = 'ankhbold';
   static var isLogin = false;
+  static var seasonId;
   static var email = '';
   static var phone = '89006176';
   static var firstname = 'Анхболд';
@@ -10,8 +11,9 @@ class Globals {
   static var position = '';
   static var company = 'Aгрономич';
   static var index_color = 0;
-  static var personId = '584719';
+  static var personId = '626247';
   static var prof_company_id = '1';
+  static var company_id = '';
   static var latit = '';
   static var longit = '';
   // static printInteger() {
@@ -87,6 +89,10 @@ class Globals {
 
   static changeUserCompany(String a) {
     company = a;
+  }
+
+  static changeCompanyId(String a) {
+    company_id = a;
   }
 
   static getUserCompany() {

@@ -7,7 +7,7 @@ void requestMLocationPermissions() async {
   Map<Permission, PermissionStatus> statuses = await [
     Permission.location,
   ].request();
-  print("location permission: ${statuses[Permission.location]}, ");
+  // print("location permission: ${statuses[Permission.location]}, ");
 }
 
 LocationSettings locationSettings = const LocationSettings(
@@ -15,9 +15,6 @@ LocationSettings locationSettings = const LocationSettings(
   distanceFilter: 100,
 );
 StreamSubscription<Position> positionStream =
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position? position) {
-  print(position == null
-      ? 'Unknown'
-      : '${position.latitude.toString()}, ${position.longitude.toString()}');
+    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) {
+  print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
 });

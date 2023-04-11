@@ -17,22 +17,6 @@ class _CropState extends State<Crop> {
 
   late List<Employee> _employees;
   late EmployeeDataSource _employeeDataSource;
-  // Future<List<CropModel>> getCrop() async {
-  //   var url = Uri.parse('http://103.143.40.250:8100/api/get/season/crop/list');
-  //   try {
-  //     var response = await http.get(url);
-  //     if (response.statusCode == 200) {
-  //       data = json.decode(response.body);
-  //       results = data.map((e) => CropModel.fromJson(e)).toList();
-  //       print(response.body);
-  //     } else {
-  //       print("fetch error");
-  //     }
-  //   } on Exception catch (e) {
-  //     print('error: $e');
-  //   }
-  //   return results;
-  // }
 
   @override
   void initState() {
@@ -58,8 +42,7 @@ class _CropState extends State<Crop> {
           frozenPaneElevation: 0,
           headerColor: Color.fromARGB(255, 201, 230, 227),
           frozenPaneLineWidth: 0.5,
-          currentCellStyle: DataGridCurrentCellStyle(
-              borderWidth: 2, borderColor: AppColors.Green),
+          currentCellStyle: DataGridCurrentCellStyle(borderWidth: 2, borderColor: AppColors.Green),
         ),
         child: SfDataGrid(
           navigationMode: GridNavigationMode.cell,
@@ -382,8 +365,8 @@ class EmployeeDataSource extends DataGridSource {
 }
 
 class Employee {
-  Employee(this.id, this.name, this.designation, this.salary, this.test1,
-      this.test2, this.test3, this.test4, this.test5);
+  Employee(
+      this.id, this.name, this.designation, this.salary, this.test1, this.test2, this.test3, this.test4, this.test5);
 
   final String id;
   final String name;
@@ -458,54 +441,42 @@ List<Employee> getEmployeeData() {
     Employee('+', 'Kathryn', 'Mustard, black', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Lara', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Michael', '+', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Balnc', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Perry', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Gable', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Grimes', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Grimes', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'James', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Kathryn', 'Mustard, black', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Lara', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Michael', '+', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Balnc', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Perry', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Gable', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'James', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Kathryn', 'Mustard, black', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Lara', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Michael', '+', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Balnc', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Perry', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Gable', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'James', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Kathryn', 'Mustard, black', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Lara', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Michael', '+', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Martin', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
+    Employee('+', 'Newberry', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Balnc', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Perry', '+', '+', '+', '+', '+', '+', '+'),
     Employee('+', 'Gable', 'Wheat soft,\ spring', '+', '+', '+', '+', '+', '+'),
-    Employee(
-        '+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+')
+    Employee('+', 'Grimes', 'Sr.Wheat soft,\ spring', '+', '+', '+', '+', '+', '+')
   ];
 }
 

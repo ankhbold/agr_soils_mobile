@@ -8,7 +8,6 @@ import 'insight%20screen/insight_screen.dart';
 import 'notes%20screen/notes_screen.dart';
 import 'profile screen/login_with_signup_screen.dart';
 
-
 var index_color = 0;
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
 
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final Screen = [
     FieldScreen(),
     InsightScreen(),
-    ScreenTwo(),
+    NoteListPage(),
     LoginWithSignup(),
   ];
   void onTabTapped(int index) {
@@ -33,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // print(Globals.getIndexColor());
     });
   }
+
   @override
   void initState() {
     super.initState();

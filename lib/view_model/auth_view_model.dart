@@ -82,13 +82,12 @@ class AuthViewModel with ChangeNotifier {
         Globals.changeFirstName(in_firstname);
         Globals.changeLastName(in_lastname);
         Globals.changePosition(in_position);
+
         setLoading(false);
         Globals.changePersonId(in_personId);
 
-        final userPreference =
-            Provider.of<UserViewModel>(context, listen: false);
-        userPreference
-            .saveUser(UserModel(user_id: value['data']['user_id'].toString()));
+        final userPreference = Provider.of<UserViewModel>(context, listen: false);
+        userPreference.saveUser(UserModel(user_id: value['data']['user_id'].toString()));
 
         Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
 
@@ -101,11 +100,10 @@ class AuthViewModel with ChangeNotifier {
 
         // Navigator.pushNamed(context, RoutesName.home);
         // if (kDebugMode) {
-          // print(value.toString());
+        // print(value.toString());
         // }
       } else {
-        Utils.flushBarErrorMessage(
-            'Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);
+        Utils.flushBarErrorMessage('Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);
         wrong = true;
       }
     }).onError((error, stackTrace) {

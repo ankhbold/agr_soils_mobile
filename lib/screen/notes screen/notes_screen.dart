@@ -1,29 +1,27 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:mvvm/models/note.dart';
+import 'package:mvvm/service/remote_services.dart';
 import '../../constants/colors.dart';
-import '../../service/apis/get_notes_data.dart';
 import '../../widget/loader.dart';
 import '../../widget/snackbar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class ScreenTwo extends StatefulWidget {
-  const ScreenTwo({super.key});
+class NoteListPage extends StatefulWidget {
+  const NoteListPage({super.key});
 
   @override
-  State<ScreenTwo> createState() => _ScreenTwoState();
+  State<NoteListPage> createState() => NoteListPageState();
 }
 
-class _ScreenTwoState extends State<ScreenTwo> {
+class NoteListPageState extends State<NoteListPage> {
   bool isLoading = true;
 
-  FetchUserList _userList = FetchUserList();
-  // Repository repository = Repository();
-  List<GetNote> listNote = [], currentListNote = [];
+  List<Note> listNote = [], currentListNote = [];
   getGetNoteApi() async {
-    listNote = await _userList.getNoteList();
+    listNote = await NoteService().getNoteList();
     currentListNote = listNote;
     isLoading = false;
     setState(() {});
@@ -48,188 +46,134 @@ class _ScreenTwoState extends State<ScreenTwo> {
         ),
       ),
       body: Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    CupertinoSearchTextField(
-                      placeholder: "Тэмдэглэл хайх",
-                      onChanged: (String value) {
-                        currentListNote = currentListNote.where((element) => element.name!.contains(value)).toList();
+        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  CupertinoSearchTextField(
+                    placeholder: "Тэмдэглэл хайх",
+                    onChanged: (String value) {
+                      currentListNote = currentListNote
+                          .where((element) => element.note_type_desc!.toLowerCase().contains(value.toLowerCase()))
+                          .toList();
 
-                        if (value == '') {
-                          currentListNote = listNote;
-                        }
-                        setState(() {});
-                        // print(value);
-                        // fieldValue('The text has changed to: $value');
-                      },
-                      onSubmitted: (String value) {
-                        currentListNote = currentListNote.where((element) => element.name!.contains(value)).toList();
-                        if (value == '') {
-                          currentListNote = listNote;
-                        }
-                        setState(() {});
-                        // fieldValue('Submitted text: $value');
-                      },
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: currentListNote.length,
-                            itemBuilder: (context, index) {
-                              GetNote note = currentListNote[index];
-                              return Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.only(bottom: 10),
-                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: MediaQuery.of(context).size.width * 0.92,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      if (value == '') {
+                        currentListNote = listNote;
+                      }
+                      setState(() {});
+                    },
+                    onSubmitted: (String value) {
+                      currentListNote = currentListNote
+                          .where((element) => element.note_type_desc!.toLowerCase().contains(value.toLowerCase()))
+                          .toList();
+                      if (value == '') {
+                        currentListNote = listNote;
+                      }
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: currentListNote.length,
+                        itemBuilder: (context, index) {
+                          Note note = currentListNote[index];
+                          return Container(
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(bottom: 10),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width * 0.92,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          currentListNote[index].createdAt!,
-                                                          style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w500,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          currentListNote[index].name!,
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                        ),
-                                                        // Text(
-                                                        //   '${data[index].}',
-                                                        //   style: const TextStyle(
-                                                        //     fontSize: 14,
-                                                        //     fontWeight: FontWeight.w400,
-                                                        //     color: Color.fromARGB(
-                                                        //         255, 127, 127, 127),
-                                                        //   ),
-                                                        // ),
-                                                      ],
+                                                    Text(
+                                                      currentListNote[index].created_at!,
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
                                                     ),
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        LoadingIndicator(context: context).showLoadingIndicator();
-                                                        _userList.deleteNote(note.id as int).then(
-                                                          (value) {
-                                                            LoadingIndicator(context: context).hideLoadingIndicator();
-                                                            ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                                                              message: "Амжилттай устгалаа",
-                                                            ));
-                                                            setState(() {
-                                                              currentListNote.removeAt(index);
-                                                            });
-                                                          },
-                                                        ).catchError((onError) {
-                                                          LoadingIndicator(context: context).hideLoadingIndicator();
-                                                        });
-                                                      },
-                                                      child: Container(
-                                                        height: 40,
-                                                        width: 50,
-                                                        child: Icon(
-                                                          Icons.delete,
-                                                          color: Colors.red,
-                                                        ),
-                                                        decoration: BoxDecoration(
-                                                          // color: Color.fromARGB(
-                                                          //     255, 185, 52, 43),
-                                                          borderRadius: BorderRadius.circular(12),
-                                                        ),
+                                                    Text(
+                                                      currentListNote[index].note_type_desc!,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w400,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                              Container(
-                                                height: MediaQuery.of(context).size.height * 0.16,
-                                                width: MediaQuery.of(context).size.width * 0.92,
-                                                decoration: BoxDecoration(
-                                                  image: const DecorationImage(
-                                                    image: AssetImage(
-                                                      'assets/images/note.jpeg',
-                                                    ),
+                                                InkWell(
+                                                  onTap: () async {
+                                                    LoadingIndicator(context: context).showLoadingIndicator();
+                                                    NoteService().deleteNote(note.id as int).then(
+                                                      (value) {
+                                                        LoadingIndicator(context: context).hideLoadingIndicator();
+                                                        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                                                          message: "Амжилттай устгалаа",
+                                                        ));
+                                                        setState(() {
+                                                          currentListNote.removeAt(index);
+                                                        });
+                                                      },
+                                                    ).catchError((onError) {
+                                                      LoadingIndicator(context: context).hideLoadingIndicator();
+                                                    });
+                                                  },
+                                                  child: Image.asset(
+                                                    "assets/common/remove.png",
+                                                    width: 30,
+                                                    height: 30,
                                                   ),
-                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: MediaQuery.of(context).size.height * 0.16,
+                                            width: MediaQuery.of(context).size.width * 0.92,
+                                            decoration: BoxDecoration(
+                                              image: const DecorationImage(
+                                                image: AssetImage(
+                                                  'assets/images/note.jpeg',
                                                 ),
                                               ),
-                                              Text(
-                                                '${currentListNote[index].description ?? ""}',
-                                              )
-                                            ],
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
                                           ),
-                                        ),
+                                          Text(
+                                            '${currentListNote[index].description ?? ""}',
+                                          )
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            }))
-                  ],
-                )),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              ),
+      ),
     );
-  }
-}
-
-class FetchUserList {
-  var data = [];
-  List<GetNote> results = [];
-  String urlList = 'http://103.143.40.250:8100/api/note/type/getnotetype';
-
-  Future<List<GetNote>> getNoteList({String? query}) async {
-    var url = Uri.parse(urlList);
-    try {
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        results = data.map((e) => GetNote.fromJson(e)).toList();
-        if (query != null) {
-          results = results.where((element) => element.name!.toLowerCase().contains((query.toLowerCase()))).toList();
-        }
-      } else {
-        print("fetch error");
-      }
-    } on Exception catch (e) {
-      print('error: $e');
-    }
-    return results;
-  }
-
-  String uri5 = 'http://103.143.40.250:8100/api/note/delete';
-  Future deleteNote(int id) async {
-    try {
-      final response = await http.delete(
-        Uri.parse('$uri5/$id'),
-      );
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  Future<void> refreshList() async {
-    results = await getNoteList();
   }
 }

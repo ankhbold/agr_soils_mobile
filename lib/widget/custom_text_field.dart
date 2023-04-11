@@ -189,7 +189,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             : InputBorder.none,
         disabledBorder: widget.isBorder!
             ? OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
+                borderSide: const BorderSide(color: Color(0xffD9D9D9)),
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.borderRadius ?? 18),
                 ),
@@ -197,7 +197,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             : InputBorder.none,
         enabledBorder: widget.isBorder!
             ? OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
+                borderSide: const BorderSide(color: Color(0xffD9D9D9)),
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.borderRadius ?? 18),
                 ),
@@ -205,7 +205,7 @@ class CustomTextFieldState extends State<CustomTextField> {
             : InputBorder.none,
         focusedBorder: widget.isBorder!
             ? OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
+                borderSide: const BorderSide(color: Color(0xffD9D9D9)),
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.borderRadius ?? 18),
                 ),

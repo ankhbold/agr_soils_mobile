@@ -42,7 +42,9 @@ class _LoginViewState extends State<LoginView> {
     // final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,6 +184,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

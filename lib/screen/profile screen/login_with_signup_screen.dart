@@ -24,13 +24,16 @@ class LoginWithSignupState extends State<LoginWithSignup> {
     final userPrefernece = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xffDADADA),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xffDADADA),
+      // ),
       body: Consumer(
         builder: (context, value, child) {
           return Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Globals.isLogin
                   ? UserProfilePage(
                       logout: () {
@@ -77,15 +80,16 @@ class LoginWithSignupState extends State<LoginWithSignup> {
                           ),
                           currentIndex == 0
                               ? Container(
-                                  height: MediaQuery.of(context).size.height - 260,
+                                  height: MediaQuery.of(context).size.height - 170,
                                   child: LoginView(),
                                 )
                               : Container(
-                                  height: MediaQuery.of(context).size.height - 260,
+                                  height: MediaQuery.of(context).size.height - 170,
                                   child: RegisterPage(),
                                 ),
                         ],
-                      )),
+                      ),
+                    ),
             ],
           );
         },

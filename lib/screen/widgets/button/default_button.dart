@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/color.dart';
 
-import '../../profile screen/profile_screen.dart';
+import '../../../constants/color.dart';
+import '../../../widget/line.dart';
+
 
 class DefaultButton extends StatefulWidget {
   final VoidCallback OnTap;

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../conf_global.dart';
 import '../constants/colors.dart';
-import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
 import '../view_model/auth_view_model.dart';
 import 'widgets/button/round_button.dart';
@@ -178,8 +176,6 @@ class _LoginViewState extends State<LoginView> {
                     'password': _passwordController.text.toString(),
                   };
                   authViewMode.loginApi(data, context);
-                  print('api hit');
-                  print(Globals.getPCI());
                   setState(() {});
                 }
               },

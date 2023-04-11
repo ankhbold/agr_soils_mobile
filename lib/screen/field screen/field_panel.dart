@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/insight%20screen/weather.dart';
 
 import '../../constants/color.dart';
+import '../../widget/line.dart';
+import '../insight%20screen/weather.dart';
 import 'field.dart';
-import '../profile screen/profile_screen.dart';
 import 'floating_fields.dart';
 import 'floatingss/first_float.dart';
 import 'ndvi_sheet_button.dart';

@@ -2,7 +2,7 @@ class Globals {
   // static var anInteger = 0;
 
   static var username = 'ankhbold';
-  static var isLogin = true;
+  static var isLogin = false;
   static var email = '';
   static var phone = '89006176';
   static var firstname = 'Анхболд';

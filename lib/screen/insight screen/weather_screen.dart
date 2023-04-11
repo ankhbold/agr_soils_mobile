@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/insight%20screen/insight_screen.dart';
-import 'package:mvvm/screen/insight%20screen/weather.dart';
-import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
+
+import '../../constants/color.dart';
+import '../../widget/line.dart';
+import '../insight%20screen/insight_screen.dart';
+import '../insight%20screen/weather.dart';
 
 final ScrollController _scrollController = ScrollController();
 

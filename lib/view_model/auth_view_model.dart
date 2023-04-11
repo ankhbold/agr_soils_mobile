@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mvvm/models/user_model.dart';
-import 'package:mvvm/respository/auth_repository.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
-import 'package:mvvm/utils/utils.dart';
-import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:mvvm/conf_global.dart';
+
+import '../conf_global.dart';
+import '../models/user_model.dart';
+import '../respository/auth_repository.dart';
+import '../utils/routes/routes_name.dart';
+import '../utils/utils.dart';
+import 'user_view_model.dart';
 
 bool isEmpty = false;
 bool wrong = false;
@@ -98,10 +99,10 @@ class AuthViewModel with ChangeNotifier {
           // print(value.user_id.toString());
         });
 
-        Navigator.pushNamed(context, RoutesName.home);
-        if (kDebugMode) {
+        // Navigator.pushNamed(context, RoutesName.home);
+        // if (kDebugMode) {
           // print(value.toString());
-        }
+        // }
       } else {
         Utils.flushBarErrorMessage(
             'Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/profile%20screen/profile_screen.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
+import '../../widget/line.dart';
 
 class Crop extends StatefulWidget {
   @override

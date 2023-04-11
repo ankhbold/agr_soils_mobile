@@ -6,7 +6,8 @@ import '../view_model/home_view_model.dart';
 import 'field%20screen/field.dart';
 import 'insight%20screen/insight_screen.dart';
 import 'notes%20screen/notes_screen.dart';
-import 'profile%20screen/profile_screen.dart';
+import 'profile screen/login_with_signup_screen.dart';
+
 
 var index_color = 0;
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     FieldScreen(),
     InsightScreen(),
     ScreenTwo(),
-    ProfilePage(),
+    LoginWithSignup(),
   ];
   void onTabTapped(int index) {
     setState(() {

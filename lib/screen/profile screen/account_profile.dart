@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/login_view.dart';
-import 'package:mvvm/screen/widgets/button/account_button.dart';
-import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:mvvm/conf_global.dart';
 
-import 'profile_screen.dart';
+import '../../conf_global.dart';
+import '../../constants/color.dart';
+import '../../view_model/user_view_model.dart';
+import '../../widget/line.dart';
+import '../login_view.dart';
+import '../widgets/button/account_button.dart';
+
 
 class AccountProfile extends StatefulWidget {
   const AccountProfile({super.key});

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/color.dart';
 
-import 'profile_screen.dart';
+import '../../constants/color.dart';
+import '../../widget/line.dart';
+
+
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({super.key});

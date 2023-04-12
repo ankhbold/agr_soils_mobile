@@ -8,7 +8,7 @@ import 'package:mvvm/conf_global.dart';
 import 'package:mvvm/models/note_type.dart';
 
 import '../../constants/color.dart';
-import '../../service/remote_services.dart';
+import '../../services/remote_services.dart';
 import '../../widget/loader.dart';
 import '../../widget/outlined_btn.dart';
 import '../../widget/snackbar.dart';

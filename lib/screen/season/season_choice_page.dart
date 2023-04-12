@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mvvm/models/season.dart';
 
 import '../../conf_global.dart';
+import '../../models/season.dart';
 
 class SeasonChoicePage extends StatefulWidget {
   @override
@@ -28,12 +28,16 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
     if (response.statusCode == 200 && data['status']) {
       final seasonData = data['data'] as List<dynamic>;
       final seasons = seasonData.map((seasonJson) => Season.fromJson(seasonJson)).toList();
-      if (seasons.isNotEmpty) {
+      if (seasons.isNotEmpty && Globals.seasonId == null) {
         Globals.seasonId = seasons.first.season_id;
       }
       setState(() {
         this.seasons = seasons;
-        selectedSeason = seasons.isNotEmpty ? seasons[0] : null;
+        selectedSeason = seasons.isNotEmpty
+            ? Globals.seasonId == null
+                ? seasons[0]
+                : seasons.singleWhere((element) => element.season_id == Globals.seasonId)
+            : null;
       });
     }
   }
@@ -44,7 +48,7 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.40,
+      width: MediaQuery.of(context).size.width * 0.45,
       height: MediaQuery.of(context).size.height * 0.04,
       child: Center(
         child: DropdownButton(

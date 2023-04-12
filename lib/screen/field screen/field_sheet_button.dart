@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/constants/color.dart';
-import 'package:mvvm/screen/field%20screen/field.dart';
 
-import 'package:mvvm/screen/field%20screen/floating_fields.dart';
-import 'package:mvvm/screen/field%20screen/ndvi_sheet_button.dart';
+import '../../constants/color.dart';
+import '../field%20screen/field.dart';
+import '../field%20screen/floating_fields.dart';
+import '../field%20screen/ndvi_sheet_button.dart';
 
 class FieldsSheet extends StatefulWidget {
   final Function notecreate;
@@ -33,15 +33,14 @@ class _FieldsSheetState extends State<FieldsSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.2,
+      width: 50,
       height: MediaQuery.of(context).size.height * 0.055,
       decoration: BoxDecoration(
         color: Color.fromARGB(36, 255, 255, 255),
         borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
-          // heroTag: Text("btn2"),
-          // color: Color.fromARGB(255, 255, 255, 255),
+       
           onTap: () {
             // print(_geojson);
             showModalBottomSheet(

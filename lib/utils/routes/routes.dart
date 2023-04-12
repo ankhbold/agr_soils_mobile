@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/home_screen.dart';
-import 'package:mvvm/screen/login_view.dart';
-import 'package:mvvm/screen/notes%20screen/notes_screen.dart';
-import 'package:mvvm/screen/signp_view.dart';
-import 'package:mvvm/ui/splash/intro_screen.dart';
-import 'package:mvvm/ui/splash/splash_view.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
+
+import '../../screen/home_screen.dart';
+import '../../screen/login_view.dart';
+import '../../screen/notes%20screen/notes_screen.dart';
+import '../../screen/signp_view.dart';
+import '../../ui/splash/intro_screen.dart';
+import '../../ui/splash/splash_view.dart';
+import 'routes_name.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,7 +17,7 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const IntroScreen());
 
       case RoutesName.home:
-        return MaterialPageRoute(builder: (BuildContext context) => const HomeScreen());
+        return MaterialPageRoute(builder: (BuildContext context) => const MainTabBarPage());
 
       case RoutesName.login:
         return MaterialPageRoute(builder: (BuildContext context) => const LoginView());

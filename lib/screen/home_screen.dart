@@ -11,14 +11,14 @@ import 'profile screen/login_with_signup_screen.dart';
 var index_color = 0;
 HomeViewViewModel homeViewViewModel = HomeViewViewModel();
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MainTabBarPage extends StatefulWidget {
+  const MainTabBarPage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  MainTabBarPageState createState() => MainTabBarPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class MainTabBarPageState extends State<MainTabBarPage> {
   final Screen = [
     FieldScreen(),
     InsightScreen(),
@@ -39,15 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   final authViewMode = Provider.of<AuthViewModel>(context, listen: false);
-    //   Map data = {
-    //     'username': "ankhbold",
-    //     'password': "89006176",
-    //   };
-    //   authViewMode.loginApi(data, context);
-    // });
+  Widget build(BuildContext context) {  
     return Scaffold(
       body: Screen[index_color],
       bottomNavigationBar: Container(

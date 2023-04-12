@@ -3,30 +3,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mvvm/constants/colors.dart';
-import 'package:mvvm/screen/insight%20screen/indices_screen.dart';
-import 'package:mvvm/screen/insight%20screen/weather.dart';
-import 'package:mvvm/screen/insight%20screen/weather_screen.dart';
-import 'package:mvvm/screen/widgets/button/default_button.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-bool weather = true;
+import '../../constants/colors.dart';
+import '../../models/unit_area.dart';
+import '../../services/geo_service.dart';
+import '../../widget/loader.dart';
+import '../insight%20screen/indices_screen.dart';
+import '../insight%20screen/weather.dart';
+import '../insight%20screen/weather_screen.dart';
+import '../widgets/button/default_button.dart';
 
-final ScrollController _firstController = ScrollController();
-bool darsan = true;
-List<String> text = [
-  'Сэлэнгэ\n67 талбар',
-  'Сэлэнгэ\n67 талбар',
-  'Сэлэнгэ\n67 талбар',
-  'Сэлэнгэ\n67 талбар',
-];
 List<String> texts = [
   'бүх талбай',
   'Буудай',
 ];
 
-int current = 0;
-int currents = 0;
 DateTime now = DateTime.now();
 String formattedDate = DateFormat('M сарын d (H цаг)').format(now);
 String formatDate = DateFormat('M сарын d').format(now);
@@ -45,6 +37,7 @@ class _InsightScreenState extends State<InsightScreen> {
       body: Navigator(
         onGenerateRoute: (insight) {
           Widget page = const Insight();
+          // print(page);
           if (insight.name == 'page2') page = const WeatherScreen();
           if (insight.name == 'page3') page = const IndicesScreen();
           if (insight.name == 'page1') page = const Insight();
@@ -98,18 +91,18 @@ class _InsightState extends State<Insight> {
               Weathers(),
               DefaultButton(
                 OnTap: () {
-                  // setState(() {
                   Navigator.pushNamed(context, 'page2');
-                  // });
                 },
-                text: 'Дэлгэрэнгүй харах',
+                text: 'Цаг агаарын урьдчилсан мэдээ',
               ),
-              Container(height: 15, color: AppColors.grey),
+              Container(
+                height: 15,
+                color: AppColors.grey,
+              ),
               Chart(),
               DefaultButton(
                   OnTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ChartPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => ChartPage()));
                   },
                   text: 'Бүгдийг харах'),
               Container(height: 15, color: AppColors.grey),
@@ -138,6 +131,7 @@ class ChooseLoc extends StatefulWidget {
 }
 
 class _ChooseLocState extends State<ChooseLoc> {
+  final ScrollController _firstController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -152,15 +146,7 @@ class _ChooseLocState extends State<ChooseLoc> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.77,
                   height: MediaQuery.of(context).size.width * 0.15,
-                  child: RawScrollbar(
-                    thumbColor: AppColors.Green,
-                    thickness: 4,
-                    radius: Radius.circular(100),
-                    // interactive: true,
-                    thumbVisibility: true,
-                    controller: _firstController,
-                    child: Near(),
-                  ),
+                  child: Near(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 12),
@@ -179,9 +165,8 @@ class _ChooseLocState extends State<ChooseLoc> {
                       height: MediaQuery.of(context).size.height * 0.055,
                       width: MediaQuery.of(context).size.height * 0.055,
                       decoration: BoxDecoration(
-                        // color: AppColors.Green,
                         gradient: AppColors.grad,
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
                         Icons.add,
@@ -207,78 +192,61 @@ class Near extends StatefulWidget {
 }
 
 class _NearState extends State<Near> {
+  final ScrollController _firstController = ScrollController();
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      controller: _firstController,
-      itemCount: text.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: current == index ? AppColors.grad : AppColors.gradi,
-                // color:
-                //     current == index ? const Color(0xff0f766e) : AppColors.grey,
-                borderRadius: BorderRadius.circular(8)),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      current = index;
-                    });
-                  },
-                  child: Ink(
-                    child: FittedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          text[index],
-                          style: TextStyle(
-                            color:
-                                current == index ? Colors.white : Colors.black,
-                            fontSize: 13,
+    return FutureBuilder<List<UnitArea>>(
+        future: GeoService.getGeoUnitArea(),
+        builder: (BuildContext context, AsyncSnapshot<List<UnitArea>> snapshot) {
+          // print('orsin');
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              controller: _firstController,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(3.0),
+                  decoration: BoxDecoration(
+                      gradient: currentIndex == index ? AppColors.grad : AppColors.gradi,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                        },
+                        child: Ink(
+                          child: FittedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                snapshot.data![index].properties?.name ?? "",
+                                style: TextStyle(
+                                  color: currentIndex == index ? Colors.white : Colors.black,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class Indices extends StatefulWidget {
-  const Indices({super.key});
-
-  @override
-  State<Indices> createState() => _IndicesState();
-}
-
-class _IndicesState extends State<Indices> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [],
-    );
-  }
-
-  Widget buildSegment(String text) {
-    return Container(
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 15, color: Colors.black),
-      ),
-    );
+                );
+              },
+            );
+          } else {
+            return LoadingIndicatorWidget(
+              loaderColor: Colors.green,
+            );
+          }
+        });
   }
 }
 
@@ -290,6 +258,7 @@ class AllFields extends StatefulWidget {
 }
 
 class _AllFieldsState extends State<AllFields> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -307,7 +276,6 @@ class _AllFieldsState extends State<AllFields> {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                // letterSpacing: 0,
               ),
             ),
           ),
@@ -323,14 +291,12 @@ class _AllFieldsState extends State<AllFields> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        currents = index;
+                        currentIndex = index;
                       });
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: currents == index
-                              ? const Color(0xff0f766e)
-                              : AppColors.grey,
+                          color: currentIndex == index ? const Color(0xff0f766e) : AppColors.grey,
                           borderRadius: BorderRadius.circular(8)),
                       child: FittedBox(
                         child: Padding(
@@ -339,9 +305,7 @@ class _AllFieldsState extends State<AllFields> {
                             texts[index],
                             style: TextStyle(
                               fontSize: 14,
-                              color: currents == index
-                                  ? Colors.white
-                                  : Colors.black,
+                              color: currentIndex == index ? Colors.white : Colors.black,
                             ),
                           ),
                         ),
@@ -384,9 +348,6 @@ class Roow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.02,
-            // ),
             Row(
               children: [
                 Padding(
@@ -480,10 +441,8 @@ class _ChartState extends State<Chart> {
   }
 
   Future loadSalesData() async {
-    final String jsonString =
-        await _loadSalesDataAsset(); // Deserialization  step 1
-    final dynamic jsonResponse =
-        json.decode(jsonString); // Deserialization  step 2
+    final String jsonString = await _loadSalesDataAsset(); // Deserialization  step 1
+    final dynamic jsonResponse = json.decode(jsonString); // Deserialization  step 2
     setState(() {
       // ignore: always_specify_types
       for (final Map<dynamic, dynamic> i in jsonResponse) {
@@ -500,13 +459,10 @@ class _ChartState extends State<Chart> {
     _trackballBehavior = TrackballBehavior(
         enable: true,
         lineColor: AppColors.Green,
-        lineWidth: 15,
+        lineWidth: 2,
         activationMode: ActivationMode.singleTap,
         markerSettings: const TrackballMarkerSettings(
-            borderWidth: 4,
-            height: 10,
-            width: 10,
-            markerVisibility: TrackballVisibilityMode.visible));
+            borderWidth: 4, height: 10, width: 10, markerVisibility: TrackballVisibilityMode.visible));
   }
 
   List<_SampleData>? chartData;
@@ -534,33 +490,6 @@ class _ChartState extends State<Chart> {
             majorTickLines: const MajorTickLines(color: Colors.transparent)),
         series: _getDefaultLineSeries(),
         trackballBehavior: _trackballBehavior);
-
-    // return SfCartesianChart(
-    //     plotAreaBorderWidth: 0,
-    //     primaryXAxis: DateTimeAxis(
-    //         // edgeLabelPlacement: EdgeLabelPlacement.shift,
-    //         // intervalType: DateTimeIntervalType.years,
-    //         // dateFormat: DateFormat.y(),
-    //         // name: 'Years',
-    //         majorGridLines: const MajorGridLines(width: 0)),
-    //     primaryYAxis: NumericAxis(
-    //         rangePadding: ChartRangePadding.none,
-    //         name: 'Price',
-    //         minimum: 70,
-    //         maximum: 110,
-    //         interval: 10,
-    //         axisLine: const AxisLine(width: 0),
-    //         majorTickLines: const MajorTickLines(color: Colors.transparent)),
-    //     title: ChartTitle(text: 'Сенсор мэдээлэл'),
-    //     tooltipBehavior: _tooltipBehavior,
-    //     trackballBehavior: _trackballBehavior,
-    //     series: <ChartSeries>[
-    //       // Renders line chart
-    //       LineSeries<ChartData, int>(
-    //           dataSource: chartData,
-    //           xValueMapper: (ChartData data, _) => data.x,
-    //           yValueMapper: (ChartData data, _) => data.y)
-    //     ]);
   }
 
   List<LineSeries<_SampleData, DateTime>> _getDefaultLineSeries() {

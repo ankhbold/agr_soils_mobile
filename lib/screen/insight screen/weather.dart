@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 // LatLng(latitude:49.981314, longitude:105.826702)
@@ -115,39 +116,7 @@ class _WeathersState extends State<Weathers> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceEvenly,
-                                  //   children: [
-                                  //     Row(
-                                  //       children: [
-                                  //         Icon(Icons.air),
-                                  //         SizedBox(
-                                  //           width: 2,
-                                  //         ),
-                                  //         Text(
-                                  //           'Салхи\n(5 m/s)',
-                                  //           style: TextStyle(fontSize: 13),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 15,
-                                  //     ),
-                                  //     Row(
-                                  //       children: [
-                                  //         Icon(Icons.air),
-                                  //         SizedBox(
-                                  //           width: 2,
-                                  //         ),
-                                  //         Text(
-                                  //           'Хур тунадас\n(0 mm)',
-                                  //           style: TextStyle(fontSize: 13),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ],
-                                  // ),
+                                 
                                 ],
                               ),
                             ),

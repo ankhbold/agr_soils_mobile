@@ -11,6 +11,7 @@ class IndicesScreen extends StatefulWidget {
 }
 
 class _IndicesScreenState extends State<IndicesScreen> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +60,12 @@ class _IndicesScreenState extends State<IndicesScreen> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        currents = index;
+                        currentIndex = index;
                       });
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: currents == index
-                              ? const Color(0xff0f766e)
-                              : AppColors.grey,
+                          color: currentIndex == index ? const Color(0xff0f766e) : AppColors.grey,
                           borderRadius: BorderRadius.circular(8)),
                       child: FittedBox(
                         child: Padding(
@@ -74,9 +73,7 @@ class _IndicesScreenState extends State<IndicesScreen> {
                           child: Text(
                             texts[index],
                             style: TextStyle(
-                              color: currents == index
-                                  ? Colors.white
-                                  : Colors.black,
+                              color: currentIndex == index ? Colors.white : Colors.black,
                             ),
                           ),
                         ),

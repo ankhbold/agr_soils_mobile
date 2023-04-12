@@ -9,12 +9,11 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
-import '../field%20screen/field_sheet_button.dart';
 import '../field%20screen/floatingss/floating_items.dart';
-import '../field%20screen/geojson/get_geo_api.dart';
 import '../field%20screen/panel_widget.dart';
 import '../season/season_choice_page.dart';
 import 'field_panel.dart';
+import 'field_sheet_button.dart';
 
 bool mapsol = true;
 
@@ -102,7 +101,7 @@ class _FieldScreenState extends State<FieldScreen> {
     });
   }
 
-  GeoRepository repository = GeoRepository();
+
   @override
   void initState() {
     _mapController = MapController();

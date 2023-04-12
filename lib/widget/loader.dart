@@ -29,3 +29,23 @@ class LoadingIndicator {
     Navigator.pop(context!);
   }
 }
+
+class LoadingIndicatorWidget extends StatelessWidget {
+  final Color? loaderColor;
+  final double? size;
+
+  LoadingIndicatorWidget({Key? key, this.loaderColor, this.size = 40}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: SpinKitCircle(
+        duration: const Duration(seconds: 2),
+        color: loaderColor ?? Colors.white,
+        size: size!,
+      ),
+    );
+  }
+}

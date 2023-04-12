@@ -18,21 +18,17 @@ class LoginWithSignup extends StatefulWidget {
 
 class LoginWithSignupState extends State<LoginWithSignup> {
   int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xffDADADA),
-      // ),
       body: Consumer(
         builder: (context, value, child) {
           return Column(
             children: [
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               Globals.isLogin
                   ? UserProfilePage(
@@ -80,11 +76,11 @@ class LoginWithSignupState extends State<LoginWithSignup> {
                           ),
                           currentIndex == 0
                               ? Container(
-                                  height: MediaQuery.of(context).size.height - 170,
+                                  height: MediaQuery.of(context).size.height - 190,
                                   child: LoginView(),
                                 )
                               : Container(
-                                  height: MediaQuery.of(context).size.height - 170,
+                                  height: MediaQuery.of(context).size.height - 190,
                                   child: RegisterPage(),
                                 ),
                         ],

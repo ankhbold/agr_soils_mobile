@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/screen/widgets/button/round_button.dart';
-import 'package:mvvm/utils/routes/routes_name.dart';
-import 'package:mvvm/utils/utils.dart';
-import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../utils/routes/routes_name.dart';
+import '../utils/utils.dart';
+import '../view_model/auth_view_model.dart';
+import 'widgets/button/round_button.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);

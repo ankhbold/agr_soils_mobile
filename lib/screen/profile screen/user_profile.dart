@@ -20,6 +20,9 @@ class UserProfilePageState extends State<UserProfilePage> {
     final userPrefernece = Provider.of<UserViewModel>(context);
     return Column(
       children: [
+        SizedBox(
+          height: 20,
+        ),
         Center(
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,

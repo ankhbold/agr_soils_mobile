@@ -36,7 +36,11 @@ class Globals {
   }
 
   static changeLatitude(double a) {
-    latit = '';
+    latit = a.toString();
+  }
+
+  static changeLongtitude(double a) {
+    longit = a.toString();
   }
 
   static getLatitude() {

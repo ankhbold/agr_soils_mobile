@@ -11,9 +11,9 @@ import '../../conf_global.dart';
 import '../../constants/color.dart';
 import '../field%20screen/floatingss/floating_items.dart';
 import '../field%20screen/panel_widget.dart';
+import '../notes screen/add_note.dart';
 import '../season/season_choice_page.dart';
 import 'field_panel.dart';
-import 'field_sheet_button.dart';
 
 bool mapsol = true;
 
@@ -53,6 +53,7 @@ class _FieldScreenState extends State<FieldScreen> {
   List<LatLng> polygonPoints = [];
   List<Polygon> polygons = [];
   List<LatLng> currentPolygon = [];
+  PanelController panelController = PanelController();
   var sate =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
   var png =
@@ -101,7 +102,6 @@ class _FieldScreenState extends State<FieldScreen> {
     });
   }
 
-
   @override
   void initState() {
     _mapController = MapController();
@@ -131,7 +131,6 @@ class _FieldScreenState extends State<FieldScreen> {
         ),
       ),
     );
-    print(point);
   }
 
   void zoomToFeature(LatLng center) {
@@ -211,6 +210,130 @@ class _FieldScreenState extends State<FieldScreen> {
                           backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
                           elevation: 0,
                           onPressed: () {
+                            showModalBottomSheet(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height * 0.27,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(right: 50, left: 50),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Center(
+                                                child: Container(
+                                                  height: 5,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(25),
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Үйлдлүүд',
+                                                    style: TextStyle(
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Container(
+                                                height: 40,
+                                                width: 500,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      isMarker = true;
+                                                      isChoose = false;
+                                                      changeStage();
+                                                      // ChangeStage();
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Image.asset(
+                                                          "assets/common/note.png",
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text('Тэмдэглэл нэмэх'),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 7,
+                                              ),
+                                              Container(
+                                                height: 40,
+                                                width: 500,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      changePolygonStage();
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Ink(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Image.asset(
+                                                          "assets/common/area.png",
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text('Талбай зурах'),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                        ),
+                        FloatingActionButton.small(
+                          backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+                          elevation: 0,
+                          onPressed: () {
                             setState(() {
                               _navigateToPosition();
                             });
@@ -238,12 +361,13 @@ class _FieldScreenState extends State<FieldScreen> {
                         markers.clear();
                       });
                     } else if (isMarker) {
+                      Globals.changeLatitude(latlng.latitude);
+                      Globals.changeLongtitude(latlng.longitude);
                       setState(() {
                         _addMarkers(latlng);
                         polygonPoints.clear();
                       });
                     } else if (isChoose) {
-                      print('orsin');
                       setState(() {
                         Globals.changeLatitude(latlng.latitude);
                         markers.clear();
@@ -276,7 +400,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 ),
               ],
             ),
-            fieldBar(),
+            fieldAppBar(),
             Offstage(
                 offstage: mapsol,
                 child: Container(
@@ -297,13 +421,22 @@ class _FieldScreenState extends State<FieldScreen> {
             Offstage(
               offstage: !isSecondWidgetVisible,
               child: SlidingUpPanel(
+                controller: panelController,
                 backdropEnabled: true,
                 maxHeight: panelHeightOpened2,
                 minHeight: panelHeightClosed2,
                 parallaxEnabled: true,
                 parallaxOffset: .5,
-                panelBuilder: (controller) => PanelWidget2(
+                panelBuilder: (controller) => ListView(
                   controller: controller,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    NoteAdd(
+                      success: () async {
+                        await panelController.close();
+                      },
+                    ),
+                  ],
                 ),
                 onPanelSlide: (position) => setState(
                   () {
@@ -375,12 +508,11 @@ class _FieldScreenState extends State<FieldScreen> {
         ));
   }
 
-  PreferredSize fieldBar() {
+  PreferredSize fieldAppBar() {
     return PreferredSize(
       preferredSize: Size.fromHeight(500.0),
       child: Container(
         decoration: BoxDecoration(
-          // color: AppColors.Green,
           gradient: AppColors.grad,
           boxShadow: [
             BoxShadow(
@@ -409,17 +541,7 @@ class _FieldScreenState extends State<FieldScreen> {
                 child: SeasonChoicePage(),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 12.0,
-              ),
-              child: FieldsSheet(
-                notecreate: changeStage,
-                polygoncreate: changePolygonStage,
-              ),
-            ),
             Column(
-              // crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
@@ -432,8 +554,8 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     },
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.055,
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 255, 255), borderRadius: BorderRadius.circular(12)),
                       child: Padding(

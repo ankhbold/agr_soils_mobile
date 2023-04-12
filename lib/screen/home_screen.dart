@@ -39,7 +39,7 @@ class MainTabBarPageState extends State<MainTabBarPage> {
   }
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Screen[index_color],
       bottomNavigationBar: Container(

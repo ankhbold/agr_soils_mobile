@@ -74,12 +74,10 @@ class _WeathersState extends State<Weathers> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.55,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Row(
                                         children: [
@@ -116,7 +114,6 @@ class _WeathersState extends State<Weathers> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                 
                                 ],
                               ),
                             ),
@@ -127,8 +124,7 @@ class _WeathersState extends State<Weathers> {
                   ),
                 )
               : const Center(
-                  child:
-                      CircularProgressIndicator(backgroundColor: Colors.black),
+                  child: CircularProgressIndicator(backgroundColor: Colors.black),
                 );
         });
   }
@@ -190,12 +186,10 @@ class _WeatherClickState extends State<WeatherClick> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.55,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Row(
                                         children: [
@@ -217,10 +211,6 @@ class _WeatherClickState extends State<WeatherClick> {
                                       ),
                                       Row(
                                         children: [
-                                          // Icon(Icons.air),
-                                          // SizedBox(
-                                          //   width: 2,
-                                          // ),
                                           Text(
                                             'Чийгшил\n${snapshot.data!.main.humidity.toStringAsFixed(1)} %',
                                             style: TextStyle(fontSize: 13),
@@ -232,39 +222,6 @@ class _WeatherClickState extends State<WeatherClick> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceEvenly,
-                                  //   children: [
-                                  //     Row(
-                                  //       children: [
-                                  //         Icon(Icons.air),
-                                  //         SizedBox(
-                                  //           width: 2,
-                                  //         ),
-                                  //         Text(
-                                  //           'Салхи\n(5 m/s)',
-                                  //           style: TextStyle(fontSize: 13),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //     SizedBox(
-                                  //       width: 15,
-                                  //     ),
-                                  //     Row(
-                                  //       children: [
-                                  //         Icon(Icons.air),
-                                  //         SizedBox(
-                                  //           width: 2,
-                                  //         ),
-                                  //         Text(
-                                  //           'Хур тунадас\n(0 mm)',
-                                  //           style: TextStyle(fontSize: 13),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ],
-                                  // ),
                                 ],
                               ),
                             ),
@@ -275,8 +232,7 @@ class _WeatherClickState extends State<WeatherClick> {
                   ),
                 )
               : const Center(
-                  child:
-                      CircularProgressIndicator(backgroundColor: Colors.black),
+                  child: CircularProgressIndicator(backgroundColor: Colors.black),
                 );
         });
   }
@@ -305,8 +261,7 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
         coord: Coord.fromJson(json["coord"]),
-        weather: List<WeatherElement>.from(
-            json["weather"].map((x) => WeatherElement.fromJson(x))),
+        weather: List<WeatherElement>.from(json["weather"].map((x) => WeatherElement.fromJson(x))),
         main: Main.fromJson(json["main"]),
         visibility: json["visibility"],
         wind: Wind.fromJson(json["wind"]),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvvm/conf_global.dart';
+import 'package:mvvm/models/create_note_request.dart';
 import 'package:mvvm/models/note_type.dart';
 
 import '../../constants/color.dart';
@@ -15,7 +16,8 @@ import '../../widget/snackbar.dart';
 import '../field%20screen/field.dart';
 
 class NoteAdd extends StatefulWidget {
-  const NoteAdd({super.key});
+  NoteAdd({super.key, this.success});
+  Function? success;
 
   @override
   State<NoteAdd> createState() => _NoteAddState();
@@ -51,7 +53,6 @@ class _NoteAddState extends State<NoteAdd> {
   DateTime chooseDateTime = DateTime.now();
   void changeToNote() {
     setState(() {
-      // index_color = 2;
       isFabVisible = true;
       note = !note;
       isFirstWidgetVisible = true;
@@ -119,28 +120,33 @@ class _NoteAddState extends State<NoteAdd> {
                   ),
                   TextButton(
                     onPressed: () async {
-                      // print(Globals.seasonId);
+                      CreateNoteRequestModel createNoteRequestMode = CreateNoteRequestModel(
+                        description: titleController.text,
+                        season_id: Globals.seasonId,
+                        note_type: noteTypes[currentTypeIndex].id,
+                        send_date: currentDateTime.toString(),
+                        cordinate_x: Globals.longit,
+                        cordinate_y: Globals.latit,
+                      );
                       LoadingIndicator(context: context).showLoadingIndicator();
-                      await NoteService().createData(titleController.text).then((value) {
+                      await NoteService().createNoteStore(createNoteRequestMode).then((value) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
                         if (value!) {
                           setState(() {
-                            changeToNote();
+                            isChoose = true;
+                            isMarker = false;
+                            isFabVisible = true;
+                            note = false;
+                            isFirstWidgetVisible = false;
+                            isSecondWidgetVisible = false;
+                            isThirdWidgetVisible = false;
                           });
+                          widget.success!();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
                             message: 'fail to post',
                           ));
                         }
-                        setState(() {
-                          isChoose = true;
-                          isMarker = false;
-                          isFabVisible = true;
-
-                          isFirstWidgetVisible = true;
-                          isSecondWidgetVisible = false;
-                          isThirdWidgetVisible = false;
-                        });
                       }).catchError((onError) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
                         ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(

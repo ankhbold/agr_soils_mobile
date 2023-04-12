@@ -33,6 +33,9 @@ class MyCachedNetworkImage extends StatelessWidget {
           ),
         );
       },
+      errorWidget: (context, url, error) {
+        return Container();
+      },
       placeholder: isPlaceHolder!
           ? (context, url) {
               return LoadingIndicatorWidget(

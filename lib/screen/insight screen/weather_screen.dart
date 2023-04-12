@@ -19,13 +19,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
+      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
         setState(() {
           _isVisible = false;
         });
-      } else if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
+      } else if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
         setState(() {
           _isVisible = true;
         });
@@ -139,8 +137,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   return Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.2,
                           child: Column(
@@ -149,8 +146,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             children: [
                               Text(
                                 'Өнөөдөр,$formatDate',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                               ),
                               Row(
                                 children: [
@@ -163,28 +159,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     width: 5,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
                                     child: Text(
                                       '-16',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                                     ),
                                   ),
                                   Text(
                                     'үүлэрхэг',
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 68, 98, 110),
-                                        fontSize: 15),
+                                    style: TextStyle(color: Color.fromARGB(255, 68, 98, 110), fontSize: 15),
                                   ),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text('Салхи\n(5 m/s)'),
                                       Text('Салхи\n(5 m/s)'),
@@ -196,8 +186,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     height: 10,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text('Салхи\n(5 m/s)'),
                                       Text('Салхи\n(5 m/s)'),
@@ -374,11 +363,9 @@ class _ChooseLoccState extends State<ChooseLocc> {
                   thumbColor: AppColors.Green,
                   thickness: 4,
                   radius: Radius.circular(100),
-                  // interactive: true,
-
                   thumbVisibility: true,
                   controller: _scrollController,
-                  child: Near(),
+                  child: Container(),
                 ),
               ),
               Padding(
@@ -416,4 +403,3 @@ class _ChooseLoccState extends State<ChooseLocc> {
     );
   }
 }
-

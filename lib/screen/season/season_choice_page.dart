@@ -48,8 +48,8 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
-      width: MediaQuery.of(context).size.width * 0.45,
-      height: MediaQuery.of(context).size.height * 0.04,
+      width: MediaQuery.of(context).size.width * 0.52,
+      height: 40,
       child: Center(
         child: DropdownButton(
           underline: Container(
@@ -79,6 +79,7 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
                     setState(() {
                       selectedSeason = season;
                     });
+                    print(selectedSeason!.season_id);
                   },
                   value: season,
                   child: Column(

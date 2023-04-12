@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mvvm/widget/cached_network_image.dart';
 import '../../models/note.dart';
+import '../../services/commons/apis.dart';
 import '../../services/remote_services.dart';
 import '../../constants/colors.dart';
 import '../../widget/loader.dart';
@@ -149,13 +151,12 @@ class NoteListPageState extends State<NoteListPage> {
                                           Container(
                                             height: MediaQuery.of(context).size.height * 0.16,
                                             width: MediaQuery.of(context).size.width * 0.92,
-                                            decoration: BoxDecoration(
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                  'assets/images/note.jpeg',
-                                                ),
-                                              ),
-                                              borderRadius: BorderRadius.circular(10),
+                                            child: MyCachedNetworkImage(
+                                              fit: BoxFit.contain,
+                                              isPlaceHolder: true,
+                                              imageUrl: main_host_url.toString() +
+                                                  "/" +
+                                                  currentListNote[index].image_url.toString(),
                                             ),
                                           ),
                                           Text(

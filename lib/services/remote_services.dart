@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mvvm/models/create_note_request.dart';
 
 import '../conf_global.dart';
 import '../models/note.dart';
@@ -34,19 +35,23 @@ class NoteService {
     }
   }
 
-  Future createData(
-    String name,
-  ) async {
+  Future createNoteStore(CreateNoteRequestModel createNoteRequestModel) async {
+    print(createNoteRequestModel.toJson());
     try {
-      final response = await http.post(Uri.parse('http://103.143.40.250:8100/api/note/post/store'), body: {
-        'name': name,
-      });
+      final response = await http.post(
+        Uri.parse(
+          'http://103.143.40.250:8100/api/mobile/parcelnote/create?season_id=${createNoteRequestModel.season_id}&description=${createNoteRequestModel.description}desc&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date}',
+        ),
+      );
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
     } catch (e) {
+      print(e.toString());
       throw Exception(e.toString());
     }
   }
@@ -105,11 +110,11 @@ class NoteService {
     return notes;
   }
 
-  String uri5 = 'http://103.143.40.250:8100/api/note/delete';
   Future deleteNote(int id) async {
+    String uri5 = 'http://103.143.40.250:8100/api/mobile/parcelnote/delete?note_id=$id';
     try {
       final response = await http.delete(
-        Uri.parse('$uri5/$id'),
+        Uri.parse('$uri5'),
       );
     } catch (e) {
       throw Exception(e.toString());

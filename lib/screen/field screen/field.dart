@@ -371,6 +371,7 @@ class _FieldScreenState extends State<FieldScreen> {
                     } else if (isChoose) {
                       setState(() {
                         Globals.changeLatitude(latlng.latitude);
+                        Globals.changeLongtitude(latlng.longitude);
                         markers.clear();
                         print(latlng);
                         _handleTap(latlng);

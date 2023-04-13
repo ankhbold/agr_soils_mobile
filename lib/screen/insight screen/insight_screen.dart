@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../constants/colors.dart';
 import '../../models/unit_area.dart';
 import '../../services/geo_service.dart';
 import '../../widget/loader.dart';
-import '../insight%20screen/indices_screen.dart';
 import '../insight%20screen/weather.dart';
 import '../insight%20screen/weather_screen.dart';
 import '../sensor/sensor_chart.dart';
@@ -22,8 +17,8 @@ String formattedDate = DateFormat('M сарын d (H цаг)').format(now);
 String formatDate = DateFormat('M сарын d').format(now);
 
 class InsightScreen extends StatefulWidget {
-  const InsightScreen({super.key});
-
+  InsightScreen({super.key, this.tabController});
+  PersistentTabController? tabController;
   @override
   State<InsightScreen> createState() => _InsightScreenState();
 }

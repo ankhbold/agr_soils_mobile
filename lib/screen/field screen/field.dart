@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
@@ -42,8 +43,8 @@ Future<void> TapMove(LatLng latLng) async {
 }
 
 class FieldScreen extends StatefulWidget {
-  const FieldScreen({Key? key}) : super(key: key);
-
+  FieldScreen({Key? key, this.tabController}) : super(key: key);
+  PersistentTabController? tabController;
   @override
   State<FieldScreen> createState() => _FieldScreenState();
 }

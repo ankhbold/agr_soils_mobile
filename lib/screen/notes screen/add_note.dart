@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mvvm/conf_global.dart';
-import 'package:mvvm/models/create_note_request.dart';
-import 'package:mvvm/models/note_type.dart';
 
+import '../../conf_global.dart';
 import '../../constants/color.dart';
+import '../../models/create_note_request.dart';
+import '../../models/note_type.dart';
 import '../../services/remote_services.dart';
+import '../../widget/line.dart';
 import '../../widget/loader.dart';
 import '../../widget/outlined_btn.dart';
 import '../../widget/snackbar.dart';
@@ -29,6 +30,7 @@ class _NoteAddState extends State<NoteAdd> {
   String? selectedType;
   int currentTypeIndex = -1;
   List<NoteType> noteTypes = [];
+  List<XFile> images = [];
 
   @override
   void initState() {
@@ -44,6 +46,8 @@ class _NoteAddState extends State<NoteAdd> {
       if (image == null) return;
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
+      images.add(image);
+      setState(() {});
     } on PlatformException catch (e) {
       print('Failed to pick image$e');
     }
@@ -234,6 +238,39 @@ class _NoteAddState extends State<NoteAdd> {
               ),
             ),
           ),
+
+          images.isNotEmpty
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  child: GridView.builder(
+                    padding: EdgeInsets.all(0),
+                    itemCount: images.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 10 / 7,
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 50,
+                        width: 80,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.file(
+                            File(images[index].path),
+                            height: 50,
+                            width: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ))
+              : Container(),
+          SizedBox(
+            height: 20,
+          ),
           Line4(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,20 +307,6 @@ class _NoteAddState extends State<NoteAdd> {
             ],
           ),
           Line5(),
-          Padding(
-            padding: EdgeInsets.only(top: 10, bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: image != null
-                ? Image.file(
-                    image!,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    width: 0,
-                    height: 0,
-                  ),
-          ),
           InkWell(
             onTap: () {
               showCupertinoModalPopup(
@@ -367,43 +390,3 @@ Widget buildNavigator() => Container(
         ],
       ),
     );
-
-class Line4 extends StatelessWidget {
-  const Line4({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors.black,
-          height: 0.2,
-          width: MediaQuery.of(context).size.width * 0.9,
-        ),
-      ],
-    );
-  }
-}
-
-class Line5 extends StatelessWidget {
-  const Line5({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors.black,
-          height: 0.2,
-          width: MediaQuery.of(context).size.width * 0.95,
-        ),
-      ],
-    );
-  }
-}

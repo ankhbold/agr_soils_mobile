@@ -8,6 +8,7 @@ import '../profile%20screen/user_profile.dart';
 import '../register/register_page.dart';
 
 class LoginWithSignup extends StatefulWidget {
+ 
   const LoginWithSignup({
     Key? key,
   }) : super(key: key);

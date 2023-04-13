@@ -79,3 +79,23 @@ class Line4 extends StatelessWidget {
     );
   }
 }
+
+class Line5 extends StatelessWidget {
+  const Line5({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          color: Colors.black,
+          height: 0.2,
+          width: MediaQuery.of(context).size.width * 0.95,
+        ),
+      ],
+    );
+  }
+}

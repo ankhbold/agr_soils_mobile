@@ -17,7 +17,7 @@ class MainTabBarPage extends StatefulWidget {
   MainTabBarPageState createState() => MainTabBarPageState();
 }
 
-class MainTabBarPageState extends State<MainTabBarPage> {
+class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveClientMixin<MainTabBarPage> {
   PersistentTabController _controller = PersistentTabController(initialIndex: 0);
   List<Widget> screens = [];
   int currentIndex = 0;
@@ -62,7 +62,7 @@ class MainTabBarPageState extends State<MainTabBarPage> {
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: false, // Default is true.
+      stateManagement: currentIndex == 2 ? true : false, // Default is true.
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
@@ -73,8 +73,9 @@ class MainTabBarPageState extends State<MainTabBarPage> {
         currentIndex = value;
         setState(() {});
       },
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
+      selectedTabScreenContext: (p0) {},
+      // popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.once,
       navBarStyle: NavBarStyle.style9, // Choose the nav bar style with this property.
     );
   }
@@ -82,31 +83,33 @@ class MainTabBarPageState extends State<MainTabBarPage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(
-          Icons.nfc,
-        ),
+        icon: Image.asset("assets/bottom_bar/areas.png"),
         title: ("Талбай"),
         textStyle: TextStyle(color: Colors.grey),
         activeColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.leaderboard),
+        icon: Image.asset("assets/bottom_bar/chart.png"),
         title: ("Статистик"),
         textStyle: TextStyle(color: Colors.grey),
         activeColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.speaker_notes),
+        icon: Image.asset("assets/bottom_bar/notes.png"),
         title: ("Тэмдэглэл"),
         textStyle: TextStyle(color: Colors.grey),
         activeColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.account_box_rounded),
+        icon: Image.asset("assets/bottom_bar/user.png"),
         title: ("Хэрэглэгч"),
         textStyle: TextStyle(color: Colors.grey),
         activeColorPrimary: Colors.white,
       ),
     ];
   }
+  
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mvvm/models/create_note_request.dart';
 
 import '../conf_global.dart';
+import '../models/create_note_request.dart';
 import '../models/note.dart';
 import '../models/note_type.dart';
 
@@ -91,7 +91,7 @@ class NoteService {
   }
 
   Future<List<Note>> getNoteList({String? person_id, String? season_id}) async {
-    // print(Globals.personId);
+    // print(Globals.seasonId);
     String urlList =
         'http://103.143.40.250:8100/api/mobile/getnotes?company_person_id=${Globals.personId}&season_id=${Globals.seasonId}';
     var url = Uri.parse(urlList);

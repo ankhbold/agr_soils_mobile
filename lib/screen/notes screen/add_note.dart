@@ -368,6 +368,10 @@ class _NoteAddState extends State<NoteAdd> {
             ),
           ),
           Line4(),
+          Container(
+            height: MediaQuery.of(context).viewInsets.bottom,
+          )
+
         ],
       ),
     );

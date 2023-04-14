@@ -3,17 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
+import '../../services/permissions/location.dart';
 import '../field%20screen/floatingss/floating_items.dart';
 import '../field%20screen/panel_widget.dart';
 import '../notes screen/add_note.dart';
 import '../season/season_choice_page.dart';
+import '../unit_area/add_area.dart';
 import 'field_panel.dart';
 
 bool mapsol = true;
@@ -72,7 +73,6 @@ class _FieldScreenState extends State<FieldScreen> {
           version: '1.1.1',
           otherParameters: {
             'CQL_FILTER': 'person_id = ${Globals.personId}',
-            // 'person_id': '8sdvcsd2',
           },
         )
       : WMSTileLayerOptions(baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
@@ -163,9 +163,9 @@ class _FieldScreenState extends State<FieldScreen> {
     final panelHeightOpened = MediaQuery.of(context).size.height * 0.9;
     final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.3;
     final panelHeightOpened2 = MediaQuery.of(context).size.height * 0.85;
-    final panelHeightClosed3 = MediaQuery.of(context).size.height * 0.07;
+    final panelHeightClosed3 = MediaQuery.of(context).size.height * 0.18;
     final panelHeightClosed4 = MediaQuery.of(context).size.height * 0.265;
-    final panelHeightClosed5 = MediaQuery.of(context).size.height * 0.44;
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.white,
@@ -264,7 +264,6 @@ class _FieldScreenState extends State<FieldScreen> {
                                                       isMarker = true;
                                                       isChoose = false;
                                                       changeStage();
-                                                      // ChangeStage();
                                                     });
                                                     Navigator.pop(context);
                                                   },
@@ -395,11 +394,23 @@ class _FieldScreenState extends State<FieldScreen> {
                 MarkerLayer(
                   markers: markers,
                 ),
-
-                PolygonLayer(
-                  polygons: polygons,
-                  // polygonCulling: true,
+                PolylineLayer(
+                  polylineCulling: true,
+                  saveLayers: true,
+                  polylines: [
+                    Polyline(
+                      points: polygonPoints,
+                      color: Colors.white,
+                      
+                      // useStrokeWidthInMeter: true,
+                    ),
+                  ],
                 ),
+                // PolygonLayer(
+                //   polygons: polygons,
+                //   // polygonCulling: true,
+                // ),
+               
               ],
             ),
             fieldAppBar(),
@@ -494,6 +505,10 @@ class _FieldScreenState extends State<FieldScreen> {
                     isSecondWidgetVisible = false;
                     isThirdWidgetVisible = false;
                   },
+                  undo: () {
+                    polygonPoints.removeLast();
+                    setState(() {});
+                  },
                 ),
                 onPanelSlide: (position) => setState(
                   () {
@@ -581,106 +596,6 @@ class _FieldScreenState extends State<FieldScreen> {
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-Future<Position> determinePosition() async {
-  bool serviceEnabled;
-  LocationPermission permission;
-
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    await Geolocator.openLocationSettings();
-    return Future.error('Location services are disabled.');
-  }
-
-  permission = await Geolocator.checkPermission();
-  // await Geolocator.openLocationSettings();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      await Geolocator.openLocationSettings();
-      return Future.error('Location permissions are denied');
-    }
-  }
-
-  if (permission == LocationPermission.deniedForever) {
-    await Geolocator.openLocationSettings();
-    return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-  }
-  return await Geolocator.getCurrentPosition();
-}
-
-class AddField extends StatelessWidget {
-  AddField({super.key, this.clear});
-  Function? clear;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Ink(
-        decoration: BoxDecoration(),
-        height: MediaQuery.of(context).size.height * 0.06,
-        child: TextButton(
-          onPressed: () {
-            clear!();
-          },
-          child: Text(
-            'Буцах',
-            style: TextStyle(color: Color.fromARGB(255, 183, 45, 37), fontSize: 18),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TextFieldField extends StatefulWidget {
-  const TextFieldField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<TextFieldField> createState() => _TextFieldFieldState();
-}
-
-class _TextFieldFieldState extends State<TextFieldField> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: Padding(
-        padding: EdgeInsets.only(right: 10, left: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                setState(() {});
-              },
-              child: Container(
-                height: 40,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 255, 255), borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: EdgeInsets.only(),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search,
-                        size: 20,
-                        color: AppColors.Green,
-                      ),
-                      Text('Талбай хайх'),
-                    ],
-                  ),
-                ),
-              ),
             ),
           ],
         ),

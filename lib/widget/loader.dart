@@ -26,7 +26,7 @@ class LoadingIndicator {
   }
 
   hideLoadingIndicator() {
-    Navigator.pop(context!);
+    Navigator.of(context!, rootNavigator: true).pop();
   }
 }
 

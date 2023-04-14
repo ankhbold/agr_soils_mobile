@@ -132,13 +132,14 @@ class NoteListPageState extends State<NoteListPage> {
                                                       LoadingIndicator(context: context).showLoadingIndicator();
                                                       NoteService().deleteNote(note.id as int).then(
                                                         (value) {
-                                                          LoadingIndicator(context: context).hideLoadingIndicator();
                                                           ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
                                                             message: "Амжилттай устгалаа",
                                                           ));
+                                                      
                                                           setState(() {
                                                             currentListNote.removeAt(index);
                                                           });
+                                                          LoadingIndicator(context: context).hideLoadingIndicator();
                                                         },
                                                       ).catchError((onError) {
                                                         LoadingIndicator(context: context).hideLoadingIndicator();

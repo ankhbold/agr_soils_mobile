@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/screen/notes%20screen/add_note.dart';
 
 import '../../constants/colors.dart';
 import '../field%20screen/crop.dart';
@@ -335,16 +334,4 @@ class Roow extends StatelessWidget {
   }
 }
 
-class PanelWidget2 extends StatelessWidget {
-  final ScrollController controller;
 
-  PanelWidget2({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => ListView(controller: controller, padding: EdgeInsets.zero, children: [
-        NoteAdd(),
-      ]);
-}

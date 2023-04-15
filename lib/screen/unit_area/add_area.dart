@@ -4,9 +4,10 @@ import '../../widget/line.dart';
 import '../../widget/outlined_btn.dart';
 
 class AddField extends StatelessWidget {
-  AddField({super.key, this.clear, this.undo});
+  AddField({super.key, this.clear, this.undo, this.next});
   Function? clear;
   Function? undo;
+  Function? next;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,9 @@ class AddField extends StatelessWidget {
                     color: Colors.green,
                     textColor: Colors.white,
                     text: 'Дараагийн',
-                    onTap: () {},
+                    onTap: () {
+                      next!();
+                    },
                   ),
                 )
               ],

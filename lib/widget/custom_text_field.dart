@@ -117,6 +117,7 @@ class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       maxLines: widget.textInputType == TextInputType.multiline ? null : 1,
       validator: widget.validator,
       maxLength: widget.maxLength,

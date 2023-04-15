@@ -5,7 +5,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../../constants/colors.dart';
 import '../../models/note.dart';
 import '../../services/commons/apis.dart';
-import '../../services/remote_services.dart';
+import '../../services/note_services.dart';
 import '../../widget/cached_network_image.dart';
 import '../../widget/loader.dart';
 import '../../widget/snackbar.dart';

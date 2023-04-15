@@ -79,7 +79,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   Container(
                     height: 80,
                     padding: EdgeInsets.only(
-                      // top: 15,
+                
                       left: 20,
                     ),
                     child: Column(

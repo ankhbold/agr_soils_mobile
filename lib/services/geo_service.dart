@@ -12,6 +12,6 @@ class GeoService {
         List<UnitArea>.from(json.decode(response)['features'].map((model) => UnitArea.fromJson(model)));
 
     return areas;
-    // var data = json.decode(response.body);
+   
   }
 }

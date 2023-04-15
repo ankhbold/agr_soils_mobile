@@ -9,7 +9,7 @@ import '../../conf_global.dart';
 import '../../constants/color.dart';
 import '../../models/create_note_request.dart';
 import '../../models/note_type.dart';
-import '../../services/remote_services.dart';
+import '../../services/note_services.dart';
 import '../../widget/line.dart';
 import '../../widget/loader.dart';
 import '../../widget/outlined_btn.dart';

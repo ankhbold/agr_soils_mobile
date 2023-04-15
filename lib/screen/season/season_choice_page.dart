@@ -6,9 +6,13 @@ import 'package:http/http.dart' as http;
 import '../../conf_global.dart';
 import '../../models/season.dart';
 
+// ignore: must_be_immutable
 class SeasonChoicePage extends StatefulWidget {
+  SeasonChoicePage({this.done, this.changeSeason});
   @override
   SeasonChoicePageState createState() => SeasonChoicePageState();
+  Function? done;
+  Function? changeSeason;
 }
 
 class SeasonChoicePageState extends State<SeasonChoicePage> {
@@ -18,7 +22,10 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await fetchData();
+      widget.done!();
+    });
   }
 
   Future<void> fetchData() async {
@@ -49,7 +56,7 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
         color: Colors.transparent,
       ),
       width: MediaQuery.of(context).size.width * 0.52,
-      height: 40,
+      height: 45,
       child: Center(
         child: DropdownButton(
           underline: Container(
@@ -70,6 +77,7 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
             setState(() {
               selectedSeason = season;
             });
+            widget.changeSeason!();
           },
           items: seasons
               .map(
@@ -79,6 +87,7 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
                     setState(() {
                       selectedSeason = season;
                     });
+                    widget.changeSeason!();
                     print(selectedSeason!.season_id);
                   },
                   value: season,

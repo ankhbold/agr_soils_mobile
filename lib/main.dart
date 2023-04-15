@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'screen/main_tab_bar_screen.dart';
+import 'themes/styles.dart';
 import 'utils/routes/routes.dart';
 import 'view_model/auth_view_model.dart';
 import 'view_model/user_view_model.dart';
@@ -25,9 +26,7 @@ class MyApp extends StatelessWidget {
         showPerformanceOverlay: false,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
+        theme: appTheme,
         home: MainTabBarPage(),
       ),
     );

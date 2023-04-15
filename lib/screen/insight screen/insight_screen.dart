@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../constants/colors.dart';
@@ -53,6 +54,7 @@ class _InsightState extends State<Insight> {
   int currentIndex = 0;
   final ScrollController _firstController = ScrollController();
   List<UnitArea> areas = [];
+  LatLng? latLng;
   bool isLoading = true;
   @override
   void initState() {
@@ -60,7 +62,8 @@ class _InsightState extends State<Insight> {
     GeoService.getGeoUnitArea().then((value) {
       areas = value;
       isLoading = false;
-      // longtitude=value.first.
+      // latLng=LatLng(value.first., _longitude)
+
       setState(() {});
     });
   }
@@ -106,7 +109,14 @@ class _InsightState extends State<Insight> {
                         controller: _firstController,
                         itemCount: areas.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                currentIndex = index;
+                                // latLng = LatLng(_latitude, _longitude);
+                              });
+                            },
+                            child: Container(
                             margin: EdgeInsets.all(10),
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
@@ -114,13 +124,7 @@ class _InsightState extends State<Insight> {
                                 borderRadius: BorderRadius.circular(8)),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      currentIndex = index;
-                                    });
-                                  },
+                                  padding: const EdgeInsets.all(2.0),
                                   child: Ink(
                                     child: FittedBox(
                                       child: Padding(
@@ -135,6 +139,7 @@ class _InsightState extends State<Insight> {
                                       ),
                                     ),
                                   ),
+                              
                                 ),
                               ),
                             ),
@@ -145,7 +150,9 @@ class _InsightState extends State<Insight> {
                         loaderColor: Colors.green,
                       ),
               ),
-              Weathers(),
+              Weathers(
+                latLng: latLng,
+              ),
               DefaultButton(
                 OnTap: () {
                   Navigator.pushNamed(context, 'page2');

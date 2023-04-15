@@ -404,7 +404,8 @@ class _FieldScreenState extends State<FieldScreen> {
                   child: PanelWidget(
                     controller: ScrollController(),
                   ),
-                )),
+              ),
+            ),
             Offstage(
               offstage: !isFirstWidgetVisible,
               child: Column(
@@ -568,33 +569,12 @@ class _FieldScreenState extends State<FieldScreen> {
     return PreferredSize(
       preferredSize: Size.fromHeight(500.0),
       child: Container(
-        decoration: BoxDecoration(
-          gradient: AppColors.grad,
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-              spreadRadius: 0.4,
-              blurRadius: 5,
-              offset: Offset(0, 2), // changes position of shadow
-            ),
-          ],
-        ),
         height: MediaQuery.of(context).size.height * 0.13,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 12.0,
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 3, vertical: 7),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(36, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SeasonChoicePage(
+            SeasonChoicePage(
                   done: () {
                     getNoteMarkerList();
                   },
@@ -603,8 +583,7 @@ class _FieldScreenState extends State<FieldScreen> {
                     getNoteMarkerList();
                   },
                 ),
-              ),
-            ),
+          
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

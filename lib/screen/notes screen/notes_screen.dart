@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../constants/colors.dart';
@@ -9,7 +10,9 @@ import '../../services/note_services.dart';
 import '../../widget/cached_network_image.dart';
 import '../../widget/loader.dart';
 import '../../widget/snackbar.dart';
+import '../field screen/field.dart';
 
+// ignore: must_be_immutable
 class NoteListPage extends StatefulWidget {
   NoteListPage({super.key, this.tabController, this.changeLocation});
   PersistentTabController? tabController;
@@ -85,8 +88,15 @@ class NoteListPageState extends State<NoteListPage> {
                           Note note = currentListNote[index];
                           return InkWell(
                             onTap: () {
-                              widget.changeLocation!();
-                              // widget.tabController!.jumpToTab(0);
+                            
+                              NoteMove(
+                                LatLng(
+                                  double.parse(note.y_coordinate!),
+                                  double.parse(note.x_coordinate!),
+                                ),
+                              );
+                              widget.tabController!.jumpToTab(0);
+
                             },
                             child: Container(
                               padding: EdgeInsets.all(10),
@@ -135,7 +145,7 @@ class NoteListPageState extends State<NoteListPage> {
                                                           ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
                                                             message: "Амжилттай устгалаа",
                                                           ));
-                                                      
+
                                                           setState(() {
                                                             currentListNote.removeAt(index);
                                                           });

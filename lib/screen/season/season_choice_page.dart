@@ -7,6 +7,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../conf_global.dart';
 import '../../models/season.dart';
 import '../../widget/outlined_btn.dart';
+import 'create_season.dart';
 
 // ignore: must_be_immutable
 class SeasonChoicePage extends StatefulWidget {
@@ -102,13 +103,27 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
                                         ),
                                         IconButton(
                                           onPressed: () {
-                                            print('olson');
+                                            showBarModalBottomSheet(
+                                              builder: (context) {
+                                                return CreateSeasonPage(
+                                                  isEdit: true,
+                                                  season: seasons[index],
+                                                  success: () async {
+                                                    Navigator.pop(context);
+                                                    await fetchData();
+                                                    widget.done!();
+                                                  },
+                                                );
+                                              },
+                                              context: context,
+                                            );
                                           },
                                           icon: Icon(
                                             Icons.edit_note_outlined,
                                             size: 30,
                                           ),
-                                        )
+                                        ),
+                                      
                                       ],
                                     ),
                                   ),
@@ -121,12 +136,25 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
                             child: CustomOutlinedBtn(
                               textColor: Colors.white,
                               color: Colors.green,
-                              text: 'Улирал үүсгэх',
-                              onTap: () {},
+                              text: 'Шинэ Улирал нэмэх',
+                              onTap: () {
+                                showBarModalBottomSheet(
+                                    builder: (context) {
+                                      return CreateSeasonPage(
+                                        success: () async {
+                                          Navigator.pop(context);
+                                          await fetchData();
+                                          widget.done!();
+                                        },
+                                      );
+                                    },
+                                    context: context);
+                              },
                             ),
                           )
                         ],
                       ),
+                    
                     );
                   }).then((value) {
                 if (value != null) {

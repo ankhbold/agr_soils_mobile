@@ -44,6 +44,9 @@ Future<void> TapMove(LatLng latLng) async {
 
   _mapController.move(LatLng(49.939048, 105.841644), _zoom + 2.5);
 }
+Future<void> NoteMove(LatLng latLng) async {
+  _mapController.move(latLng, _zoom + 5);
+}
 
 class FieldScreen extends StatefulWidget {
   FieldScreen({Key? key, this.tabController}) : super(key: key);

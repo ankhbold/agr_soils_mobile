@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mvvm/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user_model.dart';
 
 class UserViewModel with ChangeNotifier {
   Future<bool> saveUser(UserModel user) async {
@@ -9,14 +10,12 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
     return true;
   }
-
   Future<UserModel> getUser() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     final String? user_id = sp.getString('user_id');
 
     return UserModel(user_id: user_id.toString());
   }
-
   Future<bool> remove() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     sp.remove('user_id');

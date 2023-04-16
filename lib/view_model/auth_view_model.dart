@@ -90,18 +90,7 @@ class AuthViewModel with ChangeNotifier {
         userPreference.saveUser(UserModel(user_id: value['data']['user_id'].toString()));
 
         Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
-
         Globals.changeIsLogin(true);
-
-        Future<UserModel> getUserDate() => UserViewModel().getUser();
-        getUserDate().then((value) {
-          // print(value.user_id.toString());
-        });
-
-        // Navigator.pushNamed(context, RoutesName.home);
-        // if (kDebugMode) {
-        // print(value.toString());
-        // }
       } else {
         Utils.flushBarErrorMessage('Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);
         wrong = true;

@@ -54,11 +54,6 @@ class Globals {
   static getPCI() {
     return prof_company_id;
   }
-  // static changeInteger(int a) {
-  //   anInteger = a;
-  //   printInteger(); // this can be replaced with any static method
-  // }
-
   static changeUsername(String a) {
     username = a;
   }

@@ -100,10 +100,11 @@ class ApiHelper {
     try {
       // dio.options.headers['access_token'] = await getToken();
       Response response = await dio.put(url!, data: body);
+      // print(response.data);
       return response.data;
     } on DioError catch (ex) {
       var decodedResp = ex.response!.data;
-      // print(decodedResp);
+      print(decodedResp);
       if (decodedResp != null) {
         throw CustomException(errorMsg: decodedResp['message']['mongolian']);
       } else {

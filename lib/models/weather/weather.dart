@@ -4,40 +4,33 @@ import '../coord.dart';
 import 'weather_element.dart';
 import 'weather_main.dart';
 import 'wind.dart';
+part 'weather.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Weather {
   Weather({
-    required this.coord,
-    required this.weather,
-    required this.main,
-    required this.visibility,
-    required this.wind,
-    required this.name,
+    this.coord,
+    this.weather,
+    this.main,
+    this.visibility,
+    this.wind,
+    this.name,
   });
 
-  final Coord coord;
-  final List<WeatherElement> weather;
-  final Main main;
-  final int visibility;
-  final Wind wind;
-  final String name;
+  final Coord? coord;
+  final List<WeatherElement>? weather;
+  final Main? main;
+  final int? visibility;
+  final Wind? wind;
+  final String? name;
 
-  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-        coord: Coord.fromJson(json["coord"]),
-        weather: List<WeatherElement>.from(json["weather"].map((x) => WeatherElement.fromJson(x))),
-        main: Main.fromJson(json["main"]),
-        visibility: json["visibility"],
-        wind: Wind.fromJson(json["wind"]),
-        name: json["name"],
-      );
+  /// A necessary factory constructor for creating a new User instance
+  /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
+  /// The constructor is named after the source class, in this case, User.
+  factory Weather.fromJson(Map<String, dynamic> json) => _$WeatherFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "coord": coord.toJson(),
-        "weather": List<dynamic>.from(weather.map((x) => x.toJson())),
-        "main": main.toJson(),
-        "visibility": visibility,
-        "wind": wind.toJson(),
-        "name": name,
-      };
+  /// `toJson` is the convention for a class to declare support for serialization
+  /// to JSON. The implementation simply calls the private, generated
+  /// helper method `_$UserToJson`.
+  Map<String, dynamic> toJson() => _$WeatherToJson(this);
 }

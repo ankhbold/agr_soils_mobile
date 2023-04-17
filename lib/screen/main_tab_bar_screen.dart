@@ -8,7 +8,6 @@ import 'profile screen/login_with_signup_screen.dart';
 
 var index_color = 0;
 
-
 class MainTabBarPage extends StatefulWidget {
   const MainTabBarPage({Key? key}) : super(key: key);
 
@@ -18,35 +17,19 @@ class MainTabBarPage extends StatefulWidget {
 
 class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveClientMixin<MainTabBarPage> {
   PersistentTabController _controller = PersistentTabController(initialIndex: 0);
-  List<Widget> screens = [];
+
   int currentIndex = 0;
+  bool isNoteSelected = false;
 
   void onTabTapped(int index) {
     setState(() {
       index_color = index;
-      // Globals.changeIndexColor(index);
-      // print(Globals.getIndexColor());
     });
   }
 
   @override
   void initState() {
     super.initState();
-    screens = [
-      FieldScreen(
-        tabController: _controller,
-      ),
-      InsightScreen(
-        tabController: _controller,
-      ),
-      NoteListPage(
-        tabController: _controller,
-        changeLocation: () {
-          print('duudsam');
-        },
-      ),
-      LoginWithSignup()
-    ];
   }
 
   @override
@@ -54,7 +37,23 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
     return PersistentTabView(
       context,
       controller: _controller,
-      screens: screens,
+      screens: [
+        FieldScreen(
+          isNoteSelected: isNoteSelected,
+          tabController: _controller,
+        ),
+        InsightScreen(
+          tabController: _controller,
+        ),
+        NoteListPage(
+          tabController: _controller,
+          changeLocation: () {
+            isNoteSelected = true;
+            setState(() {});
+          },
+        ),
+        LoginWithSignup()
+      ],
       items: _navBarsItems(),
       confineInSafeArea: true,
       backgroundColor: Color(0xff065F46), // Default is Colors.white.

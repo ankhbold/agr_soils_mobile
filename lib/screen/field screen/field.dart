@@ -44,13 +44,15 @@ Future<void> TapMove(LatLng latLng) async {
 
   _mapController.move(LatLng(49.939048, 105.841644), _zoom + 2.5);
 }
+
 Future<void> NoteMove(LatLng latLng) async {
   _mapController.move(latLng, _zoom + 5);
 }
 
 class FieldScreen extends StatefulWidget {
-  FieldScreen({Key? key, this.tabController}) : super(key: key);
+  FieldScreen({Key? key, this.tabController, this.isNoteSelected = false}) : super(key: key);
   PersistentTabController? tabController;
+  bool? isNoteSelected;
   @override
   State<FieldScreen> createState() => _FieldScreenState();
 }
@@ -401,12 +403,12 @@ class _FieldScreenState extends State<FieldScreen> {
             ),
             fieldAppBar(),
             Offstage(
-                offstage: mapsol,
-                child: Container(
-                  height: 600,
-                  child: PanelWidget(
-                    controller: ScrollController(),
-                  ),
+              offstage: mapsol,
+              child: Container(
+                height: 600,
+                child: PanelWidget(
+                  controller: ScrollController(),
+                ),
               ),
             ),
             Offstage(
@@ -419,7 +421,7 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
             ),
             Offstage(
-              offstage: !isSecondWidgetVisible,
+              offstage: !isSecondWidgetVisible || widget.isNoteSelected!,
               child: SlidingUpPanel(
                 controller: panelController,
                 backdropEnabled: true,
@@ -578,15 +580,14 @@ class _FieldScreenState extends State<FieldScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SeasonChoicePage(
-                  done: () {
-                    getNoteMarkerList();
-                  },
-                  changeSeason: () {
-                    noteMarkers.clear();
-                    getNoteMarkerList();
-                  },
-                ),
-          
+              done: () {
+                getNoteMarkerList();
+              },
+              changeSeason: () {
+                noteMarkers.clear();
+                getNoteMarkerList();
+              },
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

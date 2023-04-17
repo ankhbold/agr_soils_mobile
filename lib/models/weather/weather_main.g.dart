@@ -7,12 +7,12 @@ part of 'weather_main.dart';
 // **************************************************************************
 
 Main _$MainFromJson(Map<String, dynamic> json) => Main(
-      temp: (json['temp'] as num).toDouble(),
-      feelsLike: (json['feelsLike'] as num).toDouble(),
-      tempMin: (json['tempMin'] as num).toDouble(),
-      tempMax: (json['tempMax'] as num).toDouble(),
-      pressure: json['pressure'] as int,
-      humidity: json['humidity'] as int,
+      temp: (json['temp'] as num?)?.toDouble(),
+      feelsLike: (json['feelsLike'] as num?)?.toDouble(),
+      tempMin: (json['tempMin'] as num?)?.toDouble(),
+      tempMax: (json['tempMax'] as num?)?.toDouble(),
+      pressure: json['pressure'] as int?,
+      humidity: json['humidity'] as int?,
     );
 
 Map<String, dynamic> _$MainToJson(Main instance) => <String, dynamic>{

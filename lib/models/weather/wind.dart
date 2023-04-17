@@ -5,12 +5,12 @@ part 'wind.g.dart';
 @JsonSerializable()
 class Wind {
   Wind({
-    required this.speed,
-    required this.deg,
+    this.speed,
+    this.deg,
   });
 
-  final double speed;
-  final int deg;
+  final double? speed;
+  final int? deg;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

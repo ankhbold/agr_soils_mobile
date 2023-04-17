@@ -7,7 +7,7 @@ part of 'clouds.dart';
 // **************************************************************************
 
 Clouds _$CloudsFromJson(Map<String, dynamic> json) => Clouds(
-      all: json['all'] as int,
+      all: json['all'] as int?,
     );
 
 Map<String, dynamic> _$CloudsToJson(Clouds instance) => <String, dynamic>{

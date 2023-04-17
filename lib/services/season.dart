@@ -21,8 +21,8 @@ class SeasonService {
 
   Future<dynamic> deleteSeason({int? season_id}) async {
     String url = '${main_host_url}/api/mobile/season/delete?season_id=${season_id}';
-    print(url);
-    var response = await ApiHelper().deleteUrl(url: url);
+    print(season_id);
+    var response = await ApiHelper().getUrl(url: url);
     return response;
   }
 }

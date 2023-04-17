@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mvvm/models/note.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
@@ -17,26 +18,36 @@ import '../../widget/snackbar.dart';
 import '../field%20screen/field.dart';
 
 class NoteAdd extends StatefulWidget {
-  NoteAdd({super.key, this.success});
+  NoteAdd({super.key, this.success, this.isEdit = false, this.note});
   Function? success;
+  bool isEdit;
+  Note? note;
 
   @override
   State<NoteAdd> createState() => _NoteAddState();
 }
 
 class _NoteAddState extends State<NoteAdd> {
-  List<String> types = ['Disease', 'Pests', 'Weeds', 'Lodging', 'Waterlogging', 'Other'];
   File? image;
   String? selectedType;
   int currentTypeIndex = -1;
   List<NoteType> noteTypes = [];
   List<XFile> images = [];
+  final titleController = TextEditingController();
+  DateTime currentDateTime = DateTime.now();
+  DateTime chooseDateTime = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     NoteService().getGetNoteType().then((value) {
       noteTypes = value;
+      if (widget.isEdit) {
+        titleController.text = widget.note?.note_type_desc ?? "";
+        currentDateTime = DateTime.parse(widget.note!.created_at!);
+        currentTypeIndex = noteTypes.indexOf(noteTypes.singleWhere((element) => element.id == widget.note!.id));
+        setState(() {});
+      }
     });
   }
 
@@ -53,8 +64,6 @@ class _NoteAddState extends State<NoteAdd> {
     }
   }
 
-  DateTime currentDateTime = DateTime.now();
-  DateTime chooseDateTime = DateTime.now();
   void changeToNote() {
     setState(() {
       isFabVisible = true;
@@ -64,8 +73,6 @@ class _NoteAddState extends State<NoteAdd> {
       isThirdWidgetVisible = false;
     });
   }
-
-  final titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -147,9 +154,11 @@ class _NoteAddState extends State<NoteAdd> {
                           });
                           widget.success!();
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                            message: 'fail to post',
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            CustomSnackBar(
+                              message: 'fail to post',
+                            ),
+                          );
                         }
                       }).catchError((onError) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
@@ -238,7 +247,6 @@ class _NoteAddState extends State<NoteAdd> {
               ),
             ),
           ),
-
           images.isNotEmpty
               ? SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
@@ -371,7 +379,6 @@ class _NoteAddState extends State<NoteAdd> {
           Container(
             height: MediaQuery.of(context).viewInsets.bottom,
           )
-
         ],
       ),
     );

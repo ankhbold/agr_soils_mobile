@@ -10,14 +10,30 @@ part 'unit_area.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class UnitArea {
-  String? type;
-  String? id;
-  UnitAreaProperties? properties;
+  int? id;
+  String? cad_parcel_id;
+  String? address_streetname;
+  String? field_name;
+  int? agr_cultivation_id;
+  String? area_m2;
+  String? area_ha;
+  String? parcel_image;
+  String? coord_x;
+  String? coord_y;
+  String? cult_names;
   // UnitAreaGeometry? geometry;
   UnitArea({
-    this.type,
     this.id,
-    this.properties,
+    this.cad_parcel_id,
+    this.address_streetname,
+    this.field_name,
+    this.agr_cultivation_id,
+    this.area_m2,
+    this.area_ha,
+    this.parcel_image,
+    this.coord_x,
+    this.coord_y,
+    this.cult_names,
   });
 
   /// A necessary factory constructor for creating a new User instance

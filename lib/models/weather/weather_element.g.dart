@@ -8,9 +8,9 @@ part of 'weather_element.dart';
 
 WeatherElement _$WeatherElementFromJson(Map<String, dynamic> json) =>
     WeatherElement(
-      id: json['id'] as int,
-      description: json['description'] as String,
-      icon: json['icon'] as String,
+      id: json['id'] as int?,
+      description: json['description'] as String?,
+      icon: json['icon'] as String?,
     );
 
 Map<String, dynamic> _$WeatherElementToJson(WeatherElement instance) =>

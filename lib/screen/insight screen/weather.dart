@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 
 import '../../models/weather/weather.dart';
 import '../../services/weather.dart';
 import '../../widget/loader.dart';
-
 
 class Weathers extends StatefulWidget {
   Weathers({super.key, this.latLng});
@@ -18,8 +18,9 @@ class _WeathersState extends State<Weathers> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Weather>(
-        future: WeatherService().getWeather(),
+        future: WeatherService().getWeather(latLng: widget.latLng),
         builder: (context, snapshot) {
+          print(snapshot.data);
           return snapshot.hasData
               ? Container(
                   height: MediaQuery.of(context).size.height * 0.1,
@@ -46,7 +47,7 @@ class _WeathersState extends State<Weathers> {
                                     width: 8,
                                   ),
                                   Text(
-                                    '${(snapshot.data!.main.temp - 273.15).toInt()}°',
+                                    '${(snapshot.data!.main!.temp! - 273.15).toInt()}°',
                                     style: TextStyle(
                                       fontSize: 32,
                                       fontWeight: FontWeight.w600,
@@ -76,7 +77,7 @@ class _WeathersState extends State<Weathers> {
                                             width: 5,
                                           ),
                                           Text(
-                                            "Салхи\n${snapshot.data!.wind.speed.toStringAsFixed(1)} km/h",
+                                            "Салхи\n${snapshot.data!.wind!.speed!.toStringAsFixed(1)} km/h",
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -91,7 +92,7 @@ class _WeathersState extends State<Weathers> {
                                           //   width: 2,
                                           // ),
                                           Text(
-                                            'Чийгшил\n${snapshot.data!.main.humidity.toStringAsFixed(1)} %',
+                                            'Чийгшил\n${snapshot.data!.main!.humidity!.toStringAsFixed(1)} %',
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -132,7 +133,7 @@ class _WeatherClickState extends State<WeatherClick> {
     return FutureBuilder<Weather>(
         future: WeatherService().getWeather(),
         builder: (context, snapshot) {
-          return snapshot.hasData
+          return snapshot.hasData && snapshot.connectionState == ConnectionState.done
               ? Container(
                   height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width,
@@ -158,7 +159,7 @@ class _WeatherClickState extends State<WeatherClick> {
                                     width: 10,
                                   ),
                                   Text(
-                                    '${(snapshot.data!.main.temp - 273.15).toInt()}°',
+                                    '${(snapshot.data!.main!.temp! - 273.15).toInt()}°',
                                     style: TextStyle(
                                       fontSize: 32,
                                       fontWeight: FontWeight.w600,
@@ -188,7 +189,7 @@ class _WeatherClickState extends State<WeatherClick> {
                                             width: 5,
                                           ),
                                           Text(
-                                            "Салхи\n${snapshot.data!.wind.speed.toStringAsFixed(1)} km/h",
+                                            "Салхи\n${snapshot.data!.wind!.speed!.toStringAsFixed(1)} km/h",
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -199,7 +200,7 @@ class _WeatherClickState extends State<WeatherClick> {
                                       Row(
                                         children: [
                                           Text(
-                                            'Чийгшил\n${snapshot.data!.main.humidity.toStringAsFixed(1)} %',
+                                            'Чийгшил\n${snapshot.data!.main!.humidity!.toStringAsFixed(1)} %',
                                             style: TextStyle(fontSize: 13),
                                           ),
                                         ],
@@ -224,10 +225,3 @@ class _WeatherClickState extends State<WeatherClick> {
         });
   }
 }
-
-
-
-
-
-
-

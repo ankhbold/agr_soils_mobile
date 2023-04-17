@@ -16,9 +16,11 @@ class Globals {
   static var company_id = '';
   static var latit = '';
   static var longit = '';
+
   // static printInteger() {
   //   print(anInteger);
   // }
+
   static changeIndexColor(int a) {
     index_color = a;
   }
@@ -54,6 +56,7 @@ class Globals {
   static getPCI() {
     return prof_company_id;
   }
+
   static changeUsername(String a) {
     username = a;
   }

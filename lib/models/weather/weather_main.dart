@@ -5,20 +5,20 @@ part 'weather_main.g.dart';
 @JsonSerializable()
 class Main {
   Main({
-    required this.temp,
-    required this.feelsLike,
-    required this.tempMin,
-    required this.tempMax,
-    required this.pressure,
-    required this.humidity,
+    this.temp,
+    this.feelsLike,
+    this.tempMin,
+    this.tempMax,
+    this.pressure,
+    this.humidity,
   });
 
-  final double temp;
-  final double feelsLike;
-  final double tempMin;
-  final double tempMax;
-  final int pressure;
-  final int humidity;
+  final double? temp;
+  final double? feelsLike;
+  final double? tempMin;
+  final double? tempMax;
+  final int? pressure;
+  final int? humidity;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

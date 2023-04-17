@@ -5,14 +5,14 @@ part 'weather_element.g.dart';
 @JsonSerializable()
 class WeatherElement {
   WeatherElement({
-    required this.id,
-    required this.description,
-    required this.icon,
+    this.id,
+    this.description,
+    this.icon,
   });
 
-  final int id;
-  final String description;
-  final String icon;
+  final int? id;
+  final String? description;
+  final String? icon;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

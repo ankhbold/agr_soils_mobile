@@ -180,7 +180,7 @@ class AddUnitAreaPageState extends State<AddUnitAreaPage> {
             text: 'Хадгалах',
             onTap: () {
               widget.polygonPoints!.forEach((element) {
-                locationPoints.add([element.longitude, element.longitude]);
+                locationPoints.add([element.longitude, element.latitude]);
               });
               CreateUnitAreaModelRequest createUnitAreaModelRequest = CreateUnitAreaModelRequest(
                 description: descController.text,

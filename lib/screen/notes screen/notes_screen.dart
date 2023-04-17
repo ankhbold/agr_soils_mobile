@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/conf_global.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../constants/colors.dart';
@@ -88,7 +89,7 @@ class NoteListPageState extends State<NoteListPage> {
                           Note note = currentListNote[index];
                           return InkWell(
                             onTap: () {
-                            
+                              widget.changeLocation!();
                               NoteMove(
                                 LatLng(
                                   double.parse(note.y_coordinate!),
@@ -96,7 +97,6 @@ class NoteListPageState extends State<NoteListPage> {
                                 ),
                               );
                               widget.tabController!.jumpToTab(0);
-
                             },
                             child: Container(
                               padding: EdgeInsets.all(10),

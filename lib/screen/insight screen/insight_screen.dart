@@ -62,8 +62,7 @@ class _InsightState extends State<Insight> {
     GeoService.getGeoUnitArea().then((value) {
       areas = value;
       isLoading = false;
-      // latLng=LatLng(value.first., _longitude)
-
+      latLng = LatLng(double.parse(value.first.coord_y!), double.parse(value.first.coord_x!));
       setState(() {});
     });
   }
@@ -113,24 +112,25 @@ class _InsightState extends State<Insight> {
                             onTap: () {
                               setState(() {
                                 currentIndex = index;
-                                // latLng = LatLng(_latitude, _longitude);
+                                latLng =
+                                    LatLng(double.parse(areas[index].coord_y!), double.parse(areas[index].coord_x!));
                               });
                             },
                             child: Container(
-                            margin: EdgeInsets.all(10),
-                            padding: const EdgeInsets.all(3.0),
-                            decoration: BoxDecoration(
-                                gradient: currentIndex == index ? AppColors.grad : AppColors.gradi,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Center(
-                              child: Padding(
+                              margin: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                  gradient: currentIndex == index ? AppColors.grad : AppColors.gradi,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Center(
+                                child: Padding(
                                   padding: const EdgeInsets.all(2.0),
                                   child: Ink(
                                     child: FittedBox(
                                       child: Padding(
                                         padding: const EdgeInsets.all(5.0),
                                         child: Text(
-                                          areas[index].properties?.name ?? "",
+                                          areas[index].address_streetname ?? "",
                                           style: TextStyle(
                                             color: currentIndex == index ? Colors.white : Colors.black,
                                             fontSize: 13,
@@ -139,7 +139,6 @@ class _InsightState extends State<Insight> {
                                       ),
                                     ),
                                   ),
-                              
                                 ),
                               ),
                             ),

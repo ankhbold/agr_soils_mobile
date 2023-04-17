@@ -170,8 +170,8 @@ class SeasonChoicePageState extends State<SeasonChoicePage> {
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
               ),
-              width: MediaQuery.of(context).size.width * 0.52,
-              height: 60,
+              width: MediaQuery.of(context).size.width * 0.56,
+              height: 64,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

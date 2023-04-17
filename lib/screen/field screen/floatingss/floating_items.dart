@@ -81,9 +81,7 @@ class _FloatingFourthItemState extends State<FloatingFourthItem> {
                   decoration: BoxDecoration(
                     color: color[index],
                     borderRadius: BorderRadius.circular(60),
-                    // border: Border.all(
-                    //   width: 0,
-                    // ),
+                   
                   ),
                 ),
                 SizedBox(

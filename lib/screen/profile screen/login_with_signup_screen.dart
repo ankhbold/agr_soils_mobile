@@ -48,13 +48,15 @@ class LoginWithSignupState extends State<LoginWithSignup> {
                             decoration:
                                 BoxDecoration(color: Color(0xff065F46), borderRadius: BorderRadius.circular(10)),
                             child: TabBar(
+                                dividerColor: Colors.transparent,
                                 unselectedLabelColor: Colors.white,
                                 labelColor: Color(0xff065F46),
+                                indicatorSize: TabBarIndicatorSize.tab,
                                 indicator: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                indicatorPadding: EdgeInsets.all(5),
+                                indicatorPadding: EdgeInsets.all(2),
                                 overlayColor: MaterialStateProperty.all(Colors.green),
                                 onTap: (value) {
                                   currentIndex = value;
@@ -63,25 +65,33 @@ class LoginWithSignupState extends State<LoginWithSignup> {
                                 tabs: [
                                   Tab(
                                     child: Container(
+                                      width: double.infinity,
                                       padding: EdgeInsets.all(10),
-                                      child: Text('Нэвтрэх'),
+                                      child: Text(
+                                        'Нэвтрэх',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                   Tab(
                                     child: Container(
+                                      width: double.infinity,
                                       padding: EdgeInsets.all(10),
-                                      child: Text('Бүртгүүлэх'),
+                                      child: Text(
+                                        'Бүртгүүлэх',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 ]),
                           ),
                           currentIndex == 0
                               ? Container(
-                                  height: MediaQuery.of(context).size.height - 190,
+                                  height: MediaQuery.of(context).size.height - 200,
                                   child: LoginView(),
                                 )
                               : Container(
-                                  height: MediaQuery.of(context).size.height - 190,
+                                  height: MediaQuery.of(context).size.height - 200,
                                   child: RegisterPage(),
                                 ),
                         ],

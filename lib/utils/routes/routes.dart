@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import '../../screen/login_view.dart';
 import '../../screen/main_tab_bar_screen.dart';
 import '../../screen/notes%20screen/notes_screen.dart';
-import '../../screen/signp_view.dart';
+
 import '../../ui/splash/intro_screen.dart';
 import '../../ui/splash/splash_view.dart';
 import 'routes_name.dart';
+import '../../screen/signup_view.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

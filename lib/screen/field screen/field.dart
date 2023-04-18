@@ -416,7 +416,21 @@ class _FieldScreenState extends State<FieldScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FloatingFab(),
+                  FloatingFab(
+                    changeLayer: () {
+                      wmsLayer = WMSTileLayerOptions(
+                        baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+                        layers: ['agrgis:agr_parcel_cultivation'],
+                        transparent: true,
+                        format: 'image/png',
+                        version: '1.1.1',
+                        otherParameters: {
+                          'CQL_FILTER': 'person_id = ${Globals.personId} and season_id=67',
+                        },
+                      );
+                      setState(() {});
+                    },
+                  ),
                 ],
               ),
             ),
@@ -638,8 +652,8 @@ class _FieldScreenState extends State<FieldScreen> {
       value.forEach((element) {
         noteMarkers.add(
           Marker(
-              width: 10,
-              height: 10,
+              width: 15,
+              height: 15,
               point: LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)),
               builder: (context) {
                 return InkWell(
@@ -657,10 +671,10 @@ class _FieldScreenState extends State<FieldScreen> {
                     child: Center(
                       child: Container(
                         padding: EdgeInsets.all(5),
-                        width: 5,
-                        height: 5,
+                        width: 7,
+                        height: 7,
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: Colors.blue,
                           shape: BoxShape.circle,
                         ),
                       ),

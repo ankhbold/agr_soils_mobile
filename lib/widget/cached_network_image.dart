@@ -34,7 +34,14 @@ class MyCachedNetworkImage extends StatelessWidget {
         );
       },
       errorWidget: (context, url, error) {
-        return Container();
+        return Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Color(0xffECECEC),
+            borderRadius: BorderRadius.circular(borderRadius!),
+          ),
+        );
       },
       placeholder: isPlaceHolder!
           ? (context, url) {

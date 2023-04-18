@@ -4,7 +4,8 @@ import '../../../constants/color.dart';
 import '../../field%20screen/floatingss/first_float.dart';
 
 class FloatingFab extends StatefulWidget {
-  const FloatingFab({super.key});
+  FloatingFab({super.key, this.changeLayer});
+  Function? changeLayer;
 
   @override
   State<FloatingFab> createState() => _FloatingFabState();
@@ -81,7 +82,6 @@ class _FloatingFourthItemState extends State<FloatingFourthItem> {
                   decoration: BoxDecoration(
                     color: color[index],
                     borderRadius: BorderRadius.circular(60),
-                   
                   ),
                 ),
                 SizedBox(
@@ -166,6 +166,7 @@ class _FloatingFabState extends State<FloatingFab> {
                             setState(() {
                               current = index;
                             });
+                            widget.changeLayer!();
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.01,
@@ -173,21 +174,16 @@ class _FloatingFabState extends State<FloatingFab> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(width: 0.15),
-                              color: current == index
-                                  ? const Color(0xff0f766e)
-                                  : Color.fromARGB(211, 255, 255, 255),
+                              color: current == index ? const Color(0xff0f766e) : Color.fromARGB(211, 255, 255, 255),
                             ),
                             child: Center(
                               child: AnimatedContainer(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 12),
+                                margin: const EdgeInsets.symmetric(horizontal: 12),
                                 duration: const Duration(milliseconds: 250),
                                 child: Text(
                                   items[index],
                                   style: TextStyle(
-                                    color: current == index
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color: current == index ? Colors.white : Colors.black,
                                   ),
                                 ),
                               ),
@@ -208,9 +204,7 @@ class _FloatingFabState extends State<FloatingFab> {
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.035,
                         width: MediaQuery.of(context).size.width * 0.11,
-                        decoration: BoxDecoration(
-                            color: AppColors.Green,
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(color: AppColors.Green, borderRadius: BorderRadius.circular(5)),
                         child: Center(
                           child: Icon(
                             Icons.more_horiz,

@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../coord.dart';
+import 'clouds.dart';
 import 'weather_element.dart';
 import 'weather_main.dart';
 import 'wind.dart';
@@ -15,6 +16,7 @@ class Weather {
     this.visibility,
     this.wind,
     this.name,
+    this.clouds,
   });
 
   final Coord? coord;
@@ -23,6 +25,7 @@ class Weather {
   final int? visibility;
   final Wind? wind;
   final String? name;
+  final Clouds? clouds;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

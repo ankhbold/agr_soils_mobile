@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/screen/field%20screen/panel_widget.dart';
 
 import '../../models/weather/weather.dart';
 import '../../services/weather.dart';
@@ -20,22 +19,19 @@ class _WeathersState extends State<Weathers> {
     return FutureBuilder<Weather>(
         future: WeatherService().getWeather(latLng: widget.latLng),
         builder: (context, snapshot) {
-          print(snapshot.data);
+          // print(snapshot.data);
           return snapshot.hasData
               ? Container(
-                  height: MediaQuery.of(context).size.height * 0.1,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.only(
-                          left: 20,
-                        ),
-                        child: Row(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Column(
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.365,
+                              alignment: Alignment.topLeft,
                               child: Row(
                                 children: [
                                   Icon(
@@ -59,52 +55,51 @@ class _WeathersState extends State<Weathers> {
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.55,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.air,
-                                            size: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "Салхи\n${snapshot.data!.wind!.speed!.toStringAsFixed(1)} km/h",
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          // Icon(Icons.air),
-                                          // SizedBox(
-                                          //   width: 2,
-                                          // ),
-                                          Text(
-                                            'Чийгшил\n${snapshot.data!.main!.humidity!.toStringAsFixed(1)} %',
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                        ],
-                                      ),
+                                      getWeatherInfoWidget(
+                                          label: 'Салхины хурд',
+                                          value: snapshot.data!.wind!.speed!.toStringAsFixed(1).toString() + "м/c"),
+                                      getWeatherInfoWidget(
+                                          label: 'Агаарын чийгшил',
+                                          value: snapshot.data!.main!.humidity!.toStringAsFixed(1).toString() + "%"),
+                                      getWeatherInfoWidget(
+                                          label: 'Хөрсний чийг',
+                                          value: snapshot.data!.wind!.speed!.toStringAsFixed(1).toString() + "%"),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 10,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      getWeatherInfoWidget(
+                                          label: 'Хөрсний темпратур',
+                                          value: (snapshot.data!.main!.temp! - 273.15).toStringAsFixed(2) + " °C"),
+                                      getWeatherInfoWidget(
+                                        label: 'Үүлний масс',
+                                        value: (snapshot.data?.clouds?.all ?? 0).toString() + ' %',
+                                      ),
+                                      getWeatherInfoWidget(
+                                        label: 'Агаарын даралт',
+                                        value: (snapshot.data!.main!.pressure).toString() + " мм",
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              height: 20,
+                            )
                           ],
                         ),
                       ),
@@ -116,6 +111,17 @@ class _WeathersState extends State<Weathers> {
                 );
         });
   }
+}
+
+Widget getWeatherInfoWidget({String? label, String? value}) {
+  return Text(
+    '${label}:${value}',
+    style: TextStyle(
+      fontSize: 12,
+      color: Color(0xff717171),
+    ),
+    textAlign: TextAlign.start,
+  );
 }
 
 class WeatherClick extends StatefulWidget {
@@ -144,32 +150,36 @@ class _WeatherClickState extends State<WeatherClick> {
                         padding: EdgeInsets.only(
                           left: 20,
                         ),
-                        child: Row(
+                        child: Column(
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.sunny,
-                                    color: Color.fromARGB(255, 255, 196, 0),
-                                    size: 60,
+                            Row(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.35,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.sunny,
+                                        color: Color.fromARGB(255, 255, 196, 0),
+                                        size: 60,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        '${(snapshot.data!.main!.temp! - 273.15).toInt()}°',
+                                        style: TextStyle(
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '${(snapshot.data!.main!.temp! - 273.15).toInt()}°',
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.55,

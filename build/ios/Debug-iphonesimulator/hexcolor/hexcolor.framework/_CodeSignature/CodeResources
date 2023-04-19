@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/hexcolor-Swift.h</key>
 		<data>
-		sFXscZuVn4/Aw/qFf9pvcXpgco8=
+		5dDX+c1fr1yzdXlQu+j+D6Q+rr8=
 		</data>
 		<key>Headers/hexcolor-umbrella.h</key>
 		<data>
@@ -18,15 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		oHU0m5vA+1uEgnUdfYhUwxBNz4g=
+		Hva2s+toB9bDvwNklvOhF8Xlr9w=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		nuSpW7Kk6HK2y24yAnEpVWK+0P8=
+		ZDte8N8C77wT0YXMgI/g/PyV8SA=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		ZVjn30ZlDSqMCYna0QWu0rUuAfo=
+		rc0zdtH+OgOtPLM2HfKL6hDd37Y=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		fID4/J/jjh6c1LndCCzu8cvdCJs=
+		xFC4zbBvsn9xg2jmTqlM6aVLCaA=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		JurgsWmtICOxSvo77AxPcM8weWA=
+		uPdU9VZj/NuIm73lpR/Fxw3YW3I=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Up+kpDsiynQ1t5JncH4Nvlm//wQ=
+		FCxETav7U4Ln1WxdhWVuS34SYa8=
 		</data>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		3HN5sZbDhWUHX6IXndtOujOsPag=
+		9v+cC1PiBw9pu6wnYK7wE9gBOH0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -70,7 +70,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fh2B5VxmPROKwroAjkwGNeI+gOsY6aLpnaJTyYhZV4w=
+			/ZHhzFSb5FazwTlY2fqdinIOl+GyY9M73wQ8t9MDDHI=
 			</data>
 		</dict>
 		<key>Headers/hexcolor-umbrella.h</key>
@@ -84,14 +84,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			utW5pBKcpmf+8B0f7Amw/qYPtoQAuBfnPsMaGx6uB1w=
+			+fjBDy4p+2s4wn31UDzpwjslejfp1wYp8atYmH2IqAc=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7OPm2bxZhffHVG1FyByybRKexpQSMbdWH5OrLag+qGE=
+			utAjTHymj6MkHWygeTYXL0kqHLQquQu1f6tmr5d6pF8=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -105,14 +105,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			17x4ww1mObl52f25YZ4gwU/eOvRZ8K6sOBGRzRb1hhg=
+			HVEpMMb4fKfzyCzB67bPn1RHSQKvkOj9xuMBRqkTmkU=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ljo+3ZL9wnAbkndLr/83Ii5YiKg+DsaEll82WX+Gx9Q=
+			g7vVcG3DGaFfbqmKJBHVjcp61dsA9wCW2kKcWqNLmp0=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -126,14 +126,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			v1Por+2AAEolMDSheoTLmfu9rZ1uvzFh5mUffaupxoY=
+			J35vFCRfKTi0BZ3lshAmyjOWIg6mIiTaKv2jQIPfDsM=
 			</data>
 		</dict>
 		<key>Modules/hexcolor.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			45IC7E5JdWdrL0NYCdL8D1yNSRLZ8J31oIEotWV68ts=
+			sPQQk3yMcN2vxjvRAHvqccQRH/pSQjl3685RJhotuNg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

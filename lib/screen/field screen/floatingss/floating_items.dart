@@ -1,119 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/models/raster_layer.dart';
+import 'package:mvvm/services/geo_service.dart';
+import 'package:mvvm/widget/snackbar.dart';
 
 import '../../../constants/color.dart';
 import '../../field%20screen/floatingss/first_float.dart';
 
 class FloatingFab extends StatefulWidget {
   FloatingFab({super.key, this.changeLayer});
-  Function? changeLayer;
+  Function(RasterLayer layer)? changeLayer;
 
   @override
   State<FloatingFab> createState() => _FloatingFabState();
-}
-
-List<String> items = [
-  "NDVI",
-  "EVI",
-  "Хур тунадас",
-  "Таримлын төрөл",
-  "Ургацын дундаж",
-  "Тариалсан огноо",
-  "Хураасан огноо",
-];
-final List<Tab> myTabs = <Tab>[
-  const Tab(
-    child: FloatingItem(),
-  ),
-  const Tab(
-    child: FloatingItem(),
-  ),
-  const Tab(
-    child: FloatingItem(),
-  ),
-  Tab(
-    child: FloatingFourthItem(),
-  ),
-  const Tab(
-    child: FloatingItem(),
-  ),
-];
-
-class FloatingFourthItem extends StatefulWidget {
-  FloatingFourthItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<FloatingFourthItem> createState() => _FloatingFourthItemState();
-}
-
-class _FloatingFourthItemState extends State<FloatingFourthItem> {
-  List<String> item = [
-    "Буудай",
-    "Рапс",
-    "Овъёос",
-    "Арвай",
-    "Тэжээлийн ургамал",
-  ];
-
-  List<Color> color = [
-    Colors.red,
-    Colors.blue,
-    const Color.fromARGB(255, 226, 203, 0),
-    Colors.green,
-    Colors.pink,
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: item.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: Row(
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: color[index],
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.01,
-                ),
-                Text(
-                  item[index],
-                  style: TextStyle(
-                    overflow: TextOverflow.fade,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 13,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
 }
 
 bool sungahh = true;
 int current = 0;
 
 class _FloatingFabState extends State<FloatingFab> {
+  List<RasterLayer> layers = [];
+  @override
+  void initState() {
+    super.initState();
+    GeoService.getRasterLayer().then((value) {
+      layers = value;
+      setState(() {});
+    }).catchError((onError) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+        message: onError.toString(),
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final height1 = MediaQuery.of(context).size.height * 0.125;
+    final height1 = MediaQuery.of(context).size.height * 0.13;
     final height2 = MediaQuery.of(context).size.height * 0.42;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -138,13 +59,15 @@ class _FloatingFabState extends State<FloatingFab> {
                     SizedBox(
                       width: 10,
                     ),
-                    Sungalt(),
+                    SateliteDetailInfo(),
                   ],
                 ),
               ),
             Expanded(
               flex: 3,
-              child: SizedBox(child: myTabs[current]),
+              child: SizedBox(
+                child: FloatingItem(),
+              ),
             ),
             Expanded(
               flex: 3,
@@ -156,7 +79,7 @@ class _FloatingFabState extends State<FloatingFab> {
                     height: MediaQuery.of(context).size.height * 0.035,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: ListView.builder(
-                      itemCount: 5,
+                      itemCount: layers.length,
                       padding: const EdgeInsets.only(right: 3, left: 3),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) => Padding(
@@ -166,11 +89,10 @@ class _FloatingFabState extends State<FloatingFab> {
                             setState(() {
                               current = index;
                             });
-                            widget.changeLayer!();
+                            widget.changeLayer!(layers[index]);
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.01,
-                            // width: MediaQuery.of(context).size.width * 0.3,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(width: 0.15),
@@ -181,7 +103,7 @@ class _FloatingFabState extends State<FloatingFab> {
                                 margin: const EdgeInsets.symmetric(horizontal: 12),
                                 duration: const Duration(milliseconds: 250),
                                 child: Text(
-                                  items[index],
+                                  layers[index].name!,
                                   style: TextStyle(
                                     color: current == index ? Colors.white : Colors.black,
                                   ),
@@ -225,8 +147,8 @@ class _FloatingFabState extends State<FloatingFab> {
   }
 }
 
-class Sungalt extends StatelessWidget {
-  const Sungalt({
+class SateliteDetailInfo extends StatelessWidget {
+  const SateliteDetailInfo({
     Key? key,
   }) : super(key: key);
 

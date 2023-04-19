@@ -79,9 +79,7 @@ class ColorIndex extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
                 color: Color.fromARGB(255, 94, 18, 12),
                 // gradient: LinearGradient(
                 //   begin: Alignment.topRight,
@@ -171,9 +169,7 @@ class ColorIndex extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.green[900],
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
                 // gradient: LinearGradient(
                 //   begin: Alignment.topRight,
                 //   end: Alignment.bottomLeft,

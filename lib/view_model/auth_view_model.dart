@@ -91,6 +91,7 @@ class AuthViewModel with ChangeNotifier {
 
         Utils.flushBarErrorMessage('Амжилттай нэвтэрлээ', context);
         Globals.changeIsLogin(true);
+        // print(Globals.isLogin);
       } else {
         Utils.flushBarErrorMessage('Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!!!', context);
         wrong = true;

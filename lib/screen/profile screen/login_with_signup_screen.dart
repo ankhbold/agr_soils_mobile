@@ -8,7 +8,6 @@ import '../profile%20screen/user_profile.dart';
 import '../register/register_page.dart';
 
 class LoginWithSignup extends StatefulWidget {
- 
   const LoginWithSignup({
     Key? key,
   }) : super(key: key);
@@ -17,8 +16,16 @@ class LoginWithSignup extends StatefulWidget {
   State<LoginWithSignup> createState() => LoginWithSignupState();
 }
 
-class LoginWithSignupState extends State<LoginWithSignup> {
+class LoginWithSignupState extends State<LoginWithSignup> with TickerProviderStateMixin {
   int currentIndex = 0;
+
+  TabController? tabController;
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context, listen: true);

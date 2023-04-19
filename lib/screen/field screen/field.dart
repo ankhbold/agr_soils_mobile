@@ -68,23 +68,12 @@ class _FieldScreenState extends State<FieldScreen> {
   var sate =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
   var png =
-      'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
+      'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/1506439e900/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
 
   var falseColor = '';
   static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
-  var wmsLayer = Globals.isLogin
-      ? WMSTileLayerOptions(
-          baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-          layers: ['agrgis:agr_parcel'],
-          transparent: true,
-          format: 'image/png',
-          version: '1.1.1',
-          otherParameters: {
-            'CQL_FILTER': 'person_id = ${Globals.personId}',
-          },
-        )
-      : WMSTileLayerOptions(baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
+  var wmsLayer;
   var tileLayer = TileLayer(
     urlTemplate: 'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
@@ -115,7 +104,6 @@ class _FieldScreenState extends State<FieldScreen> {
   @override
   void initState() {
     _mapController = MapController();
-
     super.initState();
   }
 
@@ -363,43 +351,40 @@ class _FieldScreenState extends State<FieldScreen> {
                 center: firstLocation,
                 zoom: _zoom,
               ),
-              children: [
-                // layerOption,
-                tileLayer,
+              children: wmsLayer != null
+                  ? [
+                      tileLayer,
 
-                TileLayer(backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
+                      TileLayer(backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
 
-                TileLayer(
-                  backgroundColor: Colors.transparent,
-                  urlTemplate: png,
-                ),
-                MarkerLayer(
-                  markers: noteMarkers,
-                ),
-                MarkerLayer(
-                  markers: markers,
-                ),
-                PolylineLayer(
-                  polylineCulling: true,
-                  saveLayers: true,
-                  polylines: [
-                    Polyline(
-                      points: polygonPoints,
-                      color: Colors.white,
+                      TileLayer(
+                        backgroundColor: Colors.transparent,
+                        urlTemplate: png,
+                      ),
+                      MarkerLayer(
+                        markers: noteMarkers,
+                      ),
+                      MarkerLayer(
+                        markers: markers,
+                      ),
+                      PolylineLayer(
+                        polylineCulling: true,
+                        saveLayers: true,
+                        polylines: [
+                          Polyline(
+                            points: polygonPoints,
+                            color: Colors.white,
 
-                      // useStrokeWidthInMeter: true,
-                    ),
-                  ],
-                ),
-                // TileLayer(
-                //   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                //   userAgentPackageName: 'com.example.app',
-                // ),
-                // PolygonLayer(
-                //   polygons: polygons,
-                //   // polygonCulling: true,
-                // ),
-              ],
+                            // useStrokeWidthInMeter: true,
+                          ),
+                        ],
+                      ),
+                      // PolygonLayer(
+                      //   polygons: polygons,
+                      //   // polygonCulling: true,
+                      // ),
+                    ]
+                  : [],
             ),
             fieldAppBar(),
             Offstage(
@@ -417,15 +402,15 @@ class _FieldScreenState extends State<FieldScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FloatingFab(
-                    changeLayer: () {
+                    changeLayer: (layer) {
                       wmsLayer = WMSTileLayerOptions(
                         baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
-                        layers: ['agrgis:agr_parcel_cultivation'],
+                        layers: ['agrgis:${layer.layer_name}'],
                         transparent: true,
                         format: 'image/png',
                         version: '1.1.1',
                         otherParameters: {
-                          'CQL_FILTER': 'person_id = ${Globals.personId} and season_id=67',
+                          'CQL_FILTER': 'person_id = ${Globals.personId} and season_id=${Globals.seasonId}',
                         },
                       );
                       setState(() {});
@@ -594,8 +579,21 @@ class _FieldScreenState extends State<FieldScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SeasonChoicePage(
-              done: () {
-                getNoteMarkerList();
+              done: () async {
+                await getNoteMarkerList();
+                wmsLayer = Globals.isLogin
+                    ? WMSTileLayerOptions(
+                        baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+                        layers: ['agrgis:agr_parcel'],
+                        transparent: true,
+                        format: 'image/png',
+                        version: '1.1.1',
+                        otherParameters: {
+                          'CQL_FILTER': 'person_id = ${Globals.personId} and season_id=${Globals.seasonId}',
+                        },
+                      )
+                    : WMSTileLayerOptions(baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms');
+                setState(() {});
               },
               changeSeason: () {
                 noteMarkers.clear();

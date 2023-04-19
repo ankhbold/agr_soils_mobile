@@ -4,7 +4,7 @@ class RegisterInfo {
   String? firstname;
   String? lastname;
   String? phone;
-  String? position_type_id;
+  int? position_type_id;
   String? email;
   String? username;
   String? password;

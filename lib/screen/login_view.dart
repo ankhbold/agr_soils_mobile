@@ -36,155 +36,136 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final authViewMode = Provider.of<AuthViewModel>(context);
-    _emailController.text = 'ankhbold';
-    _passwordController.text = '89006176';
 
-    // final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-                height: 100,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                )),
-            Center(
-              child: Text(
-                // textAlign: TextAlign.center,
-                'УХААЛАГ ГАЗАР ТАРИАЛАН',
-                textAlign: TextAlign.center,
-
-                style: GoogleFonts.montserrat(
-                  color: AppColors.green,
-                  textStyle: TextStyle(fontSize: 18),
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                  height: 100,
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                  )),
+              Center(
+                child: Text(
+                  'УХААЛАГ ГАЗАР ТАРИАЛАН',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                    color: AppColors.green,
+                    textStyle: TextStyle(fontSize: 18),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.1,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.035,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.1,
-                left: MediaQuery.of(context).size.width * 0.1,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.035,
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.backgroundColor,
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                  child: TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    focusNode: emailFocusNode,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Нэвтрэх нэр оруулна уу',
+              Padding(
+                padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.1,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(color: AppColors.backgroundColor, borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                    child: TextField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      focusNode: emailFocusNode,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Нэвтрэх нэр оруулна уу',
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 15,
-                right: MediaQuery.of(context).size.width * 0.1,
-                left: MediaQuery.of(context).size.width * 0.1,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.backgroundColor,
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                  child: ValueListenableBuilder(
-                    valueListenable: _obsecurePassword,
-                    builder: (context, value, child) {
-                      return TextField(
-                        controller: _passwordController,
-                        obscureText: _obsecurePassword.value,
-                        focusNode: passwordFocusNode,
-                        obscuringCharacter: "*",
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Нууц үг оруулна уу',
-                          // labelText: 'Нууц үг',
-                          suffixIcon: InkWell(
-                            onTap: () {
-                              _obsecurePassword.value =
-                                  !_obsecurePassword.value;
-                            },
-                            child: Icon(_obsecurePassword.value
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 15,
+                  right: MediaQuery.of(context).size.width * 0.1,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                ),
+                child: Container(
+                  decoration: BoxDecoration(color: AppColors.backgroundColor, borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                    child: ValueListenableBuilder(
+                      valueListenable: _obsecurePassword,
+                      builder: (context, value, child) {
+                        return TextField(
+                          controller: _passwordController,
+                          obscureText: _obsecurePassword.value,
+                          focusNode: passwordFocusNode,
+                          obscuringCharacter: "*",
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Нууц үг оруулна уу',
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                _obsecurePassword.value = !_obsecurePassword.value;
+                              },
+                              child: Icon(_obsecurePassword.value ? Icons.visibility_off_outlined : Icons.visibility),
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.001,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Нууц үг мартсан?',
-                      style: GoogleFonts.montserrat(
-                        letterSpacing: 0.05,
-                        textStyle: TextStyle(
-
-                            // color: Color.fromARGB(150, 0, 0, 0),
-                            color: AppColors.Green,
-                            fontWeight: FontWeight.w500),
-                      )),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.1,
-                )
-              ],
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            RoundButton(
-              title: 'Нэвтрэх',
-              loading: authViewMode.loading,
-              onPress: () {
-                if (_emailController.text.isEmpty) {
-                  Utils.flushBarErrorMessage(
-                      'Нэвтрэх нэрээ оруулна уу', context);
-                } else if (_passwordController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Нууц үг оруулна уу', context);
-                } else if (_passwordController.text.length < 3) {
-                  Utils.flushBarErrorMessage(
-                      '6 оронтой тоо оруулна уу', context);
-                } else {
-                  Map data = {
-                    'username': _emailController.text.toString(),
-                    'password': _passwordController.text.toString(),
-                  };
-                  authViewMode.loginApi(data, context);
-                  setState(() {});
-                }
-              },
-            ),
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.001,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Нууц үг мартсан?',
+                        style: GoogleFonts.montserrat(
+                          letterSpacing: 0.05,
+                          textStyle: TextStyle(color: AppColors.Green, fontWeight: FontWeight.w500),
+                        )),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.1,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              RoundButton(
+                title: 'Нэвтрэх',
+                loading: authViewMode.loading,
+                onPress: () {
+                  if (_emailController.text.isEmpty) {
+                    Utils.flushBarErrorMessage('Нэвтрэх нэрээ оруулна уу', context);
+                  } else if (_passwordController.text.isEmpty) {
+                    Utils.flushBarErrorMessage('Нууц үг оруулна уу', context);
+                  } else if (_passwordController.text.length < 3) {
+                    Utils.flushBarErrorMessage('6 оронтой тоо оруулна уу', context);
+                  } else {
+                    Map data = {
+                      'username': _emailController.text.toString(),
+                      'password': _passwordController.text.toString(),
+                    };
+                    authViewMode.loginApi(data, context);
+                    setState(() {});
+                  }
+                },
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

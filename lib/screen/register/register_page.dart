@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/models/company.dart';
-import 'package:mvvm/models/register_info.dart';
-import 'package:mvvm/services/register_service.dart';
-import 'package:mvvm/widget/loader.dart';
-import 'package:mvvm/widget/outlined_btn.dart';
 
+import '../../models/company.dart';
+import '../../models/register_info.dart';
+import '../../services/register_service.dart';
 import '../../widget/custom_text_field.dart';
+import '../../widget/loader.dart';
+import '../../widget/outlined_btn.dart';
 import '../../widget/snackbar.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -23,6 +23,7 @@ class RegisterPageState extends State<RegisterPage> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController repeatPasswordController = TextEditingController();
   CompanyInfo? companyInfo;
@@ -67,9 +68,6 @@ class RegisterPageState extends State<RegisterPage> {
                 }
               },
               maxLength: 7,
-            ),
-            SizedBox(
-              height: 10,
             ),
             Text(
               'Байгууллагын нэр',
@@ -118,6 +116,21 @@ class RegisterPageState extends State<RegisterPage> {
               height: 10,
             ),
             Text(
+              'Нэвтрэх Нэр',
+              textAlign: TextAlign.start,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: userNameController,
+              context: context,
+              labelText: '',
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
               'Утасны дугаар',
               textAlign: TextAlign.start,
             ),
@@ -159,6 +172,9 @@ class RegisterPageState extends State<RegisterPage> {
               context: context,
               labelText: '',
             ),
+            SizedBox(
+              height: 10,
+            ),
             Text(
               'Нууц үг давтах *',
               textAlign: TextAlign.start,
@@ -185,7 +201,10 @@ class RegisterPageState extends State<RegisterPage> {
                     prof_company_id: companyInfo!.prof_company_id,
                     firstname: firstNameController.text,
                     lastname: lastNameController.text,
+                    email: emailController.text,
+                    username: userNameController.text,
                     phone: phoneNumberController.text,
+                    password: passwordController.text,
                   );
                 },
               ),

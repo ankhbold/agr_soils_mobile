@@ -87,6 +87,7 @@ class NoteListPageState extends State<NoteListPage> {
                         itemCount: currentListNote.length,
                         itemBuilder: (context, index) {
                           Note note = currentListNote[index];
+                          // print(note.image_url);
                           return InkWell(
                             onTap: () {
                               widget.changeLocation!();
@@ -170,9 +171,7 @@ class NoteListPageState extends State<NoteListPage> {
                                               child: MyCachedNetworkImage(
                                                 fit: BoxFit.contain,
                                                 isPlaceHolder: true,
-                                                imageUrl: main_host_url.toString() +
-                                                    "/" +
-                                                    currentListNote[index].image_url.toString(),
+                                                imageUrl: main_host_url.toString() + "/" + note.image_url.toString(),
                                               ),
                                             ),
                                             Text(

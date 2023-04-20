@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/screen/field%20screen/satelite_image_type.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
+import '../../models/note.dart';
 import '../../services/note_services.dart';
 import '../../services/permissions/location.dart';
 import '../field%20screen/floatingss/floating_items.dart';
@@ -53,6 +55,7 @@ class FieldScreen extends StatefulWidget {
   FieldScreen({Key? key, this.tabController, this.isNoteSelected = false}) : super(key: key);
   PersistentTabController? tabController;
   bool? isNoteSelected;
+
   @override
   State<FieldScreen> createState() => _FieldScreenState();
 }
@@ -65,6 +68,8 @@ class _FieldScreenState extends State<FieldScreen> {
   List<Polygon> polygons = [];
   List<LatLng> currentPolygon = [];
   PanelController panelController = PanelController();
+  String? currentLayerName;
+  Note? currentNote;
   var sate =
       'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
   var png =
@@ -401,8 +406,13 @@ class _FieldScreenState extends State<FieldScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  StateliteImageType(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   FloatingFab(
                     changeLayer: (layer) {
+                      currentLayerName = layer.layer_name;
                       wmsLayer = WMSTileLayerOptions(
                         baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
                         layers: ['agrgis:${layer.layer_name}'],
@@ -549,6 +559,17 @@ class _FieldScreenState extends State<FieldScreen> {
                       success: () {
                         isDetailAddFieldWidgetVisible = false;
                         isAddFieldWidgetVisible = false;
+                        wmsLayer = WMSTileLayerOptions(
+                          baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
+                          layers: ['agrgis:${currentLayerName}'],
+                          transparent: true,
+                          format: 'image/png',
+                          version: '1.1.1',
+                          otherParameters: {
+                            'CQL_FILTER': 'person_id = ${Globals.personId} and season_id=${Globals.seasonId}',
+                          },
+                        );
+                        polygonPoints.clear();
                         setState(() {});
                       },
                     )
@@ -569,6 +590,53 @@ class _FieldScreenState extends State<FieldScreen> {
         ));
   }
 
+  getNoteMarkerList() {
+    NoteService().getNoteList().then((value) {
+      value.forEach((element) {
+        noteMarkers.add(
+          Marker(
+              width: 15,
+              height: 15,
+              point: LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)),
+              builder: (context) {
+                return InkWell(
+                  onTap: () {
+                    currentNote = element;
+
+                    Globals.changeSelectedNote(currentNote);
+                    isSecondWidgetVisible = true;
+                    _mapController.move(
+                        LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)), 15);
+
+                    setState(() {});
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 10,
+                    height: 10,
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        );
+      });
+      setState(() {});
+    });
+  }
+
   PreferredSize fieldAppBar() {
     return PreferredSize(
       preferredSize: Size.fromHeight(500.0),
@@ -581,6 +649,7 @@ class _FieldScreenState extends State<FieldScreen> {
             SeasonChoicePage(
               done: () async {
                 await getNoteMarkerList();
+                currentLayerName = 'agr_parcel';
                 wmsLayer = Globals.isLogin
                     ? WMSTileLayerOptions(
                         baseUrl: 'http://103.143.40.250:8080/geoserver/agrgis/wms?',
@@ -643,46 +712,5 @@ class _FieldScreenState extends State<FieldScreen> {
         ),
       ),
     );
-  }
-
-  getNoteMarkerList() {
-    NoteService().getNoteList().then((value) {
-      value.forEach((element) {
-        noteMarkers.add(
-          Marker(
-              width: 15,
-              height: 15,
-              point: LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)),
-              builder: (context) {
-                return InkWell(
-                  onTap: () {
-                    _mapController.move(
-                        LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)), 15);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    width: 10,
-                    height: 10,
-                    child: Center(
-                      child: Container(
-                        padding: EdgeInsets.all(5),
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }),
-        );
-      });
-      setState(() {});
-    });
   }
 }

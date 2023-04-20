@@ -30,16 +30,12 @@ class _NdviButtonState extends State<NdviButton> {
             width: 80,
             height: MediaQuery.of(context).size.height * 0.055,
             decoration: BoxDecoration(
-                color:
-                    const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+                color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
                 borderRadius: BorderRadius.circular(12)),
             child: const Center(
                 child: Text(
               'NDVI',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18),
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18),
             )),
           ),
         ),
@@ -50,8 +46,7 @@ class _NdviButtonState extends State<NdviButton> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 239, 239, 239)
-                      .withOpacity(0.85),
+                  color: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
                   borderRadius: BorderRadius.circular(12)),
               height: MediaQuery.of(context).size.height * 0.055,
               width: MediaQuery.of(context).size.width * 0.7,

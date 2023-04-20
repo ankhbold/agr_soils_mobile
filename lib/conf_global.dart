@@ -1,3 +1,5 @@
+import 'models/note.dart';
+
 class Globals {
   // static var anInteger = 0;
 
@@ -16,10 +18,15 @@ class Globals {
   static var company_id = '';
   static var latit = '';
   static var longit = '';
+  static Note? selectedNote;
 
   // static printInteger() {
   //   print(anInteger);
   // }
+
+  static changeSelectedNote(Note? a) {
+    selectedNote = a;
+  }
 
   static changeIndexColor(int a) {
     index_color = a;

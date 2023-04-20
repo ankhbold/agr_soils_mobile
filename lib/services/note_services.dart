@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mvvm/services/commons/api_helper.dart';
 
 import '../conf_global.dart';
 import '../models/create_note_request.dart';
@@ -36,24 +37,10 @@ class NoteService {
   }
 
   Future createNoteStore(CreateNoteRequestModel createNoteRequestModel) async {
-    print(createNoteRequestModel.toJson());
-    try {
-      final response = await http.post(
-        Uri.parse(
-          'http://103.143.40.250:8100/api/mobile/parcelnote/create?season_id=${createNoteRequestModel.season_id}&description=${createNoteRequestModel.description}desc&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date}',
-        ),
-      );
-      print(response.statusCode);
-
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print(e.toString());
-      throw Exception(e.toString());
-    }
+    final response = await ApiHelper().postUrl(
+        url:
+            '/api/mobile/parcelnote/create?season_id=${createNoteRequestModel.season_id}&description=${createNoteRequestModel.description}desc&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date}&files=${createNoteRequestModel.files}');
+    return response;
   }
 
   Future updatePage(String id, String name, String nameEn) async {

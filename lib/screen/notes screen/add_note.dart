@@ -13,6 +13,7 @@ import '../../models/note_type.dart';
 import '../../services/commons/exception.dart';
 import '../../services/commons/img_upload.dart';
 import '../../services/note_services.dart';
+import '../../widget/cached_network_image.dart';
 import '../../widget/line.dart';
 import '../../widget/loader.dart';
 import '../../widget/outlined_btn.dart';
@@ -20,10 +21,9 @@ import '../../widget/snackbar.dart';
 import '../field%20screen/field.dart';
 
 class NoteAdd extends StatefulWidget {
-  NoteAdd({super.key, this.success, this.isEdit = false, this.note});
+  NoteAdd({super.key, this.success, this.isEdit = false});
   Function? success;
   bool isEdit;
-  Note? note;
 
   @override
   State<NoteAdd> createState() => _NoteAddState();
@@ -34,29 +34,28 @@ class _NoteAddState extends State<NoteAdd> {
   String? selectedType;
   int currentTypeIndex = -1;
   List<NoteType> noteTypes = [];
-  List<XFile> images = [];
+  List<String> images = [];
   final titleController = TextEditingController();
   DateTime currentDateTime = DateTime.now();
   DateTime chooseDateTime = DateTime.now();
+  bool imageLoading = false;
+  Note? currentNote;
 
   @override
   void initState() {
     super.initState();
     NoteService().getGetNoteType().then((value) {
       noteTypes = value;
-      if (widget.isEdit) {
-        titleController.text = widget.note?.note_type_desc ?? "";
-        currentDateTime = DateTime.parse(widget.note!.created_at!);
-        currentTypeIndex = noteTypes.indexOf(noteTypes.singleWhere((element) => element.id == widget.note!.id));
-        setState(() {});
-      }
+      setState(() {});
     });
+    // print('orsind');
   }
 
   Future pickImage() async {
     try {
       image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+
       setState(() {});
     } on PlatformException catch (e) {
       print('Failed to pick image$e');
@@ -77,6 +76,17 @@ class _NoteAddState extends State<NoteAdd> {
 
   @override
   Widget build(BuildContext context) {
+    if (Globals.selectedNote != null && currentNote == null) {
+      currentNote = Globals.selectedNote!;
+      titleController.text = currentNote?.description ?? "";
+      currentDateTime = DateTime.parse(currentNote!.created_at!);
+      if (noteTypes.isNotEmpty) {
+        currentTypeIndex = noteTypes.indexOf(noteTypes.singleWhere((element) => element.id == currentNote!.note_type));
+        selectedType = noteTypes[currentTypeIndex].name;
+        setState(() {});
+      }
+    }
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
       child: ListView(
@@ -134,33 +144,34 @@ class _NoteAddState extends State<NoteAdd> {
                     onPressed: () async {
                       CreateNoteRequestModel createNoteRequestMode = CreateNoteRequestModel(
                         description: titleController.text,
-                        season_id: Globals.seasonId,
+                        season_id: currentNote != null ? currentNote!.season_id : Globals.seasonId,
                         note_type: noteTypes[currentTypeIndex].id,
                         send_date: currentDateTime.toString(),
-                        cordinate_x: Globals.longit,
-                        cordinate_y: Globals.latit,
+                        cordinate_x: currentNote != null ? currentNote!.x_coordinate : Globals.longit,
+                        cordinate_y: currentNote != null ? currentNote!.y_coordinate : Globals.latit,
+                        files: images,
                       );
                       LoadingIndicator(context: context).showLoadingIndicator();
-                      await NoteService().createNoteStore(createNoteRequestMode).then((value) {
+                      NoteService().createNoteStore(createNoteRequestMode).then((value) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
-                        if (value!) {
-                          setState(() {
-                            isChoose = true;
-                            isMarker = false;
-                            isFabVisible = true;
-                            note = false;
-                            isFirstWidgetVisible = false;
-                            isSecondWidgetVisible = false;
-                            isThirdWidgetVisible = false;
-                          });
-                          widget.success!();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            CustomSnackBar(
-                              message: 'fail to post',
-                            ),
-                          );
-                        }
+                        // if (value!) {
+                        setState(() {
+                          isChoose = true;
+                          isMarker = false;
+                          isFabVisible = true;
+                          note = false;
+                          isFirstWidgetVisible = false;
+                          isSecondWidgetVisible = false;
+                          isThirdWidgetVisible = false;
+                        });
+                        widget.success!();
+                        // } else {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     CustomSnackBar(
+                        //       message: 'fail to post',
+                        //     ),
+                        //   );
+                        // }
                       }).catchError((onError) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
                         ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
@@ -219,9 +230,16 @@ class _NoteAddState extends State<NoteAdd> {
             ),
             child: InkWell(
               onTap: () {
+                imageLoading = true;
+                setState(() {});
                 pickImage().then((value) {
-                  ImgUploadService().sendImage(file: image).then((value) {
-                    print(value);
+                  ImgUploadService().sendImage(file: image)!.then((value) {
+                    images.add(value!);
+                    imageLoading = false;
+                    setState(() {});
+                  }).catchError((onError) {
+                    imageLoading = false;
+                    setState(() {});
                   });
                 });
               },
@@ -251,34 +269,56 @@ class _NoteAddState extends State<NoteAdd> {
             ),
           ),
           images.isNotEmpty
-              ? SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  child: GridView.builder(
-                    padding: EdgeInsets.all(0),
-                    itemCount: images.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 10 / 7,
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 50,
-                        width: 80,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.file(
-                            File(images[index].path),
-                            height: 50,
-                            width: 80,
-                            fit: BoxFit.cover,
+              ? Stack(
+                  children: [
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: GridView.builder(
+                          padding: EdgeInsets.all(0),
+                          itemCount: images.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 10 / 7,
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
                           ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              height: 50,
+                              width: 80,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: MyCachedNetworkImage(
+                                  imageUrl: images[index],
+                                  fit: BoxFit.cover,
+                                  isPlaceHolder: true,
+                                ),
+                              ),
+                            );
+                          },
+                        )),
+                    imageLoading
+                        ? Center(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 80),
+                              child: LoadingIndicatorWidget(
+                                loaderColor: Color(0xff065F46),
+                              ),
+                            ),
+                          )
+                        : Container()
+                  ],
+                )
+              : imageLoading
+                  ? Center(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 80),
+                        child: LoadingIndicatorWidget(
+                          loaderColor: Color(0xff065F46),
                         ),
-                      );
-                    },
-                  ))
-              : Container(),
+                      ),
+                    )
+                  : Container(),
           SizedBox(
             height: 20,
           ),

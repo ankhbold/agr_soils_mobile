@@ -8,6 +8,7 @@ class AddField extends StatelessWidget {
   Function? clear;
   Function? undo;
   Function? next;
+  Function? success;
 
   @override
   Widget build(BuildContext context) {

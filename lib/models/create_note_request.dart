@@ -5,6 +5,7 @@ class CreateNoteRequestModel {
   String? cordinate_x;
   String? cordinate_y;
   String? send_date;
+  List<String>? files;
   CreateNoteRequestModel({
     this.season_id,
     this.description,
@@ -12,6 +13,7 @@ class CreateNoteRequestModel {
     this.cordinate_x,
     this.cordinate_y,
     this.send_date,
+    this.files,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -21,6 +23,7 @@ class CreateNoteRequestModel {
       'cordinate_x': cordinate_x,
       'cordinate_y': cordinate_y,
       'send_date': send_date,
+      'files': files,
     };
   }
 }

@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'exception.dart';
 
 class ImgUploadService {
-  Future sendImage({XFile? file}) async {
+  Future<String?>? sendImage({XFile? file}) async {
     try {
       String fileName = file!.path.split('/').last;
 
@@ -15,13 +15,17 @@ class ImgUploadService {
         ),
       });
       Dio dio = Dio();
-      Response response = await dio.post("/mobile/image/upload", data: data);
+      Response response = await dio.post("http://103.143.40.250:8100/mobile/image/upload", data: data);
+
       if (response.statusCode == 200) {
-        return response.data["response"];
+        return response.data["url"];
       } else {
-        return false;
+        return null;
       }
+    } on DioError catch (ex) {
+      print(ex.message);
     } catch (Ex) {
+      print(Ex.toString());
       throw CustomException(errorMsg: Ex.toString());
     }
   }

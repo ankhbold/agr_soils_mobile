@@ -48,21 +48,6 @@ class _FloatingFabState extends State<FloatingFab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (sungahh)
-              Expanded(flex: 1, child: SizedBox())
-            else
-              Expanded(
-                flex: 14,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    SateliteDetailInfo(),
-                  ],
-                ),
-              ),
             Expanded(
               flex: 3,
               child: SizedBox(
@@ -77,7 +62,7 @@ class _FloatingFabState extends State<FloatingFab> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.035,
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.98,
                     child: ListView.builder(
                       itemCount: layers.length,
                       padding: const EdgeInsets.only(right: 3, left: 3),
@@ -110,28 +95,6 @@ class _FloatingFabState extends State<FloatingFab> {
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        sungahh = !sungahh;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.035,
-                        width: MediaQuery.of(context).size.width * 0.11,
-                        decoration: BoxDecoration(color: AppColors.Green, borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: Icon(
-                            Icons.more_horiz,
-                            size: 30,
-                            color: AppColors.whiteColor,
                           ),
                         ),
                       ),

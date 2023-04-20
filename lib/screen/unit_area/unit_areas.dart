@@ -1,9 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:mvvm/services/commons/apis.dart';
-import 'package:mvvm/widget/cached_network_image.dart';
+
 import '../../models/unit_area.dart';
+import '../../services/commons/apis.dart';
 import '../../services/geo_service.dart';
+import '../../widget/cached_network_image.dart';
 import '../insight screen/insight_screen.dart';
 
 class AllUnitAreas extends StatefulWidget {
@@ -114,7 +115,7 @@ class UnitAreaItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   AutoSizeText(
-                    '${unitArea!.address_streetname} ${unitArea?.area_ha ?? 0} га',
+                    '${unitArea?.address_streetname ?? ""} ${unitArea?.area_ha ?? 0} га',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -126,7 +127,7 @@ class UnitAreaItem extends StatelessWidget {
                   Row(
                     children: unitArea!.cult_names!.split(",").map((e) {
                       return Text(
-                        e.toString(),
+                        e ?? '',
                         textAlign: TextAlign.start,
                       );
                     }).toList(),
@@ -138,7 +139,7 @@ class UnitAreaItem extends StatelessWidget {
           Column(
             children: [
               Text(
-                formatDate,
+                formatDate ?? '',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

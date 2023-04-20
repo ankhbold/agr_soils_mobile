@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mvvm/models/note.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
 import '../../models/create_note_request.dart';
+import '../../models/note.dart';
 import '../../models/note_type.dart';
+import '../../services/commons/exception.dart';
+import '../../services/commons/img_upload.dart';
 import '../../services/note_services.dart';
 import '../../widget/line.dart';
 import '../../widget/loader.dart';
@@ -28,7 +30,7 @@ class NoteAdd extends StatefulWidget {
 }
 
 class _NoteAddState extends State<NoteAdd> {
-  File? image;
+  XFile? image;
   String? selectedType;
   int currentTypeIndex = -1;
   List<NoteType> noteTypes = [];
@@ -53,14 +55,13 @@ class _NoteAddState extends State<NoteAdd> {
 
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      final imageTemporary = File(image.path);
-      this.image = imageTemporary;
-      images.add(image);
       setState(() {});
     } on PlatformException catch (e) {
       print('Failed to pick image$e');
+    } catch (Ex) {
+      throw CustomException(errorMsg: Ex.toString());
     }
   }
 
@@ -218,8 +219,10 @@ class _NoteAddState extends State<NoteAdd> {
             ),
             child: InkWell(
               onTap: () {
-                setState(() {
-                  pickImage();
+                pickImage().then((value) {
+                  ImgUploadService().sendImage(file: image).then((value) {
+                    print(value);
+                  });
                 });
               },
               child: Ink(

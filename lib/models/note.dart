@@ -25,6 +25,7 @@ class Note {
   String? end_date;
   String? note_type_desc;
   String? image_url;
+  List<String>? images;
   Note({
     this.id,
     this.parcel_id,
@@ -42,6 +43,7 @@ class Note {
     this.end_date,
     this.note_type_desc,
     this.image_url,
+    this.images,
   });
 
   /// A necessary factory constructor for creating a new User instance

@@ -23,6 +23,8 @@ Note _$NoteFromJson(Map<String, dynamic> json) => Note(
       end_date: json['end_date'] as String?,
       note_type_desc: json['note_type_desc'] as String?,
       image_url: json['image_url'] as String?,
+      images:
+          (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
     )
       ..note_type = json['note_type'] as int?
       ..season_id = json['season_id'] as int?;
@@ -46,4 +48,5 @@ Map<String, dynamic> _$NoteToJson(Note instance) => <String, dynamic>{
       'end_date': instance.end_date,
       'note_type_desc': instance.note_type_desc,
       'image_url': instance.image_url,
+      'images': instance.images,
     };

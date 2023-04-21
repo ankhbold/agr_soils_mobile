@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/screen/field%20screen/satelite_image_type.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
 import '../../models/note.dart';
+import '../../services/geo_service.dart';
 import '../../services/note_services.dart';
 import '../../services/permissions/location.dart';
+import '../../widget/loader.dart';
+import '../../widget/snackbar.dart';
 import '../field%20screen/floatingss/floating_items.dart';
 import '../field%20screen/panel_widget.dart';
+import '../field%20screen/satelite_image_type.dart';
 import '../notes screen/add_note.dart';
 import '../season/season_choice_page.dart';
 import '../unit_area/add_area.dart';
@@ -348,6 +351,9 @@ class _FieldScreenState extends State<FieldScreen> {
                         Globals.changeLongtitude(latlng.longitude);
                         markers.clear();
                         print(latlng);
+                        GeoService.getUnitAreaNumber(latLng: latlng).then(
+                          (value) {},
+                        );
                         _handleTap(latlng);
                       });
                     }
@@ -406,7 +412,11 @@ class _FieldScreenState extends State<FieldScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  StateliteImageType(),
+                  StateliteImageType(
+                    changeSateliteLayer: (value) {
+                      print(value);
+                    },
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -430,9 +440,12 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
             ),
             Offstage(
-              offstage: !isSecondWidgetVisible || widget.isNoteSelected!,
+              offstage: !isSecondWidgetVisible || widget.isNoteSelected! || Globals.selectedNote != null,
               child: SlidingUpPanel(
                 controller: panelController,
+                onPanelClosed: () {
+                  Globals.changeSelectedNote(null);
+                },
                 backdropEnabled: true,
                 maxHeight: panelHeightOpened2,
                 minHeight: panelHeightClosed2,
@@ -601,14 +614,23 @@ class _FieldScreenState extends State<FieldScreen> {
               builder: (context) {
                 return InkWell(
                   onTap: () {
-                    currentNote = element;
+                    LoadingIndicator(context: context).showLoadingIndicator();
+                    NoteService().getNoteDetail(id: element.id).then((value) {
+                      LoadingIndicator(context: context).hideLoadingIndicator();
 
-                    Globals.changeSelectedNote(currentNote);
-                    isSecondWidgetVisible = true;
-                    _mapController.move(
-                        LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)), 15);
-
-                    setState(() {});
+                      currentNote = value;
+                      // print(currentNote!.images.toString());
+                      isSecondWidgetVisible = true;
+                      Globals.changeSelectedNote(currentNote);
+                      _mapController.move(
+                          LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)), 15);
+                      setState(() {});
+                    }).catchError((onError) {
+                      LoadingIndicator(context: context).hideLoadingIndicator();
+                      ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                        message: onError.toString(),
+                      ));
+                    });
                   },
                   child: Container(
                     decoration: BoxDecoration(

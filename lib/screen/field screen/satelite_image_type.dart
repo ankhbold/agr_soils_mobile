@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/models/satelite_layer_type.dart';
 
 import '../../constants/color.dart';
+import '../../models/satelite_layer_type.dart';
 import '../../services/satelite.dart';
 import 'floatingss/first_float.dart';
 
+// ignore: must_be_immutable
 class StateliteImageType extends StatefulWidget {
+  StateliteImageType({this.changeSateliteLayer});
   @override
   State<StatefulWidget> createState() {
     return StateliteImageTypeState();
   }
+
+  Function(String name)? changeSateliteLayer;
 }
 
 bool sungahh = true;
@@ -83,7 +87,7 @@ class StateliteImageTypeState extends State<StateliteImageType> {
                             setState(() {
                               current = index;
                             });
-                            // widget.changeLayer!(layers[index]);
+                            widget.changeSateliteLayer!(types[index].name!);
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.01,

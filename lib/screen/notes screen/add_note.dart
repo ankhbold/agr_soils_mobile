@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,13 +74,17 @@ class _NoteAddState extends State<NoteAdd> {
 
   @override
   Widget build(BuildContext context) {
-    if (Globals.selectedNote != null && currentNote == null) {
+    if (Globals.selectedNote != null) {
       currentNote = Globals.selectedNote!;
+      images.clear();
       titleController.text = currentNote?.description ?? "";
       currentDateTime = DateTime.parse(currentNote!.created_at!);
       if (noteTypes.isNotEmpty) {
         currentTypeIndex = noteTypes.indexOf(noteTypes.singleWhere((element) => element.id == currentNote!.note_type));
         selectedType = noteTypes[currentTypeIndex].name;
+        if (currentNote!.images != null) {
+          images.addAll(currentNote!.images!);
+        }
         setState(() {});
       }
     }
@@ -154,7 +156,6 @@ class _NoteAddState extends State<NoteAdd> {
                       LoadingIndicator(context: context).showLoadingIndicator();
                       NoteService().createNoteStore(createNoteRequestMode).then((value) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
-                        // if (value!) {
                         setState(() {
                           isChoose = true;
                           isMarker = false;
@@ -165,13 +166,6 @@ class _NoteAddState extends State<NoteAdd> {
                           isThirdWidgetVisible = false;
                         });
                         widget.success!();
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     CustomSnackBar(
-                        //       message: 'fail to post',
-                        //     ),
-                        //   );
-                        // }
                       }).catchError((onError) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
                         ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
@@ -425,6 +419,13 @@ class _NoteAddState extends State<NoteAdd> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    currentNote == null;
+    setState(() {});
+    super.dispose();
   }
 }
 

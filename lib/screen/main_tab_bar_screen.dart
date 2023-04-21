@@ -20,6 +20,7 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
 
   int currentIndex = 0;
   bool isNoteSelected = false;
+  ValueNotifier<bool> selectedNotifier = ValueNotifier(false);
 
   void onTabTapped(int index) {
     setState(() {
@@ -108,6 +109,5 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

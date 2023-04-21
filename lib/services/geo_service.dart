@@ -1,9 +1,11 @@
 import 'dart:convert';
 
-import 'package:mvvm/models/raster_layer.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../conf_global.dart';
+import '../models/raster_layer.dart';
 import '../models/unit_area.dart';
+import '../models/unit_area_number.dart';
 import 'commons/api_helper.dart';
 
 class GeoService {
@@ -28,5 +30,17 @@ class GeoService {
       ),
     );
     return layers;
+  }
+
+  static Future<UnitAreaNumber> getUnitAreaNumber({LatLng? latLng}) async {
+    var response = await ApiHelper()
+        .getUrl(url: '/api/mobile/getparcelid/bycoords?coord_x=${latLng!.longitude}&coord_y=${latLng.latitude}');
+
+    UnitAreaNumber unitAreaNumber = List<UnitAreaNumber>.from(
+      (json.decode(response) as List).map(
+        (model) => UnitAreaNumber.fromJson(model),
+      ),
+    ).first;
+    return unitAreaNumber;
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mvvm/services/commons/api_helper.dart';
 
 import '../conf_global.dart';
 import '../models/create_note_request.dart';
 import '../models/note.dart';
 import '../models/note_type.dart';
+import 'commons/api_helper.dart';
 
 // const uri = 'https://63aa6bd6594f75dc1dcff51c.mockapi.io/name';
 // const uri2 = 'http://103.143.40.250:8100/api/get/season';
@@ -107,4 +107,12 @@ class NoteService {
       throw Exception(e.toString());
     }
   }
+
+  Future<Note> getNoteDetail({int? id}) async {
+    final response = await ApiHelper().getUrl(url: '/api/mobile/getnote/id?note_id=$id');
+    // print(response);
+    return Note.fromJson(json.decode(response));
+  }
+
+  // http://soils/api/mobile/getnote/id?note_id=651
 }

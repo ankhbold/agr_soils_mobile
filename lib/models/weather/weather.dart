@@ -5,6 +5,7 @@ import 'clouds.dart';
 import 'weather_element.dart';
 import 'weather_main.dart';
 import 'wind.dart';
+
 part 'weather.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -17,6 +18,7 @@ class Weather {
     this.wind,
     this.name,
     this.clouds,
+    this.dt_txt
   });
 
   final Coord? coord;
@@ -26,6 +28,7 @@ class Weather {
   final Wind? wind;
   final String? name;
   final Clouds? clouds;
+  String? dt_txt;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

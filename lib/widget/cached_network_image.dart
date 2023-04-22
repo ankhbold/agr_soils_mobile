@@ -39,7 +39,7 @@ class MyCachedNetworkImage extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
             color: Color(0xffECECEC),
-            borderRadius: BorderRadius.circular(borderRadius!),
+            borderRadius: BorderRadius.circular(borderRadius ?? 15),
           ),
         );
       },

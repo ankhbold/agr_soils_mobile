@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/models/raster_layer.dart';
-import 'package:mvvm/services/geo_service.dart';
-import 'package:mvvm/widget/snackbar.dart';
 
-import '../../../constants/color.dart';
+import '../../../models/raster_layer.dart';
+import '../../../models/unit_area_satelite_stats.dart';
+import '../../../services/geo_service.dart';
+import '../../../widget/snackbar.dart';
 import '../../field%20screen/floatingss/first_float.dart';
 
 class FloatingFab extends StatefulWidget {
@@ -110,16 +110,17 @@ class _FloatingFabState extends State<FloatingFab> {
   }
 }
 
+// ignore: must_be_immutable
 class SateliteDetailInfo extends StatelessWidget {
-  const SateliteDetailInfo({
-    Key? key,
-  }) : super(key: key);
+  SateliteDetailInfo({Key? key, this.sateliteInfoStats}) : super(key: key);
+  UnitAreaSateliteInfoStats? sateliteInfoStats;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -128,10 +129,8 @@ class SateliteDetailInfo extends StatelessWidget {
             style: TextStyle(fontSize: 13, color: Colors.white),
           ),
         ),
-        Text(
-          'Их',
-          style: TextStyle(fontSize: 13, color: Colors.white),
-        ),
+        Line100(),
+        SateliteDetailInfoItemWidget(label: 'Их', value: (sateliteInfoStats?.max ?? 0).toString()),
         Line100(),
         Text(
           'Дундаж',
@@ -158,6 +157,23 @@ class SateliteDetailInfo extends StatelessWidget {
           style: TextStyle(fontSize: 13, color: Colors.white),
         ),
         Line100()
+      ],
+    );
+  }
+
+  Widget SateliteDetailInfoItemWidget({String? label, String? value}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Text(
+          label!,
+          style: TextStyle(fontSize: 13, color: Colors.white),
+        ),
+        Text(
+          value!,
+          style: TextStyle(fontSize: 13, color: Colors.white),
+        )
       ],
     );
   }

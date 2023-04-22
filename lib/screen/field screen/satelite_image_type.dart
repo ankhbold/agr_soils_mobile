@@ -4,6 +4,7 @@ import '../../constants/color.dart';
 import '../../models/satelite_layer_type.dart';
 import '../../services/satelite.dart';
 import 'floatingss/first_float.dart';
+import 'floatingss/floating_items.dart';
 
 // ignore: must_be_immutable
 class StateliteImageType extends StatefulWidget {
@@ -17,7 +18,7 @@ class StateliteImageType extends StatefulWidget {
 }
 
 bool sungahh = true;
-int current = 0;
+int current = -1;
 
 class StateliteImageTypeState extends State<StateliteImageType> {
   List<SateliteLayerType> types = [];
@@ -57,7 +58,7 @@ class StateliteImageTypeState extends State<StateliteImageType> {
                     SizedBox(
                       width: 10,
                     ),
-                    // SateliteDetailInfo(),
+                    SateliteDetailInfo(),
                   ],
                 ),
               ),

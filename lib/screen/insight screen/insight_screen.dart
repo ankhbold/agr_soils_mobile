@@ -8,10 +8,10 @@ import '../../models/unit_area.dart';
 import '../../services/geo_service.dart';
 import '../../widget/loader.dart';
 import '../insight%20screen/weather.dart';
-import '../insight%20screen/weather_screen.dart';
 import '../sensor/sensor_chart.dart';
 import '../unit_area/unit_areas.dart';
 import '../widgets/button/default_button.dart';
+import 'forecast_weather_screen.dart';
 
 DateTime now = DateTime.now();
 String formattedDate = DateFormat('M сарын d (H цаг)').format(now);
@@ -31,8 +31,7 @@ class _InsightScreenState extends State<InsightScreen> {
       body: Navigator(
         onGenerateRoute: (insight) {
           Widget page = const Insight();
-          if (insight.name == 'page2') page = const WeatherScreen();
-          if (insight.name == 'page1') page = const Insight();
+          if (insight.name == 'page2') page = ForecastWeatherScreen();
           return MaterialPageRoute(builder: (_) => page);
         },
       ),
@@ -154,7 +153,14 @@ class _InsightState extends State<Insight> {
               ),
               DefaultButton(
                 OnTap: () {
-                  Navigator.pushNamed(context, 'page2');
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: ForecastWeatherScreen(
+                      latLng: latLng,
+                    ),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
                 },
                 text: 'Цаг агаарын урьдчилсан мэдээ',
               ),

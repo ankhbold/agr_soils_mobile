@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constants/color.dart';
@@ -50,17 +49,20 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
+    return SfCartesianChart( 
+      zoomPanBehavior: ZoomPanBehavior(enablePinching: true),
         key: GlobalKey(),
         plotAreaBorderWidth: 0,
         title: ChartTitle(text: 'Сенсор мэдээлэл'),
         legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
         primaryXAxis: DateTimeAxis(
-            edgeLabelPlacement: EdgeLabelPlacement.shift,
-            intervalType: DateTimeIntervalType.months,
-            dateFormat: DateFormat.m(),
-            name: 'Сар',
-            majorGridLines: const MajorGridLines(width: 0)),
+          autoScrollingMode: AutoScrollingMode.end, intervalType: DateTimeIntervalType.months
+          // enableAutoIntervalOnZooming: true,
+          //     edgeLabelPlacement: EdgeLabelPlacement.shift,
+          //     intervalType: DateTimeIntervalType.months,
+          // dateFormat: DateFormat.m(),
+          // majorGridLines: const MajorGridLines(width: 0),
+          ),
         primaryYAxis: NumericAxis(
             rangePadding: ChartRangePadding.none,
             name: '...',
@@ -68,9 +70,11 @@ class _ChartState extends State<Chart> {
             maximum: 110,
             interval: 10,
             axisLine: const AxisLine(width: 0),
-            majorTickLines: const MajorTickLines(color: Colors.transparent)),
+        majorTickLines: const MajorTickLines(color: Colors.transparent),
+      ),
         series: _getDefaultLineSeries(),
-        trackballBehavior: _trackballBehavior);
+      trackballBehavior: _trackballBehavior,
+    );
   }
 
   List<LineSeries<_SampleData, DateTime>> _getDefaultLineSeries() {
@@ -79,7 +83,7 @@ class _ChartState extends State<Chart> {
         dataSource: chartData!,
         xValueMapper: (_SampleData sales, _) => sales.x,
         yValueMapper: (_SampleData sales, _) => sales.y1,
-        name: 'Product A',
+        // name: 'Product A',
       ),
     ];
   }

@@ -19,7 +19,7 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
   PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
   int currentIndex = 0;
-  bool isNoteSelected = false;
+  bool? isNoteSelected;
   ValueNotifier<bool> selectedNotifier = ValueNotifier(false);
 
   void onTabTapped(int index) {
@@ -31,6 +31,7 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
   @override
   void initState() {
     super.initState();
+    
   }
 
   @override

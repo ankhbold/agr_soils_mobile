@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants/color.dart';
 import '../../widget/line.dart';
-import '../insight%20screen/weather.dart';
 import 'field.dart';
 import 'floating_fields.dart';
 import 'floatingss/first_float.dart';
@@ -181,7 +180,6 @@ class _FieldPanelState extends State<FieldPanel> {
                 const SizedBox(
                   height: 10,
                 ),
-                WeatherClick(),
                 const SizedBox(
                   height: 10,
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../../conf_global.dart';
 import '../../constants/colors.dart';
 import '../../models/note.dart';
 import '../../services/commons/apis.dart';
@@ -14,9 +15,10 @@ import '../field screen/field.dart';
 
 // ignore: must_be_immutable
 class NoteListPage extends StatefulWidget {
-  NoteListPage({super.key, this.tabController, this.changeLocation});
+  NoteListPage({super.key, this.tabController, this.changeLocation, this.selectedNotifer});
   PersistentTabController? tabController;
   Function? changeLocation;
+  ValueNotifier<bool>? selectedNotifer;
   @override
   State<NoteListPage> createState() => NoteListPageState();
 }
@@ -89,15 +91,18 @@ class NoteListPageState extends State<NoteListPage> {
                           // print(note.image_url);
                           return InkWell(
                             onTap: () {
-                          
-                              widget.changeLocation!();
+                           
+
                               NoteMove(
                                 LatLng(
                                   double.parse(note.y_coordinate!),
                                   double.parse(note.x_coordinate!),
                                 ),
                               );
+                              Globals.changeSelectedNote(note);
+                              widget.changeLocation!();
                               widget.tabController!.jumpToTab(0);
+                             
                             },
                             child: Container(
                               padding: EdgeInsets.all(10),

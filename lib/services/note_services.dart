@@ -37,45 +37,17 @@ class NoteService {
   }
 
   Future createNoteStore(CreateNoteRequestModel createNoteRequestModel) async {
+    print(createNoteRequestModel.toJson());
     final response = await ApiHelper().postUrl(
         url:
             '/api/mobile/parcelnote/create?season_id=${createNoteRequestModel.season_id}&description=${createNoteRequestModel.description}desc&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date}&files=${createNoteRequestModel.files}');
+   
     return response;
   }
 
-  Future updatePage(String id, String name, String nameEn) async {
-    try {
-      final response = await http.put(
-        Uri.parse('$uri6/$id'),
-        body: {
-          'name': name,
-          'name_en': nameEn,
-        },
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
 
-  Future deleteData(int id) async {
-    try {
-      final response = await http.delete(
-        Uri.parse('$uri5/$id'),
-      );
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return e.toString();
-    }
-  }
+
+
 
   Future<List<Note>> getNoteList({String? person_id, String? season_id}) async {
     // print(Globals.seasonId);

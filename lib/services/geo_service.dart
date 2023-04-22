@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:latlong2/latlong.dart';
 
 import '../conf_global.dart';
+import '../models/get_satelite_info.dart';
 import '../models/raster_layer.dart';
 import '../models/unit_area.dart';
 import '../models/unit_area_number.dart';
+import '../models/unit_area_satelite_info.dart';
 import 'commons/api_helper.dart';
 
 class GeoService {
@@ -36,11 +38,16 @@ class GeoService {
     var response = await ApiHelper()
         .getUrl(url: '/api/mobile/getparcelid/bycoords?coord_x=${latLng!.longitude}&coord_y=${latLng.latitude}');
 
-    UnitAreaNumber unitAreaNumber = List<UnitAreaNumber>.from(
-      (json.decode(response) as List).map(
-        (model) => UnitAreaNumber.fromJson(model),
-      ),
-    ).first;
+    UnitAreaNumber unitAreaNumber = UnitAreaNumber.fromJson(json.decode(response));
     return unitAreaNumber;
+  }
+
+  static Future<UnitAreaSateliteInfo> getUnitAreaSateliteInfo({GetSateliteTypeInfo? typeInfo}) async {
+    var response = await ApiHelper().getUrl(
+        url:
+            '/parcel/satellite/bypolygon?parcel_id=${typeInfo!.parcel_id}&image_type=${typeInfo.image_type}&sattelite_date=${typeInfo.sattelite_date}');
+    UnitAreaSateliteInfo unitAreaSateliteInfo = UnitAreaSateliteInfo.fromJson(response);
+    print(unitAreaSateliteInfo.toJson());
+    return unitAreaSateliteInfo;
   }
 }

@@ -61,6 +61,27 @@ class MyDateManager {
     }
   }
 
+
+  static String getDayName({int? day}) {
+    switch (day) {
+      case 1:
+        return "Даваа";
+      case 2:
+        return "Мягмар";
+      case 3:
+        return "Лхагва";
+      case 4:
+        return "Пүрэв";
+      case 5:
+        return "Баасан";
+      case 6:
+        return "Бямба";
+      case 7:
+        return "Ням";
+    }
+    return "";
+  }
+
   static String getMonthName({int? month}) {
     switch (month) {
       case 1:

@@ -19,8 +19,9 @@ import '../../widget/snackbar.dart';
 import '../field%20screen/field.dart';
 
 class NoteAdd extends StatefulWidget {
-  NoteAdd({super.key, this.success, this.isEdit = false});
+  NoteAdd({super.key, this.success, this.isEdit = false, this.back});
   Function? success;
+  Function? back;
   bool isEdit;
 
   @override
@@ -38,6 +39,8 @@ class _NoteAddState extends State<NoteAdd> {
   DateTime chooseDateTime = DateTime.now();
   bool imageLoading = false;
   Note? currentNote;
+  int? season_id;
+  String? current_x, current_y;
 
   @override
   void initState() {
@@ -79,6 +82,9 @@ class _NoteAddState extends State<NoteAdd> {
       images.clear();
       titleController.text = currentNote?.description ?? "";
       currentDateTime = DateTime.parse(currentNote!.created_at!);
+      current_x = currentNote!.x_coordinate;
+      current_y = currentNote!.y_coordinate;
+      season_id = currentNote!.season_id;
       if (noteTypes.isNotEmpty) {
         currentTypeIndex = noteTypes.indexOf(noteTypes.singleWhere((element) => element.id == currentNote!.note_type));
         selectedType = noteTypes[currentTypeIndex].name;
@@ -87,6 +93,10 @@ class _NoteAddState extends State<NoteAdd> {
         }
         setState(() {});
       }
+    } else {
+      season_id = Globals.seasonId;
+      current_x = Globals.longit;
+      current_y = Globals.latit;
     }
 
     return Container(
@@ -110,15 +120,7 @@ class _NoteAddState extends State<NoteAdd> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      setState(() {
-                        isChoose = true;
-                        isMarker = false;
-                        isFabVisible = true;
-                        note = !note;
-                        isFirstWidgetVisible = true;
-                        isSecondWidgetVisible = false;
-                        isThirdWidgetVisible = false;
-                      });
+                      widget.back!();
                     },
                     child: Text(
                       'Буцах',
@@ -146,11 +148,11 @@ class _NoteAddState extends State<NoteAdd> {
                     onPressed: () async {
                       CreateNoteRequestModel createNoteRequestMode = CreateNoteRequestModel(
                         description: titleController.text,
-                        season_id: currentNote != null ? currentNote!.season_id : Globals.seasonId,
+                        season_id: season_id,
                         note_type: noteTypes[currentTypeIndex].id,
                         send_date: currentDateTime.toString(),
-                        cordinate_x: currentNote != null ? currentNote!.x_coordinate : Globals.longit,
-                        cordinate_y: currentNote != null ? currentNote!.y_coordinate : Globals.latit,
+                        cordinate_x: current_x,
+                        cordinate_y: current_y,
                         files: images,
                       );
                       LoadingIndicator(context: context).showLoadingIndicator();
@@ -165,6 +167,7 @@ class _NoteAddState extends State<NoteAdd> {
                           isSecondWidgetVisible = false;
                           isThirdWidgetVisible = false;
                         });
+
                         widget.success!();
                       }).catchError((onError) {
                         LoadingIndicator(context: context).hideLoadingIndicator();
@@ -181,6 +184,9 @@ class _NoteAddState extends State<NoteAdd> {
                           isThirdWidgetVisible = false;
                         });
                       });
+                      // if (currentNote != null) {
+                      //   Globals.changeSelectedNote(null);
+                      // }
                     },
                     child: Text(
                       'Хадгалах',
@@ -286,6 +292,7 @@ class _NoteAddState extends State<NoteAdd> {
                                   imageUrl: images[index],
                                   fit: BoxFit.cover,
                                   isPlaceHolder: true,
+                                  borderRadius: 10,
                                 ),
                               ),
                             );

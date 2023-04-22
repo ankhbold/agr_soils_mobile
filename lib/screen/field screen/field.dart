@@ -9,10 +9,12 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
 import '../../constants/color.dart';
+import '../../models/get_satelite_info.dart';
 import '../../models/note.dart';
 import '../../services/geo_service.dart';
 import '../../services/note_services.dart';
 import '../../services/permissions/location.dart';
+import '../../utils/date_manager.dart';
 import '../../widget/loader.dart';
 import '../../widget/snackbar.dart';
 import '../field%20screen/floatingss/floating_items.dart';
@@ -55,7 +57,7 @@ Future<void> NoteMove(LatLng latLng) async {
 }
 
 class FieldScreen extends StatefulWidget {
-  FieldScreen({Key? key, this.tabController, this.isNoteSelected = false}) : super(key: key);
+  FieldScreen({Key? key, this.tabController, this.isNoteSelected}) : super(key: key);
   PersistentTabController? tabController;
   bool? isNoteSelected;
 
@@ -71,17 +73,15 @@ class _FieldScreenState extends State<FieldScreen> {
   List<Polygon> polygons = [];
   List<LatLng> currentPolygon = [];
   PanelController panelController = PanelController();
-  String? currentLayerName;
+  String? currentLayerName, currentSateliteLayerName;
   Note? currentNote;
-  var sate =
-      'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/10063b8b600/63bbb2d9176fe69751440499?appid=515ebec1b32cec8d92b4de210361642b';
-  var png =
-      'http://api.agromonitoring.com/tile/1.0/{z}/{x}/{y}/1506439e900/63bbe6a99512edd85de62fcf?appid=515ebec1b32cec8d92b4de210361642b';
-
+  var sate;
+  int? currentUnitAreaNumber;
   var falseColor = '';
   static double fabHeightClosed = 90.0;
   double fabHeight = fabHeightClosed;
   var wmsLayer;
+
   var tileLayer = TileLayer(
     urlTemplate: 'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
@@ -113,6 +113,7 @@ class _FieldScreenState extends State<FieldScreen> {
   void initState() {
     _mapController = MapController();
     super.initState();
+   
   }
 
   void _navigateToPosition() {
@@ -177,6 +178,7 @@ class _FieldScreenState extends State<FieldScreen> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
+   
     return Scaffold(
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -352,7 +354,11 @@ class _FieldScreenState extends State<FieldScreen> {
                         markers.clear();
                         print(latlng);
                         GeoService.getUnitAreaNumber(latLng: latlng).then(
-                          (value) {},
+                          (value) {
+                            currentUnitAreaNumber = value.id;
+                            print(currentUnitAreaNumber);
+                            setState(() {});
+                          },
                         );
                         _handleTap(latlng);
                       });
@@ -365,13 +371,13 @@ class _FieldScreenState extends State<FieldScreen> {
               children: wmsLayer != null
                   ? [
                       tileLayer,
-
                       TileLayer(backgroundColor: Colors.transparent, wmsOptions: wmsLayer),
-
-                      TileLayer(
-                        backgroundColor: Colors.transparent,
-                        urlTemplate: png,
-                      ),
+                      sate != null
+                          ? TileLayer(
+                              backgroundColor: Colors.transparent,
+                              urlTemplate: sate,
+                            )
+                          : Container(),
                       MarkerLayer(
                         markers: noteMarkers,
                       ),
@@ -385,8 +391,6 @@ class _FieldScreenState extends State<FieldScreen> {
                           Polyline(
                             points: polygonPoints,
                             color: Colors.white,
-
-                            // useStrokeWidthInMeter: true,
                           ),
                         ],
                       ),
@@ -414,7 +418,28 @@ class _FieldScreenState extends State<FieldScreen> {
                 children: [
                   StateliteImageType(
                     changeSateliteLayer: (value) {
-                      print(value);
+                      GetSateliteTypeInfo typeInfo = GetSateliteTypeInfo(
+                        image_type: value,
+                        parcel_id: currentUnitAreaNumber,
+                        sattelite_date: MyDateManager.toClientDateTime(
+                            date: DateTime.now().subtract(Duration(days: 4)).toString(), noTime: true),
+                      );
+                      LoadingIndicator(context: context).showLoadingIndicator();
+                      GeoService.getUnitAreaSateliteInfo(typeInfo: typeInfo).then((value) {
+                        LoadingIndicator(context: context).hideLoadingIndicator();
+                        if (value.status!) {
+                          sate = value.image_url;
+                          print(sate);
+                          setState(() {});
+                        }
+                      }).catchError((onError) {
+                        LoadingIndicator(context: context).hideLoadingIndicator();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          CustomSnackBar(
+                            message: onError.toString(),
+                          ),
+                        );
+                      });
                     },
                   ),
                   SizedBox(
@@ -440,7 +465,7 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
             ),
             Offstage(
-              offstage: !isSecondWidgetVisible || widget.isNoteSelected! || Globals.selectedNote != null,
+              offstage: widget.isNoteSelected != null ? widget.isNoteSelected! : !isSecondWidgetVisible,
               child: SlidingUpPanel(
                 controller: panelController,
                 onPanelClosed: () {
@@ -456,6 +481,12 @@ class _FieldScreenState extends State<FieldScreen> {
                   padding: EdgeInsets.zero,
                   children: [
                     NoteAdd(
+                      back: () {
+                        // isNoteSelected = false;
+                        // Globals.changeSelectedNote(null);
+                        // isSecondWidgetVisible = false;
+                        setState(() {});
+                      },
                       success: () async {
                         await panelController.close();
                         markers.clear();

@@ -13,7 +13,7 @@ class ApiHelper {
     dio.options.receiveTimeout = 40000;
     dio.interceptors.add(
       InterceptorsWrapper(onRequest: (options, handler) {
-        print(options.uri);
+        // print(options.uri);
         // Do something before request is sent
         return handler.next(options); //continue
         // If you want to resolve the request with some custom data，

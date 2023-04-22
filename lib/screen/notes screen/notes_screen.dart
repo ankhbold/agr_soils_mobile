@@ -87,22 +87,31 @@ class NoteListPageState extends State<NoteListPage> {
                     child: ListView.builder(
                         itemCount: currentListNote.length,
                         itemBuilder: (context, index) {
-                          Note note = currentListNote[index];
-                          // print(note.image_url);
+                        
+
                           return InkWell(
                             onTap: () {
-                           
-
-                              NoteMove(
-                                LatLng(
-                                  double.parse(note.y_coordinate!),
-                                  double.parse(note.x_coordinate!),
-                                ),
-                              );
-                              Globals.changeSelectedNote(note);
-                              widget.changeLocation!();
-                              widget.tabController!.jumpToTab(0);
-                             
+                              Note note;
+                              LoadingIndicator(context: context).showLoadingIndicator();
+                              NoteService().getNoteDetail(id: currentListNote[index].id).then((value) {
+                                LoadingIndicator(context: context).hideLoadingIndicator();
+                                note = value;
+                                Globals.changeSelectedNote(note);
+                                isSecondWidgetVisible = true;
+                                NoteMove(
+                                  LatLng(
+                                    double.parse(note.y_coordinate!),
+                                    double.parse(note.x_coordinate!),
+                                  ),
+                                );
+                                widget.changeLocation!();
+                                widget.tabController!.jumpToTab(0);
+                              }).catchError((onError) {
+                                LoadingIndicator(context: context).hideLoadingIndicator();
+                                ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                                  message: onError.toString(),
+                                ));
+                              });
                             },
                             child: Container(
                               padding: EdgeInsets.all(10),
@@ -146,7 +155,7 @@ class NoteListPageState extends State<NoteListPage> {
                                                   InkWell(
                                                     onTap: () async {
                                                       LoadingIndicator(context: context).showLoadingIndicator();
-                                                      NoteService().deleteNote(note.id as int).then(
+                                                      NoteService().deleteNote(currentListNote[index].id as int).then(
                                                         (value) {
                                                           ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
                                                             message: "Амжилттай устгалаа",
@@ -176,7 +185,9 @@ class NoteListPageState extends State<NoteListPage> {
                                               child: MyCachedNetworkImage(
                                                 fit: BoxFit.contain,
                                                 isPlaceHolder: true,
-                                                imageUrl: main_host_url.toString() + "/" + note.image_url.toString(),
+                                                imageUrl: main_host_url.toString() +
+                                                    "/" +
+                                                    currentListNote[index].image_url.toString(),
                                               ),
                                             ),
                                             Text(

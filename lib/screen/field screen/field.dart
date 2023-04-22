@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../conf_global.dart';
@@ -15,6 +16,7 @@ import '../../services/geo_service.dart';
 import '../../services/note_services.dart';
 import '../../services/permissions/location.dart';
 import '../../utils/date_manager.dart';
+import '../../view_model/user_view_model.dart';
 import '../../widget/loader.dart';
 import '../../widget/snackbar.dart';
 import '../field%20screen/floatingss/floating_items.dart';
@@ -165,6 +167,8 @@ class _FieldScreenState extends State<FieldScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final userPrefernece = Provider.of<UserViewModel>(context, listen: true);
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.24;
     final panelHeightOpened = MediaQuery.of(context).size.height * 0.9;
     final panelHeightClosed2 = MediaQuery.of(context).size.height * 0.3;
@@ -442,9 +446,7 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+               
                   FloatingFab(
                     changeLayer: (layer) {
                       currentLayerName = layer.layer_name;
@@ -465,7 +467,7 @@ class _FieldScreenState extends State<FieldScreen> {
               ),
             ),
             Offstage(
-              offstage: widget.isNoteSelected != null ? widget.isNoteSelected! : !isSecondWidgetVisible,
+              offstage: !isSecondWidgetVisible,
               child: SlidingUpPanel(
                 controller: panelController,
                 onPanelClosed: () {
@@ -484,7 +486,7 @@ class _FieldScreenState extends State<FieldScreen> {
                       back: () {
                         // isNoteSelected = false;
                         // Globals.changeSelectedNote(null);
-                        // isSecondWidgetVisible = false;
+                        isSecondWidgetVisible = false;
                         setState(() {});
                       },
                       success: () async {

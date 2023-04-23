@@ -12,6 +12,7 @@ import 'commons/api_helper.dart';
 
 class GeoService {
   static Future<List<UnitArea>> getGeoUnitArea() async {
+    // print(Globals.seasonId);
     var response = await ApiHelper().getUrl(
         url: '/mobile/parcel/bycompany/register?company_person_id=${Globals.personId}&season_id=${Globals.seasonId}');
     List<UnitArea> areas = List<UnitArea>.from(
@@ -47,7 +48,7 @@ class GeoService {
         url:
             '/parcel/satellite/bypolygon?parcel_id=${typeInfo!.parcel_id}&image_type=${typeInfo.image_type}&sattelite_date=${typeInfo.sattelite_date}');
     UnitAreaSateliteInfo unitAreaSateliteInfo = UnitAreaSateliteInfo.fromJson(response);
-    print(unitAreaSateliteInfo.toJson());
+    // print(unitAreaSateliteInfo.toJson());
     return unitAreaSateliteInfo;
   }
 }

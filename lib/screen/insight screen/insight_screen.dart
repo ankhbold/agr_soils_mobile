@@ -30,7 +30,9 @@ class _InsightScreenState extends State<InsightScreen> {
     return Scaffold(
       body: Navigator(
         onGenerateRoute: (insight) {
-          Widget page = const Insight();
+          Widget page = Insight(
+            tabController: widget.tabController,
+          );
           if (insight.name == 'page2') page = ForecastWeatherScreen();
           return MaterialPageRoute(builder: (_) => page);
         },
@@ -40,9 +42,11 @@ class _InsightScreenState extends State<InsightScreen> {
 }
 
 class Insight extends StatefulWidget {
-  const Insight({
+  Insight({
     Key? key,
+    this.tabController
   }) : super(key: key);
+  PersistentTabController? tabController;
 
   @override
   State<Insight> createState() => _InsightState();
@@ -176,10 +180,23 @@ class _InsightState extends State<Insight> {
                 text: 'Бүгдийг харах',
               ),
               Container(height: 15, color: AppColors.grey),
-              AllUnitAreas(),
+              AllUnitAreas(
+                tabController: widget.tabController,
+              ),
               DefaultButton(
                 OnTap: () {
-                  Navigator.pushNamed(context, 'page3');
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: Scaffold(
+                      appBar: AppBar(),
+                      body: AllUnitAreas(
+                        tabController: widget.tabController,
+                        isAll: true,
+                      ),
+                    ),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
                 },
                 text: 'Бүгдийг харах',
               ),

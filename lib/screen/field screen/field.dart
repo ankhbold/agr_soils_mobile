@@ -26,6 +26,7 @@ import '../notes screen/add_note.dart';
 import '../season/season_choice_page.dart';
 import '../unit_area/add_area.dart';
 import '../unit_area/add_unit_area_page.dart';
+import '../unit_area/unit_areas.dart';
 import 'field_panel.dart';
 
 bool mapsol = true;
@@ -55,6 +56,9 @@ Future<void> TapMove(LatLng latLng) async {
 }
 
 Future<void> NoteMove(LatLng latLng) async {
+  _mapController.move(latLng, _zoom + 5);
+}
+Future<void> UnitAreaMove(LatLng latLng) async {
   _mapController.move(latLng, _zoom + 5);
 }
 
@@ -731,10 +735,17 @@ class _FieldScreenState extends State<FieldScreen> {
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: InkWell(
                     onTap: () {
-                      setState(() {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (_) => PanelWidget(controller: ScrollController())));
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => Scaffold(
+                            appBar: AppBar(),
+                            body: AllUnitAreas(
+                              isAll: true,
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     child: Container(
                       height: 40,

@@ -18,6 +18,8 @@ UnitArea _$UnitAreaFromJson(Map<String, dynamic> json) => UnitArea(
       coord_x: json['coord_x'] as String?,
       coord_y: json['coord_y'] as String?,
       cult_names: json['cult_names'] as String?,
+      parcel_ndvi: json['parcel_ndvi'] as String?,
+      parcel_end_date: json['parcel_end_date'] as String?,
     );
 
 Map<String, dynamic> _$UnitAreaToJson(UnitArea instance) => <String, dynamic>{
@@ -32,4 +34,6 @@ Map<String, dynamic> _$UnitAreaToJson(UnitArea instance) => <String, dynamic>{
       'coord_x': instance.coord_x,
       'coord_y': instance.coord_y,
       'cult_names': instance.cult_names,
+      'parcel_ndvi': instance.parcel_ndvi,
+      'parcel_end_date': instance.parcel_end_date,
     };

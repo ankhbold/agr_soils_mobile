@@ -1,4 +1,5 @@
 import 'models/note.dart';
+import 'models/unit_area.dart';
 
 class Globals {
   // static var anInteger = 0;
@@ -19,6 +20,7 @@ class Globals {
   static var latit = '';
   static var longit = '';
   static Note? selectedNote;
+  static UnitArea? selectedUnitArea;
 
   // static printInteger() {
   //   print(anInteger);
@@ -26,6 +28,10 @@ class Globals {
 
   static changeSelectedNote(Note? a) {
     selectedNote = a;
+  }
+
+  static changeSelectedUnitArea(UnitArea? a) {
+    selectedUnitArea = a;
   }
 
   static changeIndexColor(int a) {

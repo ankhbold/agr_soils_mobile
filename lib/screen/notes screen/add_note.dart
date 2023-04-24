@@ -40,6 +40,7 @@ class _NoteAddState extends State<NoteAdd> {
   bool imageLoading = false;
   Note? currentNote;
   int? season_id;
+  int index = 0;
   String? current_x, current_y;
 
   @override
@@ -77,7 +78,12 @@ class _NoteAddState extends State<NoteAdd> {
 
   @override
   Widget build(BuildContext context) {
+    // print(index);
     if (Globals.selectedNote != null) {
+      index++;
+    }
+    if (Globals.selectedNote != null && index == 1) {
+      // print('edit');
       currentNote = Globals.selectedNote!;
       images.clear();
       titleController.text = currentNote?.description ?? "";
@@ -93,7 +99,8 @@ class _NoteAddState extends State<NoteAdd> {
         }
         setState(() {});
       }
-    } else {
+      // Globals.changeSelectedNote(null);
+    } else if (currentNote == null) {
       season_id = Globals.seasonId;
       current_x = Globals.longit;
       current_y = Globals.latit;
@@ -151,42 +158,79 @@ class _NoteAddState extends State<NoteAdd> {
                         season_id: season_id,
                         note_type: noteTypes[currentTypeIndex].id,
                         send_date: currentDateTime.toString(),
-                        cordinate_x: current_x,
-                        cordinate_y: current_y,
+                        cordinate_x: currentNote == null
+                            ? current_x
+                            : (Globals.longit != currentNote!.x_coordinate
+                                ? Globals.longit
+                                : currentNote!.x_coordinate),
+                        cordinate_y: currentNote == null
+                            ? current_y
+                            : (Globals.latit != currentNote!.y_coordinate ? Globals.latit : currentNote!.y_coordinate),
                         files: images,
                       );
                       LoadingIndicator(context: context).showLoadingIndicator();
-                      NoteService().createNoteStore(createNoteRequestMode).then((value) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
-                        setState(() {
-                          isChoose = true;
-                          isMarker = false;
-                          isFabVisible = true;
-                          note = false;
-                          isFirstWidgetVisible = false;
-                          isSecondWidgetVisible = false;
-                          isThirdWidgetVisible = false;
+                      if (currentNote == null) {
+                        NoteService().createNoteStore(createNoteRequestMode).then((value) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          setState(() {
+                            isChoose = true;
+                            isMarker = false;
+                            isFabVisible = true;
+                            note = false;
+                            isFirstWidgetVisible = false;
+                            isSecondWidgetVisible = false;
+                            isThirdWidgetVisible = false;
+                          });
+                          Globals.changeSelectedNote(null);
+                          widget.success!();
+                        }).catchError((onError) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                            message: onError,
+                          ));
+                          setState(() {
+                            isChoose = true;
+                            isMarker = false;
+                            isFabVisible = true;
+                            isFirstWidgetVisible = true;
+                            isSecondWidgetVisible = false;
+                            isThirdWidgetVisible = false;
+                          });
                         });
-
-                        widget.success!();
-                      }).catchError((onError) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
-                        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                          message: onError,
-                        ));
-                        setState(() {
-                          isChoose = true;
-                          isMarker = false;
-                          isFabVisible = true;
-
-                          isFirstWidgetVisible = true;
-                          isSecondWidgetVisible = false;
-                          isThirdWidgetVisible = false;
+                      } else {
+                        NoteService()
+                            .updateNote(
+                          id: currentNote!.id,
+                          createNoteRequestModel: createNoteRequestMode,
+                        )
+                            .then((value) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          setState(() {
+                            isChoose = true;
+                            isMarker = false;
+                            isFabVisible = true;
+                            note = false;
+                            isFirstWidgetVisible = false;
+                            isSecondWidgetVisible = false;
+                            isThirdWidgetVisible = false;
+                          });
+                          Globals.changeSelectedNote(null);
+                          widget.success!();
+                        }).catchError((onError) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                            message: onError,
+                          ));
+                          setState(() {
+                            isChoose = true;
+                            isMarker = false;
+                            isFabVisible = true;
+                            isFirstWidgetVisible = true;
+                            isSecondWidgetVisible = false;
+                            isThirdWidgetVisible = false;
+                          });
                         });
-                      });
-                      // if (currentNote != null) {
-                      //   Globals.changeSelectedNote(null);
-                      // }
+                      }
                     },
                     child: Text(
                       'Хадгалах',

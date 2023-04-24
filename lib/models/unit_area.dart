@@ -21,6 +21,8 @@ class UnitArea {
   String? coord_x;
   String? coord_y;
   String? cult_names;
+  String? parcel_ndvi;
+  String? parcel_end_date;
   // UnitAreaGeometry? geometry;
   UnitArea({
     this.id,
@@ -34,6 +36,8 @@ class UnitArea {
     this.coord_x,
     this.coord_y,
     this.cult_names,
+    this.parcel_ndvi,
+    this.parcel_end_date,
   });
 
   /// A necessary factory constructor for creating a new User instance

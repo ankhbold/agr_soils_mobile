@@ -31,7 +31,6 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
@@ -74,8 +73,9 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
         setState(() {});
       },
       selectedTabScreenContext: (p0) {},
-      // popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.once,
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      // popActionScreens: PopActionScreensType.once,
       navBarStyle: NavBarStyle.style9, // Choose the nav bar style with this property.
     );
   }

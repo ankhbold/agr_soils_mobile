@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/conf_global.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../../models/get_satelite_info.dart';
 import '../../models/unit_area.dart';
 import '../../services/commons/apis.dart';
 import '../../services/geo_service.dart';
@@ -61,8 +63,8 @@ class AllUnitAreasState extends State<AllUnitAreas> {
                   placeholder: "Талбай хайх",
                   onChanged: (String value) {
                     currentAreas = currentAreas
-                        .where((element) => (element.address_streetname != null &&
-                            element.address_streetname!.toLowerCase().contains(value.toLowerCase())))
+                        .where((element) => (element.field_name != null &&
+                            element.field_name!.toLowerCase().contains(value.toLowerCase())))
                         .toList();
 
                     if (value == '') {
@@ -72,8 +74,8 @@ class AllUnitAreasState extends State<AllUnitAreas> {
                   },
                   onSubmitted: (String value) {
                     currentAreas = currentAreas
-                        .where((element) => (element.address_streetname != null &&
-                            element.address_streetname!.toLowerCase().contains(value.toLowerCase())))
+                        .where((element) => (element.field_name != null &&
+                            element.field_name!.toLowerCase().contains(value.toLowerCase())))
                         .toList();
                     if (value == '') {
                       currentAreas = areas;
@@ -88,19 +90,19 @@ class AllUnitAreasState extends State<AllUnitAreas> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                'Бүх талбай',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-              ),
+                      'Бүх талбай',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
                     Container(
                       alignment: Alignment.centerRight,
                       width: 150,
                       child: TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Ургац нэмэх',
+                          'Ургац',
                           style: TextStyle(
                             color: Color(0xff40A027),
                           ),
@@ -117,6 +119,7 @@ class AllUnitAreasState extends State<AllUnitAreas> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    Globals.changeSelectedUnitArea(currentAreas[index]);
                     UnitAreaMove(
                       LatLng(
                         double.parse(currentAreas[index].coord_y!),
@@ -124,6 +127,7 @@ class AllUnitAreasState extends State<AllUnitAreas> {
                       ),
                     );
                     widget.tabController!.jumpToTab(0);
+                    setState(() {});
                   },
                   child: UnitAreaItem(
                     unitArea: currentAreas[index],
@@ -175,7 +179,7 @@ class UnitAreaItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 AutoSizeText(
-                  '${unitArea?.address_streetname ?? ""} ${unitArea?.area_ha ?? 0} га',
+                  '${unitArea?.field_name ?? ""} ${unitArea?.area_ha ?? 0} га',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -201,7 +205,7 @@ class UnitAreaItem extends StatelessWidget {
         Column(
           children: [
             Text(
-              formatDate ?? '',
+              unitArea!.parcel_end_date!,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -213,11 +217,11 @@ class UnitAreaItem extends StatelessWidget {
               width: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.red,
+                color: double.parse(unitArea!.parcel_ndvi!) >= 0 ? Colors.green : Colors.red,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  '-0.01',
+                  unitArea!.parcel_ndvi!,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,

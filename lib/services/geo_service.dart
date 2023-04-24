@@ -47,6 +47,7 @@ class GeoService {
     var response = await ApiHelper().getUrl(
         url:
             '/parcel/satellite/bypolygon?parcel_id=${typeInfo!.parcel_id}&image_type=${typeInfo.image_type}&sattelite_date=${typeInfo.sattelite_date}');
+    // print(response);
     UnitAreaSateliteInfo unitAreaSateliteInfo = UnitAreaSateliteInfo.fromJson(response);
     // print(unitAreaSateliteInfo.toJson());
     return unitAreaSateliteInfo;

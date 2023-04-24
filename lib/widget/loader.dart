@@ -5,7 +5,7 @@ class LoadingIndicator {
   BuildContext? context;
   LoadingIndicator({this.context});
   showLoadingIndicator() async {
-    await showDialog(
+    showDialog(
       useSafeArea: true,
       context: context!,
       builder: (context) {
@@ -26,6 +26,7 @@ class LoadingIndicator {
   }
 
   hideLoadingIndicator() {
+    // Navigator.of(context!).pop();
     Navigator.of(context!, rootNavigator: true).pop();
   }
 }

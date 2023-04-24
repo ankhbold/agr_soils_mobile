@@ -41,13 +41,9 @@ class NoteService {
     final response = await ApiHelper().postUrl(
         url:
             '/api/mobile/parcelnote/create?season_id=${createNoteRequestModel.season_id}&description=${createNoteRequestModel.description}desc&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date}&files=${createNoteRequestModel.files}');
-   
+
     return response;
   }
-
-
-
-
 
   Future<List<Note>> getNoteList({String? person_id, String? season_id}) async {
     // print(Globals.seasonId);
@@ -70,21 +66,20 @@ class NoteService {
   }
 
   Future deleteNote(int id) async {
-    String uri5 = 'http://103.143.40.250:8100/api/mobile/parcelnote/delete?note_id=$id';
-    try {
-      final response = await http.delete(
-        Uri.parse('$uri5'),
-      );
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+    final response = await ApiHelper().deleteUrl(url: '/api/mobile/parcelnote/delete?note_id=$id');
+
+    return response;
   }
 
   Future<Note> getNoteDetail({int? id}) async {
     final response = await ApiHelper().getUrl(url: '/api/mobile/getnote/id?note_id=$id');
-    // print(response);
     return Note.fromJson(json.decode(response));
   }
 
-  // http://soils/api/mobile/getnote/id?note_id=651
+  Future<dynamic> updateNote({int? id, CreateNoteRequestModel? createNoteRequestModel}) async {
+    final response = await ApiHelper().putUrl(
+        url:
+            ' /api/mobile/parcelnote/update?note_id=$id&season_id=${createNoteRequestModel!.season_id}&description=${createNoteRequestModel.description}&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date.toString()}&files=${createNoteRequestModel.files}');
+    return response;
+  }
 }

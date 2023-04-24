@@ -27,6 +27,7 @@ class NoteListPageState extends State<NoteListPage> {
   bool isLoading = true;
 
   List<Note> listNote = [], currentListNote = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   getGetNoteApi() async {
     listNote = await NoteService().getNoteList();
     currentListNote = listNote;
@@ -43,6 +44,7 @@ class NoteListPageState extends State<NoteListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: const Color.fromARGB(255, 226, 225, 225),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -87,8 +89,6 @@ class NoteListPageState extends State<NoteListPage> {
                     child: ListView.builder(
                         itemCount: currentListNote.length,
                         itemBuilder: (context, index) {
-                        
-
                           return InkWell(
                             onTap: () {
                               Note note;
@@ -154,20 +154,26 @@ class NoteListPageState extends State<NoteListPage> {
                                                   ),
                                                   InkWell(
                                                     onTap: () async {
-                                                      LoadingIndicator(context: context).showLoadingIndicator();
+                                                      // LoadingIndicator(context: _scaffoldKey.currentContext)
+                                                      //     .showLoadingIndicator();
                                                       NoteService().deleteNote(currentListNote[index].id as int).then(
                                                         (value) {
+                                                          currentListNote.removeAt(index);
+                                                          setState(() {});
+
+                                                          // LoadingIndicator(context: _scaffoldKey.currentContext)
+                                                          //     .hideLoadingIndicator();
+
                                                           ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
                                                             message: "Амжилттай устгалаа",
                                                           ));
 
-                                                          setState(() {
-                                                            currentListNote.removeAt(index);
-                                                          });
-                                                          LoadingIndicator(context: context).hideLoadingIndicator();
+                                                          // setState(() {});
+                                                          // Navigator.of(context).maybePop();
                                                         },
                                                       ).catchError((onError) {
-                                                        LoadingIndicator(context: context).hideLoadingIndicator();
+                                                        // LoadingIndicator(context: _scaffoldKey.currentContext)
+                                                        //     .hideLoadingIndicator();
                                                       });
                                                     },
                                                     child: Image.asset(
@@ -208,5 +214,10 @@ class NoteListPageState extends State<NoteListPage> {
               ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

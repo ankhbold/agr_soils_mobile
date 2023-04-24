@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/services/satelite.dart';
+import 'package:mvvm/services/unit_area.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -47,7 +49,7 @@ bool isDetailAddFieldWidgetVisible = false;
 bool isFabVisible = true;
 late MapController _mapController;
 double _zoom = 10.0;
-
+var sate;
 var heightS = 10.5;
 Future<void> TapMove(LatLng latLng) async {
   await Future.delayed(Duration(seconds: 1));
@@ -58,6 +60,7 @@ Future<void> TapMove(LatLng latLng) async {
 Future<void> NoteMove(LatLng latLng) async {
   _mapController.move(latLng, _zoom + 5);
 }
+
 Future<void> UnitAreaMove(LatLng latLng) async {
   _mapController.move(latLng, _zoom + 5);
 }
@@ -81,7 +84,7 @@ class _FieldScreenState extends State<FieldScreen> {
   PanelController panelController = PanelController();
   String? currentLayerName, currentSateliteLayerName;
   Note? currentNote;
-  var sate;
+
   int? currentUnitAreaNumber;
   var falseColor = '';
   static double fabHeightClosed = 90.0;
@@ -119,7 +122,6 @@ class _FieldScreenState extends State<FieldScreen> {
   void initState() {
     _mapController = MapController();
     super.initState();
-   
   }
 
   void _navigateToPosition() {
@@ -171,7 +173,6 @@ class _FieldScreenState extends State<FieldScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     final userPrefernece = Provider.of<UserViewModel>(context, listen: true);
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.24;
     final panelHeightOpened = MediaQuery.of(context).size.height * 0.9;
@@ -186,7 +187,7 @@ class _FieldScreenState extends State<FieldScreen> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
-   
+
     return Scaffold(
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -344,11 +345,13 @@ class _FieldScreenState extends State<FieldScreen> {
                 onTap: (tapPosition, LatLng latlng) async {
                   setState(() {
                     if (isPolygon) {
+                      Globals.changeSelectedUnitArea(null);
                       setState(() {
                         _addPolygons(latlng);
                         markers.clear();
                       });
                     } else if (isMarker) {
+                      Globals.changeSelectedUnitArea(null);
                       Globals.changeLatitude(latlng.latitude);
                       Globals.changeLongtitude(latlng.longitude);
                       setState(() {
@@ -360,6 +363,7 @@ class _FieldScreenState extends State<FieldScreen> {
                         Globals.changeLatitude(latlng.latitude);
                         Globals.changeLongtitude(latlng.longitude);
                         markers.clear();
+                        Globals.changeSelectedUnitArea(null);
                         print(latlng);
                         GeoService.getUnitAreaNumber(latLng: latlng).then(
                           (value) {
@@ -428,7 +432,8 @@ class _FieldScreenState extends State<FieldScreen> {
                     changeSateliteLayer: (value) {
                       GetSateliteTypeInfo typeInfo = GetSateliteTypeInfo(
                         image_type: value,
-                        parcel_id: currentUnitAreaNumber,
+                        parcel_id:
+                            Globals.selectedUnitArea != null ? Globals.selectedUnitArea!.id : currentUnitAreaNumber,
                         sattelite_date: MyDateManager.toClientDateTime(
                             date: DateTime.now().subtract(Duration(days: 4)).toString(), noTime: true),
                       );
@@ -437,7 +442,7 @@ class _FieldScreenState extends State<FieldScreen> {
                         LoadingIndicator(context: context).hideLoadingIndicator();
                         if (value.status!) {
                           sate = value.image_url;
-                          print(sate);
+
                           setState(() {});
                         }
                       }).catchError((onError) {
@@ -450,7 +455,6 @@ class _FieldScreenState extends State<FieldScreen> {
                       });
                     },
                   ),
-               
                   FloatingFab(
                     changeLayer: (layer) {
                       currentLayerName = layer.layer_name;
@@ -488,14 +492,13 @@ class _FieldScreenState extends State<FieldScreen> {
                   children: [
                     NoteAdd(
                       back: () {
-                        // isNoteSelected = false;
-                        // Globals.changeSelectedNote(null);
                         isSecondWidgetVisible = false;
                         setState(() {});
                       },
                       success: () async {
                         await panelController.close();
                         markers.clear();
+                        noteMarkers.clear();
                         await getNoteMarkerList();
                         setState(() {});
                       },
@@ -707,6 +710,7 @@ class _FieldScreenState extends State<FieldScreen> {
           children: [
             SeasonChoicePage(
               done: () async {
+                noteMarkers.clear();
                 await getNoteMarkerList();
                 currentLayerName = 'agr_parcel';
                 wmsLayer = Globals.isLogin

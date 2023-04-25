@@ -96,7 +96,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => Crop(),
+                          builder: (_) => CropPage(),
                         ),
                       );
                     },

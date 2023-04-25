@@ -2,16 +2,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/conf_global.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../../models/get_satelite_info.dart';
+import '../../conf_global.dart';
 import '../../models/unit_area.dart';
 import '../../services/commons/apis.dart';
 import '../../services/geo_service.dart';
 import '../../widget/cached_network_image.dart';
+import '../field screen/crop.dart';
 import '../field screen/field.dart';
-import '../insight screen/insight_screen.dart';
 
 class AllUnitAreas extends StatefulWidget {
   AllUnitAreas({super.key, this.isAll = false, this.tabController});
@@ -100,7 +99,14 @@ class AllUnitAreasState extends State<AllUnitAreas> {
                       alignment: Alignment.centerRight,
                       width: 150,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => CropPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Ургац',
                           style: TextStyle(

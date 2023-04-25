@@ -61,7 +61,7 @@ class MainTabBarPageState extends State<MainTabBarPage> with AutomaticKeepAliveC
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: (currentIndex == 2 || currentIndex == 1) ? true : false, // Default is true.
+      stateManagement: (currentIndex == 0 || currentIndex == 2 || currentIndex == 1) ? true : false, // Default is true.
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(

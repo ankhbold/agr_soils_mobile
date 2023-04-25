@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mvvm/services/satelite.dart';
-import 'package:mvvm/services/unit_area.dart';
+import 'package:mvvm/services/sensor.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -76,6 +76,8 @@ class FieldScreen extends StatefulWidget {
 
 class _FieldScreenState extends State<FieldScreen> {
   List<Marker> markers = [];
+  List<Marker> sensorLocations = [];
+  List<String> sateliteDates = [];
   List<Marker> noteMarkers = [];
   LatLng firstLocation = LatLng(49.939048, 105.841644);
   List<LatLng> polygonPoints = [];
@@ -122,6 +124,42 @@ class _FieldScreenState extends State<FieldScreen> {
   void initState() {
     _mapController = MapController();
     super.initState();
+    if (Globals.isLogin) {
+      SensorService().getSensorList().then((value) {
+        sensorLocations.clear();
+        value.forEach((element) {
+          sensorLocations.add(
+            Marker(
+                width: 100,
+                height: 100,
+                point: LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)),
+                builder: (context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "сенсор" + " (${element.sensor_id.toString()})",
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      Container(
+                        child: Center(
+                          child: Icon(
+                            Icons.sensors,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }),
+          );
+        });
+        setState(() {});
+      });
+    }
   }
 
   void _navigateToPosition() {
@@ -192,149 +230,151 @@ class _FieldScreenState extends State<FieldScreen> {
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FloatingActionButton.small(
-                  backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  onPressed: () {
-                    showModalBottomSheet(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.27,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 50, left: 50),
+            Globals.isLogin
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton.small(
+                        backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height * 0.27,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Center(
-                                        child: Container(
-                                          height: 5,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(25),
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
                                       SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Үйлдлүүд',
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 20,
+                                        height: 10,
                                       ),
                                       Container(
-                                        height: 40,
-                                        width: 500,
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              isMarker = true;
-                                              isChoose = false;
-                                              changeStage();
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                        padding: EdgeInsets.only(right: 50, left: 50),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Center(
+                                              child: Container(
+                                                height: 5,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(25),
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
                                               children: [
-                                                Image.asset(
-                                                  "assets/common/note.png",
-                                                  width: 30,
-                                                  height: 30,
+                                                Text(
+                                                  'Үйлдлүүд',
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text('Тэмдэглэл нэмэх'),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 7,
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 500,
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              changePolygonStage();
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: Ink(
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Image.asset(
-                                                  "assets/common/area.png",
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text('Талбай зурах'),
-                                              ],
+                                            SizedBox(
+                                              height: 20,
                                             ),
-                                          ),
+                                            Container(
+                                              height: 40,
+                                              width: 500,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    isMarker = true;
+                                                    isChoose = false;
+                                                    changeStage();
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/common/note.png",
+                                                        width: 30,
+                                                        height: 30,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text('Тэмдэглэл нэмэх'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 7,
+                                            ),
+                                            Container(
+                                              height: 40,
+                                              width: 500,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    changePolygonStage();
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Ink(
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/common/area.png",
+                                                        width: 30,
+                                                        height: 30,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text('Талбай зурах'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        });
-                  },
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                ),
-                FloatingActionButton.small(
-                  backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                  onPressed: () {
-                    setState(() {
-                      _navigateToPosition();
-                    });
-                  },
-                  child: const Icon(
-                    Icons.location_on,
-                    color: AppColors.Green,
-                  ),
-                ),
-              ],
-            ),
+                                );
+                              });
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                      FloatingActionButton.small(
+                        backgroundColor: const Color.fromARGB(255, 239, 239, 239).withOpacity(0.85),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                        onPressed: () {
+                          setState(() {
+                            _navigateToPosition();
+                          });
+                        },
+                        child: const Icon(
+                          Icons.location_on,
+                          color: AppColors.Green,
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
           ],
         ),
         body: Stack(
@@ -364,12 +404,16 @@ class _FieldScreenState extends State<FieldScreen> {
                         Globals.changeLongtitude(latlng.longitude);
                         markers.clear();
                         Globals.changeSelectedUnitArea(null);
-                        print(latlng);
                         GeoService.getUnitAreaNumber(latLng: latlng).then(
                           (value) {
                             currentUnitAreaNumber = value.id;
-                            print(currentUnitAreaNumber);
                             setState(() {});
+                            SateliteService().getSateliteDates(id: currentUnitAreaNumber).then((value) {
+                              value.forEach((element) {
+                                sateliteDates.add(element.image_date!);
+                              });
+                              setState(() {});
+                            });
                           },
                         );
                         _handleTap(latlng);
@@ -394,6 +438,9 @@ class _FieldScreenState extends State<FieldScreen> {
                         markers: noteMarkers,
                       ),
                       MarkerLayer(
+                        markers: sensorLocations,
+                      ),
+                      MarkerLayer(
                         markers: markers,
                       ),
                       PolylineLayer(
@@ -406,6 +453,7 @@ class _FieldScreenState extends State<FieldScreen> {
                           ),
                         ],
                       ),
+
                       // PolygonLayer(
                       //   polygons: polygons,
                       //   // polygonCulling: true,
@@ -428,6 +476,22 @@ class _FieldScreenState extends State<FieldScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: sateliteDates.map((e) {
+                        return Container(
+                          padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+                          margin: EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            e,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList()),
                   StateliteImageType(
                     changeSateliteLayer: (value) {
                       GetSateliteTypeInfo typeInfo = GetSateliteTypeInfo(

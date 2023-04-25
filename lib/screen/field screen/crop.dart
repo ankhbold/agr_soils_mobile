@@ -14,6 +14,7 @@ class CropPage extends StatefulWidget {
 }
 
 Set<String> columnNames = {};
+Set<int> areaIds = {};
 
 class CropPageState extends State<CropPage> {
   var data = [];
@@ -32,35 +33,30 @@ class CropPageState extends State<CropPage> {
   void initState() {
     CropService.getAllCrop().then((value) {
       crops = value;
+      columnNames.add(" ");
       crops.forEach((element) {
         seasonIds.add(element.season_id!);
+        columnNames.add(element.season_name!);
       });
-      columnNames.add(" ");
-      seasonIds.forEach((id) {
-        // int cnt = 0;
-        columnNames.add(crops.firstWhere((element) => element.season_id == id).season_name!);
 
-        crops.where((element) => element.season_id == id).forEach((element) {
-          // if (cnt == 0) {
-          //   areaDatas.add(
-          //     UnitAreaData(cult_names: element.field_name),
-          //   );
-          // }
-          // cnt++;
-          areaDatas.add(
-            UnitAreaData(
-              parcel_id: element.parcel_id,
-              field_name: element.field_name,
-              parcel_area_ha: element.parcel_area_ha,
-              parcel_area_m2: element.parcel_area_m2,
-              season_name: element.season_name,
-              cult_names: element.cult_names,
-              fill_color: element.fill_color,
-              parcel_harvest_ha: element.parcel_harvest_ha,
-              parcel_end_date: element.parcel_end_date,
-              address_streetname: element.address_streetname,
-            ),
-          );
+      areaIds.forEach((areaId) {
+        seasonIds.forEach((id) {
+          crops.where((element) => element.season_id == id && element.parcel_id == areaId).forEach((element) {
+            areaDatas.add(
+              UnitAreaData(
+                parcel_id: element.parcel_id,
+                field_name: element.field_name,
+                parcel_area_ha: element.parcel_area_ha,
+                parcel_area_m2: element.parcel_area_m2,
+                season_name: element.season_name,
+                cult_names: element.cult_names,
+                fill_color: element.fill_color,
+                parcel_harvest_ha: element.parcel_harvest_ha,
+                parcel_end_date: element.parcel_end_date,
+                address_streetname: element.address_streetname,
+              ),
+            );
+          });
         });
       });
 
@@ -126,20 +122,18 @@ class CropDataSource extends DataGridSource {
   List<DataGridRow>? dataGridRows = [];
 
   CropDataSource(List<UnitAreaData> areas) {
-    dataGridRows!.addAll(
-      areas
-          .map<DataGridRow>(
-            (dataGridRow) => DataGridRow(
-              cells: columnNames.map((e) {
-                return DataGridCell<String>(
-                  columnName: e,
-                  value: e == " " ? dataGridRow.field_name : dataGridRow.cult_names,
-                );
-              }).toList(),
-            ),
-          )
-          .toList(),
-    );
+    dataGridRows = areas
+        .map<DataGridRow>(
+          (dataGridRow) => DataGridRow(
+            cells: columnNames.map((e) {
+              return DataGridCell<String>(
+                columnName: e,
+                value: e == " " ? dataGridRow.field_name : dataGridRow.cult_names,
+              );
+            }).toList(),
+          ),
+        )
+        .toList();
   }
   @override
   List<DataGridRow> get rows => dataGridRows!;

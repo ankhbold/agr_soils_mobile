@@ -42,10 +42,7 @@ class _InsightScreenState extends State<InsightScreen> {
 }
 
 class Insight extends StatefulWidget {
-  Insight({
-    Key? key,
-    this.tabController
-  }) : super(key: key);
+  Insight({Key? key, this.tabController}) : super(key: key);
   PersistentTabController? tabController;
 
   @override
@@ -172,14 +169,8 @@ class _InsightState extends State<Insight> {
                 height: 15,
                 color: AppColors.grey,
               ),
-              Chart(),
-              DefaultButton(
-                OnTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => ChartPage()));
-                },
-                text: 'Бүгдийг харах',
-              ),
-              Container(height: 15, color: AppColors.grey),
+              // Chart(),
+              // Container(height: 15, color: AppColors.grey),
               AllUnitAreas(
                 tabController: widget.tabController,
               ),

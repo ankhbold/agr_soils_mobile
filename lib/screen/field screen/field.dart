@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mvvm/screen/sensor/sensor_chart.dart';
 import 'package:mvvm/services/satelite.dart';
 import 'package:mvvm/services/sensor.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -134,25 +135,59 @@ class _FieldScreenState extends State<FieldScreen> {
                 height: 100,
                 point: LatLng(double.parse(element.y_coordinate!), double.parse(element.x_coordinate!)),
                 builder: (context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "сенсор" + " (${element.sensor_id.toString()})",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
-                      Container(
-                        child: Center(
-                          child: Icon(
-                            Icons.sensors,
-                            size: 25,
-                            color: Colors.white,
-                          ),
+                  return InkWell(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: ChartPage(
+                          sensorDatas: [],
                         ),
-                      )
-                    ],
+                        withNavBar: true, // OPTIONAL VALUE. True by default.
+                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      );
+                      // LoadingIndicator(context: context).showLoadingIndicator();
+                      // SensorService().getSensorData(id: element.sensor_id).then((value) {
+                      //   LoadingIndicator(context: context).hideLoadingIndicator();
+                      //   if (value.isNotEmpty) {
+                      //     PersistentNavBarNavigator.pushNewScreen(
+                      //       context,
+                      //       screen: ChartPage(
+                      //         sensorDatas: value,
+                      //       ),
+                      //       withNavBar: true, // OPTIONAL VALUE. True by default.
+                      //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      //     );
+                      //   } else {
+                      //     ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                      //       message: "Сенсор мэдээлэл байхгүй байна",
+                      //     ));
+                      //   }
+
+                      //   // print(value);
+                      // }).catchError((onError) {
+                      //   LoadingIndicator(context: context).hideLoadingIndicator();
+                      // });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "сенсор" + " (${element.sensor_id.toString()})",
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                        Container(
+                          child: Center(
+                            child: Icon(
+                              Icons.sensors,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 }),
           );

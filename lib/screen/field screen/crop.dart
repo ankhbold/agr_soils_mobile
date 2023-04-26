@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mvvm/constants/color.dart';
 import 'package:mvvm/models/crop_model.dart';
+import 'package:mvvm/models/parcel_season.dart';
 import 'package:mvvm/services/crop.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -14,12 +16,11 @@ class CropPage extends StatefulWidget {
 }
 
 Set<String> columnNames = {};
-Set<int> areaIds = {};
 
 class CropPageState extends State<CropPage> {
   var data = [];
 
-  List<Crop> crops = [];
+  Crop? crop;
   List<CropModel> preapareCrops = [];
 
   Set<int> seasonIds = {};
@@ -32,32 +33,18 @@ class CropPageState extends State<CropPage> {
   @override
   void initState() {
     CropService.getAllCrop().then((value) {
-      crops = value;
-      columnNames.add(" ");
-      crops.forEach((element) {
+      crop = value;
+      columnNames.add("Талбай");
+      crop!.seasons!.forEach((element) {
         seasonIds.add(element.season_id!);
         columnNames.add(element.season_name!);
       });
-
-      areaIds.forEach((areaId) {
-        seasonIds.forEach((id) {
-          crops.where((element) => element.season_id == id && element.parcel_id == areaId).forEach((element) {
-            areaDatas.add(
-              UnitAreaData(
-                parcel_id: element.parcel_id,
-                field_name: element.field_name,
-                parcel_area_ha: element.parcel_area_ha,
-                parcel_area_m2: element.parcel_area_m2,
-                season_name: element.season_name,
-                cult_names: element.cult_names,
-                fill_color: element.fill_color,
-                parcel_harvest_ha: element.parcel_harvest_ha,
-                parcel_end_date: element.parcel_end_date,
-                address_streetname: element.address_streetname,
-              ),
-            );
-          });
-        });
+      crop!.parcels!.forEach((element) {
+        areaDatas.add(UnitAreaData(
+          parcel_id: element.id,
+          field_name: element.field_name,
+          parcelSeason: element.parcel_season,
+        ));
       });
 
       columnNames.forEach((value) {
@@ -126,9 +113,17 @@ class CropDataSource extends DataGridSource {
         .map<DataGridRow>(
           (dataGridRow) => DataGridRow(
             cells: columnNames.map((e) {
-              return DataGridCell<String>(
+              List<ParcelSeason> parcelSeasons = dataGridRow.parcelSeason!;
+
+              return DataGridCell<List<dynamic>>(
                 columnName: e,
-                value: e == " " ? dataGridRow.field_name : dataGridRow.cult_names,
+                value: [
+                  parcelSeasons.singleWhere(
+                    (element) => element.season_name!.toUpperCase() == e.toUpperCase(),
+                    orElse: () => ParcelSeason(),
+                  ),
+                  dataGridRow.field_name!
+                ],
               );
             }).toList(),
           ),
@@ -141,23 +136,17 @@ class CropDataSource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((dataGridCell) {
-        Color getColor() {
-          if (dataGridCell.columnName == 'Арвин хур 2023') {
-            if (dataGridCell.value == 'Wheat soft, spring') {
-              return Color.fromARGB(255, 244, 147, 147);
-            } else if (dataGridCell.value == 'Mustard, black') {
-              return Color.fromARGB(255, 245, 235, 205);
-            }
-          }
-
-          return Colors.transparent;
+        Color getColor({String? color}) {
+          return HexColor(color!);
         }
 
         return Container(
-          color: getColor(),
+          color: ((dataGridCell.value as List)[0] as ParcelSeason).cult_name != null
+              ? getColor(color: ((dataGridCell.value as List)[0] as ParcelSeason).fill_color)
+              : Colors.transparent,
           child: Center(
             child: Text(
-              dataGridCell.value.toString(),
+              ((dataGridCell.value as List)[0] as ParcelSeason).cult_name ?? (dataGridCell.value as List)[1].toString(),
               style: TextStyle(fontSize: 12),
             ),
           ),
@@ -175,19 +164,23 @@ class UnitAreaData {
       this.parcel_area_m2,
       this.season_name,
       this.cult_names,
+      this.season_id,
       this.fill_color,
       this.parcel_harvest_ha,
       this.parcel_end_date,
-      this.address_streetname});
+      this.address_streetname,
+      this.parcelSeason});
 
   int? parcel_id;
   String? field_name;
   String? parcel_area_m2;
   String? parcel_area_ha;
   String? season_name;
+  int? season_id;
   String? cult_names;
   String? fill_color;
   String? parcel_harvest_ha;
   String? parcel_end_date;
   String? address_streetname;
+  List<ParcelSeason>? parcelSeason;
 }

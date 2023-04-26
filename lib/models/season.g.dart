@@ -13,6 +13,8 @@ Season _$SeasonFromJson(Map<String, dynamic> json) => Season(
       start_date: json['start_date'] as String?,
       end_date: json['end_date'] as String?,
       prof_company_id: json['prof_company_id'] as int?,
+      season_all_area_ha: json['season_all_area_ha'] as String?,
+      season_harvest_ha: json['season_harvest_ha'] as String?,
     );
 
 Map<String, dynamic> _$SeasonToJson(Season instance) => <String, dynamic>{
@@ -22,4 +24,6 @@ Map<String, dynamic> _$SeasonToJson(Season instance) => <String, dynamic>{
       'start_date': instance.start_date,
       'end_date': instance.end_date,
       'prof_company_id': instance.prof_company_id,
+      'season_all_area_ha': instance.season_all_area_ha,
+      'season_harvest_ha': instance.season_harvest_ha,
     };

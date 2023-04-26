@@ -13,7 +13,18 @@ class Season {
   String? start_date;
   String? end_date;
   int? prof_company_id;
-  Season({this.season_id, this.season_name, this.description, this.start_date, this.end_date, this.prof_company_id});
+  String? season_all_area_ha;
+  String? season_harvest_ha;
+  Season({
+    this.season_id,
+    this.season_name,
+    this.description,
+    this.start_date,
+    this.end_date,
+    this.prof_company_id,
+    this.season_all_area_ha,
+    this.season_harvest_ha,
+  });
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

@@ -1,16 +1,33 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mvvm/models/sensor_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
 import '../../constants/color.dart';
+import '../../models/sensor_data.dart';
+import '../../services/sensor.dart';
+import '../../widget/loader.dart';
 
 class Chart extends StatefulWidget {
-  Chart({super.key, this.sensorDatas});
+  Chart({
+    super.key,
+    this.sensorDatas,
+    this.isAirtemp = false,
+    this.isAirMoisture = false,
+    this.isRawAirPressure = false,
+    this.isBattery = false,
+    this.isLuminance = false,
+    this.isTemp = false,
+    this.isMoisture = false,
+  });
   List<SensorData>? sensorDatas;
+  bool? isAirtemp;
+  bool? isAirMoisture;
+  bool? isRawAirPressure;
+  bool? isBattery;
+  bool? isLuminance;
+  bool? isTemp;
+  bool? isMoisture;
   @override
   State<Chart> createState() => _ChartState();
 }
@@ -21,14 +38,18 @@ class _ChartState extends State<Chart> {
   @override
   void initState() {
     super.initState();
-
     _trackballBehavior = TrackballBehavior(
-        enable: true,
-        lineColor: AppColors.Green,
-        lineWidth: 2,
-        activationMode: ActivationMode.singleTap,
-        markerSettings: const TrackballMarkerSettings(
-            borderWidth: 4, height: 10, width: 10, markerVisibility: TrackballVisibilityMode.visible));
+      enable: true,
+      lineColor: AppColors.Green,
+      lineWidth: 2,
+      activationMode: ActivationMode.singleTap,
+      markerSettings: const TrackballMarkerSettings(
+        borderWidth: 4,
+        height: 10,
+        width: 10,
+        markerVisibility: TrackballVisibilityMode.visible,
+      ),
+    );
   }
 
   @override
@@ -49,7 +70,6 @@ class _ChartState extends State<Chart> {
       tooltipBehavior: TooltipBehavior(
         enable: true,
         builder: (data, point, series, pointIndex, seriesIndex) {
-          print(data.runtimeType);
           return Container();
         },
       ),
@@ -67,27 +87,48 @@ class _ChartState extends State<Chart> {
     );
   }
 
+  double getChartValue({SensorData? sensorData}) {
+    if (widget.isAirtemp!) {
+      return double.parse(double.parse(sensorData!.air_temp!).toStringAsFixed(2));
+    } else if (widget.isAirMoisture!) {
+      return double.parse(double.parse(sensorData!.air_moisture!).toStringAsFixed(2));
+    } else if (widget.isRawAirPressure!) {
+      return double.parse(double.parse(sensorData!.raw_air_pressure!).toStringAsFixed(2));
+    } else if (widget.isBattery!) {
+      return double.parse(double.parse(sensorData!.battery!).toStringAsFixed(2));
+    } else if (widget.isLuminance!) {
+      return double.parse(double.parse(sensorData!.luminance!).toStringAsFixed(2));
+    } else if (widget.isTemp!) {
+      return double.parse(double.parse(sensorData!.temp!).toStringAsFixed(2));
+    }
+    return double.parse(double.parse(sensorData!.moisture!).toStringAsFixed(2));
+  }
+
   List<LineSeries<SensorData, DateTime>> _getDefaultLineSeries() {
     return <LineSeries<SensorData, DateTime>>[
       LineSeries<SensorData, DateTime>(
         dataSource: widget.sensorDatas!,
         xValueMapper: (SensorData sensorData, _) => DateTime.parse(sensorData.datetime!),
-        yValueMapper: (SensorData sensorData, _) => int.parse(sensorData.air_moisture!),
-        // name: 'Product A',
+        yValueMapper: (SensorData sensorData, _) => getChartValue(
+          sensorData: sensorData,
+        ),
       ),
     ];
   }
 }
 
 class ChartPage extends StatefulWidget {
-  ChartPage({super.key, this.sensorDatas});
-  List<SensorData>? sensorDatas;
+  ChartPage({super.key, this.sensorId});
+
+  int? sensorId;
   @override
   State<ChartPage> createState() => _ChartPageState();
 }
 
 class _ChartPageState extends State<ChartPage> {
   final DateRangePickerController _controller = DateRangePickerController();
+  List<SensorData> sensorDatas = [];
+  DateTime? start_date, end_date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,42 +168,68 @@ class _ChartPageState extends State<ChartPage> {
                   ));
                 },
                 onSubmit: (Object? value) {
-                  print(value.toString());
+                  print(value.runtimeType);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
                       'Selection Confirmed' + value.toString(),
                     ),
                     duration: Duration(milliseconds: 200),
                   ));
+                  LoadingIndicator(context: context).showLoadingIndicator();
+                  SensorService().getSensorData(id: widget.sensorId).then((value) {
+                    LoadingIndicator(context: context).hideLoadingIndicator();
+                    sensorDatas = value;
+                    setState(() {});
+                  }).catchError((onError) {
+                    LoadingIndicator(context: context).hideLoadingIndicator();
+                  });
                 },
               ),
             ),
-            Chart(
-              sensorDatas: widget.sensorDatas,
-            ),
-            // Chart(sensorDatas: widget.sensorDatas),
-            // Chart(sensorDatas: widget.sensorDatas),
-            // Chart(sensorDatas: widget.sensorDatas),
-            // Chart(sensorDatas: widget.sensorDatas),
-            // Chart(sensorDatas: widget.sensorDatas),
-            // Chart(sensorDatas: widget.sensorDatas),
+            // getChart(label: 'Агаарын температур', isAirtemp: true),
+            // getChart(label: 'Агаарын чийгшил', isAirMoisture: true),
+            // getChart(label: 'Агаарын даралт', isRawAirPressure: true),
+            // getChart(label: 'Төхөөрөмжийн цэнэг', isBattery: true),
+            // getChart(label: 'Гэрэлтүүлэг', isLuminance: true),
+            // getChart(label: 'Хөрсний температур', isTemp: true),
+            // getChart(label: 'Хөрсний чийг', isMoisture: true),
           ],
         ),
       ),
     );
   }
-}
 
-class _SampleData {
-  _SampleData(this.x, this.y1, this.y2);
-  factory _SampleData.fromJson(Map<dynamic, dynamic> parsedJson) {
-    return _SampleData(
-      DateTime.parse(parsedJson['x']),
-      parsedJson['y1'],
-      parsedJson['y2'],
+  getChart({
+    String? label,
+    bool? isAirtemp = false,
+    bool? isAirMoisture = false,
+    bool? isRawAirPressure = false,
+    bool? isBattery = false,
+    bool? isLuminance = false,
+    bool? isTemp = false,
+    bool? isMoisture = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          label!,
+          textAlign: TextAlign.start,
+        ),
+        Chart(
+          sensorDatas: sensorDatas,
+          isAirtemp: isAirtemp,
+          isAirMoisture: isAirMoisture,
+          isRawAirPressure: isRawAirPressure,
+          isBattery: isBattery,
+          isLuminance: isLuminance,
+          isTemp: isTemp,
+          isMoisture: isMoisture,
+        )
+      ],
     );
   }
-  DateTime x;
-  num y1;
-  num y2;
 }
+
+

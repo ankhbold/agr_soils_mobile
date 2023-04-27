@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:mvvm/conf_global.dart';
-import 'package:mvvm/models/sensor_info.dart';
-
+import '../conf_global.dart';
 import '../models/sensor_data.dart';
+import '../models/sensor_info.dart';
 import 'commons/api_helper.dart';
 
 class SensorService {
@@ -19,19 +18,14 @@ class SensorService {
     return sensorInfos;
   }
 
-  Future<List<SensorData>> getSensorData({int? id}) async {
-    var response = await ApiHelper().getUrl(url: '/api/mobile/sensor/data/id?sensor_id=$id');
-    // print(response);
-    try {
+  Future<List<SensorData>> getSensorData({int? id, String? start_date, String? end_date}) async {
+    var response = await ApiHelper()
+        .getUrl(url: '/api/mobile/sensor/data/id?sensor_id=${id}&start_date=$start_date&end_date=$end_date');
       List<SensorData> sensorDatas = List<SensorData>.from(
         (json.decode(response) as List).map(
           (model) => SensorData.fromJson(model),
         ),
       );
-      return sensorDatas;
-    } catch (Ex) {
-      print(Ex.toString());
-      return [];
-    }
+    return sensorDatas; 
   }
 }

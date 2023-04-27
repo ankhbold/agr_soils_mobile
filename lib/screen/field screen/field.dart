@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mvvm/screen/sensor/sensor_chart.dart';
-import 'package:mvvm/services/satelite.dart';
-import 'package:mvvm/services/sensor.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -18,6 +15,8 @@ import '../../models/note.dart';
 import '../../services/geo_service.dart';
 import '../../services/note_services.dart';
 import '../../services/permissions/location.dart';
+import '../../services/satelite.dart';
+import '../../services/sensor.dart';
 import '../../utils/date_manager.dart';
 import '../../view_model/user_view_model.dart';
 import '../../widget/loader.dart';
@@ -27,6 +26,7 @@ import '../field%20screen/panel_widget.dart';
 import '../field%20screen/satelite_image_type.dart';
 import '../notes screen/add_note.dart';
 import '../season/season_choice_page.dart';
+import '../sensor/sensor_chart.dart';
 import '../unit_area/add_area.dart';
 import '../unit_area/add_unit_area_page.dart';
 import '../unit_area/unit_areas.dart';
@@ -140,33 +140,11 @@ class _FieldScreenState extends State<FieldScreen> {
                       PersistentNavBarNavigator.pushNewScreen(
                         context,
                         screen: ChartPage(
-                          sensorDatas: [],
+                          sensorId: element.sensor_id,
                         ),
-                        withNavBar: true, // OPTIONAL VALUE. True by default.
+                        withNavBar: true, 
                         pageTransitionAnimation: PageTransitionAnimation.cupertino,
                       );
-                      // LoadingIndicator(context: context).showLoadingIndicator();
-                      // SensorService().getSensorData(id: element.sensor_id).then((value) {
-                      //   LoadingIndicator(context: context).hideLoadingIndicator();
-                      //   if (value.isNotEmpty) {
-                      //     PersistentNavBarNavigator.pushNewScreen(
-                      //       context,
-                      //       screen: ChartPage(
-                      //         sensorDatas: value,
-                      //       ),
-                      //       withNavBar: true, // OPTIONAL VALUE. True by default.
-                      //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                      //     );
-                      //   } else {
-                      //     ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
-                      //       message: "Сенсор мэдээлэл байхгүй байна",
-                      //     ));
-                      //   }
-
-                      //   // print(value);
-                      // }).catchError((onError) {
-                      //   LoadingIndicator(context: context).hideLoadingIndicator();
-                      // });
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -128,7 +128,10 @@ class ChartPage extends StatefulWidget {
 class _ChartPageState extends State<ChartPage> {
   final DateRangePickerController _controller = DateRangePickerController();
   List<SensorData> sensorDatas = [];
-  DateTime? start_date, end_date;
+  DateTime? start_date = DateTime.now(),
+      end_date = DateTime.now().add(
+        Duration(days: 1),
+      );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,15 +171,17 @@ class _ChartPageState extends State<ChartPage> {
                   ));
                 },
                 onSubmit: (Object? value) {
-                  print(value.runtimeType);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                      'Selection Confirmed' + value.toString(),
-                    ),
-                    duration: Duration(milliseconds: 200),
-                  ));
+                  PickerDateRange pickerDateRange = (value as PickerDateRange);
+                  start_date = pickerDateRange.startDate;
+                  end_date = pickerDateRange.endDate;
                   LoadingIndicator(context: context).showLoadingIndicator();
-                  SensorService().getSensorData(id: widget.sensorId).then((value) {
+                  SensorService()
+                      .getSensorData(
+                    id: widget.sensorId,
+                    start_date: start_date.toString(),
+                    end_date: end_date.toString(),
+                  )
+                      .then((value) {
                     LoadingIndicator(context: context).hideLoadingIndicator();
                     sensorDatas = value;
                     setState(() {});
@@ -186,13 +191,19 @@ class _ChartPageState extends State<ChartPage> {
                 },
               ),
             ),
-            // getChart(label: 'Агаарын температур', isAirtemp: true),
-            // getChart(label: 'Агаарын чийгшил', isAirMoisture: true),
-            // getChart(label: 'Агаарын даралт', isRawAirPressure: true),
-            // getChart(label: 'Төхөөрөмжийн цэнэг', isBattery: true),
-            // getChart(label: 'Гэрэлтүүлэг', isLuminance: true),
-            // getChart(label: 'Хөрсний температур', isTemp: true),
-            // getChart(label: 'Хөрсний чийг', isMoisture: true),
+            sensorDatas.isNotEmpty
+                ? Column(
+                    children: [
+                      getChart(label: 'Агаарын температур', isAirtemp: true),
+                      getChart(label: 'Агаарын чийгшил', isAirMoisture: true),
+                      getChart(label: 'Агаарын даралт', isRawAirPressure: true),
+                      getChart(label: 'Төхөөрөмжийн цэнэг', isBattery: true),
+                      getChart(label: 'Гэрэлтүүлэг', isLuminance: true),
+                      getChart(label: 'Хөрсний температур', isTemp: true),
+                      getChart(label: 'Хөрсний чийг', isMoisture: true),
+                    ],
+                  )
+                : Container()
           ],
         ),
       ),
@@ -231,5 +242,3 @@ class _ChartPageState extends State<ChartPage> {
     );
   }
 }
-
-

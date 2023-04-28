@@ -185,6 +185,7 @@ class _ChartPageState extends State<ChartPage> {
                     LoadingIndicator(context: context).hideLoadingIndicator();
                     sensorDatas = value;
                     setState(() {});
+                  
                   }).catchError((onError) {
                     LoadingIndicator(context: context).hideLoadingIndicator();
                   });
@@ -194,13 +195,34 @@ class _ChartPageState extends State<ChartPage> {
             sensorDatas.isNotEmpty
                 ? Column(
                     children: [
-                      getChart(label: 'Агаарын температур', isAirtemp: true),
-                      getChart(label: 'Агаарын чийгшил', isAirMoisture: true),
-                      getChart(label: 'Агаарын даралт', isRawAirPressure: true),
-                      getChart(label: 'Төхөөрөмжийн цэнэг', isBattery: true),
-                      getChart(label: 'Гэрэлтүүлэг', isLuminance: true),
-                      getChart(label: 'Хөрсний температур', isTemp: true),
-                      getChart(label: 'Хөрсний чийг', isMoisture: true),
+                      getChart(
+                        label: 'Агаарын температур',
+                        isAirtemp: true,
+                      ),
+                      getChart(
+                        label: 'Агаарын чийгшил',
+                        isAirMoisture: true,
+                      ),
+                      getChart(
+                        label: 'Агаарын даралт',
+                        isRawAirPressure: true,
+                      ),
+                      getChart(
+                        label: 'Төхөөрөмжийн цэнэг',
+                        isBattery: true,
+                      ),
+                      getChart(
+                        label: 'Гэрэлтүүлэг',
+                        isLuminance: true,
+                      ),
+                      getChart(
+                        label: 'Хөрсний температур',
+                        isTemp: true,
+                      ),
+                      getChart(
+                        label: 'Хөрсний чийг',
+                        isMoisture: true,
+                      ),
                     ],
                   )
                 : Container()

@@ -1,4 +1,4 @@
-package com.example.mvvm
+package mn.sm.CropMn
 
 import io.flutter.embedding.android.FlutterActivity
 

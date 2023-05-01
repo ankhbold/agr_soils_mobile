@@ -79,7 +79,12 @@ class NoteService {
   Future<dynamic> updateNote({int? id, CreateNoteRequestModel? createNoteRequestModel}) async {
     final response = await ApiHelper().putUrl(
         url:
-            ' /api/mobile/parcelnote/update?note_id=$id&season_id=${createNoteRequestModel!.season_id}&description=${createNoteRequestModel.description}&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date.toString()}&files=${createNoteRequestModel.files}');
+            '/api/mobile/parcelnote/update?note_id=$id&season_id=${createNoteRequestModel!.season_id}&description=${createNoteRequestModel.description}&note_type=${createNoteRequestModel.note_type}&cordinate_x=${createNoteRequestModel.cordinate_x}&cordinate_y=${createNoteRequestModel.cordinate_y}&send_date=${createNoteRequestModel.send_date.toString()}&files=${createNoteRequestModel.files}');
+    return response;
+  }
+
+  Future<dynamic> noteRemoveImage({int? id}) async {
+    final response = await ApiHelper().deleteUrl(url: '/api/mobile/parcelnote/image/delete?image_id=$id');
     return response;
   }
 }

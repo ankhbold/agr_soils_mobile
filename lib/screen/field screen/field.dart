@@ -87,6 +87,8 @@ class _FieldScreenState extends State<FieldScreen> {
   PanelController panelController = PanelController();
   String? currentLayerName, currentSateliteLayerName;
   Note? currentNote;
+  DateTime? currentSateliteDateTime;
+  int? currentSateliteDateIndex = -1;
 
   int? currentUnitAreaNumber;
   var falseColor = '';
@@ -142,7 +144,7 @@ class _FieldScreenState extends State<FieldScreen> {
                         screen: ChartPage(
                           sensorId: element.sensor_id,
                         ),
-                        withNavBar: true, 
+                        withNavBar: true,
                         pageTransitionAnimation: PageTransitionAnimation.cupertino,
                       );
                     },
@@ -489,47 +491,71 @@ class _FieldScreenState extends State<FieldScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: sateliteDates.map((e) {
-                        return Container(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                          margin: EdgeInsets.only(right: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            e,
-                            style: TextStyle(color: Colors.black),
+                  Container(
+                    height: 40,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: sateliteDates.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            currentSateliteDateTime = DateTime.parse(sateliteDates[index]);
+                            currentSateliteDateIndex = index;
+                            setState(() {});
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.only(left: 15, right: 15),
+                            margin: EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                              color: currentSateliteDateIndex == index ? Color(0xff065F46) : Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              sateliteDates[index],
+                              style: TextStyle(color: Colors.black),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         );
-                      }).toList()),
+                      },
+                    ),
+                  ),
                   StateliteImageType(
                     changeSateliteLayer: (value) {
-                      GetSateliteTypeInfo typeInfo = GetSateliteTypeInfo(
-                        image_type: value,
-                        parcel_id:
-                            Globals.selectedUnitArea != null ? Globals.selectedUnitArea!.id : currentUnitAreaNumber,
-                        sattelite_date: MyDateManager.toClientDateTime(
-                            date: DateTime.now().subtract(Duration(days: 4)).toString(), noTime: true),
-                      );
-                      LoadingIndicator(context: context).showLoadingIndicator();
-                      GeoService.getUnitAreaSateliteInfo(typeInfo: typeInfo).then((value) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
-                        if (value.status!) {
-                          sate = value.image_url;
-
-                          setState(() {});
-                        }
-                      }).catchError((onError) {
-                        LoadingIndicator(context: context).hideLoadingIndicator();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          CustomSnackBar(
-                            message: onError.toString(),
+                      if (currentSateliteDateTime != null) {
+                        GetSateliteTypeInfo typeInfo = GetSateliteTypeInfo(
+                          image_type: value,
+                          parcel_id:
+                              Globals.selectedUnitArea != null ? Globals.selectedUnitArea!.id : currentUnitAreaNumber,
+                          sattelite_date: MyDateManager.toClientDateTime(
+                            noTime: true,
+                            date: DateTime.parse(
+                              currentSateliteDateTime.toString(),
+                            ).toString(),
                           ),
                         );
-                      });
+                        LoadingIndicator(context: context).showLoadingIndicator();
+                        GeoService.getUnitAreaSateliteInfo(typeInfo: typeInfo).then((value) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          if (value.status!) {
+                            sate = value.image_url;
+
+                            setState(() {});
+                          }
+                        }).catchError((onError) {
+                          LoadingIndicator(context: context).hideLoadingIndicator();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            CustomSnackBar(
+                              message: onError.toString(),
+                            ),
+                          );
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                          message: "Он сараа сонгоно уу",
+                        ));
+                      }
                     },
                   ),
                   FloatingFab(
@@ -560,7 +586,9 @@ class _FieldScreenState extends State<FieldScreen> {
                 },
                 backdropEnabled: true,
                 maxHeight: panelHeightOpened2,
-                minHeight: panelHeightClosed2,
+                minHeight: MediaQuery.of(context).viewInsets.bottom > 0
+                    ? panelHeightOpened2 - MediaQuery.of(context).size.height * 0.5
+                    : panelHeightClosed2,
                 parallaxEnabled: true,
                 parallaxOffset: .5,
                 panelBuilder: (controller) => ListView(

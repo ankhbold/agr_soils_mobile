@@ -125,6 +125,7 @@ class AllUnitAreasState extends State<AllUnitAreas> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                 
                     Globals.changeSelectedUnitArea(currentAreas[index]);
                     UnitAreaMove(
                       LatLng(

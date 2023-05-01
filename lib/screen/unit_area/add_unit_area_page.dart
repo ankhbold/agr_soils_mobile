@@ -131,6 +131,7 @@ class AddUnitAreaPageState extends State<AddUnitAreaPage> {
                   controller: descController,
                   textInputType: TextInputType.multiline,
                   labelText: 'Таны тайлбар',
+                  onChanged: (value) {},
                   context: context,
                 ),
               ),

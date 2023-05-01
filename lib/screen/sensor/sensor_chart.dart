@@ -55,22 +55,27 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
-      zoomPanBehavior: ZoomPanBehavior(enablePinching: true),
+      zoomPanBehavior: ZoomPanBehavior(enablePinching: true, enablePanning: true),
       key: GlobalKey(),
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'Сенсор мэдээлэл'),
       legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
       primaryXAxis: DateTimeAxis(
         autoScrollingMode: AutoScrollingMode.start,
         intervalType: DateTimeIntervalType.days,
         enableAutoIntervalOnZooming: true,
-        dateFormat: DateFormat.yMMMEd(),
+        dateFormat: DateFormat.yMEd(),
         isVisible: true,
       ),
       tooltipBehavior: TooltipBehavior(
         enable: true,
         builder: (data, point, series, pointIndex, seriesIndex) {
-          return Container();
+          return Container(
+            child: Text(
+              (data as SensorData).datetime.toString() + " " + (point as CartesianChartPoint).yValue.toString(),
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+          );
         },
       ),
       primaryYAxis: NumericAxis(
@@ -185,7 +190,6 @@ class _ChartPageState extends State<ChartPage> {
                     LoadingIndicator(context: context).hideLoadingIndicator();
                     sensorDatas = value;
                     setState(() {});
-                  
                   }).catchError((onError) {
                     LoadingIndicator(context: context).hideLoadingIndicator();
                   });

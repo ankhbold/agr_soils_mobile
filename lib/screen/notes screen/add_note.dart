@@ -12,6 +12,7 @@ import '../../services/commons/exception.dart';
 import '../../services/commons/img_upload.dart';
 import '../../services/note_services.dart';
 import '../../widget/cached_network_image.dart';
+import '../../widget/custom_text_field.dart';
 import '../../widget/line.dart';
 import '../../widget/loader.dart';
 import '../../widget/outlined_btn.dart';
@@ -27,6 +28,11 @@ class NoteAdd extends StatefulWidget {
   @override
   State<NoteAdd> createState() => _NoteAddState();
 }
+
+// class NoteImage {
+//   String? image;
+//    int? image;
+// }
 
 class _NoteAddState extends State<NoteAdd> {
   XFile? image;
@@ -46,6 +52,7 @@ class _NoteAddState extends State<NoteAdd> {
   @override
   void initState() {
     super.initState();
+
     NoteService().getGetNoteType().then((value) {
       noteTypes = value;
       setState(() {});
@@ -255,14 +262,12 @@ class _NoteAddState extends State<NoteAdd> {
               height: MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width * 0.2,
               // color: Colors.amber[500],
-              child: TextField(
-                maxLines: 3,
+              child: CustomTextField(
                 controller: titleController,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  hintText: 'Таны тэмдэглэл...',
-                  border: InputBorder.none,
-                ),
+                textInputType: TextInputType.multiline,
+                labelText: 'Таны тэмдэглэл...',
+                context: context,
+                onDone: () {},
               ),
             ),
           ),
@@ -464,9 +469,6 @@ class _NoteAddState extends State<NoteAdd> {
             ),
           ),
           Line4(),
-          Container(
-            height: MediaQuery.of(context).viewInsets.bottom,
-          )
         ],
       ),
     );

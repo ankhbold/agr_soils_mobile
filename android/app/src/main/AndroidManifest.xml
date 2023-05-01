@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package = "mn.sm.CropMN" >
+package="mn.sm.CropMN" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -13,9 +13,8 @@ package = "mn.sm.CropMN" >
     <uses-permission android:name="android.permission.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION"/>
     
    <application
-android : label = "CropMN"
-android : name = "CropMN"
-
+        android:label = "CropMN"
+        android:name = "CropMN"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -37,10 +37,10 @@ class ApiHelper {
 
   Future<dynamic> postUrl({String? url, Map<String, dynamic>? body, bool? isPublic = false}) async {
     var dio = createDio();
-    bool checkConnection = await NetWorkUtils().checkInternetConnection();
-    if (!checkConnection) {
-      throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
-    }
+    // bool checkConnection = await NetWorkUtils().checkInternetConnection();
+    // if (!checkConnection) {
+    //   throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
+    // }
     try {
       // if (!isPublic!) dio.options.headers['access_token'] = await getToken();
 
@@ -66,10 +66,10 @@ class ApiHelper {
 
   Future<dynamic> getUrl({String? url, bool? isPublic}) async {
     var dio = createDio();
-    bool checkConnection = await NetWorkUtils().checkInternetConnection();
-    if (!checkConnection) {
-      throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
-    }
+    // bool checkConnection = await NetWorkUtils().checkInternetConnection();
+    // if (!checkConnection) {
+    //   throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
+    // }
     try {
       // dio.options.headers['access_token'] = await getToken();
       Response response = await dio.get(url!);
@@ -94,10 +94,10 @@ class ApiHelper {
 
   Future<dynamic> putUrl({String? url, Map<String, dynamic>? body, bool? isPublic}) async {
     var dio = createDio();
-    bool checkConnection = await NetWorkUtils().checkInternetConnection();
-    if (!checkConnection) {
-      throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
-    }
+    // bool checkConnection = await NetWorkUtils().checkInternetConnection();
+    // if (!checkConnection) {
+    //   throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
+    // }
     try {
       // dio.options.headers['access_token'] = await getToken();
       Response response = await dio.put(url!, data: body);
@@ -122,10 +122,10 @@ class ApiHelper {
 
   Future<dynamic> deleteUrl({String? url, Map<String, dynamic>? body, bool? isPublic}) async {
     var dio = createDio();
-    bool checkConnection = await NetWorkUtils().checkInternetConnection();
-    if (!checkConnection) {
-      throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
-    }
+    // bool checkConnection = await NetWorkUtils().checkInternetConnection();
+    // if (!checkConnection) {
+    //   throw CustomException(errorMsg: "Интернэт холболтоо шалгана уу");
+    // }
     try {
       // dio.options.headers['access_token'] = await getToken();
       Response response = await dio.delete(url!, data: body);

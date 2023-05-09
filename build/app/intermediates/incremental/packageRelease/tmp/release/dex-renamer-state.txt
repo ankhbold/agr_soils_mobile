@@ -1,0 +1,4 @@
+#Tue May 09 18:59:08 ULAT 2023
+base.0=/Users/softmaster/Desktop/agr_soils_mobile/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

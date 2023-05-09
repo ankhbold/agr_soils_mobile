@@ -1,0 +1,12 @@
+io.flutter.plugins.webviewflutter.webview_flutter-jetified-window-java-1.0.0-beta04-0 /Users/softmaster/.gradle/caches/transforms-3/006d93cd422dbc43e89591147c2de572/transformed/jetified-window-java-1.0.0-beta04/res
+io.flutter.plugins.webviewflutter.webview_flutter-core-1.6.0-1 /Users/softmaster/.gradle/caches/transforms-3/4ca28c4a71705f8a687c69dda140a277/transformed/core-1.6.0/res
+io.flutter.plugins.webviewflutter.webview_flutter-jetified-annotation-experimental-1.1.0-2 /Users/softmaster/.gradle/caches/transforms-3/8965c941cf4bee4d72541b965c7c9d39/transformed/jetified-annotation-experimental-1.1.0/res
+io.flutter.plugins.webviewflutter.webview_flutter-jetified-window-1.0.0-beta04-3 /Users/softmaster/.gradle/caches/transforms-3/dee59bb480020f42d53c2ea15e4501f7/transformed/jetified-window-1.0.0-beta04/res
+io.flutter.plugins.webviewflutter.webview_flutter-main-4 /Users/softmaster/.pub-cache/hosted/pub.dev/webview_flutter-0.3.24/android/src/main/res
+io.flutter.plugins.webviewflutter.webview_flutter-release-5 /Users/softmaster/.pub-cache/hosted/pub.dev/webview_flutter-0.3.24/android/src/release/res
+io.flutter.plugins.webviewflutter.webview_flutter-pngs-6 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/generated/res/pngs/release
+io.flutter.plugins.webviewflutter.webview_flutter-resValues-7 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/generated/res/resValues/release
+io.flutter.plugins.webviewflutter.webview_flutter-rs-8 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/generated/res/rs/release
+io.flutter.plugins.webviewflutter.webview_flutter-mergeReleaseResources-9 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/intermediates/incremental/release/mergeReleaseResources/merged.dir
+io.flutter.plugins.webviewflutter.webview_flutter-mergeReleaseResources-10 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+io.flutter.plugins.webviewflutter.webview_flutter-merged_res-11 /Users/softmaster/Desktop/agr_soils_mobile/build/webview_flutter/intermediates/merged_res/release

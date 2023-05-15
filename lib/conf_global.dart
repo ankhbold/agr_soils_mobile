@@ -6,6 +6,7 @@ class Globals {
 
   static var username;
   // static var username = 'ankhbold';
+  static var user_id;
   static var isLogin = false;
   static var seasonId;
   static var email;
@@ -35,6 +36,9 @@ class Globals {
 
   static changeSelectedNote(Note? a) {
     selectedNote = a;
+  }
+  static changeUserId(int? a) {
+    user_id = a;
   }
 
   static changeSelectedUnitArea(UnitArea? a) {

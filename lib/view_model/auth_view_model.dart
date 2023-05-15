@@ -75,6 +75,7 @@ class AuthViewModel with ChangeNotifier {
         }
         Globals.changeUsername(in_username);
         Globals.changePCI(value['data']['prof_company_id'].toString());
+        Globals.changeUserId(value['data']['user_id']);
         Globals.changeUserEmail(in_email);
         Globals.changeUserPhone(in_phone.toString());
         Globals.changeUserCompany(in_company.toString());

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/services/commons/api_helper.dart';
+import 'package:mvvm/themes/styles.dart';
+import 'package:mvvm/widget/confirm_dialog.dart';
+import 'package:mvvm/widget/loader.dart';
+import 'package:mvvm/widget/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../conf_global.dart';
@@ -20,7 +25,7 @@ class UserProfilePageState extends State<UserProfilePage> {
     final userPrefernece = Provider.of<UserViewModel>(context);
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Center(
@@ -42,7 +47,7 @@ class UserProfilePageState extends State<UserProfilePage> {
           ),
           text: Text(
             '${Globals.getFirstName()} ${Globals.getLastName()}',
-            style: TextStyle(),
+            style: const TextStyle(),
           ),
         ),
         const Line(),
@@ -54,10 +59,10 @@ class UserProfilePageState extends State<UserProfilePage> {
                 ),
                 text: Text(
                   Globals.getUserCompany(),
-                  style: TextStyle(),
+                  style: const TextStyle(),
                 ),
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 1,
               ),
         const Line(),
@@ -69,13 +74,13 @@ class UserProfilePageState extends State<UserProfilePage> {
                 ),
                 text: Text(
                   Globals.getPosition(),
-                  style: TextStyle(),
+                  style: const TextStyle(),
                 ),
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 1,
               ),
-        Line(),
+        const Line(),
         Globals.isLogin
             ? AccountButtonLess(
                 icon: const Icon(
@@ -87,12 +92,12 @@ class UserProfilePageState extends State<UserProfilePage> {
                         Globals.email,
                         style: TextStyle(),
                       )
-                    : Text('Оруулаагүй'),
+                    : const Text('Оруулаагүй'),
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 1,
               ),
-        Line(),
+        const Line(),
         Globals.isLogin
             ? AccountButtonLess(
                 icon: const Icon(
@@ -101,10 +106,10 @@ class UserProfilePageState extends State<UserProfilePage> {
                 ),
                 text: Text(
                   Globals.getUserPhone(),
-                  style: TextStyle(),
+                  style: const TextStyle(),
                 ),
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 1,
               ),
         const Line2(),
@@ -134,15 +139,15 @@ class UserProfilePageState extends State<UserProfilePage> {
                   ),
                 ),
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 1,
               ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: const [
             SizedBox(
               width: 20,
             ),
@@ -154,6 +159,42 @@ class UserProfilePageState extends State<UserProfilePage> {
               ),
             ),
           ],
+        ),
+        TextButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmDialog(
+                  isAlert: true,
+                  text:
+                      'Та өөрийн хэрэглэгчийн бүртгэл устгаснаар таны мэдээллүүд бүрэн устах бөгөөд дахин сэргээгдэх боломжгүйг анхаарна уу.',
+                );
+              },
+            ).then((value) {
+              if (value != null && value) {
+                LoadingIndicator(context: context).showLoadingIndicator();
+                ApiHelper().getUrl(url: '/api/user/delete?user_id=${Globals.user_id}').then((value) {
+                  LoadingIndicator(context: context).hideLoadingIndicator();
+                  setState(() {
+                    userPrefernece.remove().then((value) {
+                      widget.logout!();
+                    });
+                  });
+                }).catchError((onError) {
+                  print(onError);
+                  LoadingIndicator(context: context).hideLoadingIndicator();
+                  ScaffoldMessenger.of(context).showSnackBar(CustomSnackBar(
+                    message: onError.toString(),
+                  ));
+                });
+              }
+            });
+          },
+          child: const Text(
+            'Хэрэглэгчийн бүртгэл устгах',
+            style: TextStyle(color: primaryColor, fontSize: 15),
+          ),
         )
       ],
     );
